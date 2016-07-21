@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Knowte.InformationModule.Views.InformationSubMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Knowte.InformationModule.Views"
+             mc:Ignorable="d"
+             xmlns:myControls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
+             xmlns:myViews="clr-namespace:Knowte.InformationModule.Views"
+             xmlns:commonprism="clr-namespace:Knowte.Common.Prism;assembly=Knowte.Common">
+
+    <StackPanel Orientation="Horizontal">
+        <myControls:SubMenuButton x:Name="MenuInformationAbout" GroupName="InformationGroup" Foreground="{DynamicResource RG_WhiteBrush}" Content="{DynamicResource Language_About}" IsChecked="True" Command="{x:Static commonprism:ApplicationCommands.NavigateBetweenInformationCommand}" CommandParameter="1"/>
+    </StackPanel>
+</UserControl>

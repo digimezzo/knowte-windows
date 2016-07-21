@@ -1,0 +1,100 @@
+﻿using Knowte.Core.Base;
+using Knowte.Core.Database.Entities;
+using Knowte.Core.Utils;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Shell;
+
+namespace Knowte.Common.Services.WindowsIntegration
+{
+    public class JumpListService : IJumpListService
+    {
+        #region Variables
+        private JumpList jumplist;
+        #endregion
+
+        #region Constructor
+        public JumpListService()
+        {
+            this.jumplist = JumpList.GetJumpList(Application.Current);
+        }
+        #endregion
+
+        #region Properties
+        public bool OpenNoteFromJumplist { get; set; }
+        public string OpenNoteFromJumplistTitle { get; set; }
+        public bool NewNoteFromJumplist { get; set; }
+        #endregion
+
+        #region Private
+        private List<JumpTask> CreateRecentNotesJumpTasks(List<Note> recentNotes)
+        {
+            List<JumpTask> jtList = new List<JumpTask>();
+
+            foreach (Note note in recentNotes)
+            {
+                jtList.Add(new JumpTask
+                {
+                    Title = note.Title,
+                    Arguments = "/open " + "\"" + note.Title + "\"",
+                    Description = "",
+                    CustomCategory = ResourceUtils.GetStringResource("Language_Recent_Notes"),
+                    IconResourcePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Defaults.IconsLibrary),
+                    ApplicationPath = Assembly.GetEntryAssembly().Location,
+                    IconResourceIndex = 2
+                });
+            }
+
+            return jtList;
+        }
+        #endregion
+
+        #region Public
+        public async void RefreshJumpListAsync(List<Note> recentNotes, List<Note> flaggedNotes)
+        {
+            await Task.Run(() =>
+            {
+                if (this.jumplist != null)
+                {
+                    this.jumplist.JumpItems.Clear();
+                    this.jumplist.ShowFrequentCategory = false;
+                    this.jumplist.ShowRecentCategory = false;
+
+                    foreach (JumpTask task in this.CreateRecentNotesJumpTasks(recentNotes))
+                    {
+                        this.jumplist.JumpItems.Add(task);
+                    }
+
+                    this.jumplist.JumpItems.Add(new JumpTask
+                    {
+                        Title = ResourceUtils.GetStringResource("Language_Donate"),
+                        Arguments = "/donate " + ProductInformation.PayPalLink,
+                        Description = "",
+                        IconResourcePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Defaults.IconsLibrary),
+                        ApplicationPath = Assembly.GetEntryAssembly().Location,
+                        IconResourceIndex = 0
+                    });
+
+                    this.jumplist.JumpItems.Add(new JumpTask
+                    {
+                        Title = ResourceUtils.GetStringResource("Language_New_Note"),
+                        Arguments = "/new dummyArgument",
+                        Description = "",
+                        IconResourcePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Defaults.IconsLibrary),
+                        ApplicationPath = Assembly.GetEntryAssembly().Location,
+                        IconResourceIndex = 1
+                    });
+                }
+            });
+
+            if (this.jumplist != null)
+            {
+                this.jumplist.Apply();
+            }
+        }
+        #endregion
+    }
+}

@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="ListboxThemeButtonsItem" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <StackPanel VerticalAlignment="Center">
+                        <Label x:Name="Upper" Visibility="Hidden" Padding="0,0,0,3" HorizontalContentAlignment="Center">
+                            <Viewbox Width="12" Height="6">
+                                <Path Data="F1 M 0,0 L 6.4,6.4 12.8,0 z"  Fill="#ff000000" />
+                            </Viewbox>
+                        </Label>
+                        <Grid Margin="2" ToolTip="{Binding Path=Name}">
+                            <StackPanel Panel.ZIndex="0" Height="32" Width="32" Background="{Binding Path=AccentColor}" />
+                            <StackPanel Panel.ZIndex="1" Height="32" Width="32">
+                                <StackPanel.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.3">
+                                        <GradientStop Color="White" Offset="0.0" />
+                                        <GradientStop Color="Transparent" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </StackPanel.Background>
+                            </StackPanel>
+                        </Grid>
+                        <Label x:Name="Lower" Visibility="Hidden" Padding="0,3,0,0" HorizontalContentAlignment="Center">
+                            <Viewbox Width="12" Height="6">
+                                <Path Data="F1 M 0,6.4 L 6.4,0 12.8,6.4 z"  Fill="#ff000000" />
+                            </Viewbox>
+                        </Label>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Upper" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Lower" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ListboxThemeButtons" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource ListboxThemeButtonsItem}" />
+        <Setter Property="Height" Value="58"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Style.Triggers>
+            <Trigger Property="IsHitTestVisible" Value="False">
+                <Setter Property="Opacity" Value="0.5" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

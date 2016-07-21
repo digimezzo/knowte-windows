@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ButtonTemplates.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ColoredButton.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ColorSchemeButtons.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ComboBox.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ComboBoxNotebooks.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/CommandButtonStyles.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ContextMenu.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/CountLabel.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ExportButton.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/FontStyles.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/Geometries.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ImportNoteButton.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/KnowteWindowMain.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/LinkButton.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/LinkNoteButton.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ListBoxNotebooks.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ListBoxNotes.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ListBoxThemeButtons.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ListButtonStyles.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/MetroTextBox.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/NewNotebookButton.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/NewNoteButton.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/Null.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ScrollBar.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/Tooltip.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <Namespace Name="Application">
+    <Setting Name="IsPortable">
+      <Value>False</Value>
+    </Setting>
+  </Namespace>
+  <Namespace Name="General">
+    <Setting Name="Width">
+      <Value>950</Value>
+    </Setting>
+    <Setting Name="Height">
+      <Value>600</Value>
+    </Setting>
+    <Setting Name="IsMaximized">
+      <Value>False</Value>
+    </Setting>
+    <Setting Name="Top">
+      <Value>50</Value>
+    </Setting>
+    <Setting Name="Left">
+      <Value>50</Value>
+    </Setting>
+    <Setting Name="LastExportDirectory">
+      <Value></Value>
+    </Setting>
+  </Namespace>
+  <Namespace Name="Appearance">
+    <Setting Name="SortByModificationDate">
+      <Value>False</Value>
+    </Setting>
+    <Setting Name="Theme">
+      <Value>Light</Value>
+    </Setting>
+    <Setting Name="ColorScheme">
+      <Value>Blue</Value>
+    </Setting>
+    <Setting Name="FollowWindowsColor">
+      <Value>False</Value>
+    </Setting>
+    <Setting Name="Language">
+      <Value>EN</Value>
+    </Setting>
+  </Namespace>
+  <Namespace Name="Notes">
+    <Setting Name="FontSizeCorrection">
+      <Value>0</Value>
+    </Setting>
+    <Setting Name="PressingEscapeClosesNotes">
+      <Value>False</Value>
+    </Setting>
+  </Namespace>
+  <Namespace Name="Advanced">
+    <Setting Name="NumberOfNotesInJumpList">
+      <Value>10</Value>
+    </Setting>
+  </Namespace>
+  <Namespace Name="Runtime">
+    <Setting Name="OpenFromJumpList">
+      <Value></Value>
+    </Setting>
+    <Setting Name="NewFromJumpList">
+      <Value>False</Value>
+    </Setting>
+  </Namespace>
+</Settings>

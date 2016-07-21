@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:myControls="clr-namespace:Knowte.Common.Controls">
+
+    <Style x:Key="NewNotebookButton" TargetType="{x:Type myControls:AccentButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type myControls:AccentButton}">
+                    <Viewbox Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" SnapsToDevicePixels="False">
+                        <Canvas Width="256" Height="256">
+                            <Path x:Name="Background" Data="F1 M 267.38,136.796C 267.38,209.64 208.797,268.692 136.531,268.692C 64.2707,268.692 5.688,209.64 5.688,136.796C 5.688,63.9533 64.2707,4.90134 136.531,4.90134C 208.797,4.90134 267.38,63.9533 267.38,136.796 Z" Fill="Transparent"/>
+                            <Path x:Name="Circle" Data="F1 M 136.636,0.26532C 61.2347,0.26532 0,61.396 0,136.796C 0,212.203 61.2347,273.333 136.636,273.333C 212.031,273.333 273.068,212.203 273.068,136.796C 273.068,61.396 212.031,0.26532 136.636,0.26532 Z M 136.636,16.796C 202.901,16.796 256.531,70.5253 256.531,136.796C 256.531,203.072 202.901,256.796 136.636,256.796C 70.364,256.796 16.5307,203.072 16.5307,136.796C 16.5307,70.5253 70.364,16.796 136.636,16.796 Z" Fill="{TemplateBinding Foreground}" />
+                            <Path x:Name="Icon" Data="F1 M 94.1147,59.1507C 87.6507,59.1507 82.448,64.348 82.448,70.8173L 82.448,75.1507L 98.6507,75.1507C 102.869,75.1507 106.251,78.5307 106.251,82.7493L 106.251,96.984C 106.251,101.197 102.869,104.583 98.6507,104.583L 82.448,104.583L 82.448,122.083L 98.6507,122.083C 102.869,122.083 106.251,125.463 106.251,129.681L 106.251,143.916C 106.251,148.135 102.869,151.515 98.6507,151.515L 82.448,151.515L 82.448,169.015L 98.6507,169.015C 102.869,169.015 106.251,172.396 106.251,176.615L 106.251,190.848C 106.251,195.068 102.869,198.448 98.6507,198.448L 82.448,198.448L 82.448,202.781C 82.448,209.249 87.6507,214.448 94.1147,214.448L 198.683,214.448C 205.151,214.448 210.349,209.249 210.349,202.781L 210.349,70.8173C 210.349,64.348 205.151,59.1507 198.683,59.1507M 65.984,82.848C 64.172,82.848 62.7187,84.3013 62.7187,86.1147L 62.7187,93.7813C 62.7187,95.5933 64.172,97.0466 65.984,97.0466L 95.484,97.0466C 97.2973,97.0466 98.7507,95.5933 98.7507,93.7813L 98.7507,86.1147C 98.7507,84.3013 97.2973,82.848 95.484,82.848M 186.484,95.88C 186.885,95.8907 187.307,95.9373 187.719,95.984C 194.88,96.7706 200.047,103.281 199.251,110.547C 199.011,112.719 198.26,114.719 197.151,116.416L 192.948,120.583L 174.651,102.416L 175.183,101.916L 175.281,101.817L 175.683,101.416C 175.719,101.364 175.751,101.364 175.781,101.317L 178.817,98.2813C 181.005,96.724 183.656,95.8387 186.484,95.88 Z M 168.719,108.317L 187.052,126.484L 144.552,168.984L 126.251,150.615L 161.219,115.713M 65.984,129.817C 64.172,129.817 62.7187,131.271 62.7187,133.083L 62.7187,140.749C 62.7187,142.563 64.172,144.015 65.984,144.015L 95.484,144.015C 97.2973,144.015 98.7507,142.563 98.7507,140.749L 98.7507,133.083C 98.7507,131.271 97.2973,129.817 95.484,129.817M 120.448,156.249L 138.817,174.651L 138.781,174.681L 117.281,177.713L 117.251,177.651M 65.984,177.115C 64.172,177.115 62.7187,178.604 62.7187,180.416L 62.7187,188.083C 62.7187,189.896 64.172,191.348 65.984,191.348L 95.484,191.348C 97.2973,191.348 98.7507,189.896 98.7507,188.083L 98.7507,180.416C 98.7507,178.604 97.2973,177.115 95.484,177.115L 65.984,177.115 Z"  Fill="{TemplateBinding Foreground}" />
+                        </Canvas>
+                    </Viewbox>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Opacity" Value="0.7"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Opacity" Value="1.0"/>
+                            <Setter TargetName="Background" Property="Fill" Value="{Binding Foreground,RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <Setter TargetName="Circle" Property="Fill" Value="{Binding Foreground,RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <Setter TargetName="Icon" Property="Fill" Value="{Binding AccentForeground,RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

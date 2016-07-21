@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Knowte.MainModule.Views.Search"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:controls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
+             xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+             prismMvvm:ViewModelLocator.AutoWireViewModel="True">
+
+    <controls:SearchBox x:Name="SearchBox" Width="200" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource RG_SearchInvisibleBackgroundBrush}"  VisibleBackground="{DynamicResource RG_SearchBackgroundBrush}" Foreground="{DynamicResource RG_ForegroundBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_ForegroundBrush}"/>
+</UserControl>

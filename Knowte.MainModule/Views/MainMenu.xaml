@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Knowte.MainModule.Views.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:myControls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
+             mc:Ignorable="d"
+             xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+             xmlns:commonprism="clr-namespace:Knowte.Common.Prism;assembly=Knowte.Common"
+             prismMvvm:ViewModelLocator.AutoWireViewModel="True">
+
+    <StackPanel Orientation="Horizontal">
+        <myControls:MainMenuButton x:Name="MenuNotes" GroupName="MainMenuGroup" Foreground="{DynamicResource RG_BlackBrush}" Content="{DynamicResource Language_Notes}" IsChecked="True" Command="{x:Static commonprism:ApplicationCommands.NavigateBetweenMainCommand}" CommandParameter="1"/>
+        <myControls:MainMenuButton x:Name="MenuSettings" GroupName="MainMenuGroup" Foreground="{DynamicResource RG_BlackBrush}" Content="{DynamicResource Language_Settings}" Command="{x:Static commonprism:ApplicationCommands.NavigateBetweenMainCommand}" CommandParameter="2"/>
+        <myControls:MainMenuButton x:Name="MenuInformation" GroupName="MainMenuGroup" Foreground="{DynamicResource RG_BlackBrush}" Content="{DynamicResource Language_Information}" Command="{x:Static commonprism:ApplicationCommands.NavigateBetweenMainCommand}" CommandParameter="3"/>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,27 @@
+Knowte 1.1.464.0 (21-07-2016)
+----------------------------
+
+- Knowte is now Open Source Software!
+- Dark parts of the windows are now transparent and blurred on Windows 10
+- Fixed a possible crash when exporting a note
+
+
+Knowte 1.0.460.0 (1-07-2016)
+----------------------------
+
+First release of Knowte. Features:
+
+- Write notes and group them in notebooks
+- Search for notes containing specific text
+- Font styling (bold, italic, underine, strike through)
+- Text highlighting
+- Bulleted lists 
+- Custom user interface colors
+- Export notes to .rtf (Rich Text File)
+- Export notes to .knowte (allows you to share your notes with other Knowte users)
+- Print notes
+- Link notes to other notes (WIKI style)
+- Click a URL in a note to open your default web browser
+- Click an e-mail address in a note to open your default e-mail client
+- Pin important notes to a Windows Taskbar Jump List
+- Undo and redo

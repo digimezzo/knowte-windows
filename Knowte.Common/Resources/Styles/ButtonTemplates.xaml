@@ -1,0 +1,64 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:myControls="clr-namespace:Knowte.Common.Controls"
+    xmlns:myPresentationConverters="clr-namespace:Knowte.Common.Presentation.Converters">
+
+   <myPresentationConverters:InvertingBooleanConverter x:Key="InvertingBooleanConverter" />
+   <myPresentationConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+   <myPresentationConverters:InvertingBooleanToVisibilityConverter x:Key="InvertingBooleanToVisibilityConverter" />
+
+   <ControlTemplate x:Key="closeButtonTemplate" TargetType="{x:Type Button}">
+      <Label Width="25" Height="25" Padding="0" ToolTip="{TemplateBinding ToolTip}">
+         <Viewbox Width="25" Height="25" SnapsToDevicePixels="False">
+            <Canvas x:Name="Canvas" Width="272.96" Height="272.96" Visibility="{Binding Visibility, ElementName=DummyBorder}">
+               <Path x:Name="Background" Data="F1 M 0,0 C 0,72.8 -58.72,131.84 -130.88,131.84 -203.2,131.84 -261.76,72.8 -261.76,0
+		 -261.76,-72.8 -203.2,-132 -130.88,-132 -58.72,-132 0,-72.8 0,0 z" RenderTransform="1,0,0,1,267.36,136.48" Fill="Transparent" />
+               <Path x:Name="Icon" Data="F1 M 0,0 L 37.76,37.76 0,75.52 15.04,90.56 52.8,52.8 90.56,90.56 105.6,75.52
+		 67.84,37.76 105.6,0 90.56,-15.04 52.8,22.72 15.04,-15.04 z" RenderTransform="1,0,0,1,83.68,98.72" Fill="{DynamicResource RG_AccentBrush}" />
+               <Path x:Name="Circle" Data="F1 M 0,0 C -75.36,0 -136.48,61.12 -136.48,136.48 -136.48,211.84 -75.36,272.96 0,272.96
+		 75.52,272.96 136.48,211.84 136.48,136.48 136.48,61.12 75.52,0 0,0 z
+		M 0,16.48 C 66.4,16.48 120,70.24 120,136.48 120,202.72 66.4,256.48 0,256.48
+		 -66.24,256.48 -120,202.72 -120,136.48 -120,70.24 -66.24,16.48 0,16.48 z" RenderTransform="1,0,0,1,136.48,0" Fill="Transparent" />
+            </Canvas>
+         </Viewbox>
+      </Label>
+      <ControlTemplate.Triggers>
+         <Trigger Property="IsMouseOver" Value="True">
+            <Setter TargetName="Circle" Property="Fill" Value="{DynamicResource RG_AccentBrush}"/>
+         </Trigger>
+         <Trigger Property="IsPressed" Value="True">
+            <Setter TargetName="Background" Property="Fill" Value="{DynamicResource RG_AccentBrush}"/>
+            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource RG_WhiteBrush}"/>
+         </Trigger>
+      </ControlTemplate.Triggers>
+   </ControlTemplate>
+
+   <ControlTemplate x:Key="editButtonTemplate" TargetType="{x:Type Button}">
+      <Label Width="25" Height="25" Padding="0" ToolTip="{TemplateBinding ToolTip}" Visibility="{Binding Path=IsDefaultNotebook, Converter={StaticResource InvertingBooleanToVisibilityConverter}}">
+         <Viewbox Width="25" Height="25" SnapsToDevicePixels="False">
+            <Canvas x:Name="Canvas" Width="272.96" Height="272.96" Visibility="{Binding Visibility, ElementName=DummyBorder}">
+               <Path x:Name="Background" Data="F1 M 0,0 C 0,72.8 -58.72,131.84 -130.88,131.84 -203.2,131.84 -261.76,72.8 -261.76,0
+		 -261.76,-72.8 -203.2,-132 -130.88,-132 -58.72,-132 0,-72.8 0,0 z" RenderTransform="1,0,0,1,267.36,136.48" Fill="Transparent" />
+               <Path x:Name="Circle" Data="F1 M 0,0 C -75.36,0 -136.48,61.12 -136.48,136.48 -136.48,211.84 -75.36,272.96 0,272.96
+		 75.52,272.96 136.48,211.84 136.48,136.48 136.48,61.12 75.52,0 0,0 z
+		M 0,16.48 C 66.4,16.48 120,70.24 120,136.48 120,202.72 66.4,256.48 0,256.48
+		 -66.24,256.48 -120,202.72 -120,136.48 -120,70.24 -66.24,16.48 0,16.48 z" RenderTransform="1,0,0,1,136.48,0" Fill="Transparent" />
+               <Path x:Name="Icon" Data="F1 M 0,0 C -4.96,-0.16 -9.6,1.44 -13.44,4.16 L -18.72,9.28 C -18.72,9.44 -18.88,9.44 -18.88,9.6
+		L -19.52,10.24 C -19.52,10.24 -19.68,10.4 -19.68,10.4 L -20.64,11.36 11.2,42.88 18.56,35.68
+		C 20.48,32.64 21.76,29.28 22.24,25.44 23.52,12.8 14.56,1.44 2.08,0 1.44,0 0.64,0 0,0 z
+		M -31.04,21.6 L -44,34.4 -104.96,95.2 -73.12,127.2 0.96,53.28 z
+		M -115.04,104.96 L -120.64,142.4 -120.48,142.4 -83.04,137.12 -83.04,137.12 -115.04,104.96 z" RenderTransform="1,0,0,1,185.6,65.28" Fill="{DynamicResource RG_AccentBrush}" />
+            </Canvas>
+         </Viewbox>
+      </Label>
+      <ControlTemplate.Triggers>
+         <Trigger Property="IsMouseOver" Value="True">
+            <Setter TargetName="Circle" Property="Fill" Value="{DynamicResource RG_AccentBrush}"/>
+         </Trigger>
+         <Trigger Property="IsPressed" Value="True">
+            <Setter TargetName="Background" Property="Fill" Value="{DynamicResource RG_AccentBrush}"/>
+            <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource RG_WhiteBrush}"/>
+         </Trigger>
+      </ControlTemplate.Triggers>
+   </ControlTemplate>
+</ResourceDictionary>

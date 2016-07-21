@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Packager>
+  <Packaging>
+    <PackageDirectory>C:\Temp\Knowte</PackageDirectory>
+    <Installable>
+      <WixBinDirectory>C:\Program Files (x86)\WiX Toolset v3.10\bin</WixBinDirectory>
+    </Installable>
+    <Portable>
+      <Directories>
+        <Directory>Languages</Directory>
+        <Directory>Licenses</Directory>
+        <Directory>x64</Directory>
+        <Directory>x86</Directory>
+      </Directories>
+      <Files>
+        <File>BaseSettings.xml</File>
+        <File>Changelog.txt</File>
+        <File>DotNetZip.dll</File>
+        <File>Knowte.Common.dll</File>
+        <File>Knowte.Core.dll</File>
+        <File>Knowte.exe</File>
+        <File>Knowte.exe.config</File>
+        <File>Migrator.exe</File>
+        <File>Knowte.Icons.dll</File>
+        <File>Knowte.InformationModule.dll</File>
+        <File>Knowte.MainModule.dll</File>
+        <File>Knowte.NotesModule.dll</File>
+        <File>Knowte.SettingsModule.dll</File>
+        <File>License.txt</File>
+        <File>Microsoft.Practices.ServiceLocation.dll</File>
+        <File>Microsoft.Practices.Unity.Configuration.dll</File>
+        <File>Microsoft.Practices.Unity.dll</File>
+        <File>Microsoft.Practices.Unity.RegistrationByConvention.dll</File>
+        <File>NLog.dll</File>
+        <File>Prism.dll</File>
+        <File>Prism.Unity.Wpf.dll</File>
+        <File>Prism.Wpf.dll</File>
+        <File>Digimezzo.WPFControls.dll</File>
+        <File>System.Windows.Interactivity.dll</File>
+        <File>SQLite.Net.dll</File>
+        <File>SQLite.Net.Platform.Win32.dll</File>
+        <File>System.Data.SQLite.dll</File>
+      </Files>
+    </Portable>
+  </Packaging>
+</Packager>
+

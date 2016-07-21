@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Knowte.SettingsModule.Views.SettingsAppearance"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+             xmlns:controls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
+             xmlns:commonprism="clr-namespace:Knowte.Common.Prism;assembly=Knowte.Common"
+             xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+             prismMvvm:ViewModelLocator.AutoWireViewModel="True">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <!-- Color -->
+            <Label Content="{DynamicResource Language_Color}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+            <Label Content="{DynamicResource Language_Follow_Windows_Color}"/>
+            <dc:Windows10ToggleSwitch x:Name="CheckBoxWindowsColor" HorizontalAlignment="Left" Margin="5,5,0,0" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" IsChecked="{Binding CheckBoxWindowsColorChecked}" Accent="{DynamicResource RG_AccentBrush}"/>
+            <Separator Height="20" Background="Transparent" />
+            <ListBox Name="ListBoxColorSchemes" DockPanel.Dock="Left" Background="Transparent" Style="{StaticResource ColorSchemeButtons}" ItemsSource="{Binding Path=ColorSchemes}" SelectedItem="{Binding SelectedColorScheme,Mode=TwoWay}" IsHitTestVisible="{Binding Path=CheckBoxWindowsColorChecked, Converter={StaticResource InvertingBooleanConverter}}" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <controls:IconTextButton Data="{StaticResource TextButtonPlus}" Margin="5,10,0,0" HorizontalAlignment="Left" Content="{DynamicResource Language_Add_More_Colors}" Foreground="{DynamicResource RG_AccentBrush}" Command="{x:Static commonprism:ApplicationCommands.OpenPathCommand}" CommandParameter="{Binding Path=ColorSchemesDirectory}" />
+            <Separator Height="20" Background="Transparent" />
+            <!-- Language -->
+            <Label Content="{DynamicResource Language_Language}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+            <StackPanel>
+                <Label Content="{DynamicResource Language_Choose_Language}"/>
+                <ComboBox x:Name="ComboBoxLanguage" Padding="0" Height="30" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="150"  Margin="5,10,0,0" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"/>
+            </StackPanel>
+            <Separator Height="20" Background="Transparent" />
+            <!-- Sorting -->
+            <Label Content="{DynamicResource Language_Sorting}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+            <StackPanel>
+                <Label Content="{DynamicResource Language_Sort_Notes_By_modification_Date}"/>
+                <DockPanel>
+                    <dc:Windows10ToggleSwitch x:Name="CheckBoxSort" DockPanel.Dock="Left" Margin="5,5,0,0" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" IsChecked="{Binding CheckBoxSortChecked}" Accent="{DynamicResource RG_AccentBrush}"/>
+                    <Label></Label>
+                </DockPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
