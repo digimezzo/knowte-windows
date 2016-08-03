@@ -1,5 +1,5 @@
-Knowte 1.1.465.0 (3-0-2016)
----------------------------
+Knowte 1.1.465.0 (3-08-2016)
+----------------------------
 
 - Knowte is now Open Source Software! The source code is available here: https://github.com/digimezzo/Knowte
 - Dark parts of the windows are now transparent and blurred on Windows 10
