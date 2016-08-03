@@ -7,12 +7,10 @@ namespace Knowte.Core.Extensions
     {
         public static void SetGeometry(this Window win, double top, double left, double width, double height, double topFallback = 50, double leftFallback = 50)
         {
-            double totalScreenWidth = SystemParameters.VirtualScreenWidth;
-            double totalScreenHeight = SystemParameters.VirtualScreenHeight;
-            double totalScreenTop = SystemParameters.VirtualScreenTop;
-            double totalScreenLeft = SystemParameters.VirtualScreenLeft;
-
-            if (top < totalScreenTop | top > totalScreenHeight | left < totalScreenLeft | left > totalScreenWidth)
+            if (left <= (SystemParameters.VirtualScreenLeft - width) ||
+                top <= (SystemParameters.VirtualScreenTop - height) ||
+                (SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth) <= left ||
+                (SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight) <= top)
             {
                 top = Convert.ToInt32(topFallback);
                 left = Convert.ToInt32(leftFallback);
