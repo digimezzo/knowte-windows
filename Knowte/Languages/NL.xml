@@ -86,4 +86,5 @@
   <Text Key="Invalid_File">Dit bestand is niet geldig.</Text>
   <Text Key="Link_Does_Not_Work_Anymore">Deze link werkt niet meer.</Text>
   <Text Key="License">Licentie</Text>
+  <Text Key="Backup_And_Restore">Backup en restore</Text>
 </Language>

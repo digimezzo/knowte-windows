@@ -24,7 +24,7 @@ namespace Knowte.NotesModule.ViewModels
 {
     public class NotesListsViewModel : BindableBase
     {
-        #region Members
+        #region Variables
         private ObservableCollection<NotebookViewModel> notebooks;
         private ObservableCollection<NoteViewModel> notes;
         private NotebookViewModel selectedNotebook;
@@ -57,6 +57,7 @@ namespace Knowte.NotesModule.ViewModels
         public DelegateCommand<string> ImportNoteCommand;
         public DelegateCommand<string> OpenNoteCommand;
         public DelegateCommand<object> NavigateBetweenNotesCommand;
+        public DelegateCommand BackupRestoreCommand { get; set; }
         #endregion
 
         #region Properties
@@ -195,7 +196,7 @@ namespace Knowte.NotesModule.ViewModels
                 }
             };
             // New Notebook
-            this.NewNotebookCommand = new DelegateCommand<string>((x) =>
+            this.NewNotebookCommand = new DelegateCommand<string>((_) =>
             {
                 this.selectedNotebook = null;
 
@@ -347,7 +348,7 @@ namespace Knowte.NotesModule.ViewModels
             this.NavigateBetweenNotesCommand = new DelegateCommand<object>(NavigateBetweenNotes);
             Common.Prism.ApplicationCommands.NavigateBetweenNotesCommand.RegisterCommand(this.NavigateBetweenNotesCommand);
 
-            this.OpenNoteCommand = new DelegateCommand<string>((x) =>
+            this.OpenNoteCommand = new DelegateCommand<string>((_) =>
             {
                 if (this.SelectedNote == null)
                 {
@@ -381,7 +382,10 @@ namespace Knowte.NotesModule.ViewModels
 
             });
 
-            this.searchService.Searching += (sender, e) =>
+            // Backup and restore
+            this.BackupRestoreCommand = new DelegateCommand(() => MessageBox.Show("Backup and restore"));
+
+            this.searchService.Searching += (_, __) =>
             {
                 try
                 {

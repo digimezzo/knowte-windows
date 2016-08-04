@@ -1,5 +1,6 @@
 ﻿using Knowte.Common.Presentation.Views;
 using Knowte.Common.Services.Appearance;
+using Knowte.Common.Services.Backup;
 using Knowte.Common.Services.Command;
 using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.I18n;
@@ -52,6 +53,7 @@ namespace Knowte
             Container.RegisterSingletonType<ISearchService, SearchService>();
             Container.RegisterSingletonType<IJumpListService, JumpListService>();
             Container.RegisterSingletonType<IDialogService, DialogService>();
+            Container.RegisterSingletonType<IBackupService, BackupService>();
             Container.RegisterType<INotebookService, NotebookService>();
             Container.RegisterType<INoteService, NoteService>();
             Container.RegisterType<ICommandService, CommandService>();

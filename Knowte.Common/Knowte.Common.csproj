@@ -151,6 +151,8 @@
     <Compile Include="Services\Appearance\AppearanceService.cs" />
     <Compile Include="Services\Appearance\ColorScheme.cs" />
     <Compile Include="Services\Appearance\IAppearanceService.cs" />
+    <Compile Include="Services\Backup\BackupService.cs" />
+    <Compile Include="Services\Backup\IBackupService.cs" />
     <Compile Include="Services\Command\CommandService.cs" />
     <Compile Include="Services\Command\ICommandService.cs" />
     <Compile Include="Services\Dialog\ConfirmationDialog.xaml.cs">

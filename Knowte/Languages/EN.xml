@@ -86,4 +86,5 @@
   <Text Key="Invalid_File">This is not a valid file.</Text>
   <Text Key="Link_Does_Not_Work_Anymore">This link does not work anymore.</Text>
   <Text Key="License">License</Text>
+  <Text Key="Backup_And_Restore">Backup and restore</Text>
 </Language>
