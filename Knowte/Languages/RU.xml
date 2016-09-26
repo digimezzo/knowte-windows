@@ -10,8 +10,8 @@
   <Text Key="Yesterday">Вчера</Text>
   <Text Key="This_Week">На этой неделе</Text>
   <Text Key="Flagged">Отмеченные</Text>
-  <Text Key="Flagged_Notes">Отмеченные notes</Text>
-  <Text Key="Recent_Notes">Последние notes</Text>
+  <Text Key="Flagged_Notes">Отмеченные заметки</Text>
+  <Text Key="Recent_Notes">Последние заметки</Text>
   <Text Key="Settings">Настройки</Text>
   <Text Key="Appearance">Вид</Text>
   <Text Key="Advanced">Дополнительно</Text>
