@@ -101,8 +101,9 @@ namespace Knowte.Common.Services.I18n
         #region Private
         private Language CreateLanguage(string languageFile)
         {
-
-            XDocument xdoc = XDocument.Load(languageFile);
+            //Can't load file(Language) containing accented characters
+            //XDocument xdoc = XDocument.Load(languageFile);
+            var xdoc = XDocument.Parse(File.ReadAllText(languageFile, System.Text.Encoding.Default));
 
             Language returnLanguage = new Language();
 
