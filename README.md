@@ -4,3 +4,4 @@ Knowte is a note taking application that allows you to quickly and easily organi
 
 [![Release](https://img.shields.io/github/release/digimezzo/Knowte.svg?style=flat-square)](https://github.com/digimezzo/Knowte/releases/latest)
 [![Issues](https://img.shields.io/github/issues/digimezzo/Knowte.svg?style=flat-square)](https://github.com/digimezzo/Knowte/issues)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MQALEWTEZ7HX8)
