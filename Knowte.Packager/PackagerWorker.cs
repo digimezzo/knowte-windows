@@ -27,7 +27,7 @@ namespace Knowte.Packager
         // Remote
         // Requires directory structure on the server: content/software/<ApplicationName>/releases/.update
         // Requires directory structure on the server: content/software/<ApplicationName>/previews/.update
-        private string publishDirectory = string.Format("content/software/{0}",ProductInformation.ApplicationDisplayName.ToLower());
+        private string publishDirectory = string.Format("content/software/{0}", ProductInformation.ApplicationDisplayName.ToLower());
         private string publishUpdateSubDirectory = ".update";
         private string versionsFileName = "versions.dat";
         private string versionsFileSubDirectory = "content/software";
@@ -44,7 +44,7 @@ namespace Knowte.Packager
             Console.WriteLine("Packager");
             Console.WriteLine("========");
 
-            Console.WriteLine(Environment.NewLine + "Creating packages for '" + PackagingInformation.GetPackageFileName(this.versionInfo) + "'");
+            Console.WriteLine(Environment.NewLine + "Creating packages for '" + ProductInformation.FormattedAssemblyVersion + "'");
 
             // Clean up the destination directory
             // ----------------------------------

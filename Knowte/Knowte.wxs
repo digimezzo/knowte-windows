@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?define Version="1.1.466.0" ?>
+<?define Version="1.1.467.0" ?>
 <?define VersionMin="1.0.0.0" ?>
 <?define UpgradeCode="672c2adb-fc86-41e4-83f4-5103b13ca79c"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
@@ -63,6 +63,12 @@
             </Component>
             <Component Id="NL.xml" DiskId="1" Guid="2f664f1a-de42-49c6-a215-e627aec18fc9">
               <File Id="NL.xml" Name="NL.xml" Source="Languages\NL.xml" />
+            </Component>
+            <Component Id="PT_BR.xml" DiskId="1" Guid="ccaaae98-9ab5-408b-9858-fb59f4c141c4">
+              <File Id="PT_BR.xml" Name="PT-BR.xml" Source="Languages\PT-BR.xml" />
+            </Component>
+            <Component Id="RU.xml" DiskId="1" Guid="04158356-6539-47de-91f6-ac94d20bedf9">
+              <File Id="RU.xml" Name="RU.xml" Source="Languages\RU.xml" />
             </Component>
             <Component Id="ZH_CN.xml" DiskId="1" Guid="f2ace4fb-8d68-4ed2-9301-ea3bcf4d053c">
               <File Id="ZH_CN.xml" Name="ZH-CN.xml" Source="Languages\ZH-CN.xml" />
@@ -174,6 +180,8 @@
       <ComponentRef Id="EN.xml" />
       <ComponentRef Id="FR.xml" />
       <ComponentRef Id="NL.xml" />
+      <ComponentRef Id="PT_BR.xml" />
+      <ComponentRef Id="RU.xml" />
       <ComponentRef Id="ZH_CN.xml" />
       <!-- 3rd party licenses -->
       <ComponentRef Id="DotNetZip.txt" />

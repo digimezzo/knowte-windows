@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Language Code="PT_BR" Name="PortuguÍs" Author="Felipe Pacheco">
+<Language Code="PT_BR" Name="Portuguese" Author="Felipe Pacheco">
   <Text Key="Ok">OK</Text>
   <Text Key="Cancel">Cancelar</Text>
   <Text Key="Yes">Sim</Text>
-  <Text Key="No">N„o</Text>
+  <Text Key="No">N√£o</Text>
   <Text Key="Donate">Doar</Text>
   <Text Key="All">Tudo</Text>
   <Text Key="Today">Hoje</Text>
@@ -12,9 +12,9 @@
   <Text Key="Flagged">Marcada</Text>
   <Text Key="Flagged_Notes">Notas marcadas</Text>
   <Text Key="Recent_Notes">Notas recentes</Text>
-  <Text Key="Settings">ConfiguraÁıes</Text>
-  <Text Key="Appearance">AparÍncia</Text>
-  <Text Key="Advanced">AvanÁado</Text>
+  <Text Key="Settings">Configura√ß√µes</Text>
+  <Text Key="Appearance">Apar√™ncia</Text>
+  <Text Key="Advanced">Avan√ßado</Text>
   <Text Key="About">Sobre</Text>
   <Text Key="Notes">Notas</Text>
   <Text Key="Color">Cor</Text>
@@ -22,7 +22,7 @@
   <Text Key="Sorting">Ordenar</Text>
   <Text Key="Notebooks">Notebooks</Text>
   <Text Key="All_Notes">Todas notas</Text>
-  <Text Key="Unfiled_Notes">Notas n„o preenchidas</Text>
+  <Text Key="Unfiled_Notes">Notas n√£o preenchidas</Text>
   <Text Key="New_Note">Nova nota</Text>
   <Text Key="New_Notebook">Novo notebook</Text>
   <Text Key="New_Notebook_Enter_Name">Coloque um nome para seu notebook</Text>
@@ -33,20 +33,20 @@
   <Text Key="Flag_This_Note">Marque essa nota</Text>
   <Text Key="Delete_This_Note">Remova essa nota</Text>
   <Text Key="Font_Size">Tamanho da fonte</Text>
-  <Text Key="Preview">VisualizaÁ„o</Text>
+  <Text Key="Preview">Visualiza√ß√£o</Text>
   <Text Key="Closing">Encerrando</Text>
   <Text Key="Follow_Windows_Color">Siga a cor do Windows</Text>
   <Text Key="Add_More_Colors">Adicionar mais cores</Text>
   <Text Key="Choose_Language">Selecionar idioma</Text>
-  <Text Key="Sort_Notes_By_modification_Date">Ordenar notas por data de modificaÁ„o</Text>
+  <Text Key="Sort_Notes_By_modification_Date">Ordenar notas por data de modifica√ß√£o</Text>
   <Text Key="Close_notes_with_escape">Fehcar notas com [Esc]</Text>
   <Text Key="Jump_List">Lista de atalhos</Text>
   <Text Key="Number_Of_Notes_In_Jumplist">Numero de notas na lista de atalhos:</Text>
   <Text Key="Components">Componentes</Text>
-  <Text Key="Is_Useful">Knowte È util?</Text>
+  <Text Key="Is_Useful">Knowte √© util?</Text>
   <Text Key="Delete_Note">Remover nota</Text>
   <Text Key="Delete_Note_Confirm">Tem certeza que deseja remover a nota '%notename%'?</Text>
-  <Text Key="Information">InformaÁ„o</Text>
+  <Text Key="Information">Informa√ß√£o</Text>
   <Text Key="Normal">Normal</Text>
   <Text Key="Large">Grande</Text>
   <Text Key="Larger">Maior</Text>
@@ -65,26 +65,26 @@
   <Text Key="Underline">Underline</Text>
   <Text Key="Strikeout">Sublinhado</Text>
   <Text Key="Fixed_Width">Largura fixa</Text>
-  <Text Key="Highlight">RealÁar</Text>
+  <Text Key="Highlight">Real√ßar</Text>
   <Text Key="Edit_Notebook">Editar notebook</Text>
   <Text Key="Enter_New_Name_For_Notebook">Adicione um novo nome para notebook '%notebookname%'</Text>
   <Text Key="Delete_Notebook">Remover notebook</Text>
   <Text Key="Delete_Notebook_Confirm">Tem certeza que deseja remover notebook '%notebookname%'?</Text>
   <Text Key="Click_Here_To_Change_Notebook">Clique aqui para trocar o notebook</Text>
-  <Text Key="Click_Here_To_Change_Title">Clique aqui para mudar o tÌtulo</Text>
+  <Text Key="Click_Here_To_Change_Title">Clique aqui para mudar o t√≠tulo</Text>
   <Text Key="Hide_Search">Esconder pesquisa</Text>
   <Text Key="Error">Erro</Text>
   <Text Key="Warning">Aviso</Text>
   <Text Key="Error_Unexpected_Error">Houve um erro inesperado.</Text>
-  <Text Key="Note_Could_Not_Be_Opened">A nota n„o pode ser aberta.</Text>
+  <Text Key="Note_Could_Not_Be_Opened">A nota n√£o pode ser aberta.</Text>
   <Text Key="Problem_Creating_Notebook">Houve um problema ao criar notebook.</Text>
   <Text Key="Problem_Creating_Note">Houve um problema ao criar nota.</Text>
   <Text Key="Note_Needs_Name">Sua nota precisa de um nome.</Text>
-  <Text Key="Already_Note_With_That_Name">J· existe uma nota com esse nome.</Text>
+  <Text Key="Already_Note_With_That_Name">J√° existe uma nota com esse nome.</Text>
   <Text Key="Notebook_Needs_Name">O seu notebook precisa de um nome. Por favor, tente novamente.</Text>
-  <Text Key="Already_Notebook_With_That_Name">J· existe um notebook com esse nome. Por favor, tente novamente.</Text>
-  <Text Key="Invalid_File">Este n„o È um arquivo v·lido.</Text>
-  <Text Key="Link_Does_Not_Work_Anymore">Este link n„o funciona mais.</Text>
-  <Text Key="License">LicenÁa</Text>
+  <Text Key="Already_Notebook_With_That_Name">J√° existe um notebook com esse nome. Por favor, tente novamente.</Text>
+  <Text Key="Invalid_File">Este n√£o √© um arquivo v√°lido.</Text>
+  <Text Key="Link_Does_Not_Work_Anymore">Este link n√£o funciona mais.</Text>
+  <Text Key="License">Licen√ßa</Text>
   <Text Key="Backup_And_Restore">Backup e restaurao</Text>
 </Language>
