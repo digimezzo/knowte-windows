@@ -1,3 +1,5 @@
+![Knowte](Knowte.full.png)
+
 # Knowte
 
 Knowte is a note taking application that allows you to quickly and easily organize and find your notes. More information and downloads are available at [http://www.digimezzo.com](http://www.digimezzo.com)
