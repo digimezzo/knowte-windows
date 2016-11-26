@@ -18,6 +18,7 @@
                         Closed="MetroWindow_Closed"
                         OverlayBackground="{DynamicResource RG_DimBrush}"
                         IsOverlayVisible="{Binding Path=IsDimmed}"
+                        Accent="{DynamicResource RG_AccentBrush}"
                         xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
                         prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 

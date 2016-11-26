@@ -87,4 +87,6 @@
   <Text Key="Link_Does_Not_Work_Anymore">Este link não funciona mais.</Text>
   <Text Key="License">Licença</Text>
   <Text Key="Backup_And_Restore">Backup e restaurao</Text>
+  <Text Key="Border">Border</Text>
+  <Text Key="Show_Window_Border">Show a border of 1 px around the window</Text>
 </Language>

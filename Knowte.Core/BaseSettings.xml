@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings>
+  <Namespace Name="Settings">
+    <Setting Name="Version">
+      <Value>1</Value>
+    </Setting>
+  </Namespace>
   <Namespace Name="Application">
     <Setting Name="IsPortable">
       <Value>False</Value>
@@ -26,6 +31,9 @@
     </Setting>
   </Namespace>
   <Namespace Name="Appearance">
+    <Setting Name="ShowWindowBorder">
+      <Value>False</Value>
+    </Setting>
     <Setting Name="SortByModificationDate">
       <Value>False</Value>
     </Setting>

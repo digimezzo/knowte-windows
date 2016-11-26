@@ -87,4 +87,6 @@
   <Text Key="Link_Does_Not_Work_Anymore">Ce lien ne fonctionne plus.</Text>
   <Text Key="License">License</Text>
   <Text Key="Backup_And_Restore">Sauvegarde et restauration</Text>
+  <Text Key="Border">Bordure</Text>
+  <Text Key="Show_Window_Border">Afficher une bordure autour de la fenêtre (1 px)</Text>
 </Language>

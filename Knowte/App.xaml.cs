@@ -3,6 +3,7 @@ using Knowte.Core.Base;
 using Knowte.Core.Database;
 using Knowte.Core.IO;
 using Knowte.Core.Logging;
+using Knowte.Core.Settings;
 using System;
 using System.Reflection;
 using System.ServiceModel;
@@ -26,6 +27,22 @@ namespace Knowte
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            // Check if the settings need to be upgraded
+            try
+            {
+                // Checks if an upgrade of the settings is needed
+                if (XmlSettingsClient.Instance.IsSettingsUpgradeNeeded())
+                {
+                    LogClient.Instance.Logger.Info("Upgrading settings");
+                    XmlSettingsClient.Instance.UpgradeSettings();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogClient.Instance.Logger.Error("There was a problem initializing the settings. Exception: {0}", ex.Message);
+                this.Shutdown();
+            }
 
             // Create a jumplist and assign it to the current application
             JumpList jl = new JumpList();

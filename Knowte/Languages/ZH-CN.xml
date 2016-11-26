@@ -86,4 +86,6 @@
   <Text Key="Invalid_File">无效文件.</Text>
   <Text Key="Link_Does_Not_Work_Anymore">链接无效.</Text>
   <Text Key="License">许可</Text>
+  <Text Key="Border">边框</Text>
+  <Text Key="Show_Window_Border">在窗口周围显示 1px 的边框</Text>
 </Language>

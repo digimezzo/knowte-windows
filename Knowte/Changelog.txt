@@ -1,13 +1,14 @@
-2016-11-22: Knowte 1.1 Build 467 (Preview)
+2016-11-26: Knowte 1.1 Build 468 (Preview)
 ------------------------------------------
 
-- Knowte is now Open Source Software! The source code is available here: https://github.com/digimezzo/Knowte
-- Dark parts of the windows are now transparent and blurred on Windows 10
-- Fixed a possible crash when exporting a note
-- Fixed an issue where notes could appear on a disconnected monitor
-- Added Simplified Chinese translation
-- Added Russian translation
-- Added Portuguese translation
+- [Added] Option to show a 1px border around all windows
+- [Added] Simplified Chinese translation
+- [Added] Russian translation
+- [Added] Portuguese translation
+- [Changed] Knowte is now Open Source Software! The source code is available here: https://github.com/digimezzo/Knowte
+- [Changed] Dark parts of the windows are now transparent and blurred on Windows 10
+- [Fixed] Possible crash when exporting a note
+- [Fixed] Issue where notes could appear on a disconnected monitor
 
 
 2016-07-01: Knowte 1.0 Build 460 (Release)
