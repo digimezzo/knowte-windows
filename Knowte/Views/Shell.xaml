@@ -14,6 +14,7 @@
     KeyDown="Shell_KeyDown" 
     Loaded="Shell_Loaded" 
     MouseDown="Shell_MouseDown"
+    SourceInitialized="Shell_SourceInitialized"
     FocusVisualStyle="{DynamicResource Null}" 
     OverlayBackground="{DynamicResource RG_DimBrush}"
     IsOverlayVisible="{Binding Path=IsDimmed}"
