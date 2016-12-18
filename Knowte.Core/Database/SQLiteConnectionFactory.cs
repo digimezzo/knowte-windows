@@ -1,8 +1,6 @@
 ﻿using Knowte.Core.Base;
-using Knowte.Core.IO;
-using SQLite.Net;
-using SQLite.Net.Platform.Win32;
 using Knowte.Core.Settings;
+using SQLite;
 
 namespace Knowte.Core.Database
 {
@@ -29,7 +27,7 @@ namespace Knowte.Core.Database
         #region Public
         public SQLiteConnection GetConnection()
         {
-            return new SQLiteConnection(new SQLitePlatformWin32(), this.databaseFile);
+            return new SQLiteConnection(this.databaseFile);
         }
         #endregion
     }

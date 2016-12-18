@@ -1,4 +1,4 @@
-﻿using SQLite.Net.Attributes;
+﻿using SQLite;
 using System;
 
 namespace Knowte.Core.Database.Entities
