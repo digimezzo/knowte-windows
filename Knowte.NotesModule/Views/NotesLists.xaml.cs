@@ -1,5 +1,5 @@
 ﻿using Knowte.Common.Prism;
-using Knowte.Core.Utils;
+using Knowte.Common.Utils;
 using Prism.Events;
 using System.Windows;
 using System.Windows.Controls;

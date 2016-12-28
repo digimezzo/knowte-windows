@@ -1,5 +1,5 @@
-﻿using Knowte.Common.Prism;
-using Knowte.Core.Settings;
+﻿using Digimezzo.Utilities.Settings;
+using Knowte.Common.Prism;
 using Prism.Events;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
@@ -36,7 +36,7 @@ namespace Knowte.SettingsModule.ViewModels
             set
             {
                 SetProperty<int>(ref this.selectedNumberOfNotesInJumpList, value);
-                XmlSettingsClient.Instance.Set<int>("Advanced", "NumberOfNotesInJumpList", value);
+                SettingsClient.Set<int>("Advanced", "NumberOfNotesInJumpList", value);
                 this.eventAggregator.GetEvent<RefreshJumpListEvent>().Publish("");
             }
         }
@@ -62,7 +62,7 @@ namespace Knowte.SettingsModule.ViewModels
                 this.NumberOfNotesInJumpList.Add(i);
             }
 
-            this.SelectedNumberOfNotesInJumpList = XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList");
+            this.SelectedNumberOfNotesInJumpList = SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList");
         }
         #endregion
     }

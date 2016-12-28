@@ -53,6 +53,9 @@
     <AssemblyOriginatorKeyFile>..\Knowte\Knowte.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Digimezzo.Utilities">
+      <HintPath>..\Knowte\Libaries\Digimezzo.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="Digimezzo.WPFControls">
       <HintPath>..\Knowte\Libaries\Digimezzo.WPFControls.dll</HintPath>
     </Reference>
@@ -167,10 +170,6 @@
     <ProjectReference Include="..\Knowte.Common\Knowte.Common.csproj">
       <Project>{5bf8997e-c3a5-49c0-90f4-17dc4f88f92e}</Project>
       <Name>Knowte.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Knowte.Core\Knowte.Core.csproj">
-      <Project>{c4b73f76-532d-4156-b035-0abfe216ebf7}</Project>
-      <Name>Knowte.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

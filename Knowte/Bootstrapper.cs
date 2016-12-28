@@ -1,4 +1,8 @@
-﻿using Knowte.Common.Presentation.Views;
+﻿using Digimezzo.Utilities.Log;
+using Knowte.Common.Base;
+using Knowte.Common.Extensions;
+using Knowte.Common.IO;
+using Knowte.Common.Presentation.Views;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.Backup;
 using Knowte.Common.Services.Command;
@@ -7,9 +11,6 @@ using Knowte.Common.Services.I18n;
 using Knowte.Common.Services.Notes;
 using Knowte.Common.Services.Search;
 using Knowte.Common.Services.WindowsIntegration;
-using Knowte.Core.Base;
-using Knowte.Core.Extensions;
-using Knowte.Core.IO;
 using Knowte.ViewModels;
 using Knowte.Views;
 using Microsoft.Practices.Unity;
@@ -94,11 +95,11 @@ namespace Knowte
             try
             {
                 commandServicehost.Open();
-                Knowte.Core.Logging.LogClient.Instance.Logger.Info("CommandService was started successfully");
+                LogClient.Info("CommandService was started successfully");
             }
             catch (Exception ex)
             {
-                Knowte.Core.Logging.LogClient.Instance.Logger.Error("Could not start CommandService. Exception: {0}", ex.Message);
+                LogClient.Error("Could not start CommandService. Exception: {0}", ex.Message);
             }
         }
     }

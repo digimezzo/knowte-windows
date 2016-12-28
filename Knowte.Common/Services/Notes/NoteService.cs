@@ -1,11 +1,11 @@
-﻿using Ionic.Zip;
-using Knowte.Core.Base;
-using Knowte.Core.Database;
-using Knowte.Core.Database.Entities;
-using Knowte.Core.Extensions;
-using Knowte.Core.IO;
-using Knowte.Core.Settings;
-using Knowte.Core.Utils;
+﻿using Digimezzo.Utilities.Settings;
+using Ionic.Zip;
+using Knowte.Common.Base;
+using Knowte.Common.Database;
+using Knowte.Common.Database.Entities;
+using Knowte.Common.Extensions;
+using Knowte.Common.IO;
+using Knowte.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +21,7 @@ namespace Knowte.Common.Services.Notes
     public class NoteService : INoteService
     {
         #region Variables
-        private string applicationFolder = XmlSettingsClient.Instance.ApplicationFolder;
+        private string applicationFolder = SettingsClient.ApplicationFolder();
         private SQLiteConnectionFactory factory;
         #endregion
 
@@ -41,7 +41,7 @@ namespace Knowte.Common.Services.Notes
 
             using (var conn = this.factory.GetConnection())
             {
-                Core.Database.Entities.Configuration config = conn.Table<Core.Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").FirstOrDefault();
+                Database.Entities.Configuration config = conn.Table<Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").FirstOrDefault();
 
                 if (config != null)
                 {
@@ -58,7 +58,7 @@ namespace Knowte.Common.Services.Notes
 
             using (var conn = this.factory.GetConnection())
             {
-                Core.Database.Entities.Configuration config = conn.Table<Core.Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").FirstOrDefault();
+                Database.Entities.Configuration config = conn.Table<Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").FirstOrDefault();
 
                 if (config != null)
                 {

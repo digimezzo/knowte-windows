@@ -40,9 +40,6 @@
             <Component Id="DotNetZip.txt" DiskId="1" Guid="b8d7a5a2-4092-43c5-a712-72b6a26f28f3">
               <File Id="DotNetZip.txt" Name="DotNetZip.txt" Source="Licenses\DotNetZip.txt" />
             </Component>
-            <Component Id="NLog.txt" DiskId="1" Guid="d87fd71f-fa31-45ba-ad16-bb4bf029eca4">
-              <File Id="NLog.txt" Name="NLog.txt" Source="Licenses\NLog.txt" />
-            </Component>
             <Component Id="Prism.txt" DiskId="1" Guid="d87fd70f-fa82-48ba-ad46-bb4bf029eca4">
               <File Id="Prism.txt" Name="Prism.txt" Source="Licenses\Prism.txt" />
             </Component>
@@ -122,9 +119,6 @@
           <Component Id="Knowte.Icons.dll" DiskId="1" Guid="AEC010A6-285D-4086-BAA0-E171847B5B91">
             <File Id="Knowte.Icons.dll" Name="Knowte.Icons.dll" Source="Knowte.Icons.dll" />
           </Component>
-          <Component Id="Knowte.Core.dll" DiskId="1" Guid="AEC010A6-285D-4086-BAA0-E171847B5B93">
-            <File Id="Knowte.Core.dll" Name="Knowte.Core.dll" Source="Knowte.Core.dll" />
-          </Component>
           <Component Id="Knowte.InformationModule.dll" DiskId="1" Guid="AEC010A6-285D-4086-BAA0-E171847B5B94">
             <File Id="Knowte.InformationModule.dll" Name="Knowte.InformationModule.dll" Source="Knowte.InformationModule.dll" />
           </Component>
@@ -151,8 +145,8 @@
               <File Id="SQLite.Interop.x86.dll" Name="SQLite.Interop.dll" Source="x86\SQLite.Interop.dll" />
             </Component>
           </Directory>
-          <Component Id="NLog.dll" DiskId="1" Guid="bf864198-1193-4283-945a-e0b1aed971ee">
-            <File Id="NLog.dll" Name="NLog.dll" Source="NLog.dll" />
+          <Component Id="Digimezzo.Utilities.dll" DiskId="1" Guid="9d34167e-5e7d-486b-9772-3234513ade07">
+            <File Id="Digimezzo.Utilities.dll" Name="Digimezzo.Utilities.dll" Source="Digimezzo.Utilities.dll" />
           </Component>
           <Component Id="Digimezzo.WPFControls.dll" DiskId="1" Guid="6E1282E8-EC1B-4D18-BA9B-65ED1748C0D7">
             <File Id="Digimezzo.WPFControls.dll" Name="Digimezzo.WPFControls.dll" Source="Digimezzo.WPFControls.dll" />
@@ -185,7 +179,6 @@
       <ComponentRef Id="ZH_CN.xml" />
       <!-- 3rd party licenses -->
       <ComponentRef Id="DotNetZip.txt" />
-      <ComponentRef Id="NLog.txt" />
       <ComponentRef Id="Prism.txt" />
       <ComponentRef Id="Unity.WCF.txt" />
       <ComponentRef Id="WiX.txt" />
@@ -206,14 +199,13 @@
       <ComponentRef Id="Prism.Wpf.dll" />
       <!-- Application libraries -->
       <ComponentRef Id="Knowte.Icons.dll" />
-      <ComponentRef Id="Knowte.Core.dll" />
       <ComponentRef Id="Knowte.InformationModule.dll" />
       <ComponentRef Id="Knowte.MainModule.dll" />
       <ComponentRef Id="Knowte.NotesModule.dll" />
       <ComponentRef Id="Knowte.Common.dll" />
       <ComponentRef Id="Knowte.SettingsModule.dll" />
       <!-- 3rd party libraries -->
-      <ComponentRef Id="NLog.dll" />
+      <ComponentRef Id="Digimezzo.Utilities.dll" />
       <ComponentRef Id="Digimezzo.WPFControls.dll" />
       <ComponentRef Id="System.Windows.Interactivity.dll" />
       <ComponentRef Id="DotNetZip.dll" />

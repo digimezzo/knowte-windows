@@ -154,10 +154,6 @@
       <Project>{5bf8997e-c3a5-49c0-90f4-17dc4f88f92e}</Project>
       <Name>Knowte.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Knowte.Core\Knowte.Core.csproj">
-      <Project>{c4b73f76-532d-4156-b035-0abfe216ebf7}</Project>
-      <Name>Knowte.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

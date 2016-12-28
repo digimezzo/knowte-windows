@@ -3,13 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Knowte.InformationModule.Views"
              mc:Ignorable="d" 
              xmlns:prism="http://www.codeplex.com/prism"
-             xmlns:myControls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
+             xmlns:controls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
              xmlns:commonprism="clr-namespace:Knowte.Common.Prism;assembly=Knowte.Common" 
              xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
              prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
-    <myControls:TransitioningContentControl Foreground="{DynamicResource RG_ForegroundBrush}" FadeIn="True" FadeInTimeout="0.5" SlideIn="True" SlideInTimeout="0.25" SlideInFrom="{Binding SlideInFrom}" SlideInTo="20" Margin="0,35,0,0" Name="InformationRegion" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.InformationRegion}"/>
+    <controls:TransitioningContentControl Foreground="{DynamicResource RG_ForegroundBrush}" FadeIn="True" FadeInTimeout="0.5" SlideIn="True" SlideInTimeout="0.25" SlideInFrom="{Binding SlideInFrom}" SlideInTo="20" Margin="0,35,0,0" Name="InformationRegion" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.InformationRegion}"/>
 </UserControl>

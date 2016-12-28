@@ -1,6 +1,6 @@
-﻿using Knowte.Core.Base;
-using Knowte.Core.IO;
-using Knowte.Core.Settings;
+﻿using Digimezzo.Utilities.Settings;
+using Knowte.Common.Base;
+using Knowte.Common.IO;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace Knowte.Common.Services.Appearance
     public class AppearanceService : IAppearanceService
     {
         #region Variables
-        private string colorSchemesSubDirectory = Path.Combine(XmlSettingsClient.Instance.ApplicationFolder, ApplicationPaths.ColorSchemesSubDirectory);
+        private string colorSchemesSubDirectory = Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.ColorSchemesSubDirectory);
         private const int WM_DWMCOLORIZATIONCOLORCHANGED = 0x320;
         private bool followWindowsColor = false;
         private List<ColorScheme> colorSchemes = new List<ColorScheme>();

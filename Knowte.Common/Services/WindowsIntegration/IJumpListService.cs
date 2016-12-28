@@ -1,5 +1,5 @@
-﻿using Knowte.Core.Base;
-using Knowte.Core.Database.Entities;
+﻿using Knowte.Common.Base;
+using Knowte.Common.Database.Entities;
 using System.Collections.Generic;
 
 namespace Knowte.Common.Services.WindowsIntegration

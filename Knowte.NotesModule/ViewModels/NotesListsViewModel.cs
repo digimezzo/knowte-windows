@@ -1,14 +1,14 @@
-﻿using Knowte.Common.Prism;
+﻿using Digimezzo.Utilities.Settings;
+using Knowte.Common.Base;
+using Knowte.Common.Database.Entities;
+using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.I18n;
 using Knowte.Common.Services.Notes;
 using Knowte.Common.Services.Search;
 using Knowte.Common.Services.WindowsIntegration;
-using Knowte.Core.Base;
-using Knowte.Core.Database.Entities;
-using Knowte.Core.Settings;
-using Knowte.Core.Utils;
+using Knowte.Common.Utils;
 using Knowte.NotesModule.Views;
 using Microsoft.Win32;
 using Prism.Commands;
@@ -162,7 +162,7 @@ namespace Knowte.NotesModule.ViewModels
                 this.TriggerRefreshNotesAnimation = true;
             });
 
-            this.eventAggregator.GetEvent<RefreshJumpListEvent>().Subscribe((x) => this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes()));
+            this.eventAggregator.GetEvent<RefreshJumpListEvent>().Subscribe((x) => this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes()));
             this.eventAggregator.GetEvent<NewNoteEvent>().Subscribe(createUnfiled => this.NewNoteCommand.Execute(createUnfiled));
             this.eventAggregator.GetEvent<DeleteNoteEvent>().Subscribe((x) => this.DeleteNote.Execute(null));
             this.eventAggregator.GetEvent<DeleteNotebookEvent>().Subscribe((x) => this.DeleteNotebook.Execute(null));
@@ -305,7 +305,7 @@ namespace Knowte.NotesModule.ViewModels
                 OpenFileDialog dlg = new OpenFileDialog();
                 dlg.Filter = ProductInformation.ApplicationDisplayName + " file (*." + Defaults.ExportFileExtension + ")|*." + Defaults.ExportFileExtension + "|All files (*.*)|*.*";
 
-                string lastExportDirectory = XmlSettingsClient.Instance.Get<string>("General", "LastExportDirectory");
+                string lastExportDirectory = SettingsClient.Get<string>("General", "LastExportDirectory");
 
                 if (!string.IsNullOrEmpty(lastExportDirectory))
                 {
@@ -547,7 +547,7 @@ namespace Knowte.NotesModule.ViewModels
                 Id = SelectedNotebook.Id,
                 Title = SelectedNotebook.Title,
                 CreationDate = SelectedNotebook.CreationDate.Ticks
-            }, theText, ref this.total, XmlSettingsClient.Instance.Get<bool>("Appearance", "SortByModificationDate"), this.NoteFilter))
+            }, theText, ref this.total, SettingsClient.Get<bool>("Appearance", "SortByModificationDate"), this.NoteFilter))
             {
                 this.Notes.Add(new NoteViewModel
                 {
@@ -591,7 +591,7 @@ namespace Knowte.NotesModule.ViewModels
                 if (dialogResult)
                 {
                     this.noteService.DeleteNote(theNote.Id);
-                    this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+                    this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
 
                     try
                     {
@@ -641,7 +641,7 @@ namespace Knowte.NotesModule.ViewModels
                     this.noteService.UpdateNoteFlag(theNote.Id, true);
                 }
 
-                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
 
                 //helper.CountNotes(Me.AllNotesCounter, Me.TodayNotesCounter, Me.YesterdayNotesCounter, Me.ThisWeekNotesCounter, Me.FlaggedCounter)
             }
@@ -783,7 +783,7 @@ namespace Knowte.NotesModule.ViewModels
                 {
                 }
 
-                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
             }
         }
 

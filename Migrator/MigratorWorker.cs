@@ -1,8 +1,8 @@
-﻿using Knowte.Core.Base;
-using Knowte.Core.Database;
-using Knowte.Core.Database.Entities;
-using Knowte.Core.IO;
-using Knowte.Core.Settings;
+﻿using Digimezzo.Utilities.Settings;
+using Knowte.Common.Base;
+using Knowte.Common.Database;
+using Knowte.Common.Database.Entities;
+using Knowte.Common.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -107,7 +107,7 @@ namespace Migrator
                                 using (var conn = this.factory.GetConnection())
                                 {
                                     // NewNoteCount
-                                    Knowte.Core.Database.Entities.Configuration newNoteCountConfiguration = conn.Table<Knowte.Core.Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").Select((c) => c).FirstOrDefault();
+                                    Knowte.Common.Database.Entities.Configuration newNoteCountConfiguration = conn.Table<Knowte.Common.Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").Select((c) => c).FirstOrDefault();
                                     newNoteCountConfiguration.Value = newNoteCount.ToString();
                                     conn.Update(newNoteCountConfiguration);
 
@@ -130,7 +130,7 @@ namespace Migrator
                                 if (System.IO.Directory.Exists(noteStudioNotesSubFolder))
                                 {
                                     // If the Notes subfolder doesn't exist, create it.
-                                    string notesSubfolder = System.IO.Path.Combine(XmlSettingsClient.Instance.ApplicationFolder, "Notes");
+                                    string notesSubfolder = System.IO.Path.Combine(SettingsClient.ApplicationFolder(), "Notes");
 
                                     if (!System.IO.Directory.Exists(notesSubfolder))
                                     {

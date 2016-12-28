@@ -1,0 +1,8 @@
+﻿namespace Knowte.Common.Base
+{
+    public static class Constants
+    {
+         // Transparency
+        public static readonly double OpacityWhenBlurred = 0.85;
+    }
+}

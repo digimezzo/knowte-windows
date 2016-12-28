@@ -1,4 +1,4 @@
-﻿using Knowte.Core.Database.Entities;
+﻿using Knowte.Common.Database.Entities;
 using Prism.Mvvm;
 using System;
 

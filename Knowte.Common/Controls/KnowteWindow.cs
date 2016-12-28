@@ -1,5 +1,5 @@
-﻿using Digimezzo.WPFControls;
-using Knowte.Core.Settings;
+﻿using Digimezzo.Utilities.Settings;
+using Digimezzo.WPFControls;
 using System;
 using System.Windows;
 using System.Windows.Media;
@@ -45,7 +45,7 @@ namespace Knowte.Common.Controls
         {
             base.OnApplyTemplate();
 
-            this.SetWindowBorder(XmlSettingsClient.Instance.Get<bool>("Appearance", "ShowWindowBorder"));
+            this.SetWindowBorder(SettingsClient.Get<bool>("Appearance", "ShowWindowBorder"));
             this.InitializeWindow();
         }
 

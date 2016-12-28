@@ -1,6 +1,6 @@
-﻿using Knowte.Core.Base;
-using Knowte.Core.Database.Entities;
-using Knowte.Core.Utils;
+﻿using Knowte.Common.Base;
+using Knowte.Common.Database.Entities;
+using Knowte.Common.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;

@@ -53,6 +53,9 @@
     <AssemblyOriginatorKeyFile>..\Knowte\Knowte.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Digimezzo.Utilities">
+      <HintPath>..\Knowte\Libaries\Digimezzo.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="Digimezzo.WPFControls">
       <HintPath>..\Knowte\Libaries\Digimezzo.WPFControls.dll</HintPath>
     </Reference>
@@ -83,7 +86,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -150,10 +152,6 @@
     <ProjectReference Include="..\Knowte.Common\Knowte.Common.csproj">
       <Project>{5BF8997E-C3A5-49C0-90F4-17DC4F88F92E}</Project>
       <Name>Knowte.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Knowte.Core\Knowte.Core.csproj">
-      <Project>{C4B73F76-532D-4156-B035-0ABFE216EBF7}</Project>
-      <Name>Knowte.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

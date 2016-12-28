@@ -1,14 +1,14 @@
-﻿using Knowte.Common.Controls;
+﻿using Digimezzo.Utilities.Settings;
+using Digimezzo.Utilities.Log;
+using Knowte.Common.Base;
+using Knowte.Common.Controls;
+using Knowte.Common.Extensions;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.I18n;
 using Knowte.Common.Services.Notes;
 using Knowte.Common.Services.WindowsIntegration;
-using Knowte.Core.Base;
-using Knowte.Core.Extensions;
-using Knowte.Core.Logging;
-using Knowte.Core.Settings;
-using Knowte.Core.Utils;
+using Knowte.Common.Utils;
 using Microsoft.Practices.Unity;
 using Prism.Events;
 using Prism.Regions;
@@ -58,19 +58,19 @@ namespace Knowte.Views
             this.eventAggregator.GetEvent<SettingShowWindowBorderChanged>().Subscribe(showWindowBorder => this.SetWindowBorder(showWindowBorder));
 
             // Theming
-            this.appearanceService.ApplyTheme(XmlSettingsClient.Instance.Get<string>("Appearance", "Theme"));
-            this.appearanceService.ApplyColorScheme(XmlSettingsClient.Instance.Get<bool>("Appearance", "FollowWindowsColor"), XmlSettingsClient.Instance.Get<string>("Appearance", "ColorScheme"));
+            this.appearanceService.ApplyTheme(SettingsClient.Get<string>("Appearance", "Theme"));
+            this.appearanceService.ApplyColorScheme(SettingsClient.Get<bool>("Appearance", "FollowWindowsColor"), SettingsClient.Get<string>("Appearance", "ColorScheme"));
 
             // I18n
-            this.i18nService.ApplyLanguageAsync(XmlSettingsClient.Instance.Get<string>("Appearance", "Language"));
+            this.i18nService.ApplyLanguageAsync(SettingsClient.Get<string>("Appearance", "Language"));
 
             // Events
             this.eventAggregator.GetEvent<ShowMainWindowEvent>().Subscribe((x) => this.ActivateNow());
 
-            this.SetGeometry(XmlSettingsClient.Instance.Get<int>("General", "Top"), XmlSettingsClient.Instance.Get<int>("General", "Left"), XmlSettingsClient.Instance.Get<int>("General", "Width") > 50 ? XmlSettingsClient.Instance.Get<int>("General", "Width") : Defaults.DefaultMainWindowWidth, XmlSettingsClient.Instance.Get<int>("General", "Height") > 50 ? XmlSettingsClient.Instance.Get<int>("General", "Height") : Defaults.DefaultMainWindowHeight, Defaults.DefaultMainWindowLeft, Defaults.DefaultMainWindowTop);
+            this.SetGeometry(SettingsClient.Get<int>("General", "Top"), SettingsClient.Get<int>("General", "Left"), SettingsClient.Get<int>("General", "Width") > 50 ? SettingsClient.Get<int>("General", "Width") : Defaults.DefaultMainWindowWidth, SettingsClient.Get<int>("General", "Height") > 50 ? SettingsClient.Get<int>("General", "Height") : Defaults.DefaultMainWindowHeight, Defaults.DefaultMainWindowLeft, Defaults.DefaultMainWindowTop);
 
             // Main window state
-            this.WindowState = XmlSettingsClient.Instance.Get<bool>("General", "IsMaximized") ? WindowState.Maximized : WindowState.Normal;
+            this.WindowState = SettingsClient.Get<bool>("General", "IsMaximized") ? WindowState.Maximized : WindowState.Normal;
         }
         #endregion
 
@@ -119,7 +119,7 @@ namespace Knowte.Views
 
         private void Shell_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            LogClient.Instance.Logger.Info("### STOPPING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProductInformation.AssemblyVersion.ToString());
+            LogClient.Info("### STOPPING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProductInformation.AssemblyVersion.ToString());
 
             // Prevent saving the size when the window is minimized.
             // When minimized, the actual size is not detected correctly,
@@ -129,30 +129,30 @@ namespace Knowte.Views
             {
                 if (this.WindowState == WindowState.Maximized)
                 {
-                    XmlSettingsClient.Instance.Set<bool>("General", "IsMaximized", true);
+                    SettingsClient.Set<bool>("General", "IsMaximized", true);
                 }
                 else
                 {
-                    XmlSettingsClient.Instance.Set<bool>("General", "IsMaximized", false);
+                    SettingsClient.Set<bool>("General", "IsMaximized", false);
 
                     // TODO: make tis better. Workaround for bug "MainWindow opens with size 0 px"
                     if (this.ActualWidth > 50 & this.ActualHeight > 50)
                     {
-                        XmlSettingsClient.Instance.Set<int>("General", "Width", (int)this.ActualWidth);
-                        XmlSettingsClient.Instance.Set<int>("General", "Height", (int)this.ActualHeight);
+                        SettingsClient.Set<int>("General", "Width", (int)this.ActualWidth);
+                        SettingsClient.Set<int>("General", "Height", (int)this.ActualHeight);
                     }
                     else
                     {
-                        XmlSettingsClient.Instance.Set<int>("General", "Width", Defaults.DefaultMainWindowWidth);
-                        XmlSettingsClient.Instance.Set<int>("General", "Height", Defaults.DefaultMainWindowHeight);
+                        SettingsClient.Set<int>("General", "Width", Defaults.DefaultMainWindowWidth);
+                        SettingsClient.Set<int>("General", "Height", Defaults.DefaultMainWindowHeight);
                     }
 
-                    XmlSettingsClient.Instance.Set<int>("General", "Top", (int)this.Top);
-                    XmlSettingsClient.Instance.Set<int>("General", "Left", (int)this.Left);
+                    SettingsClient.Set<int>("General", "Top", (int)this.Top);
+                    SettingsClient.Set<int>("General", "Left", (int)this.Left);
                 }
 
                 // Save the settings immediately
-                XmlSettingsClient.Instance.Write();
+                SettingsClient.Write();
             }
 
             foreach (Window win in Application.Current.Windows)
@@ -178,7 +178,7 @@ namespace Knowte.Views
             }
 
             this.ProcessCommandLineArgs();
-            this.jumplistService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+            this.jumplistService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
 
         }
 

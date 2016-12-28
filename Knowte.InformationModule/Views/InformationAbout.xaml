@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Knowte.InformationModule.Views"
              mc:Ignorable="d" 
-             xmlns:myControls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
-             xmlns:base="clr-namespace:Knowte.Core.Base;assembly=Knowte.Core"
+             xmlns:base="clr-namespace:Knowte.Common.Base;assembly=Knowte.Common"
              xmlns:commonprism="clr-namespace:Knowte.Common.Prism;assembly=Knowte.Common"
              xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
              prismMvvm:ViewModelLocator.AutoWireViewModel="True">

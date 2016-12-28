@@ -61,6 +61,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Digimezzo.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libaries\Digimezzo.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="Digimezzo.WPFControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libaries\Digimezzo.WPFControls.dll</HintPath>
@@ -79,10 +83,6 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.3.3\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Prism, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
@@ -105,7 +105,6 @@
     </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -201,14 +200,12 @@
     <Content Include="Languages\ZH-CN.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Libaries\Digimezzo.Utilities.dll" />
     <Content Include="Libaries\Digimezzo.WPFControls.dll" />
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Licenses\DotNetZip.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\NLog.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Licenses\Prism.txt">
@@ -226,10 +223,6 @@
     <ProjectReference Include="..\Knowte.Common\Knowte.Common.csproj">
       <Project>{5BF8997E-C3A5-49C0-90F4-17DC4F88F92E}</Project>
       <Name>Knowte.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Knowte.Core\Knowte.Core.csproj">
-      <Project>{C4B73F76-532D-4156-B035-0ABFE216EBF7}</Project>
-      <Name>Knowte.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Knowte.InformationModule\Knowte.InformationModule.csproj">
       <Project>{9e78e7eb-5db3-45f6-b4fd-e9533b3ceb7f}</Project>

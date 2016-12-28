@@ -1,15 +1,15 @@
-﻿using Knowte.Common.Controls;
+﻿using Digimezzo.Utilities.Log;
+using Digimezzo.Utilities.Settings;
+using Knowte.Common.Base;
+using Knowte.Common.Controls;
+using Knowte.Common.Database.Entities;
+using Knowte.Common.Extensions;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.Notes;
 using Knowte.Common.Services.WindowsIntegration;
-using Knowte.Core.Base;
-using Knowte.Core.Database.Entities;
-using Knowte.Core.Extensions;
-using Knowte.Core.Logging;
-using Knowte.Core.Settings;
-using Knowte.Core.Utils;
+using Knowte.Common.Utils;
 using Microsoft.Win32;
 using Prism.Events;
 using System;
@@ -344,12 +344,12 @@ namespace Knowte.NotesModule.Views
             {
                 block.Foreground = Brushes.Black;
                 block.FontFamily = normalFont;
-                block.FontSize = Defaults.DefaultNoteFontSize + XmlSettingsClient.Instance.Get<int>("Notes", "FontSizeCorrection");
+                block.FontSize = Defaults.DefaultNoteFontSize + SettingsClient.Get<int>("Notes", "FontSizeCorrection");
             }
 
             XAMLRichTextBox.Document.Foreground = Brushes.Black;
             XAMLRichTextBox.Document.FontFamily = normalFont;
-            XAMLRichTextBox.Document.FontSize = Defaults.DefaultNoteFontSize + XmlSettingsClient.Instance.Get<int>("Notes", "FontSizeCorrection");
+            XAMLRichTextBox.Document.FontSize = Defaults.DefaultNoteFontSize + SettingsClient.Get<int>("Notes", "FontSizeCorrection");
 
             XAMLRichTextBox.IsUndoEnabled = false;
             XAMLRichTextBox.IsUndoEnabled = true;
@@ -357,7 +357,7 @@ namespace Knowte.NotesModule.Views
             this.VisualizeUndoState();
 
             this.noteService.UpdateOpenDate(this.Id);
-            this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+            this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
         }
 
         private void InitWindowNew()
@@ -370,7 +370,7 @@ namespace Knowte.NotesModule.Views
 
             this.SetGeometry(Defaults.DefaultNoteTop, Defaults.DefaultNoteLeft, Defaults.DefaultNoteWidth, Defaults.DefaultNoteHeight, Defaults.DefaultNoteTop, Defaults.DefaultNoteLeft);
 
-            XAMLRichTextBox.Document.FontSize = Defaults.DefaultNoteFontSize + XmlSettingsClient.Instance.Get<int>("Notes", "FontSizeCorrection");
+            XAMLRichTextBox.Document.FontSize = Defaults.DefaultNoteFontSize + SettingsClient.Get<int>("Notes", "FontSizeCorrection");
 
             // Immediately save the note
 
@@ -383,7 +383,7 @@ namespace Knowte.NotesModule.Views
             {
                 block.Foreground = Brushes.Black;
                 block.FontFamily = normalFont;
-                block.FontSize = Defaults.DefaultNoteFontSize + XmlSettingsClient.Instance.Get<int>("Notes", "FontSizeCorrection");
+                block.FontSize = Defaults.DefaultNoteFontSize + SettingsClient.Get<int>("Notes", "FontSizeCorrection");
             }
 
             XAMLRichTextBox.IsUndoEnabled = false;
@@ -391,7 +391,7 @@ namespace Knowte.NotesModule.Views
 
             this.VisualizeUndoState();
 
-            this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+            this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
         }
 
         private bool SaveNote()
@@ -400,7 +400,7 @@ namespace Knowte.NotesModule.Views
 
             try
             {
-                string applicationFolder = XmlSettingsClient.Instance.ApplicationFolder;
+                string applicationFolder = SettingsClient.ApplicationFolder();
 
                 if (this.InitialTitle.Equals(this.TextBoxTitle.Text) | !this.noteService.NoteExists(this.TextBoxTitle.Text))
                 {
@@ -426,7 +426,7 @@ namespace Knowte.NotesModule.Views
                             {
                             }
 
-                            this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+                            this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
                         }
                         else
                         {
@@ -455,7 +455,7 @@ namespace Knowte.NotesModule.Views
             {
                 this.TextBoxTitle.Text = this.InitialTitle;
                 this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                LogClient.Instance.Logger.Error("An error occured while saving the Note '{0}'. Exception: {1}", this.TextBoxTitle.Text, ex.Message);
+                LogClient.Error("An error occured while saving the Note '{0}'. Exception: {1}", this.TextBoxTitle.Text, ex.Message);
 
                 retVal = false;
             }
@@ -581,7 +581,7 @@ namespace Knowte.NotesModule.Views
 
             if (e.Key == Key.Escape)
             {
-                if (XmlSettingsClient.Instance.Get<bool>("Notes", "PressingEscapeClosesNotes"))
+                if (SettingsClient.Get<bool>("Notes", "PressingEscapeClosesNotes"))
                 {
                     this.Close();
                 }
@@ -658,7 +658,7 @@ namespace Knowte.NotesModule.Views
                 this.isParametersChanged = false;
                 // Prevents saving changes when deleting a note (because that generates an exception)
 
-                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(XmlSettingsClient.Instance.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
 
                 this.Close();
 
@@ -1321,7 +1321,7 @@ namespace Knowte.NotesModule.Views
             dlg.Title = "Export to RTF";
             dlg.Filter = "Rich Text Format|*.rtf";
 
-            string lastExportDirectory = XmlSettingsClient.Instance.Get<string>("General", "LastExportDirectory");
+            string lastExportDirectory = SettingsClient.Get<string>("General", "LastExportDirectory");
 
             if (!string.IsNullOrEmpty(lastExportDirectory))
             {
@@ -1344,7 +1344,7 @@ namespace Knowte.NotesModule.Views
 
                     if (!dlg.FileName.Equals(lastExportDirectory))
                     {
-                        XmlSettingsClient.Instance.Set<string>("General", "LastExportDirectory", dlg.FileName);
+                        SettingsClient.Set<string>("General", "LastExportDirectory", dlg.FileName);
                     }
                 }
             }
@@ -1360,7 +1360,7 @@ namespace Knowte.NotesModule.Views
             dlg.Title = "Export note";
             dlg.Filter = "Note|*." + Defaults.ExportFileExtension;
 
-            string lastExportDirectory = XmlSettingsClient.Instance.Get<string>("General", "LastExportDirectory");
+            string lastExportDirectory = SettingsClient.Get<string>("General", "LastExportDirectory");
 
             if (!string.IsNullOrEmpty(lastExportDirectory))
             {
@@ -1383,7 +1383,7 @@ namespace Knowte.NotesModule.Views
 
                     if (!dlg.FileName.Equals(lastExportDirectory))
                     {
-                        XmlSettingsClient.Instance.Set<string>("General", "LastExportDirectory", dlg.FileName);
+                        SettingsClient.Set<string>("General", "LastExportDirectory", dlg.FileName);
                     }
 
                 }

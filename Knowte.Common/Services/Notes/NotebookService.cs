@@ -1,19 +1,16 @@
-﻿using Knowte.Core.Base;
-using Knowte.Core.Database;
-using Knowte.Core.Database.Entities;
-using Knowte.Core.Settings;
+﻿using Digimezzo.Utilities.Settings;
+using Knowte.Common.Database;
+using Knowte.Common.Database.Entities;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace Knowte.Common.Services.Notes
 {
     public class NotebookService : INotebookService
     {
         #region Variables
-        private string applicationFolder = XmlSettingsClient.Instance.ApplicationFolder;
+        private string applicationFolder = SettingsClient.ApplicationFolder();
         private SQLiteConnectionFactory factory;
         #endregion
 

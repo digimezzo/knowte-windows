@@ -1,14 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:my="clr-namespace:Knowte.Common.Controls"
-    xmlns:myPresentationConverters="clr-namespace:Knowte.Common.Presentation.Converters">
+    xmlns:converters="clr-namespace:Knowte.Common.Presentation.Converters">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/FontStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
-    <myPresentationConverters:BooleanToCollapsedConverter x:Key="BooleanToCollapsedConverter" />
-    <myPresentationConverters:StringToUpperConverter x:Key="StringToUpperConverter" />
+    <converters:BooleanToCollapsedConverter x:Key="BooleanToCollapsedConverter" />
+    <converters:StringToUpperConverter x:Key="StringToUpperConverter" />
     
     <Style x:Key="{x:Type my:SubMenuButton}" TargetType="{x:Type my:SubMenuButton}">
         <Setter Property="Template">

@@ -1,8 +1,8 @@
-﻿using Digimezzo.WPFControls;
-using Knowte.Core.Base;
-using Knowte.Core.Extensions;
-using Knowte.Core.IO;
-using Knowte.Core.Logging;
+﻿using Digimezzo.Utilities.Log;
+using Digimezzo.WPFControls;
+using Knowte.Common.Base;
+using Knowte.Common.Extensions;
+using Knowte.Common.IO;
 using System;
 using System.Windows;
 
@@ -47,11 +47,11 @@ namespace Knowte.Common.Services.Dialog
         {
             try
             {
-                Actions.TryViewInExplorer(LogClient.Instance.LogFile);
+                Actions.TryViewInExplorer(LogClient.Logfile());
             }
             catch (Exception ex)
             {
-                LogClient.Instance.Logger.Error("Could not view the log file {0} in explorer. Exception: {1}", LogClient.Instance.LogFile, ex.Message);
+                LogClient.Error("Could not view the log file {0} in explorer. Exception: {1}", LogClient.Logfile(), ex.Message);
             }
         }
         #endregion

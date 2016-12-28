@@ -1,12 +1,12 @@
-﻿using Knowte.Common.Presentation.Views;
+﻿using Digimezzo.Utilities.Log;
+using Digimezzo.Utilities.Settings;
+using Knowte.Common.IO;
+using Knowte.Common.Presentation.Views;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.I18n;
-using Knowte.Core.IO;
-using Knowte.Core.Logging;
-using Knowte.Core.Settings;
-using Knowte.Core.Utils;
+using Knowte.Common.Utils;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -76,10 +76,10 @@ namespace Knowte.ViewModels
             this.eventAggregator = eventAggregator;
 
             // Theming
-            this.appearanceService.ApplyColorScheme(XmlSettingsClient.Instance.Get<bool>("Appearance", "FollowWindowsColor"), XmlSettingsClient.Instance.Get<string>("Appearance", "ColorScheme"));
+            this.appearanceService.ApplyColorScheme(SettingsClient.Get<bool>("Appearance", "FollowWindowsColor"), SettingsClient.Get<string>("Appearance", "ColorScheme"));
 
             // I18n
-            this.i18nService.ApplyLanguageAsync(XmlSettingsClient.Instance.Get<string>("Appearance", "Language"));
+            this.i18nService.ApplyLanguageAsync(SettingsClient.Get<string>("Appearance", "Language"));
 
             // Commands
             this.OpenPathCommand = new DelegateCommand<string>((string path) =>
@@ -90,7 +90,7 @@ namespace Knowte.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    LogClient.Instance.Logger.Error("Could not open the path {0} in Explorer. Exception: {1}", path, ex.Message);
+                    LogClient.Error("Could not open the path {0} in Explorer. Exception: {1}", path, ex.Message);
                 }
             });
 
@@ -104,7 +104,7 @@ namespace Knowte.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    LogClient.Instance.Logger.Error("Could not open the link {0}. Exception: {1}", link, ex.Message);
+                    LogClient.Error("Could not open the link {0}. Exception: {1}", link, ex.Message);
                 }
             });
 

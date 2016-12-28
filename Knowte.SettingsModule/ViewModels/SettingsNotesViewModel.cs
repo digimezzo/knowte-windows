@@ -1,7 +1,7 @@
-﻿using Knowte.Core.Base;
-using Knowte.Core.Helpers;
-using Knowte.Core.Settings;
-using Knowte.Core.Utils;
+﻿using Digimezzo.Utilities.Settings;
+using Knowte.Common.Base;
+using Knowte.Common.Helpers;
+using Knowte.Common.Utils;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
 
@@ -28,7 +28,7 @@ namespace Knowte.SettingsModule.ViewModels
             get { return this.selectedFontSizeCorrection; }
             set
             {
-                XmlSettingsClient.Instance.Set<int>("Notes", "FontSizeCorrection", value.Correction);
+                SettingsClient.Set<int>("Notes", "FontSizeCorrection", value.Correction);
                 PreviewFontSize = Defaults.DefaultNoteFontSize + value.Correction;
                 SetProperty<FontSizeCorrection>(ref this.selectedFontSizeCorrection, value);
             }
@@ -45,7 +45,7 @@ namespace Knowte.SettingsModule.ViewModels
             get { return this.checkBoxEscapeChecked; }
             set
             {
-                XmlSettingsClient.Instance.Set<bool>("Notes", "PressingEscapeClosesNotes", value);
+                SettingsClient.Set<bool>("Notes", "PressingEscapeClosesNotes", value);
                 SetProperty<bool>(ref this.checkBoxEscapeChecked, value);
             }
         }
@@ -62,7 +62,7 @@ namespace Knowte.SettingsModule.ViewModels
         #region Private
         private void LoadCheckBoxStates()
         {
-            this.CheckBoxEscapeChecked = XmlSettingsClient.Instance.Get<bool>("Notes", "PressingEscapeClosesNotes");
+            this.CheckBoxEscapeChecked = SettingsClient.Get<bool>("Notes", "PressingEscapeClosesNotes");
         }
 
 
@@ -87,7 +87,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             foreach (FontSizeCorrection fzc in this.FontSizeCorrections)
             {
-                if (XmlSettingsClient.Instance.Get<int>("Notes", "FontSizeCorrection") == fzc.Correction)
+                if (SettingsClient.Get<int>("Notes", "FontSizeCorrection") == fzc.Correction)
                 {
                     this.SelectedFontSizeCorrection = fzc;
                 }

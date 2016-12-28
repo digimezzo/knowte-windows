@@ -79,9 +79,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Knowte.Core\Knowte.Core.csproj">
-      <Project>{C4B73F76-532D-4156-B035-0ABFE216EBF7}</Project>
-      <Name>Knowte.Core</Name>
+    <ProjectReference Include="..\Knowte.Common\Knowte.Common.csproj">
+      <Project>{5bf8997e-c3a5-49c0-90f4-17dc4f88f92e}</Project>
+      <Name>Knowte.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

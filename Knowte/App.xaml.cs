@@ -1,9 +1,9 @@
-﻿using Knowte.Common.Services.Command;
-using Knowte.Core.Base;
-using Knowte.Core.Database;
-using Knowte.Core.IO;
-using Knowte.Core.Logging;
-using Knowte.Core.Settings;
+﻿using Digimezzo.Utilities.Log;
+using Digimezzo.Utilities.Settings;
+using Knowte.Common.Base;
+using Knowte.Common.Database;
+using Knowte.Common.IO;
+using Knowte.Common.Services.Command;
 using System;
 using System.Reflection;
 using System.ServiceModel;
@@ -32,15 +32,15 @@ namespace Knowte
             try
             {
                 // Checks if an upgrade of the settings is needed
-                if (XmlSettingsClient.Instance.IsSettingsUpgradeNeeded())
+                if (SettingsClient.IsUpgradeNeeded())
                 {
-                    LogClient.Instance.Logger.Info("Upgrading settings");
-                    XmlSettingsClient.Instance.UpgradeSettings();
+                    LogClient.Info("Upgrading settings");
+                    SettingsClient.Upgrade();
                 }
             }
             catch (Exception ex)
             {
-                LogClient.Instance.Logger.Error("There was a problem initializing the settings. Exception: {0}", ex.Message);
+                LogClient.Error("There was a problem initializing the settings. Exception: {0}", ex.Message);
                 this.Shutdown();
             }
 
@@ -64,7 +64,7 @@ namespace Knowte
                     switch (args[1])
                     {
                         case "/donate":
-                            LogClient.Instance.Logger.Info("Detected 'Donate' command from jumplist.");
+                            LogClient.Info("Detected 'Donate' command from jumplist.");
                             Actions.TryOpenLink(args[2]);
                             this.Shutdown();
                             return;
@@ -76,12 +76,12 @@ namespace Knowte
             }
             catch (Exception ex)
             {
-                LogClient.Instance.Logger.Error("A problem occured while processing Donate command. Exception: {0}", ex.Message);
+                LogClient.Error("A problem occured while processing Donate command. Exception: {0}", ex.Message);
             }
 
             if (!isNewInstance)
             {
-                LogClient.Instance.Logger.Info("There is already another instance of {0} running.", ProductInformation.ApplicationDisplayName);
+                LogClient.Info("There is already another instance of {0} running.", ProductInformation.ApplicationDisplayName);
 
                 instanceMutex = null;
 
@@ -92,18 +92,18 @@ namespace Knowte
                 try
                 {
                     commandServiceProxy = commandServiceFactory.CreateChannel();
-                    LogClient.Instance.Logger.Info("Trying to show the running instance");
+                    LogClient.Info("Trying to show the running instance");
 
                     if (args.Length > 1)
                     {
                         switch (args[1])
                         {
                             case "/new":
-                                LogClient.Instance.Logger.Info("Sending 'New note' command to running instance.");
+                                LogClient.Info("Sending 'New note' command to running instance.");
                                 commandServiceProxy.NewNote();
                                 break;
                             case "/open":
-                                LogClient.Instance.Logger.Info("Sending 'Open note: {0}' command to running instance.", args[2]);
+                                LogClient.Info("Sending 'Open note: {0}' command to running instance.", args[2]);
                                 commandServiceProxy.OpenNote(args[2]);
                                 break;
                             default:
@@ -113,13 +113,13 @@ namespace Knowte
                     }
                     else
                     {
-                        LogClient.Instance.Logger.Info("Forcing running instance to show main window.");
+                        LogClient.Info("Forcing running instance to show main window.");
                         commandServiceProxy.Show();
                     }
                 }
                 catch (Exception ex)
                 {
-                    LogClient.Instance.Logger.Error("A problem occured while trying to show the running instance. Exception: {0}", ex.Message);
+                    LogClient.Error("A problem occured while trying to show the running instance. Exception: {0}", ex.Message);
                 }
 
                 this.Shutdown();
@@ -128,7 +128,7 @@ namespace Knowte
             {
                 // This piece of code is only executed when there is 
                 // no other instance of the application running.
-                LogClient.Instance.Logger.Info("### STARTING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProductInformation.AssemblyVersion.ToString());
+                LogClient.Info("### STARTING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProductInformation.AssemblyVersion.ToString());
 
                 // Show SplashScreen
                 SplashScreen splash = new SplashScreen(Assembly.LoadFrom(System.IO.Path.Combine(ApplicationPaths.ExecutionFolder, Assembly.GetEntryAssembly().GetName().Name + ".exe")), "Splash.png");
@@ -168,7 +168,7 @@ namespace Knowte
 
             if (e.GetType().ToString().Equals("System.OutOfMemoryException"))
             {
-                LogClient.Instance.Logger.Warn("Ignored System.OutOfMemoryException");
+                LogClient.Warning("Ignored System.OutOfMemoryException");
                 return;
             }
 
@@ -178,12 +178,12 @@ namespace Knowte
 
         private void ExecuteEmergencyStop(Exception iException)
         {
-            LogClient.Instance.Logger.Error(iException.Message);
+            LogClient.Error(iException.Message);
 
             // Ignore System.OutOfMemoryException. This sometimes happen when pasting invalid data from the clipboard.
             if (iException.GetType().ToString().Equals("System.OutOfMemoryException"))
             {
-                LogClient.Instance.Logger.Warn("Ignored System.OutOfMemoryException");
+                LogClient.Warning("Ignored System.OutOfMemoryException");
                 return;
             }
 

@@ -1,6 +1,6 @@
 ﻿using Digimezzo.WPFControls;
-using Knowte.Core.Base;
-using Knowte.Core.Extensions;
+using Knowte.Common.Base;
+using Knowte.Common.Extensions;
 using System.Windows;
 
 namespace Knowte.Common.Services.Dialog

@@ -1,5 +1,5 @@
 ﻿using Knowte.Common.Services.Dialog;
-using Knowte.Core.Utils;
+using Knowte.Common.Utils;
 using Knowte.InformationModule.Views;
 using Microsoft.Practices.Unity;
 using Prism.Commands;

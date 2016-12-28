@@ -1,8 +1,8 @@
-﻿using Knowte.Common.Prism;
+﻿using Digimezzo.Utilities.Settings;
+using Knowte.Common.IO;
+using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.I18n;
-using Knowte.Core.IO;
-using Knowte.Core.Settings;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
@@ -51,7 +51,7 @@ namespace Knowte.SettingsModule.ViewModels
 
                     if (value != null)
                     {
-                        XmlSettingsClient.Instance.Set<string>("Appearance", "ColorScheme", value.Name);
+                        SettingsClient.Set<string>("Appearance", "ColorScheme", value.Name);
                         this.appearanceService.ApplyColorScheme(this.CheckBoxWindowsColorChecked, value.Name);
                     }
 
@@ -73,7 +73,7 @@ namespace Knowte.SettingsModule.ViewModels
             {
                 SetProperty<Language>(ref this.selectedLanguage, value);
 
-                XmlSettingsClient.Instance.Set<string>("Appearance", "Language", value.Code);
+                SettingsClient.Set<string>("Appearance", "Language", value.Code);
                 Application.Current.Dispatcher.Invoke(() => this.i18nService.ApplyLanguageAsync(value.Code));
             }
         }
@@ -85,7 +85,7 @@ namespace Knowte.SettingsModule.ViewModels
             {
                 SetProperty<bool>(ref this.checkBoxWindowsColorChecked, value);
 
-                XmlSettingsClient.Instance.Set<bool>("Appearance", "FollowWindowsColor", value);
+                SettingsClient.Set<bool>("Appearance", "FollowWindowsColor", value);
 
                 if (this.SelectedColorScheme != null)
                 {
@@ -99,7 +99,7 @@ namespace Knowte.SettingsModule.ViewModels
             get { return this.checkBoxCheckBoxShowWindowBorderChecked; }
             set
             {
-                XmlSettingsClient.Instance.Set<bool>("Appearance", "ShowWindowBorder", value);
+                SettingsClient.Set<bool>("Appearance", "ShowWindowBorder", value);
                 SetProperty<bool>(ref this.checkBoxCheckBoxShowWindowBorderChecked, value);
                 Application.Current.Dispatcher.Invoke(() => this.eventAggregator.GetEvent<SettingShowWindowBorderChanged>().Publish(value));
             }
@@ -112,7 +112,7 @@ namespace Knowte.SettingsModule.ViewModels
             {
                 SetProperty<bool>(ref this.checkBoxSortChecked, value);
 
-                XmlSettingsClient.Instance.Set<bool>("Appearance", "SortByModificationDate", value);
+                SettingsClient.Set<bool>("Appearance", "SortByModificationDate", value);
                 this.eventAggregator.GetEvent<RefreshNotesEvent>().Publish("");
             }
         }
@@ -138,16 +138,16 @@ namespace Knowte.SettingsModule.ViewModels
             this.appearanceService.ColorSchemesChanged += ColorSchemesChangedHandler;
             this.i18nService.LanguagesChanged += (sender, e) => this.GetLanguagesAsync();
 
-            this.ColorSchemesDirectory = System.IO.Path.Combine(XmlSettingsClient.Instance.ApplicationFolder, ApplicationPaths.ColorSchemesSubDirectory);
+            this.ColorSchemesDirectory = System.IO.Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.ColorSchemesSubDirectory);
         }
         #endregion
 
         #region Private
         private void LoadCheckBoxStates()
         {
-            this.CheckBoxWindowsColorChecked = XmlSettingsClient.Instance.Get<bool>("Appearance", "FollowWindowsColor");
-            this.CheckBoxCheckBoxShowWindowBorderChecked = XmlSettingsClient.Instance.Get<bool>("Appearance", "ShowWindowBorder");
-            this.CheckBoxSortChecked = XmlSettingsClient.Instance.Get<bool>("Appearance", "SortByModificationDate");
+            this.CheckBoxWindowsColorChecked = SettingsClient.Get<bool>("Appearance", "FollowWindowsColor");
+            this.CheckBoxCheckBoxShowWindowBorderChecked = SettingsClient.Get<bool>("Appearance", "ShowWindowBorder");
+            this.CheckBoxSortChecked = SettingsClient.Get<bool>("Appearance", "SortByModificationDate");
         }
 
         private void GetColorSchemes()
@@ -159,7 +159,7 @@ namespace Knowte.SettingsModule.ViewModels
                 this.ColorSchemes.Add(cs);
             }
 
-            string savedColorSchemeName = XmlSettingsClient.Instance.Get<string>("Appearance", "ColorScheme");
+            string savedColorSchemeName = SettingsClient.Get<string>("Appearance", "ColorScheme");
 
             if (!string.IsNullOrEmpty(savedColorSchemeName))
             {
@@ -191,7 +191,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             await Task.Run(() =>
             {
-                string savedLanguageCode = XmlSettingsClient.Instance.Get<string>("Appearance", "Language");
+                string savedLanguageCode = SettingsClient.Get<string>("Appearance", "Language");
 
                 if (!string.IsNullOrEmpty(savedLanguageCode))
                 {
