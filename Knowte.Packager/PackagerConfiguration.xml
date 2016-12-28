@@ -30,16 +30,15 @@
         <File>Microsoft.Practices.Unity.Configuration.dll</File>
         <File>Microsoft.Practices.Unity.dll</File>
         <File>Microsoft.Practices.Unity.RegistrationByConvention.dll</File>
-        <File>NLog.dll</File>
         <File>Prism.dll</File>
         <File>Prism.Unity.Wpf.dll</File>
         <File>Prism.Wpf.dll</File>
         <File>Digimezzo.Utilities.dll</File>
         <File>Digimezzo.WPFControls.dll</File>
-        <File>System.Windows.Interactivity.dll</File>
-        <File>SQLite.Net.dll</File>
-        <File>SQLite.Net.Platform.Win32.dll</File>
-        <File>System.Data.SQLite.dll</File>
+        <File>SQLite-Net.dll</File>
+        <File>SQLitePCLRaw.batteries_v2.dll</File>
+        <File>SQLitePCLRaw.core.dll</File>
+        <File>SQLitePCLRaw.provider.e_sqlite3.dll</File>  
       </Files>
     </Portable>
   </Packaging>

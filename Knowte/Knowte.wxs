@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?define Version="1.1.468.0" ?>
+<?define Version="1.1.470.0" ?>
 <?define VersionMin="1.0.0.0" ?>
 <?define UpgradeCode="672c2adb-fc86-41e4-83f4-5103b13ca79c"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
@@ -136,13 +136,13 @@
           </Component>
           <!-- 3rd party libraries -->
           <Directory Id="x64DIR" Name="x64">
-            <Component Id="SQLite.Interop.x64.dll" DiskId="1" Guid="4e32b2ee-38a2-41c0-bac8-f8881929840b">
-              <File Id="SQLite.Interop.x64.dll" Name="SQLite.Interop.dll" Source="x64\SQLite.Interop.dll" />
+            <Component Id="e_sqlite3_x64.dll" DiskId="1" Guid="604a6918-08eb-4629-9a18-80f9abf64be3">
+              <File Id="e_sqlite3_x64.dll" Name="e_sqlite3.dll" Source="x64\e_sqlite3.dll" />
             </Component>
           </Directory>
           <Directory Id="x86DIR" Name="x86">
-            <Component Id="SQLite.Interop.x86.dll" DiskId="1" Guid="6d7b90e7-b5d8-4392-ae6f-7c0b07313f82">
-              <File Id="SQLite.Interop.x86.dll" Name="SQLite.Interop.dll" Source="x86\SQLite.Interop.dll" />
+            <Component Id="e_sqlite3_x86.dll" DiskId="1" Guid="32397268-ee07-4306-802f-9e352da398e6">
+              <File Id="e_sqlite3_x86.dll" Name="e_sqlite3.dll" Source="x86\e_sqlite3.dll" />
             </Component>
           </Directory>
           <Component Id="Digimezzo.Utilities.dll" DiskId="1" Guid="9d34167e-5e7d-486b-9772-3234513ade07">
@@ -151,20 +151,20 @@
           <Component Id="Digimezzo.WPFControls.dll" DiskId="1" Guid="6E1282E8-EC1B-4D18-BA9B-65ED1748C0D7">
             <File Id="Digimezzo.WPFControls.dll" Name="Digimezzo.WPFControls.dll" Source="Digimezzo.WPFControls.dll" />
           </Component>
-          <Component Id="System.Windows.Interactivity.dll" DiskId="1" Guid="DEDFC253-37CD-4DB6-A8FA-1C9AE41B7A79">
-            <File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="System.Windows.Interactivity.dll" />
-          </Component>
           <Component Id="DotNetZip.dll" DiskId="1" Guid="bf864098-1193-4283-945a-e0b1aed961ee">
             <File Id="DotNetZip.dll" Name="DotNetZip.dll" Source="DotNetZip.dll" />
           </Component>
-          <Component Id="SQLite.Net.dll" DiskId="1" Guid="d2e4532c-0000-46f0-b18d-4251db8d009d">
-            <File Id="SQLite.Net.dll" Name="SQLite.Net.dll" Source="SQLite.Net.dll" />
+          <Component Id="SQLite_net.dll" DiskId="1" Guid="81a4c9ab-0669-42cc-9ea0-e0e0eb033bf2">
+            <File Id="SQLite_net.dll" Name="SQLite-net.dll" Source="SQLite-net.dll" />
           </Component>
-          <Component Id="SQLite.Net.Platform.Win32.dll" DiskId="1" Guid="555869e6-ce8c-4e39-a3ab-de7713acf753">
-            <File Id="SQLite.Net.Platform.Win32.dll" Name="SQLite.Net.Platform.Win32.dll" Source="SQLite.Net.Platform.Win32.dll" />
+          <Component Id="SQLitePCLRaw.batteries_v2.dll" DiskId="1" Guid="0b133929-ba1c-46f0-90fa-8b8a7feb1d17">
+            <File Id="SQLitePCLRaw.batteries_v2.dll" Name="SQLitePCLRaw.batteries_v2.dll" Source="SQLitePCLRaw.batteries_v2.dll" />
           </Component>
-          <Component Id="System.Data.SQLite.dll" DiskId="1" Guid="8a3d5547-be5b-4ba2-a70e-278f57f14888">
-            <File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="System.Data.SQLite.dll" />
+          <Component Id="SQLitePCLRaw.core.dll" DiskId="1" Guid="9695793f-49be-4144-9394-0daf6a9703ed">
+            <File Id="SQLitePCLRaw.core.dll" Name="SQLitePCLRaw.core.dll" Source="SQLitePCLRaw.core.dll" />
+          </Component>
+          <Component Id="SQLitePCLRaw.provider.e_sqlite3.dll" DiskId="1" Guid="e9e644c1-135d-490d-a5ba-1d7804fb3592">
+            <File Id="SQLitePCLRaw.provider.e_sqlite3.dll" Name="SQLitePCLRaw.provider.e_sqlite3.dll" Source="SQLitePCLRaw.provider.e_sqlite3.dll" />
           </Component>
         </Directory>
       </Directory>
@@ -207,13 +207,13 @@
       <!-- 3rd party libraries -->
       <ComponentRef Id="Digimezzo.Utilities.dll" />
       <ComponentRef Id="Digimezzo.WPFControls.dll" />
-      <ComponentRef Id="System.Windows.Interactivity.dll" />
       <ComponentRef Id="DotNetZip.dll" />
-      <ComponentRef Id="SQLite.Net.dll" />
-      <ComponentRef Id="SQLite.Net.Platform.Win32.dll" />
-      <ComponentRef Id="System.Data.SQLite.dll" />
-      <ComponentRef Id="SQLite.Interop.x64.dll" />
-      <ComponentRef Id="SQLite.Interop.x86.dll" />
+      <ComponentRef Id="SQLite_net.dll" />
+      <ComponentRef Id="SQLitePCLRaw.batteries_v2.dll" />
+      <ComponentRef Id="SQLitePCLRaw.core.dll" />
+      <ComponentRef Id="SQLitePCLRaw.provider.e_sqlite3.dll" />
+      <ComponentRef Id="e_sqlite3_x64.dll" />
+      <ComponentRef Id="e_sqlite3_x86.dll" />
       <!-- Start Menu -->
       <!--<ComponentRef Id="StartMenuShortcuts" />-->
     </Feature>
