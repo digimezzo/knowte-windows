@@ -239,5 +239,8 @@
 
     <Property Id="WixShellExecTarget" Value="[#Knowte.exe]" />
     <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+    <Property Id="QtExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /f /im Funance.exe'/>
+    <CustomAction Id="KillApplication" BinaryKey="WixCA" DllEntry="CAQuietExec" Execute="immediate" Return="ignore"/>
   </Product>
 </Wix>
