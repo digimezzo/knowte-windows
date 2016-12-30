@@ -17,9 +17,9 @@
       <Custom Action="KillApplication" After="LaunchConditions"/>
       <!--<RemoveExistingProducts After="InstallInitialize"/>-->
     </InstallExecuteSequence>
-    <!--<WixVariable Id="WixUILicenseRtf" Value="Knowte.License.rtf" />-->
-    <WixVariable Id="WixUIBannerBmp" Value="Knowte.BannerBmp.bmp" />
-    <WixVariable Id="WixUIDialogBmp" Value="Knowte.DialogBmp.bmp" />
+    <!--<WixVariable Id="WixUILicenseRtf" Value="$(var.License)" />-->
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.BannerBmp)" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.DialogBmp)" />
     <Directory Id="TARGETDIR" Name="SourceDir">
       <!-- Start Menu -->
       <Directory Id="ProgramMenuFolder" />
