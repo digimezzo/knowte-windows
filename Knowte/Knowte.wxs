@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?define Version="1.1.470.0" ?>
-<?define VersionMin="1.0.0.0" ?>
+<?define Version="1.0.0.471" ?>
+<?define Manufacturer="Digimezzo" ?>
+<?define Product="Knowte" ?>
+<?define ProductCab="Knowte.cab" ?>
+<?define DowngradeMessage="A newer version of this application is already installed. If you are sure you want to downgrade, remove the existing installation via Programs and Features." ?>
+<?define License="Knowte.License.rtf" ?>
+<?define BannerBmp="Knowte.BannerBmp.bmp" ?>
+<?define DialogBmp="Knowte.DialogBmp.bmp" ?>
 <?define UpgradeCode="672c2adb-fc86-41e4-83f4-5103b13ca79c"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Knowte" Language="1033" Version="$(var.Version)" Manufacturer="Digimezzo" UpgradeCode="$(var.UpgradeCode)">
-    <Package Description="Knowte" Comments="Knowte" InstallerVersion="200" Compressed="yes" />
-    <Media Id="1" Cabinet="Knowte.cab" EmbedCab="yes" />
-    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
-    <Property Id="REINSTALLMODE" Value="amus"/>
-    <!-- This should replace all components, even if their version didn't change -->
-    <Upgrade Id="$(var.UpgradeCode)">
-      <UpgradeVersion Minimum="$(var.VersionMin)" Maximum="$(var.Version)" Property="PREVIOUSVERSIONSINSTALLED" IncludeMinimum="yes" IncludeMaximum="no" />
-      <UpgradeVersion Minimum="$(var.Version)" IncludeMinimum="yes" OnlyDetect="yes" Property="NEWERVERSIONINSTALLED" />
-    </Upgrade>
-    <Condition Message="A newer version of this product has been detected on your system. Setup cannot continue and will now terminate."><![CDATA[NOT NEWERVERSIONINSTALLED]]></Condition>
+  <Product Id="*" Name="$(var.Product)" Language="1033" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
+    <Package Description="$(var.Product)" Comments="$(var.Product)" InstallerVersion="200" Compressed="yes" />
+    <Media Id="1" Cabinet="$(var.ProductCab)" EmbedCab="yes" />
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="$(var.DowngradeMessage)" />
     <InstallExecuteSequence>
-      <RemoveExistingProducts After="InstallFinalize"></RemoveExistingProducts>
+      <Custom Action="KillApplication" After="LaunchConditions"/>
+      <!--<RemoveExistingProducts After="InstallInitialize"/>-->
     </InstallExecuteSequence>
     <!--<WixVariable Id="WixUILicenseRtf" Value="Knowte.License.rtf" />-->
     <WixVariable Id="WixUIBannerBmp" Value="Knowte.BannerBmp.bmp" />
@@ -34,7 +34,7 @@
       </Directory>-->
       <!-- Program Files -->
       <Directory Id="ProgramFilesFolder" Name="PFiles">
-        <Directory Id="INSTALLFOLDER" Name="Knowte">
+        <Directory Id="INSTALLFOLDER" Name="$(var.Product)">
           <!-- 3rd party licenses -->
           <Directory Id="LicensesDIR" Name="Licenses">
             <Component Id="DotNetZip.txt" DiskId="1" Guid="b8d7a5a2-4092-43c5-a712-72b6a26f28f3">

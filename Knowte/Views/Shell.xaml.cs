@@ -15,6 +15,8 @@ using Prism.Regions;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using Digimezzo.Utilities.IO;
+using Digimezzo.Utilities.Extensions;
 
 namespace Knowte.Views
 {
@@ -119,7 +121,7 @@ namespace Knowte.Views
 
         private void Shell_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            LogClient.Info("### STOPPING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProductInformation.AssemblyVersion.ToString());
+            LogClient.Info("### STOPPING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProcessExecutable.AssemblyVersion().FormatVersion());
 
             // Prevent saving the size when the window is minimized.
             // When minimized, the actual size is not detected correctly,

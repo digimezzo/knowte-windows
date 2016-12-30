@@ -1,4 +1,7 @@
-﻿using Knowte.Common.Services.Dialog;
+﻿using Digimezzo.Utilities.Extensions;
+using Digimezzo.Utilities.IO;
+using Digimezzo.Utilities.Packaging;
+using Knowte.Common.Services.Dialog;
 using Knowte.Common.Utils;
 using Knowte.InformationModule.Views;
 using Microsoft.Practices.Unity;
@@ -12,6 +15,7 @@ namespace Knowte.InformationModule.ViewModels
         #region Private
         private IUnityContainer container;
         private IDialogService dialogService;
+        private Package package;
         #endregion
 
         #region Commands
@@ -23,6 +27,15 @@ namespace Knowte.InformationModule.ViewModels
         {
             this.container = container;
             this.dialogService = dialogService;
+
+            Configuration config;
+#if DEBUG
+            config = Configuration.Debug;
+#else
+		    config = Configuration.Release;
+#endif
+
+            this.package = new Package(ProcessExecutable.Name(), ProcessExecutable.AssemblyVersion(), config);
 
             this.ShowLicenseCommand = new DelegateCommand(() => {
 
@@ -42,6 +55,22 @@ namespace Knowte.InformationModule.ViewModels
                     string.Empty, 
                     null);
             });
+        }
+        #endregion
+
+        #region Properties
+        public string FormattedAssemblyVersion
+        {
+            get { return ProcessExecutable.AssemblyVersion().FormatVersion(); }
+        }
+
+        public string Label
+        {
+            get
+            {
+                if (this.package != null) return this.package.Label;
+                return string.Empty;
+            }
         }
         #endregion
     }

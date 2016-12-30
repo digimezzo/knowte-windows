@@ -1,4 +1,5 @@
-﻿using Digimezzo.Utilities.Log;
+﻿using Digimezzo.Utilities.IO;
+using Digimezzo.Utilities.Log;
 using Digimezzo.WPFControls;
 using Knowte.Common.Base;
 using Knowte.Common.Extensions;

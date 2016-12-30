@@ -1,4 +1,6 @@
-﻿using Digimezzo.Utilities.Log;
+﻿using Digimezzo.Utilities.Extensions;
+using Digimezzo.Utilities.IO;
+using Digimezzo.Utilities.Log;
 using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
 using Knowte.Common.Database;
@@ -52,7 +54,7 @@ namespace Knowte
 
             // Check that there is only one instance of NoteStudio running...
             bool isNewInstance = false;
-            instanceMutex = new Mutex(true, string.Format("{0}-{1}", ProductInformation.ApplicationGuid, ProductInformation.AssemblyVersion.ToString()), out isNewInstance);
+            instanceMutex = new Mutex(true, string.Format("{0}-{1}", ProductInformation.ApplicationGuid, ProcessExecutable.AssemblyVersion().ToString()), out isNewInstance);
 
             // Get the commandline arguments
             string[] args = Environment.GetCommandLineArgs();
@@ -128,10 +130,10 @@ namespace Knowte
             {
                 // This piece of code is only executed when there is 
                 // no other instance of the application running.
-                LogClient.Info("### STARTING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProductInformation.AssemblyVersion.ToString());
+                LogClient.Info("### STARTING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProcessExecutable.AssemblyVersion().FormatVersion());
 
                 // Show SplashScreen
-                SplashScreen splash = new SplashScreen(Assembly.LoadFrom(System.IO.Path.Combine(ApplicationPaths.ExecutionFolder, Assembly.GetEntryAssembly().GetName().Name + ".exe")), "Splash.png");
+                SplashScreen splash = new SplashScreen(Assembly.LoadFrom(System.IO.Path.Combine(ProcessExecutable.ExecutionFolder(), Assembly.GetEntryAssembly().GetName().Name + ".exe")), "Splash.png");
                 splash.Show(true);
 
                 // Create or upgrade the database

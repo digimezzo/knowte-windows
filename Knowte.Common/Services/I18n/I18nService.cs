@@ -1,4 +1,5 @@
-﻿using Digimezzo.Utilities.Settings;
+﻿using Digimezzo.Utilities.IO;
+using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
 using Knowte.Common.IO;
 using System;
@@ -15,7 +16,7 @@ namespace Knowte.Common.Services.I18n
     public class I18nService : II18nService
     {
         #region Private
-        private string builtinLanguagesDirectory = System.IO.Path.Combine(ApplicationPaths.ExecutionFolder, ApplicationPaths.BuiltinLanguagesSubDirectory);
+        private string builtinLanguagesDirectory = System.IO.Path.Combine(ProcessExecutable.ExecutionFolder(), ApplicationPaths.BuiltinLanguagesSubDirectory);
         private string customLanguagesDirectory = System.IO.Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.CustomLanguagesSubDirectory);
         private List<Language> languages;
         private Language defaultLanguage;

@@ -130,11 +130,8 @@
     <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\Defaults.cs" />
     <Compile Include="Base\DialogIcons.cs" />
-    <Compile Include="Base\Enums.cs" />
     <Compile Include="Base\NoteFilters.cs" />
-    <Compile Include="Base\PackagingInformation.cs" />
     <Compile Include="Base\ProductInformation.cs" />
-    <Compile Include="Base\VersionInfo.cs" />
     <Compile Include="Controls\AccentButton.cs" />
     <Compile Include="Controls\DropUpButton.cs" />
     <Compile Include="Controls\FontIcon.cs" />
@@ -159,9 +156,7 @@
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Helpers\ExternalComponent.cs" />
     <Compile Include="Helpers\FontSizeCorrection.cs" />
-    <Compile Include="IO\Actions.cs" />
     <Compile Include="IO\ApplicationPaths.cs" />
-    <Compile Include="IO\LegacyPaths.cs" />
     <Compile Include="IO\StrongNetNamedPipeBinding.cs" />
     <Compile Include="Presentation\Views\Empty.xaml.cs">
       <DependentUpon>Empty.xaml</DependentUpon>
