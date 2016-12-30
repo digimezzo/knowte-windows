@@ -20,6 +20,33 @@
     xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
     prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
+    <controls:KnowteWindow.WindowCommands>
+        <StackPanel Orientation="Horizontal">
+            <!-- Log file -->
+            <Button 
+                x:Name="PART_LogfileButton" 
+                Style="{StaticResource WindowButton}" 
+                Width="26" 
+                Height="26"
+                Margin="0,5,5,0"
+                BorderBrush="{x:Null}" 
+                BorderThickness="0" 
+                Background="{x:Null}" 
+                ToolTip="{DynamicResource Language_Log_File}" 
+                Command="{Binding ShowLogfileCommand}"
+                Visibility="{Binding IsPreview,Converter={StaticResource BooleanToCollapsedConverter}}">
+                <Button.Content>
+                    <TextBlock 
+                        Style="{StaticResource FontAwesome}" 
+                        Text="&#xf188;" 
+                        FontSize="16" 
+                        HorizontalAlignment="center" 
+                        VerticalAlignment="Center"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+    </controls:KnowteWindow.WindowCommands>
+
     <Border x:Name="WindowBorder">
         <Grid>
             <Border x:Name="HeaderBackground" Panel.ZIndex="0" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" Background="{DynamicResource RG_WindowHeaderBackgroundBrush}" Opacity="0.8"/>

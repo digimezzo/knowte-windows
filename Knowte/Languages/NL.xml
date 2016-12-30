@@ -89,4 +89,5 @@
   <Text Key="Backup_And_Restore">Backup en restore</Text>
   <Text Key="Border">Rand</Text>
   <Text Key="Show_Window_Border">Geef een rand van 1 px weer rond het venster</Text>
+  <Text Key="Log_File">Log bestand</Text>
 </Language>

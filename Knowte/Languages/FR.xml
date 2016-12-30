@@ -89,4 +89,5 @@
   <Text Key="Backup_And_Restore">Sauvegarde et restauration</Text>
   <Text Key="Border">Bordure</Text>
   <Text Key="Show_Window_Border">Afficher une bordure autour de la fenêtre (1 px)</Text>
+  <Text Key="Log_File">Fichier log</Text>
 </Language>

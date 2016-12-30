@@ -88,4 +88,5 @@
   <Text Key="License">Лицензия</Text>
   <Text Key="Border">Рамка</Text>
   <Text Key="Show_Window_Border">Показывать вокруг окна рамку размером в 1 пикс.</Text>
+  <Text Key="Log_File">Log file</Text>
 </Language>
