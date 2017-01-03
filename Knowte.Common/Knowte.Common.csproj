@@ -154,7 +154,6 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\UnityExtensions.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
-    <Compile Include="Helpers\ExternalComponent.cs" />
     <Compile Include="Helpers\FontSizeCorrection.cs" />
     <Compile Include="IO\ApplicationPaths.cs" />
     <Compile Include="IO\StrongNetNamedPipeBinding.cs" />

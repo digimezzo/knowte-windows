@@ -1,6 +1,5 @@
-﻿using System.Reflection;
+﻿using Digimezzo.Utilities.Packaging;
 using System;
-using Knowte.Common.Helpers;
 
 namespace Knowte.Common.Base
 {
@@ -17,19 +16,38 @@ namespace Knowte.Common.Base
 		public static ExternalComponent[] Components = {
             new ExternalComponent {
                 Name = "DotNetZip",
-                Link = "http://dotnetzip.codeplex.com"
+                Description = "A FAST, FREE class library and toolset for manipulating zip files. Use VB, C# or any .NET language to easily create, extract, or update zip files.",
+                Url = "http://dotnetzip.codeplex.com"
+            },
+            new ExternalComponent {
+                Name = "Font Awesome",
+                Description = "Font Awesome by Dave Gandy.",
+                Url = "http://fontawesome.io"
             },
             new ExternalComponent {
                 Name = "Prism",
-                Link = "http://compositewpf.codeplex.com/"
+                Description = "Prism provides guidance designed to help you more easily design and build rich, flexible, and easy-to-maintain WPF desktop applications.",
+                Url = "http://compositewpf.codeplex.com"
             },
             new ExternalComponent {
-                Name = "Windows Installer XML Toolset (WiX)",
-                Link = "http://wix.codeplex.com"
+                Name = "Sqlite-net",
+                Description = "A minimal library to allow .NET and Mono applications to store data in SQLite 3 databases.",
+                Url = "https://github.com/praeclarum/sqlite-net"
             },
             new ExternalComponent {
                 Name = "Unity.WCF",
-                Link = "https://unitywcf.codeplex.com/"
+                Description = "A library that allows the simple integration of Microsoft's Unity IoC container with WCF.",
+                Url = "https://github.com/Uriil/unitywcf"
+            },
+            new ExternalComponent {
+                Name = "Unity",
+                Description = "A lightweight extensible dependency injection container with support for constructor, property, and method call injection.",
+                Url = "https://unity.codeplex.com"
+            },
+            new ExternalComponent {
+                Name = "WiX",
+                Description = "Windows Installer XML Toolset.",
+                Url = "http://wix.codeplex.com"
             }
         };
     }
