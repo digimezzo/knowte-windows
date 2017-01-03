@@ -112,7 +112,7 @@ namespace Knowte.Common.Services.Notes
 
             using (var conn = this.factory.GetConnection())
             {
-                notebookId = conn.Table<Notebook>().Where((nb) => nb.Title == notebookTitle).Select((nb) => nb.Id).FirstOrDefault();
+                notebookId = conn.Table<Notebook>().Select((nb) => nb).Where((nb) => nb.Title == notebookTitle).ToList().Select((nb) => nb.Id).FirstOrDefault();
             }
 
             return notebookId;
