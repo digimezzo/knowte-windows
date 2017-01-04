@@ -1,246 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?define Version="1.0.0.471" ?>
+<?define Version="1.2.862.4" ?>
 <?define Manufacturer="Digimezzo" ?>
 <?define Product="Knowte" ?>
 <?define ProductCab="Knowte.cab" ?>
 <?define DowngradeMessage="A newer version of this application is already installed. If you are sure you want to downgrade, remove the existing installation via Programs and Features." ?>
-<?define License="Knowte.License.rtf" ?>
+<!--<?define License="Knowte.License.rtf" ?>-->
 <?define BannerBmp="Knowte.BannerBmp.bmp" ?>
 <?define DialogBmp="Knowte.DialogBmp.bmp" ?>
 <?define UpgradeCode="672c2adb-fc86-41e4-83f4-5103b13ca79c"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="*" Name="$(var.Product)" Language="1033" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
-    <Package Description="$(var.Product)" Comments="$(var.Product)" InstallerVersion="200" Compressed="yes" />
+    <!-- Packaging -->
+    <!-- ========= -->
+    <Package Description="$(var.Product)" Comments="$(var.Product)" InstallerVersion="500" Compressed="yes" />
     <Media Id="1" Cabinet="$(var.ProductCab)" EmbedCab="yes" />
     <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="$(var.DowngradeMessage)" />
     <InstallExecuteSequence>
       <Custom Action="KillApplication" After="LaunchConditions"/>
-      <RemoveShortcuts>Installed AND NOT UPGRADINGPRODUCTCODE</RemoveShortcuts>
+      <RemoveShortcuts>0</RemoveShortcuts>
     </InstallExecuteSequence>
     <!--<WixVariable Id="WixUILicenseRtf" Value="$(var.License)" />-->
     <WixVariable Id="WixUIBannerBmp" Value="$(var.BannerBmp)" />
     <WixVariable Id="WixUIDialogBmp" Value="$(var.DialogBmp)" />
+    <!-- Icons -->
+    <!-- ===== -->
+    <!-- This just defines an icon that can be used anywhere else -->
+    <Icon Id="$(var.Product).ico" SourceFile="$(var.Product).exe" />
+    <!-- Properties -->
+    <!-- ========== -->
+    <Property Id="WixShellExecTarget" Value="[#$(var.Product).exe]" />
+    <Property Id="QtExecCmdLine" Value='"taskkill.exe" /f /im $(var.Product).exe'/>
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch $(var.Product)" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <!-- This adds an icon for Add/Remove Programs. The Value is the Id of the Icon defined above -->
+    <Property Id="ARPPRODUCTICON" Value="$(var.Product).ico" />
+    <!-- Custom actions -->
+    <!-- ============== -->
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+    <CustomAction Id="KillApplication" BinaryKey="WixCA" DllEntry="CAQuietExec" Execute="immediate" Return="ignore"/>
+    <!-- User interface -->
+    <!-- ============== -->
+    <UI>
+      <UIRef Id="DonateWixUI_InstallDir" />
+      <!-- Skip licence dialog (next 2 lines) -->
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="2">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
+      <!-- Launch application -->
+      <Publish Dialog="DonateExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
+    <!-- Directory tree -->
+    <!-- ============== -->
     <Directory Id="TARGETDIR" Name="SourceDir">
       <!-- Start Menu -->
-      <Directory Id="ProgramMenuFolder" />
-      <!--<Directory Id="ProgramMenuFolder">
-        <Directory Id="ProgramMenuDir" Name="Knowte">
-          <Component Id="StartMenuShortcuts" Guid="2460F63C-C91F-4C4E-9B48-C8CA68BF67A2">
-            <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\Raphael Godart\Knowte" Type="string" Value="" />
-            <Shortcut Id="UninstallProduct" Name="Uninstall Knowte" Description="Uninstalls Knowte" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]" />
-          </Component>
-        </Directory>
-      </Directory>-->
+      <Directory Id="ProgramMenuFolder">
+        <Component Id="STARTMENUCMP" Guid="7572F6D0-250E-4AD2-B331-258FE7862620">
+          <RemoveFile Id="RemoveShortcut" Name="$(var.Product).lnk" On="uninstall" />
+        </Component>
+      </Directory>
       <!-- Program Files -->
       <Directory Id="ProgramFilesFolder" Name="PFiles">
         <Directory Id="INSTALLFOLDER" Name="$(var.Product)">
-          <!-- 3rd party licenses -->
-          <Directory Id="LicensesDIR" Name="Licenses">
-            <Component Id="DotNetZip.txt" DiskId="1" Guid="b8d7a5a2-4092-43c5-a712-72b6a26f28f3">
-              <File Id="DotNetZip.txt" Name="DotNetZip.txt" Source="Licenses\DotNetZip.txt" />
-            </Component>
-            <Component Id="Prism.txt" DiskId="1" Guid="d87fd70f-fa82-48ba-ad46-bb4bf029eca4">
-              <File Id="Prism.txt" Name="Prism.txt" Source="Licenses\Prism.txt" />
-            </Component>
-            <Component Id="Unity.WCF.txt" DiskId="1" Guid="567a6de6-f675-47b1-b64f-51708a33c674">
-              <File Id="Unity.WCF.txt" Name="Unity.WCF.txt" Source="Licenses\Unity.WCF.txt" />
-            </Component>
-            <Component Id="WiX.txt" DiskId="1" Guid="aacc0654-5254-4cb1-8b9e-3e49b5fec8bd">
-              <File Id="WiX.txt" Name="WiX.txt" Source="Licenses\WiX.txt" />
+          <!-- SQLite -->
+          <Directory Id="X64FOLDER" Name="x64">
+            <Component Id="X64CMP" DiskId="1" Guid="E27F93D6-BE99-44CE-B027-8CE9CF0E3837">
+              <File Id="ESQLITEX64" Source="x64\esqlite3.dll" />
             </Component>
           </Directory>
-          <!-- Languages -->
-          <Directory Id="LanguagesDIR" Name="Languages">
-            <Component Id="EN.xml" DiskId="1" Guid="c7a55232-abe5-4947-aaaf-3a9fe67ffefd">
-              <File Id="EN.xml" Name="EN.xml" Source="Languages\EN.xml" />
+          <Directory Id="X86FOLDER" Name="x86">
+            <Component Id="X86CMP" DiskId="1" Guid="E583C539-B93A-41FD-91A5-F62E84ACE4CD">
+              <File Id="ESQLITEX86" Source="x86\esqlite3.dll" />
             </Component>
-            <Component Id="FR.xml" DiskId="1" Guid="0a9ccecf-5ba2-47bb-bf8f-fe96c266b098">
-              <File Id="FR.xml" Name="FR.xml" Source="Languages\FR.xml" />
+          </Directory>
+          <!-- Language -->
+          <Directory Id="LANGUAGESFOLDER" Name="Languages">
+            <Component Id="LANGUAGESCMP" DiskId="1" Guid="88064845-03A9-401E-AC16-A69E59DB4E03">
+              <File Source="Languages\EN.xml" />
+              <File Source="Languages\FR.xml" />
+              <File Source="Languages\NL.xml" />
+              <File Source="Languages\PT-BR.xml" />
+              <File Source="Languages\RU.xml" />
+              <File Source="Languages\ZH-CN.xml" />
             </Component>
-            <Component Id="NL.xml" DiskId="1" Guid="2f664f1a-de42-49c6-a215-e627aec18fc9">
-              <File Id="NL.xml" Name="NL.xml" Source="Languages\NL.xml" />
-            </Component>
-            <Component Id="PT_BR.xml" DiskId="1" Guid="ccaaae98-9ab5-408b-9858-fb59f4c141c4">
-              <File Id="PT_BR.xml" Name="PT-BR.xml" Source="Languages\PT-BR.xml" />
-            </Component>
-            <Component Id="RU.xml" DiskId="1" Guid="04158356-6539-47de-91f6-ac94d20bedf9">
-              <File Id="RU.xml" Name="RU.xml" Source="Languages\RU.xml" />
-            </Component>
-            <Component Id="ZH_CN.xml" DiskId="1" Guid="f2ace4fb-8d68-4ed2-9301-ea3bcf4d053c">
-              <File Id="ZH_CN.xml" Name="ZH-CN.xml" Source="Languages\ZH-CN.xml" />
+          </Directory>
+          <!-- Licenses -->
+          <Directory Id="LICENSESFOLDER" Name="Licenses">
+            <Component Id="LICENSESCMP" DiskId="1" Guid="6DA54777-553A-46B9-8F85-759CBEB2FF62">
+              <File Source="Licenses\DotNetZip.txt" />
+              <File Source="Licenses\Font Awesome.txt" />
+              <File Source="Licenses\Prism.txt" />
+              <File Source="Licenses\SQLite-net.txt" />
+              <File Source="Licenses\Unity.txt" />
+              <File Source="Licenses\Unity.WCF.txt" />
+              <File Source="Licenses\WiX.txt" />
             </Component>
           </Directory>
           <!-- Application -->
-          <Component Id="Knowte.exe" DiskId="1" Guid="c1245ea5-91ee-4a80-9ef1-54bcbc95a6be">
-            <File Id="Knowte.exe" Name="Knowte.exe" Source="Knowte.exe">
-              <!--<Shortcut Id="ExeShortcut" Directory="ProgramMenuDir" Name="Knowte" WorkingDirectory="INSTALLFOLDER" Advertise="yes" Icon="Knowte.exe" IconIndex="0" />-->
-            <Shortcut Id="ExeShortcut" Directory="ProgramMenuFolder" Name="Knowte" WorkingDirectory="INSTALLFOLDER" Icon="Knowte.exe" IconIndex="0" />
+          <Component Id="MAINCMP" DiskId="1" Guid="E3C0E7AE-E293-4860-8D23-5431459DF379">
+            <!-- Files -->
+            <File Source="Knowte.exe">
+              <Shortcut Id="ExeShortcut" Directory="ProgramMenuFolder" Name="Knowte" WorkingDirectory="INSTALLFOLDER" Icon="$(var.Product).ico" IconIndex="0" />
             </File>
-          </Component>
-          <Component Id="Knowte.exe.config" DiskId="1" Guid="85F7EE38-CA0C-4E9D-A73D-E85A51FD1B16">
-            <File Id="Knowte.exe.config" Name="Knowte.exe.config" Source="Knowte.exe.config" />
-          </Component>
-          <Component Id="License.txt" DiskId="1" Guid="95125c42-eed5-4b92-b4fc-7867395db64c">
-            <File Id="License.txt" Name="License.txt" Source="License.txt" />
-          </Component>
-          <Component Id="Changelog.txt" DiskId="1" Guid="0d70b26b-fb62-4389-84b9-7053260aeaf4">
-            <File Id="Changelog.txt" Name="Changelog.txt" Source="Changelog.txt" />
-          </Component>
-          <Component Id="BaseSettings.xml" DiskId="1" Guid="0d70b26b-fb62-4389-84b9-7053260deef5">
-          <File Id="BaseSettings.xml" Name="BaseSettings.xml" Source="BaseSettings.xml" />
-          </Component>
-          <Component Id="Migrator.exe" DiskId="1" Guid="5a1a8ebf-6d8a-41a9-bfe9-7cbb52856334">
-            <File Id="Migrator.exe" Name="Migrator.exe" Source="Migrator.exe" />
-          </Component>
-          <!-- Prism libraries -->
-          <Component Id="Microsoft.Practices.ServiceLocation.dll" DiskId="1" Guid="f9676ca3-6645-41a0-be8f-50af101be52a">
-            <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="Microsoft.Practices.ServiceLocation.dll" />
-          </Component>
-          <Component Id="Microsoft.Practices.Unity.dll" DiskId="1" Guid="f96093ed-2dce-4900-8aca-0c87e6704a80">
-            <File Id="Microsoft.Practices.Unity.dll" Name="Microsoft.Practices.Unity.dll" Source="Microsoft.Practices.Unity.dll" />
-          </Component>
-          <Component Id="Microsoft.Practices.Unity.Configuration.dll" DiskId="1" Guid="84805e2e-1bfb-48e3-acbb-8c2023c644f4">
-            <File Id="Microsoft.Practices.Unity.Configuration.dll" Name="Microsoft.Practices.Unity.Configuration.dll" Source="Microsoft.Practices.Unity.Configuration.dll" />
-          </Component>
-          <Component Id="Microsoft.Practices.Unity.RegistrationByConvention.dll" DiskId="1" Guid="cda49e3f-465f-4ab1-8216-54992b2e85f7">
-            <File Id="Microsoft.Practices.Unity.RegistrationByConvention.dll" Name="Microsoft.Practices.Unity.RegistrationByConvention.dll" Source="Microsoft.Practices.Unity.RegistrationByConvention.dll" />
-          </Component>
-          <Component Id="Prism.dll" DiskId="1" Guid="038ee48f-ae96-49f7-9c63-71f131dddf04">
-            <File Id="Prism.dll" Name="Prism.dll" Source="Prism.dll" />
-          </Component>
-          <Component Id="Prism.Unity.Wpf.dll" DiskId="1" Guid="c433cd83-afdd-48c4-90a0-16c99858dc8d">
-            <File Id="Prism.Unity.Wpf.dll" Name="Prism.Unity.Wpf.dll" Source="Prism.Unity.Wpf.dll" />
-          </Component>
-          <Component Id="Prism.Wpf.dll" DiskId="1" Guid="2cce346c-7a6a-425e-b5f3-9937e9bc4252">
-            <File Id="Prism.Wpf.dll" Name="Prism.Wpf.dll" Source="Prism.Wpf.dll" />
-          </Component>
-          <!-- Application libraries -->
-          <Component Id="Knowte.Icons.dll" DiskId="1" Guid="AEC010A6-285D-4086-BAA0-E171847B5B91">
-            <File Id="Knowte.Icons.dll" Name="Knowte.Icons.dll" Source="Knowte.Icons.dll" />
-          </Component>
-          <Component Id="Knowte.InformationModule.dll" DiskId="1" Guid="AEC010A6-285D-4086-BAA0-E171847B5B94">
-            <File Id="Knowte.InformationModule.dll" Name="Knowte.InformationModule.dll" Source="Knowte.InformationModule.dll" />
-          </Component>
-          <Component Id="Knowte.MainModule.dll" DiskId="1" Guid="AEC010A6-285D-4086-BAA0-E171847B5B96">
-            <File Id="Knowte.MainModule.dll" Name="Knowte.MainModule.dll" Source="Knowte.MainModule.dll" />
-          </Component>
-          <Component Id="Knowte.NotesModule.dll" DiskId="1" Guid="AEC010A6-285D-4086-BAA0-E171857B5B96">
-            <File Id="Knowte.NotesModule.dll" Name="Knowte.NotesModule.dll" Source="Knowte.NotesModule.dll" />
-          </Component>
-          <Component Id="Knowte.Common.dll" DiskId="1" Guid="AEC010B6-285D-4186-BAA1-E14A458B5B96">
-            <File Id="Knowte.Common.dll" Name="Knowte.Common.dll" Source="Knowte.Common.dll" />
-          </Component>
-          <Component Id="Knowte.SettingsModule.dll" DiskId="1" Guid="AEC010B6-285D-4086-BAA1-E171858B5B96">
-            <File Id="Knowte.SettingsModule.dll" Name="Knowte.SettingsModule.dll" Source="Knowte.SettingsModule.dll" />
-          </Component>
-          <!-- 3rd party libraries -->
-          <Directory Id="x64DIR" Name="x64">
-            <Component Id="e_sqlite3_x64.dll" DiskId="1" Guid="604a6918-08eb-4629-9a18-80f9abf64be3">
-              <File Id="e_sqlite3_x64.dll" Name="e_sqlite3.dll" Source="x64\e_sqlite3.dll" />
-            </Component>
-          </Directory>
-          <Directory Id="x86DIR" Name="x86">
-            <Component Id="e_sqlite3_x86.dll" DiskId="1" Guid="32397268-ee07-4306-802f-9e352da398e6">
-              <File Id="e_sqlite3_x86.dll" Name="e_sqlite3.dll" Source="x86\e_sqlite3.dll" />
-            </Component>
-          </Directory>
-          <Component Id="Digimezzo.Utilities.dll" DiskId="1" Guid="9d34167e-5e7d-486b-9772-3234513ade07">
-            <File Id="Digimezzo.Utilities.dll" Name="Digimezzo.Utilities.dll" Source="Digimezzo.Utilities.dll" />
-          </Component>
-          <Component Id="Digimezzo.WPFControls.dll" DiskId="1" Guid="6E1282E8-EC1B-4D18-BA9B-65ED1748C0D7">
-            <File Id="Digimezzo.WPFControls.dll" Name="Digimezzo.WPFControls.dll" Source="Digimezzo.WPFControls.dll" />
-          </Component>
-          <Component Id="DotNetZip.dll" DiskId="1" Guid="bf864098-1193-4283-945a-e0b1aed961ee">
-            <File Id="DotNetZip.dll" Name="DotNetZip.dll" Source="DotNetZip.dll" />
-          </Component>
-          <Component Id="SQLite_net.dll" DiskId="1" Guid="81a4c9ab-0669-42cc-9ea0-e0e0eb033bf2">
-            <File Id="SQLite_net.dll" Name="SQLite-net.dll" Source="SQLite-net.dll" />
-          </Component>
-          <Component Id="SQLitePCLRaw.batteries_v2.dll" DiskId="1" Guid="0b133929-ba1c-46f0-90fa-8b8a7feb1d17">
-            <File Id="SQLitePCLRaw.batteries_v2.dll" Name="SQLitePCLRaw.batteries_v2.dll" Source="SQLitePCLRaw.batteries_v2.dll" />
-          </Component>
-          <Component Id="SQLitePCLRaw.core.dll" DiskId="1" Guid="9695793f-49be-4144-9394-0daf6a9703ed">
-            <File Id="SQLitePCLRaw.core.dll" Name="SQLitePCLRaw.core.dll" Source="SQLitePCLRaw.core.dll" />
-          </Component>
-          <Component Id="SQLitePCLRaw.provider.e_sqlite3.dll" DiskId="1" Guid="e9e644c1-135d-490d-a5ba-1d7804fb3592">
-            <File Id="SQLitePCLRaw.provider.e_sqlite3.dll" Name="SQLitePCLRaw.provider.e_sqlite3.dll" Source="SQLitePCLRaw.provider.e_sqlite3.dll" />
+            <File Source="BaseSettings.xml" />
+            <File Source="Changelog.txt" />
+            <File Source="DotNetZip.dll" />
+            <File Source="Knowte.Common.dll" />
+            <File Source="Knowte.exe.config" />
+            <File Source="Migrator.exe" />
+            <File Source="Knowte.Icons.dll" />
+            <File Source="Knowte.InformationModule.dll" />
+            <File Source="Knowte.MainModule.dll" />
+            <File Source="Knowte.NotesModule.dll" />
+            <File Source="Knowte.SettingsModule.dll" />
+            <File Source="License.txt" />
+            <File Source="Microsoft.Practices.ServiceLocation.dll" />
+            <File Source="Microsoft.Practices.Unity.Configuration.dll" />
+            <File Source="Microsoft.Practices.Unity.dll" />
+            <File Source="Microsoft.Practices.Unity.RegistrationByConvention.dll" />
+            <File Source="Prism.dll" />
+            <File Source="Prism.Unity.Wpf.dll" />
+            <File Source="Prism.Wpf.dll" />
+            <File Source="Digimezzo.Utilities.dll" />
+            <File Source="Digimezzo.WPFControls.dll" />
+            <File Source="SQLite-net.dll" />
+            <File Source="SQLitePCL.batteries.dll" />
+            <File Source="SQLitePCL.raw.dll" />
+            <File Source="SQLitePCLPlugin_esqlite3.dll" />
           </Component>
         </Directory>
       </Directory>
     </Directory>
+    <!-- Components to add -->
+    <!-- ================= -->
     <Feature Id="DefaultFeature" Title="Main Feature" Level="1">
-      <!-- Languages -->
-      <ComponentRef Id="EN.xml" />
-      <ComponentRef Id="FR.xml" />
-      <ComponentRef Id="NL.xml" />
-      <ComponentRef Id="PT_BR.xml" />
-      <ComponentRef Id="RU.xml" />
-      <ComponentRef Id="ZH_CN.xml" />
-      <!-- 3rd party licenses -->
-      <ComponentRef Id="DotNetZip.txt" />
-      <ComponentRef Id="Prism.txt" />
-      <ComponentRef Id="Unity.WCF.txt" />
-      <ComponentRef Id="WiX.txt" />
-      <!-- Application -->
-      <ComponentRef Id="Knowte.exe" />
-      <ComponentRef Id="Knowte.exe.config" />
-      <ComponentRef Id="License.txt" />
-      <ComponentRef Id="Changelog.txt" />
-      <ComponentRef Id="BaseSettings.xml" />
-      <ComponentRef Id="Migrator.exe" />
-      <!-- Prism libraries -->
-      <ComponentRef Id="Microsoft.Practices.ServiceLocation.dll" />
-      <ComponentRef Id="Microsoft.Practices.Unity.dll" />
-      <ComponentRef Id="Microsoft.Practices.Unity.Configuration.dll" />
-      <ComponentRef Id="Microsoft.Practices.Unity.RegistrationByConvention.dll" />
-      <ComponentRef Id="Prism.dll" />
-      <ComponentRef Id="Prism.Unity.Wpf.dll" />
-      <ComponentRef Id="Prism.Wpf.dll" />
-      <!-- Application libraries -->
-      <ComponentRef Id="Knowte.Icons.dll" />
-      <ComponentRef Id="Knowte.InformationModule.dll" />
-      <ComponentRef Id="Knowte.MainModule.dll" />
-      <ComponentRef Id="Knowte.NotesModule.dll" />
-      <ComponentRef Id="Knowte.Common.dll" />
-      <ComponentRef Id="Knowte.SettingsModule.dll" />
-      <!-- 3rd party libraries -->
-      <ComponentRef Id="Digimezzo.Utilities.dll" />
-      <ComponentRef Id="Digimezzo.WPFControls.dll" />
-      <ComponentRef Id="DotNetZip.dll" />
-      <ComponentRef Id="SQLite_net.dll" />
-      <ComponentRef Id="SQLitePCLRaw.batteries_v2.dll" />
-      <ComponentRef Id="SQLitePCLRaw.core.dll" />
-      <ComponentRef Id="SQLitePCLRaw.provider.e_sqlite3.dll" />
-      <ComponentRef Id="e_sqlite3_x64.dll" />
-      <ComponentRef Id="e_sqlite3_x86.dll" />
-      <!-- Start Menu -->
-      <!--<ComponentRef Id="StartMenuShortcuts" />-->
+      <ComponentRef Id="STARTMENUCMP" />
+      <ComponentRef Id="X64CMP" />
+      <ComponentRef Id="X86CMP" />
+      <ComponentRef Id="LANGUAGESCMP" />
+      <ComponentRef Id="LICENSESCMP" />
+      <ComponentRef Id="MAINCMP" />
     </Feature>
-
-    <UI>
-      <UIRef Id="WixUI_InstallDir" />
-      <!-- Skip licence dialog -->
-      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="2">1</Publish>
-			<Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
-
-      <!-- Add option to launch application after install is finished -->
-      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
-    </UI>
-    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Knowte" />
-
-    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
-
-    <!-- This just defines an icon that can be used anywhere else -->
-    <Icon Id="Knowte.exe" SourceFile="Knowte.exe" />
-
-    <!-- This adds an icon for Add/Remove Programs. The Value is the Id of the Icon defined above -->
-    <Property Id="ARPPRODUCTICON" Value="Knowte.exe" />
-
-    <Property Id="WixShellExecTarget" Value="[#Knowte.exe]" />
-    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
-
-    <Property Id="QtExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /f /im Funance.exe'/>
-    <CustomAction Id="KillApplication" BinaryKey="WixCA" DllEntry="CAQuietExec" Execute="immediate" Return="ignore"/>
   </Product>
+  <!-- Customization -->
+  <!-- ============= -->
+  <Fragment>
+    <UI Id="DonateWixUI_InstallDir">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="InstallDir" />
+
+      <DialogRef Id="BrowseDlg" />
+      <DialogRef Id="DiskCostDlg" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+
+      <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
+      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+
+      <Publish Dialog="DonateExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">NOT Installed</Publish>
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">Installed AND PATCH</Publish>
+
+      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">LicenseAccepted = "1"</Publish>
+
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="1">NOT Installed</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed AND NOT PATCH</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">Installed AND PATCH</Publish>
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+      <Property Id="ARPNOMODIFY" Value="1" />
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+  </Fragment>
+  <Fragment>
+    <UI>
+      <Dialog Id="DonateExitDialog" Width="370" Height="270" Title="!(loc.ExitDialog_Title)">
+        <Control Id="Finish" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.WixUIFinish)" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUICancel)" />
+        <Control Id="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" TabSkip="no" Text="!(loc.ExitDialogBitmap)" />
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUIBack)" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogDescription)" />
+        <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />
+        <Control Id="OptionalText" Type="Text" X="135" Y="110" Width="220" Height="80" Transparent="yes" NoPrefix="yes" Hidden="yes" Text="[WIXUI_EXITDIALOGOPTIONALTEXT]">
+          <Condition Action="show">WIXUI_EXITDIALOGOPTIONALTEXT AND NOT Installed</Condition>
+        </Control>
+        <Control Id="DonateHyperLink" Type="Hyperlink" X="135" Y="135" Height="40" Width="200" Transparent="yes">
+          <Text>
+            <![CDATA[If you like this software, please consider donating.
+Thank you! <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MQALEWTEZ7HX8">Donate via PayPal</a>]]>
+          </Text>
+        </Control>
+        <Control Id="OptionalCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Hidden="yes" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOX" CheckBoxValue="1" Text="[WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT]">
+          <Condition Action="show">WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT AND NOT Installed</Condition>
+        </Control>
+      </Dialog>
+      <InstallUISequence>
+        <Show Dialog="DonateExitDialog" OnExit="success" Overridable="yes" />
+      </InstallUISequence>
+
+      <AdminUISequence>
+        <Show Dialog="DonateExitDialog" OnExit="success" Overridable="yes" />
+      </AdminUISequence>
+    </UI>
+  </Fragment>
 </Wix>

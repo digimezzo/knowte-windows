@@ -35,10 +35,10 @@
         <File>Prism.Wpf.dll</File>
         <File>Digimezzo.Utilities.dll</File>
         <File>Digimezzo.WPFControls.dll</File>
-        <File>SQLite-Net.dll</File>
-        <File>SQLitePCLRaw.batteries_v2.dll</File>
-        <File>SQLitePCLRaw.core.dll</File>
-        <File>SQLitePCLRaw.provider.e_sqlite3.dll</File>  
+        <File>SQLite-net.dll</File>
+        <File>SQLitePCL.batteries.dll</File>
+        <File>SQLitePCL.raw.dll</File>
+        <File>SQLitePCLPlugin_esqlite3.dll</File>
       </Files>
     </Portable>
   </Packaging>
