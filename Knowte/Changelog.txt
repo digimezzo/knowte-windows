@@ -1,4 +1,4 @@
-2016-12-30: Knowte 1.1 Build 472 (Preview)
+2016-12-30: Knowte 1.1 Build 473 (Preview)
 ------------------------------------------
 
 - [Added] Option to show a 1px border around all windows
