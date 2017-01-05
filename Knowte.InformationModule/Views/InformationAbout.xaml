@@ -18,9 +18,11 @@
                 <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource RG_BlackBrush}" FontSize="42" Text="{x:Static base:ProductInformation.ApplicationDisplayNameUppercase}" Style="{StaticResource RobotoThin}"/>
             </DockPanel>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                <TextBlock Text="{Binding FormattedAssemblyVersion}" Margin="0,0,5,0"/>
+                <TextBlock Text="{DynamicResource Language_Version}" Foreground="{DynamicResource RG_ForegroundBrush}"/>
+                <TextBlock Text=":" Margin="0,0,5,0" Foreground="{DynamicResource RG_ForegroundBrush}"/>
+                <TextBlock Text="{Binding Package.FormattedVersion}" Margin="0,0,5,0"/>
                 <Border Background="{DynamicResource RG_AccentBrush}" Padding="4,2,4,2" CornerRadius="2">
-                    <TextBlock Text="{Binding Label}" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                    <TextBlock Text="{Binding Package.Label}" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource RG_WhiteBrush}"/>
                 </Border>
             </StackPanel>
             <TextBlock Text="{x:Static base:ProductInformation.Copyright}"/>

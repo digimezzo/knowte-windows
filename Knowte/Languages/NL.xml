@@ -90,4 +90,5 @@
   <Text Key="Border">Rand</Text>
   <Text Key="Show_Window_Border">Geef een rand van 1 px weer rond het venster</Text>
   <Text Key="Log_File">Log bestand</Text>
+  <Text Key="Version">Versie</Text>
 </Language>

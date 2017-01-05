@@ -90,4 +90,5 @@
   <Text Key="Border">Border</Text>
   <Text Key="Show_Window_Border">Show a border of 1 px around the window</Text>
   <Text Key="Log_File">Log file</Text>
+  <Text Key="Version">Version</Text>
 </Language>

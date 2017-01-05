@@ -89,4 +89,5 @@
   <Text Key="Border">边框</Text>
   <Text Key="Show_Window_Border">在窗口周围显示 1px 的边框</Text>
   <Text Key="Log_File">Log file</Text>
+  <Text Key="Version">Version</Text>
 </Language>

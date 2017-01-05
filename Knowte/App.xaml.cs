@@ -1,5 +1,4 @@
-﻿using Digimezzo.Utilities.Extensions;
-using Digimezzo.Utilities.IO;
+﻿using Digimezzo.Utilities.IO;
 using Digimezzo.Utilities.Log;
 using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
@@ -130,7 +129,7 @@ namespace Knowte
             {
                 // This piece of code is only executed when there is 
                 // no other instance of the application running.
-                LogClient.Info("### STARTING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProcessExecutable.AssemblyVersion().FormatVersion());
+                LogClient.Info("### STARTING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProcessExecutable.AssemblyVersion().ToString());
 
                 // Show SplashScreen
                 SplashScreen splash = new SplashScreen(Assembly.LoadFrom(System.IO.Path.Combine(ProcessExecutable.ExecutionFolder(), Assembly.GetEntryAssembly().GetName().Name + ".exe")), "Splash.png");
