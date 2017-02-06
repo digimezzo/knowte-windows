@@ -17,10 +17,6 @@
             <Label Content="{DynamicResource Language_Follow_Windows_Color}"/>
             <dc:Windows10ToggleSwitch x:Name="CheckBoxWindowsColor" HorizontalAlignment="Left" Margin="5,5,0,0" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" IsChecked="{Binding CheckBoxWindowsColorChecked}" Accent="{DynamicResource RG_AccentBrush}"/>
             <Separator Height="20" Background="Transparent" />
-            <Label Content="{DynamicResource Language_Border}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
-            <TextBlock Margin="0,5,0,0" Text="{DynamicResource Language_Show_Window_Border}" Foreground="{DynamicResource RG_ForegroundBrush}"/>
-            <dc:Windows10ToggleSwitch x:Name="CheckBoxShowWindowBorder" Margin="0,10,0,0" HorizontalAlignment="Left" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" Foreground="{DynamicResource RG_ForegroundBrush}" Accent="{DynamicResource RG_AccentBrush}" IsChecked="{Binding CheckBoxCheckBoxShowWindowBorderChecked}"/>
-            <Separator Height="20" Background="Transparent" />
             <ListBox Name="ListBoxColorSchemes" DockPanel.Dock="Left" Background="Transparent" Style="{StaticResource ColorSchemeButtons}" ItemsSource="{Binding Path=ColorSchemes}" SelectedItem="{Binding SelectedColorScheme,Mode=TwoWay}" IsHitTestVisible="{Binding Path=CheckBoxWindowsColorChecked, Converter={StaticResource InvertingBooleanConverter}}" >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -29,6 +25,10 @@
                 </ListBox.ItemsPanel>
             </ListBox>
             <controls:IconTextButton Data="{StaticResource TextButtonPlus}" Margin="5,10,0,0" HorizontalAlignment="Left" Content="{DynamicResource Language_Add_More_Colors}" Foreground="{DynamicResource RG_AccentBrush}" Command="{x:Static commonprism:ApplicationCommands.OpenPathCommand}" CommandParameter="{Binding Path=ColorSchemesDirectory}" />
+            <Separator Height="20" Background="Transparent" />
+            <Label Content="{DynamicResource Language_Border}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+            <TextBlock Margin="0,5,0,0" Text="{DynamicResource Language_Show_Window_Border}" Foreground="{DynamicResource RG_ForegroundBrush}"/>
+            <dc:Windows10ToggleSwitch x:Name="CheckBoxShowWindowBorder" Margin="0,10,0,0" HorizontalAlignment="Left" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" Foreground="{DynamicResource RG_ForegroundBrush}" Accent="{DynamicResource RG_AccentBrush}" IsChecked="{Binding CheckBoxCheckBoxShowWindowBorderChecked}"/>
             <Separator Height="20" Background="Transparent" />
             <!-- Language -->
             <Label Content="{DynamicResource Language_Language}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
