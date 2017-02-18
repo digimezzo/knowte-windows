@@ -17,7 +17,6 @@
     <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="$(var.DowngradeMessage)" />
     <InstallExecuteSequence>
       <Custom Action="KillApplication" After="LaunchConditions"/>
-      <RemoveShortcuts>0</RemoveShortcuts>
     </InstallExecuteSequence>
     <!--<WixVariable Id="WixUILicenseRtf" Value="$(var.License)" />-->
     <WixVariable Id="WixUIBannerBmp" Value="$(var.BannerBmp)" />
@@ -53,9 +52,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <!-- Start Menu -->
       <Directory Id="ProgramMenuFolder">
-        <Component Id="STARTMENUCMP" Guid="7572F6D0-250E-4AD2-B331-258FE7862620">
-          <RemoveFile Id="RemoveShortcut" Name="$(var.Product).lnk" On="uninstall" />
-        </Component>
+        <Component Id="STARTMENUCMP" Guid="7572F6D0-250E-4AD2-B331-258FE7862620"/>
       </Directory>
       <!-- Program Files -->
       <Directory Id="ProgramFilesFolder" Name="PFiles">
@@ -77,6 +74,7 @@
               <File Source="Languages\EN.xml" />
               <File Source="Languages\FR.xml" />
               <File Source="Languages\NL.xml" />
+              <File Source="Languages\PL.xml" />
               <File Source="Languages\PT-BR.xml" />
               <File Source="Languages\RU.xml" />
               <File Source="Languages\ZH-CN.xml" />
