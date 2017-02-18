@@ -1,4 +1,5 @@
-﻿using Digimezzo.Utilities.Settings;
+﻿using Digimezzo.Utilities.Log;
+using Digimezzo.Utilities.Settings;
 using Ionic.Zip;
 using Knowte.Common.Base;
 using Knowte.Common.Database;
@@ -226,12 +227,19 @@ namespace Knowte.Common.Services.Notes
 
         public void LoadNote(FlowDocument doc, Note note)
         {
-            string notesPath = System.IO.Path.Combine(this.applicationFolder, ApplicationPaths.NotesSubDirectory);
+            try
+            {
+                string notesPath = System.IO.Path.Combine(this.applicationFolder, ApplicationPaths.NotesSubDirectory);
 
-            TextRange t = new TextRange(doc.ContentStart, doc.ContentEnd);
-            FileStream f = new FileStream(System.IO.Path.Combine(notesPath, note.Id + ".xaml"), FileMode.Open);
-            t.Load(f, System.Windows.DataFormats.XamlPackage);
-            f.Close();
+                TextRange t = new TextRange(doc.ContentStart, doc.ContentEnd);
+                FileStream f = new FileStream(System.IO.Path.Combine(notesPath, note.Id + ".xaml"), FileMode.Open);
+                t.Load(f, System.Windows.DataFormats.XamlPackage);
+                f.Close();
+            }
+            catch (Exception ex)
+            {
+                LogClient.Error("Could not load the note. Exception: {0}", ex.Message);
+            }
         }
 
         public Note GetNote(string title)
