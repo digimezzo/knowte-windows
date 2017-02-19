@@ -91,4 +91,5 @@
   <Text Key="Show_Window_Border">Geef een rand van 1 px weer rond het venster</Text>
   <Text Key="Log_File">Log bestand</Text>
   <Text Key="Version">Versie</Text>
+  <Text Key="Could_Not_Open_Note">De notitie kon niet worden geopened. Raadpleeg het log bestand voor meer informatie.</Text>
 </Language>

@@ -67,9 +67,10 @@ namespace Knowte.Common.Controls
         /// Custom Activate function because the real Activate function doesn't always bring the window on top.
         /// </summary>
         /// <remarks></remarks>
-
         public void ActivateNow()
         {
+            if (!this.IsLoaded) return;
+
             this.oldTopMost = this.Topmost;
 
             if (this.WindowState == WindowState.Minimized)

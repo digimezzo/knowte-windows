@@ -90,4 +90,5 @@
   <Text Key="Show_Window_Border">Показывать вокруг окна рамку размером в 1 пикс.</Text>
   <Text Key="Log_File">Log file</Text>
   <Text Key="Version">Version</Text>
+  <Text Key="Could_Not_Open_Note">The note could not be opened. Please consult the log file for more information.</Text>
 </Language>

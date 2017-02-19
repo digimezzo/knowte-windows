@@ -14,7 +14,7 @@ namespace Knowte.Common.Services.Notes
         void UpdateNoteParameters(string id, double width, double height, double top, double left, bool maximized);
         void UpdateNoteFlag(string id, bool flagged);
         void UpdateNote(FlowDocument document, string id, string title, string notebookId, double width, double height, double top, double left, bool maximized);
-        void LoadNote(FlowDocument document, Note note);
+        LoadNoteResult LoadNote(FlowDocument document, Note note);
         void DeleteNote(string id);
         Note GetNote(string title);
         Note GetNoteById(string id);

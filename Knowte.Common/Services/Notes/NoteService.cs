@@ -225,8 +225,10 @@ namespace Knowte.Common.Services.Notes
             }
         }
 
-        public void LoadNote(FlowDocument doc, Note note)
+        public LoadNoteResult LoadNote(FlowDocument doc, Note note)
         {
+            LoadNoteResult result = LoadNoteResult.Success;
+
             try
             {
                 string notesPath = System.IO.Path.Combine(this.applicationFolder, ApplicationPaths.NotesSubDirectory);
@@ -239,7 +241,10 @@ namespace Knowte.Common.Services.Notes
             catch (Exception ex)
             {
                 LogClient.Error("Could not load the note. Exception: {0}", ex.Message);
+                result = LoadNoteResult.Error;
             }
+
+            return result;
         }
 
         public Note GetNote(string title)
@@ -502,7 +507,7 @@ namespace Knowte.Common.Services.Notes
             FlowDocument tempDoc = new FlowDocument();
             LoadNote(tempDoc, new Note { Id = id });
 
-            dynamic hyperlinks = VisualTreeUtils.GetVisuals(tempDoc).OfType<Hyperlink>();
+            var hyperlinks = VisualTreeUtils.GetVisuals(tempDoc).OfType<Hyperlink>();
 
             foreach (Hyperlink link in hyperlinks)
             {

@@ -337,27 +337,43 @@ namespace Knowte.NotesModule.Views
                 this.WindowState = WindowState.Normal;
             }
 
-            this.noteService.LoadNote(XAMLRichTextBox.Document, theNote);
-            FontFamily normalFont = new FontFamily(Defaults.NoteFont);
+            LoadNoteResult result = this.noteService.LoadNote(XAMLRichTextBox.Document, theNote);
 
-            foreach (Block block in XAMLRichTextBox.Document.Blocks)
+            if (result == LoadNoteResult.Success)
             {
-                block.Foreground = Brushes.Black;
-                block.FontFamily = normalFont;
-                block.FontSize = Defaults.DefaultNoteFontSize + SettingsClient.Get<int>("Notes", "FontSizeCorrection");
+                FontFamily normalFont = new FontFamily(Defaults.NoteFont);
+
+                foreach (Block block in XAMLRichTextBox.Document.Blocks)
+                {
+                    block.Foreground = Brushes.Black;
+                    block.FontFamily = normalFont;
+                    block.FontSize = Defaults.DefaultNoteFontSize + SettingsClient.Get<int>("Notes", "FontSizeCorrection");
+                }
+
+                XAMLRichTextBox.Document.Foreground = Brushes.Black;
+                XAMLRichTextBox.Document.FontFamily = normalFont;
+                XAMLRichTextBox.Document.FontSize = Defaults.DefaultNoteFontSize + SettingsClient.Get<int>("Notes", "FontSizeCorrection");
+
+                XAMLRichTextBox.IsUndoEnabled = false;
+                XAMLRichTextBox.IsUndoEnabled = true;
+
+                this.VisualizeUndoState();
+
+                this.noteService.UpdateOpenDate(this.Id);
+                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+            }else
+            {
+                this.dialogService.ShowNotificationDialog(
+                    this, 
+                    iconCharCode: DialogIcons.ErrorIconCode, 
+                    iconSize: DialogIcons.ErrorIconSize, 
+                    title: ResourceUtils.GetStringResource("Language_Error"), 
+                    content: ResourceUtils.GetStringResource("Language_Could_Not_Open_Note"), 
+                    okText: ResourceUtils.GetStringResource("Language_Ok"), 
+                    showViewLogs: true);
+
+                this.Close();
             }
-
-            XAMLRichTextBox.Document.Foreground = Brushes.Black;
-            XAMLRichTextBox.Document.FontFamily = normalFont;
-            XAMLRichTextBox.Document.FontSize = Defaults.DefaultNoteFontSize + SettingsClient.Get<int>("Notes", "FontSizeCorrection");
-
-            XAMLRichTextBox.IsUndoEnabled = false;
-            XAMLRichTextBox.IsUndoEnabled = true;
-
-            this.VisualizeUndoState();
-
-            this.noteService.UpdateOpenDate(this.Id);
-            this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
         }
 
         private void InitWindowNew()

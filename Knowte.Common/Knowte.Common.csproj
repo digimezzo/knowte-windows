@@ -218,6 +218,7 @@
     <Compile Include="Services\I18n\I18nService.cs" />
     <Compile Include="Services\I18n\II18nService.cs" />
     <Compile Include="Services\I18n\Language.cs" />
+    <Compile Include="Services\Notes\Enums.cs" />
     <Compile Include="Services\Notes\INotebookService.cs" />
     <Compile Include="Services\Notes\INoteService.cs" />
     <Compile Include="Services\Notes\NotebookService.cs" />
