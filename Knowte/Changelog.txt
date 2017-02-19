@@ -1,4 +1,4 @@
-2016-12-30: Knowte 1.1 Build 473 (Preview)
+2017-02-19: Knowte 1.1 Build 474 (Preview)
 ------------------------------------------
 
 - [Added] Option to show a 1px border around all windows
@@ -10,6 +10,7 @@
 - [Changed] Dark parts of the windows are now transparent and blurred on Windows 10
 - [Fixed] Possible crash when exporting a note
 - [Fixed] Issue where notes could appear on a disconnected monitor
+- [Fixed] Fixed some crashes
 
 
 2016-07-01: Knowte 1.0 Build 460 (Release)
