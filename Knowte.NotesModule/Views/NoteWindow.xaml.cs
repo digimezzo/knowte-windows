@@ -1337,7 +1337,6 @@ namespace Knowte.NotesModule.Views
             {
                 dlg.FileName = this.Title.SanitizeFilename() + ".rtf";
 
-
                 if ((bool)dlg.ShowDialog())
                 {
                     this.noteService.ExportToRtf(this.Id, this.Title, dlg.FileName);
@@ -1348,9 +1347,10 @@ namespace Knowte.NotesModule.Views
                     }
                 }
             }
-            catch (UnauthorizedAccessException)
+            catch (Exception ex)
             {
-                this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                LogClient.Error("Could not export note to rtf. Exception: {0}", ex.Message);
+                this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: true);
             }
         }
 
@@ -1376,7 +1376,6 @@ namespace Knowte.NotesModule.Views
             {
                 dlg.FileName = this.Title.SanitizeFilename() + "." + Defaults.ExportFileExtension;
 
-
                 if ((bool)dlg.ShowDialog())
                 {
                     this.noteService.ExportFile(this.Id, dlg.FileName);
@@ -1388,9 +1387,10 @@ namespace Knowte.NotesModule.Views
 
                 }
             }
-            catch (UnauthorizedAccessException)
+            catch (Exception ex)
             {
-                this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                LogClient.Error("Could not export note. Exception: {0}", ex.Message);
+                this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: true);
             }
         }
 
