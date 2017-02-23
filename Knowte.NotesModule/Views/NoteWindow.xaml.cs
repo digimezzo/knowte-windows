@@ -1063,16 +1063,16 @@ namespace Knowte.NotesModule.Views
             link.MouseLeave += this.Link_MouseLeave;
         }
 
-        private void CreateLinkedNote(string iTitle, string iId, Notebook iNotebook)
+        private void CreateLinkedNote(string title, string id, Notebook notebook)
         {
 
-            if (iTitle != null && iId != null && !iTitle.Equals("") && !iId.Equals(""))
+            if (title != null && id != null && !title.Equals("") && !id.Equals(""))
             {
-                if (!this.noteService.NoteExists(iTitle))
+                if (!this.noteService.NoteExists(title))
                 {
                     try
                     {
-                        NoteWindow notewin = new NoteWindow(iTitle, iId, iNotebook, "", true, this.appearanceService, this.jumpListService, this.eventAggregator, this.notebookService, this.noteService,
+                        NoteWindow notewin = new NoteWindow(title, id, notebook, "", true, this.appearanceService, this.jumpListService, this.eventAggregator, this.notebookService, this.noteService,
                         this.dialogService);
                         notewin.Show();
                         this.eventAggregator.GetEvent<RefreshNotesEvent>().Publish("");
@@ -1084,7 +1084,7 @@ namespace Knowte.NotesModule.Views
                 }
                 else
                 {
-                    this.eventAggregator.GetEvent<OpenNoteEvent>().Publish(iTitle);
+                    this.eventAggregator.GetEvent<OpenNoteEvent>().Publish(title);
                 }
             }
         }

@@ -69,8 +69,6 @@ namespace Knowte.Common.Controls
         /// <remarks></remarks>
         public void ActivateNow()
         {
-            if (!this.IsLoaded) return;
-
             this.oldTopMost = this.Topmost;
 
             if (this.WindowState == WindowState.Minimized)

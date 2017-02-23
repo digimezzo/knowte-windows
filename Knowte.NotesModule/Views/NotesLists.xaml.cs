@@ -14,7 +14,7 @@ namespace Knowte.NotesModule.Views
     {
         #region Variables
 
-        private IEventAggregator mEventAggregator;
+        private IEventAggregator eventAggregator;
 
         #endregion
 
@@ -30,12 +30,12 @@ namespace Knowte.NotesModule.Views
 
         #region Construction
 
-        public NotesLists(IEventAggregator iEventAggregator)
+        public NotesLists(IEventAggregator eventAggregator)
         {
             // This call is required by the designer.
             InitializeComponent();
 
-            this.mEventAggregator = iEventAggregator;
+            this.eventAggregator = eventAggregator;
         }
 
         #endregion
@@ -46,7 +46,7 @@ namespace Knowte.NotesModule.Views
         {
             if (e.Key == Key.Delete)
             {
-                this.mEventAggregator.GetEvent<DeleteNoteEvent>().Publish("");
+                this.eventAggregator.GetEvent<DeleteNoteEvent>().Publish("");
             }
         }
 
@@ -54,7 +54,7 @@ namespace Knowte.NotesModule.Views
         {
             if (e.Key == Key.Delete)
             {
-                this.mEventAggregator.GetEvent<DeleteNotebookEvent>().Publish("");
+                this.eventAggregator.GetEvent<DeleteNotebookEvent>().Publish("");
             }
         }
 
@@ -71,7 +71,7 @@ namespace Knowte.NotesModule.Views
 
             if (e.ChangedButton  == MouseButton.Left)
             {
-                this.mEventAggregator.GetEvent<OpenNoteEvent>().Publish("");
+                this.eventAggregator.GetEvent<OpenNoteEvent>().Publish("");
             }
         }
 

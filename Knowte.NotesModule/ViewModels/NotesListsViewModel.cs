@@ -1,4 +1,5 @@
-﻿using Digimezzo.Utilities.Settings;
+﻿using Digimezzo.Utilities.Log;
+using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
 using Knowte.Common.Database.Entities;
 using Knowte.Common.Prism;
@@ -167,11 +168,11 @@ namespace Knowte.NotesModule.ViewModels
             this.eventAggregator.GetEvent<DeleteNoteEvent>().Subscribe((x) => this.DeleteNote.Execute(null));
             this.eventAggregator.GetEvent<DeleteNotebookEvent>().Subscribe((x) => this.DeleteNotebook.Execute(null));
             this.eventAggregator.GetEvent<RefreshNotesEvent>().Subscribe((x) => this.RefreshNotes());
-            this.eventAggregator.GetEvent<OpenNoteEvent>().Subscribe(iNoteTitle =>
+            this.eventAggregator.GetEvent<OpenNoteEvent>().Subscribe(noteTitle =>
             {
-                if (!string.IsNullOrEmpty(iNoteTitle))
+                if (!string.IsNullOrEmpty(noteTitle))
                 {
-                    this.SelectedNote = new NoteViewModel { Title = iNoteTitle };
+                    this.SelectedNote = new NoteViewModel { Title = noteTitle };
                 }
 
                 this.OpenNoteCommand.Execute(null);
@@ -374,10 +375,9 @@ namespace Knowte.NotesModule.ViewModels
 
                     ((NoteWindow)newWindow).ActivateNow();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // This should never happen
-                    this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Note_Could_Not_Be_Opened"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    LogClient.Error("Could not open the note. Exception: {0}", ex.Message);
                 }
 
             });
