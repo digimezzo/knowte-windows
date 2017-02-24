@@ -57,7 +57,6 @@ namespace Knowte.NotesModule.ViewModels
         public DelegateCommand<string> ImportNoteCommand;
         public DelegateCommand<string> OpenNoteCommand;
         public DelegateCommand<object> NavigateBetweenNotesCommand;
-        public DelegateCommand BackupRestoreCommand { get; set; }
         #endregion
 
         #region Properties
@@ -379,9 +378,6 @@ namespace Knowte.NotesModule.ViewModels
                 }
 
             });
-
-            // Backup and restore
-            this.BackupRestoreCommand = new DelegateCommand(() => MessageBox.Show("Backup and restore"));
 
             this.searchService.Searching += (_, __) =>
             {

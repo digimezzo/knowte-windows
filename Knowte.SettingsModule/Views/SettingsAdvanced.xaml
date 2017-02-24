@@ -15,6 +15,8 @@
                 <Label Content="{DynamicResource Language_Number_Of_Notes_In_Jumplist}"/>
                 <ComboBox x:Name="ComboBoxNotesInJumpList" Padding="0" Margin="5,0,0,0" Width="60" Height="30" HorizontalAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding NumberOfNotesInJumpList}" SelectedItem="{Binding SelectedNumberOfNotesInJumpList}"/>
             </StackPanel>
+            <Separator Height="20" Background="Transparent" />
+            <Label Content="{DynamicResource Language_Backup_And_Restore}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

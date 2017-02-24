@@ -86,6 +86,7 @@
   <Text Key="Invalid_File">Неправильный файл!</Text>
   <Text Key="Link_Does_Not_Work_Anymore">Эта ссылка больше не работает.</Text>
   <Text Key="License">Лицензия</Text>
+  <Text Key="Backup_And_Restore">Backup and restore</Text>
   <Text Key="Border">Рамка</Text>
   <Text Key="Show_Window_Border">Показывать вокруг окна рамку размером в 1 пикс.</Text>
   <Text Key="Log_File">Log file</Text>
