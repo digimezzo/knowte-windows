@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Language Code="ZH-CN" Name="Chinese (Simplified)" Author="gjhwssg">
+<Language Code="ZH-CN" Name="Chinese (Simplified)" Author="gjhwssg, EMLVIRUS">
   <Text Key="Ok">确认</Text>
   <Text Key="Cancel">取消</Text>
   <Text Key="Yes">是</Text>
@@ -86,14 +86,14 @@
   <Text Key="Invalid_File">无效文件</Text>
   <Text Key="Link_Does_Not_Work_Anymore">链接无效</Text>
   <Text Key="License">许可</Text>
-  <Text Key="Backup_And_Restore">Backup and restore</Text>
+  <Text Key="Backup_And_Restore">备份与还原</Text>
   <Text Key="Border">边框</Text>
   <Text Key="Show_Window_Border">在窗口周围显示 1px 的边框</Text>
   <Text Key="Log_File">日志文件</Text>
   <Text Key="Version">版本</Text>
-  <Text Key="Could_Not_Open_Note">The note could not be opened. Please consult the log file for more information.</Text>
-  <Text Key="Backup">Backup</Text>
-  <Text Key="Backup_Description">Create a backup of your notes and notebooks.</Text>
-  <Text Key="Restore">Restore</Text>
-  <Text Key="Restore_Description">Restore your notes and notebooks from a backup. Your current notes and notebooks will be overwritten.</Text>
+  <Text Key="Could_Not_Open_Note">笔记无法打开。请查看日志文件获取更多信息。</Text>
+  <Text Key="Backup">备份</Text>
+  <Text Key="Backup_Description">为笔记和笔记本新建备份。</Text>
+  <Text Key="Restore">还原</Text>
+  <Text Key="Restore_Description">从备份中还原笔记与笔记本。当前笔记与笔记本会被覆盖。</Text>
 </Language>
