@@ -93,5 +93,7 @@
   <Text Key="Version">Version</Text>
   <Text Key="Could_Not_Open_Note">La note n'a pas pu être ouverte. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Backup">Sauvegarde</Text>
+  <Text Key="Backup_Description">Créez une sauvegarde de vos notes et blocs-notes.</Text>
   <Text Key="Restore">Restauration</Text>
+  <Text Key="Restore_Description">Restaurez vos notes et blocs-notes à partir d'une sauvegarde. Vos notes et blocs-notes actuels seront écrasés.</Text>
 </Language>
