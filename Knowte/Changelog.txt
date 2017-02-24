@@ -10,6 +10,7 @@
 - [Changed] Dark parts of the windows are now transparent and blurred on Windows 10
 - [Fixed] Possible crash when exporting a note
 - [Fixed] Issue where notes could appear on a disconnected monitor
+- [Fixed] Toolbar text is more visible
 - [Fixed] Fixed some crashes
 
 
