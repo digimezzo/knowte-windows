@@ -30,11 +30,11 @@ namespace Knowte.Common.Services.WindowsIntegration
         #endregion
 
         #region Private
-        private List<JumpTask> CreateRecentNotesJumpTasks(List<Note> recentNotes)
+        private List<JumpTask> CreateRecentNotesJumpTasks(List<Database.Entities.Note> recentNotes)
         {
             List<JumpTask> jtList = new List<JumpTask>();
 
-            foreach (Note note in recentNotes)
+            foreach (Database.Entities.Note note in recentNotes)
             {
                 jtList.Add(new JumpTask
                 {
@@ -53,7 +53,7 @@ namespace Knowte.Common.Services.WindowsIntegration
         #endregion
 
         #region Public
-        public async void RefreshJumpListAsync(List<Note> recentNotes, List<Note> flaggedNotes)
+        public async void RefreshJumpListAsync(List<Database.Entities.Note> recentNotes, List<Database.Entities.Note> flaggedNotes)
         {
             await Task.Run(() =>
             {

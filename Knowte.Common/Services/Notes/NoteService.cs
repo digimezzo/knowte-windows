@@ -17,7 +17,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Xml.Linq;
 
-namespace Knowte.Common.Services.Notes
+namespace Knowte.Common.Services.Note
 {
     public class NoteService : INoteService
     {
@@ -57,11 +57,11 @@ namespace Knowte.Common.Services.Notes
                 }
 
                 // Clear NotebookId for Notes which are in this Notebook
-                List<Note> notesToUpdate = conn.Table<Note>().Where((n) => n.NotebookId == id).ToList();
+                List<Database.Entities.Note> notesToUpdate = conn.Table<Database.Entities.Note>().Where((n) => n.NotebookId == id).ToList();
 
                 if (notesToUpdate != null & notesToUpdate.Count > 0)
                 {
-                    foreach (Note noteToUpdate in notesToUpdate)
+                    foreach (Database.Entities.Note noteToUpdate in notesToUpdate)
                     {
                         noteToUpdate.NotebookId = string.Empty;
                     }
@@ -208,7 +208,7 @@ namespace Knowte.Common.Services.Notes
             }
 
             // Add Note to database
-            var newNote = new Note
+            var newNote = new Database.Entities.Note
             {
                 Id = id,
                 NotebookId = notebookId,
@@ -235,7 +235,7 @@ namespace Knowte.Common.Services.Notes
         {
             using (var conn = this.factory.GetConnection())
             {
-                Note noteToUpdate = conn.Table<Note>().Where((n) => n.Id == id).FirstOrDefault();
+                Database.Entities.Note noteToUpdate = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
 
                 if (noteToUpdate != null)
                 {
@@ -249,7 +249,7 @@ namespace Knowte.Common.Services.Notes
         {
             using (var conn = this.factory.GetConnection())
             {
-                Note noteToUpdate = conn.Table<Note>().Where((n) => n.Id == id).FirstOrDefault();
+                Database.Entities.Note noteToUpdate = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
 
                 if (noteToUpdate != null)
                 {
@@ -272,7 +272,7 @@ namespace Knowte.Common.Services.Notes
         {
             using (var conn = this.factory.GetConnection())
             {
-                Note noteToUpdate = conn.Table<Note>().Where((n) => n.Id == id).FirstOrDefault();
+                Database.Entities.Note noteToUpdate = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
 
                 if (noteToUpdate != null)
                 {
@@ -314,7 +314,7 @@ namespace Knowte.Common.Services.Notes
             // Update Note to database
             using (var conn = this.factory.GetConnection())
             {
-                Note noteToUpdate = conn.Table<Note>().Where((n) => n.Id == id).FirstOrDefault();
+                Database.Entities.Note noteToUpdate = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
 
                 if(noteToUpdate != null)
                 {
@@ -338,7 +338,7 @@ namespace Knowte.Common.Services.Notes
             }
         }
 
-        public LoadNoteResult LoadNote(FlowDocument doc, Note note)
+        public LoadNoteResult LoadNote(FlowDocument doc, Database.Entities.Note note)
         {
             LoadNoteResult result = LoadNoteResult.Success;
 
@@ -360,24 +360,24 @@ namespace Knowte.Common.Services.Notes
             return result;
         }
 
-        public Note GetNote(string title)
+        public Database.Entities.Note GetNote(string title)
         {
-            Note requestedNote = null;
+            Database.Entities.Note requestedNote = null;
 
             using (var conn = this.factory.GetConnection())
             {
-                requestedNote = conn.Table<Note>().Where((n) => n.Title == title).FirstOrDefault();
+                requestedNote = conn.Table<Database.Entities.Note>().Where((n) => n.Title == title).FirstOrDefault();
             }
             return requestedNote;
         }
 
-        public Note GetNoteById(string id)
+        public Database.Entities.Note GetNoteById(string id)
         {
-            Note requestedNote = null;
+            Database.Entities.Note requestedNote = null;
 
             using (var conn = this.factory.GetConnection())
             {
-                requestedNote = conn.Table<Note>().Where((n) => n.Id == id).FirstOrDefault();
+                requestedNote = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
             }
             return requestedNote;
         }
@@ -386,7 +386,7 @@ namespace Knowte.Common.Services.Notes
         {
             using (var conn = this.factory.GetConnection())
             {
-                Note noteToDelete = conn.Table<Note>().Where((n) => n.Id == id).FirstOrDefault();
+                Database.Entities.Note noteToDelete = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
 
                 if(noteToDelete != null)
                 {
@@ -412,7 +412,7 @@ namespace Knowte.Common.Services.Notes
 
             using (var conn = this.factory.GetConnection())
             {
-                count = conn.Table<Note>().Where((n) => n.Title == title).Count();
+                count = conn.Table<Database.Entities.Note>().Where((n) => n.Title == title).Count();
             }
 
             return count > 0;
@@ -424,46 +424,46 @@ namespace Knowte.Common.Services.Notes
 
             using (var conn = this.factory.GetConnection())
             {
-                count = conn.Table<Note>().Where((n) => n.Id == id).Count();
+                count = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).Count();
             }
 
             return count > 0;
         }
 
-        public List<Note> GetRecentlyOpenedNotes(int number)
+        public List<Database.Entities.Note> GetRecentlyOpenedNotes(int number)
         {
-            List<Note> recentlyOpenedNotes = null;
+            List<Database.Entities.Note> recentlyOpenedNotes = null;
 
             using (var conn = this.factory.GetConnection())
             {
-                recentlyOpenedNotes = conn.Table<Note>().OrderByDescending((n) => n.OpenDate).Take(number).ToList();
+                recentlyOpenedNotes = conn.Table<Database.Entities.Note>().OrderByDescending((n) => n.OpenDate).Take(number).ToList();
             }
 
             return recentlyOpenedNotes;
         }
 
-        public List<Note> GetFlaggedNotes()
+        public List<Database.Entities.Note> GetFlaggedNotes()
         {
-            List<Note> flaggedNotes = null;
+            List<Database.Entities.Note> flaggedNotes = null;
 
             using (var conn = this.factory.GetConnection())
             {
-                flaggedNotes = conn.Table<Note>().Where((n) => n.Flagged == 1).OrderByDescending((n) => n.OpenDate).ToList();
+                flaggedNotes = conn.Table<Database.Entities.Note>().Where((n) => n.Flagged == 1).OrderByDescending((n) => n.OpenDate).ToList();
             }
 
             return flaggedNotes;
         }
 
-        public List<Note> GetNotes(Notebook notebook, string searchString, ref int count, bool orderByLastChanged, string noteFilter)
+        public List<Database.Entities.Note> GetNotes(Notebook notebook, string searchString, ref int count, bool orderByLastChanged, string noteFilter)
         {
             string[] search = searchString.Split(new char[] { ' ' });
 
-            List<Note> notes = null;
+            List<Database.Entities.Note> notes = null;
 
             using (var conn = this.factory.GetConnection())
             {
                 // First, get all the notes
-                notes = conn.Table<Note>().ToList();
+                notes = conn.Table<Database.Entities.Note>().ToList();
 
                 switch (noteFilter)
                 {
@@ -527,14 +527,14 @@ namespace Knowte.Common.Services.Notes
             thisWeekNotesCount = 0;
             flaggedNotesCount = 0;
 
-            List<Note> notes = null;
+            List<Database.Entities.Note> notes = null;
 
             using (var conn = this.factory.GetConnection())
             {
                 // First, get all the notes
-                notes = conn.Table<Note>().ToList();
+                notes = conn.Table<Database.Entities.Note>().ToList();
 
-                foreach (Note note in notes)
+                foreach (Database.Entities.Note note in notes)
                 {
                     // All notes
                     allNotesCount += 1;
@@ -618,7 +618,7 @@ namespace Knowte.Common.Services.Notes
             mergedDocument.Blocks.Add(par2);
 
             FlowDocument tempDoc = new FlowDocument();
-            LoadNote(tempDoc, new Note { Id = id });
+            LoadNote(tempDoc, new Database.Entities.Note { Id = id });
 
             var hyperlinks = VisualTreeUtils.GetVisuals(tempDoc).OfType<Hyperlink>();
 
@@ -658,7 +658,7 @@ namespace Knowte.Common.Services.Notes
 
             // Then, we create a small XML file containing the metadata
 
-            Note note = GetNoteById(noteId); // Gets the note details
+            Database.Entities.Note note = GetNoteById(noteId); // Gets the note details
 
             if (!File.Exists(outputXmlFile))
             {

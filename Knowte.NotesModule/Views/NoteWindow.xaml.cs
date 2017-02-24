@@ -7,7 +7,7 @@ using Knowte.Common.Extensions;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.Dialog;
-using Knowte.Common.Services.Notes;
+using Knowte.Common.Services.Note;
 using Knowte.Common.Services.WindowsIntegration;
 using Knowte.Common.Utils;
 using Microsoft.Win32;

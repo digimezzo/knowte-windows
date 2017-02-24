@@ -1,4 +1,4 @@
-﻿namespace Knowte.Common.Services.Notes
+﻿namespace Knowte.Common.Services.Note
 {
     public enum LoadNoteResult
     {

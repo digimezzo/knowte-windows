@@ -127,7 +127,6 @@ namespace Knowte.Common.Controls
         {
             System.Threading.Thread.Sleep(250);
             Application.Current.Dispatcher.Invoke(() => this.Topmost == this.oldTopMost);
-            System.Threading.Thread.CurrentThread.Abort();
         }
         #endregion
     }

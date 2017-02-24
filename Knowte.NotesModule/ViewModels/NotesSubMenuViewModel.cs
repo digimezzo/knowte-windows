@@ -1,5 +1,5 @@
 ﻿using Knowte.Common.Prism;
-using Knowte.Common.Services.Notes;
+using Knowte.Common.Services.Note;
 using Prism.Events;
 using Prism.Mvvm;
 

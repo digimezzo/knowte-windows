@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Documents;
 
-namespace Knowte.Common.Services.Notes
+namespace Knowte.Common.Services.Note
 {
     public interface INoteService
     {
@@ -22,15 +22,15 @@ namespace Knowte.Common.Services.Notes
         void UpdateNoteParameters(string id, double width, double height, double top, double left, bool maximized);
         void UpdateNoteFlag(string id, bool flagged);
         void UpdateNote(FlowDocument document, string id, string title, string notebookId, double width, double height, double top, double left, bool maximized);
-        LoadNoteResult LoadNote(FlowDocument document, Note note);
+        LoadNoteResult LoadNote(FlowDocument document, Database.Entities.Note note);
         void DeleteNote(string id);
-        Note GetNote(string title);
-        Note GetNoteById(string id);
+        Database.Entities.Note GetNote(string title);
+        Database.Entities.Note GetNoteById(string id);
         bool NoteExists(string title);
         bool NoteIdExists(string id);
-        List<Note> GetRecentlyOpenedNotes(int number);
-        List<Note> GetFlaggedNotes();
-        List<Note> GetNotes(Notebook notebook, string searchString, ref int count, bool orderByLastChanged, string noteFilter);
+        List<Database.Entities.Note> GetRecentlyOpenedNotes(int number);
+        List<Database.Entities.Note> GetFlaggedNotes();
+        List<Database.Entities.Note> GetNotes(Notebook notebook, string searchString, ref int count, bool orderByLastChanged, string noteFilter);
         void CountNotes(ref int allNotesCount, ref int todayNotesCount, ref int yesterdayNotesCount, ref int thisWeekNotesCount, ref int flaggedNotesCount);
         void ExportToRtf(string id, string title, string fileName);
         void Print(string id, string title);

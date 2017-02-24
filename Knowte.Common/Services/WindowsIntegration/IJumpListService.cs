@@ -9,6 +9,6 @@ namespace Knowte.Common.Services.WindowsIntegration
         string OpenNoteFromJumplistTitle { get; set; }
         bool OpenNoteFromJumplist { get; set; }
         bool NewNoteFromJumplist { get; set; }
-        void RefreshJumpListAsync(List<Note> recentNotes, List<Note> flaggedNotes);
+        void RefreshJumpListAsync(List<Database.Entities.Note> recentNotes, List<Database.Entities.Note> flaggedNotes);
     }
 }
