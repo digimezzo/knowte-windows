@@ -359,15 +359,16 @@ namespace Knowte.NotesModule.Views
 
                 this.noteService.UpdateOpenDate(this.Id);
                 this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
-            }else
+            }
+            else
             {
                 this.dialogService.ShowNotificationDialog(
-                    this, 
-                    iconCharCode: DialogIcons.ErrorIconCode, 
-                    iconSize: DialogIcons.ErrorIconSize, 
-                    title: ResourceUtils.GetStringResource("Language_Error"), 
-                    content: ResourceUtils.GetStringResource("Language_Could_Not_Open_Note"), 
-                    okText: ResourceUtils.GetStringResource("Language_Ok"), 
+                    this,
+                    iconCharCode: DialogIcons.ErrorIconCode,
+                    iconSize: DialogIcons.ErrorIconSize,
+                    title: ResourceUtils.GetStringResource("Language_Error"),
+                    content: ResourceUtils.GetStringResource("Language_Could_Not_Open_Note"),
+                    okText: ResourceUtils.GetStringResource("Language_Ok"),
                     showViewLogs: true);
 
                 this.Close();
@@ -1355,10 +1356,7 @@ namespace Knowte.NotesModule.Views
                 {
                     this.noteService.ExportToRtf(this.Id, this.Title, dlg.FileName);
 
-                    if (!dlg.FileName.Equals(lastExportDirectory))
-                    {
-                        SettingsClient.Set<string>("General", "LastExportDirectory", dlg.FileName);
-                    }
+                    SettingsClient.Set<string>("General", "LastExportDirectory", Path.GetDirectoryName(dlg.FileName));
                 }
             }
             catch (Exception ex)
@@ -1394,11 +1392,7 @@ namespace Knowte.NotesModule.Views
                 {
                     this.noteService.ExportFile(this.Id, dlg.FileName);
 
-                    if (!dlg.FileName.Equals(lastExportDirectory))
-                    {
-                        SettingsClient.Set<string>("General", "LastExportDirectory", dlg.FileName);
-                    }
-
+                    SettingsClient.Set<string>("General", "LastExportDirectory", Path.GetDirectoryName(dlg.FileName));
                 }
             }
             catch (Exception ex)
