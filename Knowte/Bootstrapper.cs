@@ -55,7 +55,6 @@ namespace Knowte
             Container.RegisterSingletonType<IJumpListService, JumpListService>();
             Container.RegisterSingletonType<IDialogService, DialogService>();
             Container.RegisterSingletonType<IBackupService, BackupService>();
-            Container.RegisterType<INotebookService, NotebookService>();
             Container.RegisterType<INoteService, NoteService>();
             Container.RegisterType<ICommandService, CommandService>();
         }

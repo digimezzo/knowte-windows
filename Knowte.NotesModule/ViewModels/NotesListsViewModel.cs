@@ -42,7 +42,6 @@ namespace Knowte.NotesModule.ViewModels
         public delegate void ThemeChangedDelegate(object sender, EventArgs e);
 
         private IEventAggregator eventAggregator;
-        private INotebookService notebookSevice;
         private INoteService noteService;
         private IAppearanceService appearanceService;
         private IJumpListService jumpListService;
@@ -146,10 +145,9 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Construction
-        public NotesListsViewModel(IEventAggregator eventAggregator, INotebookService notebookSevice, INoteService noteService, IAppearanceService appearanceService, IJumpListService jumpListService, ISearchService searchService, IDialogService dialogService, I18nService i18nService)
+        public NotesListsViewModel(IEventAggregator eventAggregator, INoteService noteService, IAppearanceService appearanceService, IJumpListService jumpListService, ISearchService searchService, IDialogService dialogService, I18nService i18nService)
         {
             this.eventAggregator = eventAggregator;
-            this.notebookSevice = notebookSevice;
             this.noteService = noteService;
             this.appearanceService = appearanceService;
             this.jumpListService = jumpListService;
@@ -219,9 +217,9 @@ namespace Knowte.NotesModule.ViewModels
                         try
                         {
 
-                            if (!this.notebookSevice.NotebookExists(newNotebook))
+                            if (!this.noteService.NotebookExists(newNotebook))
                             {
-                                this.notebookSevice.NewNotebook(newNotebook);
+                                this.noteService.NewNotebook(newNotebook);
 
                                 this.RefreshNotebooks();
                                 this.SelectedNotebook = new NotebookViewModel
@@ -284,7 +282,7 @@ namespace Knowte.NotesModule.ViewModels
                         };
                     }
 
-                    NoteWindow notewin = new NoteWindow(initialTitle, "", theNotebook, this.searchService.SearchText, true, this.appearanceService, this.jumpListService, this.eventAggregator, this.notebookSevice, this.noteService,
+                    NoteWindow notewin = new NoteWindow(initialTitle, "", theNotebook, this.searchService.SearchText, true, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
                     this.dialogService);
 
                     this.noteService.IncreaseNewNoteCount();
@@ -370,7 +368,7 @@ namespace Knowte.NotesModule.ViewModels
                         }
                     }
 
-                    NoteWindow newWindow = new NoteWindow(this.SelectedNote.Title, "", this.notebookSevice.GetNotebook(this.SelectedNote.NotebookId), this.searchService.SearchText, false, this.appearanceService, this.jumpListService, this.eventAggregator, this.notebookSevice, this.noteService,
+                    NoteWindow newWindow = new NoteWindow(this.SelectedNote.Title, "", this.noteService.GetNotebook(this.SelectedNote.NotebookId), this.searchService.SearchText, false, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
                     this.dialogService);
 
                     ((NoteWindow)newWindow).ActivateNow();
@@ -488,7 +486,7 @@ namespace Knowte.NotesModule.ViewModels
                 IsDragOver = false
             });
 
-            foreach (Notebook nb in this.notebookSevice.GetNotebooks(ref this.totalNotebooks))
+            foreach (Notebook nb in this.noteService.GetNotebooks(ref this.totalNotebooks))
             {
                 localNotebooks.Add(new NotebookViewModel
                 {
@@ -664,7 +662,7 @@ namespace Knowte.NotesModule.ViewModels
 
             if (dialogResult)
             {
-                this.notebookSevice.DeleteNotebook(notebook.Id);
+                this.noteService.DeleteNotebook(notebook.Id);
                 this.RefreshNotebooks();
                 this.SelectedNotebook = new NotebookViewModel
                 {
@@ -706,7 +704,7 @@ namespace Knowte.NotesModule.ViewModels
 
         public void DeleteNotebookFromListExecute(object obj)
         {
-            DeleteNotebookAction(this.notebookSevice.GetNotebook(obj as string));
+            DeleteNotebookAction(this.noteService.GetNotebook(obj as string));
         }
 
         public bool CanDeleteNotebookFromListExecute(object obj)
@@ -722,7 +720,7 @@ namespace Knowte.NotesModule.ViewModels
 
         public void EditNotebookFromListExecute(object obj)
         {
-            Notebook notebook = this.notebookSevice.GetNotebook(obj as string);
+            Notebook notebook = this.noteService.GetNotebook(obj as string);
 
             string responseText = notebook.Title;
             bool dialogResult = this.dialogService.ShowInputDialog(null, iconCharCode: DialogIcons.EditIconCode, iconSize: DialogIcons.EditIconSize, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
@@ -733,9 +731,9 @@ namespace Knowte.NotesModule.ViewModels
                 if (!string.IsNullOrEmpty(responseText))
                 {
 
-                    if (!this.notebookSevice.NotebookExists(new Notebook { Title = responseText }))
+                    if (!this.noteService.NotebookExists(new Notebook { Title = responseText }))
                     {
-                        this.notebookSevice.UpdateNotebook(notebook.Id, responseText);
+                        this.noteService.UpdateNotebook(notebook.Id, responseText);
 
                         this.RefreshNotebooks();
                     }
@@ -809,9 +807,9 @@ namespace Knowte.NotesModule.ViewModels
                 if (!string.IsNullOrEmpty(responseText))
                 {
 
-                    if (!this.notebookSevice.NotebookExists(new Notebook { Title = responseText }))
+                    if (!this.noteService.NotebookExists(new Notebook { Title = responseText }))
                     {
-                        this.notebookSevice.UpdateNotebook(this.SelectedNotebook.Title, responseText);
+                        this.noteService.UpdateNotebook(this.SelectedNotebook.Title, responseText);
 
                         this.RefreshNotebooks();
                     }

@@ -48,7 +48,6 @@ namespace Knowte.NotesModule.Views
         private IAppearanceService appearanceService;
         private IJumpListService jumpListService;
         private IEventAggregator eventAggregator;
-        private INotebookService notebookService;
         private INoteService noteService;
         private IDialogService dialogService;
         #endregion
@@ -97,7 +96,7 @@ namespace Knowte.NotesModule.Views
         #endregion
 
         #region Construction
-        public NoteWindow(string title, string id, Notebook notebook, string searchText, bool isNew, IAppearanceService appearanceService, IJumpListService jumpListService, IEventAggregator eventAggregator, INotebookService notebookService, INoteService noteService, IDialogService dialogService)
+        public NoteWindow(string title, string id, Notebook notebook, string searchText, bool isNew, IAppearanceService appearanceService, IJumpListService jumpListService, IEventAggregator eventAggregator, INoteService noteService, IDialogService dialogService)
         {
             // This call is required by the designer.
             InitializeComponent();
@@ -109,7 +108,6 @@ namespace Knowte.NotesModule.Views
             this.appearanceService = appearanceService;
             this.jumpListService = jumpListService;
             this.eventAggregator = eventAggregator;
-            this.notebookService = notebookService;
             this.noteService = noteService;
             this.dialogService = dialogService;
 
@@ -241,7 +239,7 @@ namespace Knowte.NotesModule.Views
                 IsDefaultNotebook = true
             });
 
-            foreach (Notebook nb in this.notebookService.GetNotebooks())
+            foreach (Notebook nb in this.noteService.GetNotebooks())
             {
                 this.NotebooksComboBox.Items.Add(nb);
             }
@@ -391,7 +389,7 @@ namespace Knowte.NotesModule.Views
             // Immediately save the note
 
             // Save the new note for the first time (SaveNote is not required here)
-            this.noteService.NewNote(XAMLRichTextBox.Document, this.Id, this.InitialTitle, this.notebookService.GetNotebookId(this.notebook.Title));
+            this.noteService.NewNote(XAMLRichTextBox.Document, this.Id, this.InitialTitle, this.noteService.GetNotebookId(this.notebook.Title));
 
             FontFamily normalFont = new FontFamily(Defaults.NoteFont);
 
@@ -431,7 +429,7 @@ namespace Knowte.NotesModule.Views
 
                         if (this.isContentChanged)
                         {
-                            this.noteService.UpdateNote(XAMLRichTextBox.Document, this.Id, this.TextBoxTitle.Text, this.notebookService.GetNotebookId(this.notebook.Title), this.ActualWidth, this.ActualHeight, this.Top, this.Left, isMaximized);
+                            this.noteService.UpdateNote(XAMLRichTextBox.Document, this.Id, this.TextBoxTitle.Text, this.noteService.GetNotebookId(this.notebook.Title), this.ActualWidth, this.ActualHeight, this.Top, this.Left, isMaximized);
 
                             // We only refresh lists when saving everything
                             try
@@ -1072,7 +1070,7 @@ namespace Knowte.NotesModule.Views
                 {
                     try
                     {
-                        NoteWindow notewin = new NoteWindow(title, id, notebook, "", true, this.appearanceService, this.jumpListService, this.eventAggregator, this.notebookService, this.noteService,
+                        NoteWindow notewin = new NoteWindow(title, id, notebook, "", true, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
                         this.dialogService);
                         notewin.Show();
                         this.eventAggregator.GetEvent<RefreshNotesEvent>().Publish("");

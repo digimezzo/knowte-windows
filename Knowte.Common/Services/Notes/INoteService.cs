@@ -7,6 +7,14 @@ namespace Knowte.Common.Services.Notes
 {
     public interface INoteService
     {
+        void NewNotebook(Notebook notebook);
+        void DeleteNotebook(string id);
+        void UpdateNotebook(string id, string newTitle);
+        bool NotebookExists(Notebook notebook);
+        string GetNotebookId(string notebookTitle);
+        List<Notebook> GetNotebooks(ref int totalNotebooks);
+        List<Notebook> GetNotebooks();
+        Notebook GetNotebook(string id);
         int GetNewNoteCount();
         void IncreaseNewNoteCount();
         void NewNote(FlowDocument document, string id, string title, string notebookId);
