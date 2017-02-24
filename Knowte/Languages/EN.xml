@@ -92,4 +92,6 @@
   <Text Key="Log_File">Log file</Text>
   <Text Key="Version">Version</Text>
   <Text Key="Could_Not_Open_Note">The note could not be opened. Please consult the log file for more information.</Text>
+  <Text Key="Backup">Backup</Text>
+  <Text Key="Restore">Restore</Text>
 </Language>

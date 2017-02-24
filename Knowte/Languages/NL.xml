@@ -92,4 +92,6 @@
   <Text Key="Log_File">Log bestand</Text>
   <Text Key="Version">Versie</Text>
   <Text Key="Could_Not_Open_Note">De notitie kon niet worden geopened. Raadpleeg het log bestand voor meer informatie.</Text>
+  <Text Key="Backup">Backup</Text>
+  <Text Key="Restore">Restore</Text>
 </Language>

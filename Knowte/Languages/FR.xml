@@ -92,4 +92,6 @@
   <Text Key="Log_File">Fichier log</Text>
   <Text Key="Version">Version</Text>
   <Text Key="Could_Not_Open_Note">La note n'a pas pu être ouverte. Consultez le fichier log pour plus de détails.</Text>
+  <Text Key="Backup">Sauvegarde</Text>
+  <Text Key="Restore">Restauration</Text>
 </Language>
