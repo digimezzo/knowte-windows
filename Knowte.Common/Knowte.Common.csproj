@@ -169,6 +169,8 @@
     <Compile Include="Helpers\FontSizeCorrection.cs" />
     <Compile Include="IO\ApplicationPaths.cs" />
     <Compile Include="IO\StrongNetNamedPipeBinding.cs" />
+    <Compile Include="Presentation\Converters\AddEllipsisConverter.cs" />
+    <Compile Include="Presentation\Utils\BindingProxy.cs" />
     <Compile Include="Presentation\Views\Empty.xaml.cs">
       <DependentUpon>Empty.xaml</DependentUpon>
     </Compile>

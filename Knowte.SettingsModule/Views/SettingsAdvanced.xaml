@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+             xmlns:presentationutils="clr-namespace:Knowte.Common.Presentation.Utils;assembly=Knowte.Common"
              prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -18,12 +19,16 @@
             <Separator Height="20" Background="Transparent" />
             <Label Content="{DynamicResource Language_Backup_And_Restore}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
             <StackPanel Margin="0,10,0,0">
-                <DockPanel>
-                    <Button DockPanel.Dock="Left" Content="{DynamicResource Language_Backup}" Style="{StaticResource ColoredButton}" Margin="0,0,20,0"/>
+                <StackPanel.Resources>
+                    <presentationutils:BindingProxy x:Key="BackupProxy" Data="{DynamicResource Language_Backup}"/>
+                    <presentationutils:BindingProxy x:Key="RestoreProxy" Data="{DynamicResource Language_Restore}"/>
+                </StackPanel.Resources>
+                <DockPanel Margin="5,0,0,0">
+                    <Button DockPanel.Dock="Left" Content="{Binding Source={StaticResource BackupProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0"/>
                     <TextBlock Text="{DynamicResource Language_Backup_Description}" Foreground="{DynamicResource RG_ForegroundBrush}" VerticalAlignment="Center"/>
                 </DockPanel>
-                <DockPanel Margin="0,10,0,0">
-                    <Button DockPanel.Dock="Left" Content="{DynamicResource Language_Restore}" Style="{StaticResource ColoredButton}" Margin="0,0,20,0"/>
+                <DockPanel Margin="5,10,0,0">
+                    <Button DockPanel.Dock="Left" Content="{Binding Source={StaticResource RestoreProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0"/>
                     <TextBlock Text="{DynamicResource Language_Restore_Description}" Foreground="{DynamicResource RG_ForegroundBrush}" VerticalAlignment="Center"/>
                 </DockPanel>
             </StackPanel>
