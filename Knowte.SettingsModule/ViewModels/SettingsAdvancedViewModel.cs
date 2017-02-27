@@ -77,10 +77,10 @@ namespace Knowte.SettingsModule.ViewModels
         #endregion
 
         #region Private
-        private bool SaveBackupFile(string backupFile)
+        private bool SaveBackupFile(ref string backupFile)
         {
             var dlg = new SaveFileDialog();
-            dlg.FileName = "Document"; // TODO
+            dlg.FileName = DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss.fff");
             dlg.DefaultExt = Defaults.BackupFileExtension;
             dlg.Filter = ProductInformation.ApplicationDisplayName + " backup file (*." + Defaults.BackupFileExtension + ")|*." + Defaults.BackupFileExtension + "|All files (*.*)|*.*";
 
@@ -98,6 +98,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             if ((bool)dlg.ShowDialog())
             {
+                backupFile = Path.Combine(dlg.FileName);
                 return true;
             }
 
@@ -136,7 +137,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             // Choose a backup file
             string backupFile = string.Empty;
-            bool isBackupFileChosen = this.SaveBackupFile(backupFile);
+            bool isBackupFileChosen = this.SaveBackupFile(ref backupFile);
             if (!isBackupFileChosen) return;
 
             // Perform the backup to file

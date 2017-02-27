@@ -79,8 +79,6 @@ namespace Knowte.Common.Services.Note
             {
                 // SQLite.Net doesn't support ToLower(), so we just use a query.
                 notebooks = conn.Query<Notebook>("SELECT * FROM Notebook ORDER BY LOWER(Title);");
-                //notebooks = conn.Table<Notebook>().ToList();
-                //notebooks = notebooks.OrderBy((nb) => nb.Title.ToLower()).ToList();
                 totalNotebooks = notebooks.Count();
             }
 
