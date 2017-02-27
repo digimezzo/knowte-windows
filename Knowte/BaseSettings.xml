@@ -2,7 +2,7 @@
 <Settings>
   <Namespace Name="Configuration">
     <Setting Name="Version">
-      <Value>3</Value>
+      <Value>4</Value>
     </Setting>
     <Setting Name="IsPortable">
       <Value>False</Value>
@@ -25,6 +25,9 @@
       <Value>50</Value>
     </Setting>
     <Setting Name="LastExportDirectory">
+      <Value></Value>
+    </Setting>
+    <Setting Name="LastBackupDirectory">
       <Value></Value>
     </Setting>
   </Namespace>

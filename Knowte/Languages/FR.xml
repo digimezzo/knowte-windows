@@ -75,10 +75,10 @@
   <Text Key="Hide_Search">Fermer recherche</Text>
   <Text Key="Error">Erreur</Text>
   <Text Key="Warning">Attention</Text>
-  <Text Key="Error_Unexpected_Error">Une erreur inattendue est survenue.</Text>
+  <Text Key="Error_Unexpected_Error">Une erreur inattendue s'est produite.</Text>
   <Text Key="Note_Could_Not_Be_Opened">La note n'a pas pu être ouverte.</Text>
-  <Text Key="Problem_Creating_Notebook">Une erreur est survenue durant la création du bloc-notes.</Text>
-  <Text Key="Problem_Creating_Note">Une erreur est survenue durant la création de la note.</Text>
+  <Text Key="Problem_Creating_Notebook">Une erreur s'est produite durant la création du bloc-notes.</Text>
+  <Text Key="Problem_Creating_Note">Une erreur s'est produite durant la création de la note.</Text>
   <Text Key="Note_Needs_Name">Votre note a besoin d'un nom.</Text>
   <Text Key="Already_Note_With_That_Name">Il y a déja une note avec ce nom.</Text>
   <Text Key="Notebook_Needs_Name">Votre bloc-notes a besoin d'un nom. Veuillez essayer à nouveau.</Text>
@@ -96,4 +96,6 @@
   <Text Key="Backup_Description">Créez une sauvegarde de vos notes et blocs-notes.</Text>
   <Text Key="Restore">Restauration</Text>
   <Text Key="Restore_Description">Restaurez vos notes et blocs-notes à partir d'une sauvegarde. Vos notes et blocs-notes actuels seront écrasés.</Text>
+  <Text Key="Error_Backup_Error">Une erreur s'est produite durant la sauvegarde. Consultez le fichier log pour plus de détails.</Text>
+  <Text Key="Error_Restore_Error">Une erreur s'est produite durant la restauration. Consultez le fichier log pour plus de détails.</Text>
 </Language>

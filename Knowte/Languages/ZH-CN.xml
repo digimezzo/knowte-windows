@@ -96,4 +96,6 @@
   <Text Key="Backup_Description">为笔记和笔记本新建备份。</Text>
   <Text Key="Restore">还原</Text>
   <Text Key="Restore_Description">从备份中还原笔记与笔记本。当前笔记与笔记本会被覆盖。</Text>
+  <Text Key="Error_Backup_Error">An error occurred during the backup. Please consult the log file for more information.</Text>
+  <Text Key="Error_Restore_Error">An error occurred during the restore. Please consult the log file for more information.</Text>
 </Language>

@@ -27,5 +27,6 @@ namespace Knowte.Common.Base
         public static int ShowNotificationSeconds = 10;
         public static int AnimationDuration = 50;
         public static string ExportFileExtension = "knowte";
+        public static string BackupFileExtension = "knowtebackup";
     }
 }

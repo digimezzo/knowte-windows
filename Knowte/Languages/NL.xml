@@ -96,4 +96,6 @@
   <Text Key="Backup_Description">Maak een back-up van jouw notities en notitieboeken.</Text>
   <Text Key="Restore">Herstel</Text>
   <Text Key="Restore_Description">Herstel jouw notities en notitieboeken uit een back-up. Jouw huidige notities en notitieboeken worden overschreven.</Text>
+  <Text Key="Error_Backup_Error">Er is een fout opgetreden tijdens de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
+  <Text Key="Error_Restore_Error">Er is een fout opgetreden tijdens het herstellen van de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
 </Language>

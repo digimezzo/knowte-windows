@@ -315,7 +315,6 @@ namespace Knowte.NotesModule.ViewModels
                     dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 }
 
-
                 if ((bool)dlg.ShowDialog())
                 {
                     string importFile = dlg.FileName;
@@ -338,7 +337,6 @@ namespace Knowte.NotesModule.ViewModels
                     {
                         this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                     }
-
                 }
             });
             Common.Prism.ApplicationCommands.ImportNoteCommand.RegisterCommand(this.ImportNoteCommand);

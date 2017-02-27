@@ -96,4 +96,6 @@
   <Text Key="Backup_Description">Create a backup of your notes and notebooks.</Text>
   <Text Key="Restore">Restore</Text>
   <Text Key="Restore_Description">Restore your notes and notebooks from a backup. Your current notes and notebooks will be overwritten.</Text>
+  <Text Key="Error_Backup_Error">An error occurred during the backup. Please consult the log file for more information.</Text>
+  <Text Key="Error_Restore_Error">An error occurred during the restore. Please consult the log file for more information.</Text>
 </Language>
