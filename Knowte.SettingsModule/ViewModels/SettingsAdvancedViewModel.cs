@@ -1,5 +1,4 @@
-﻿using Digimezzo.Utilities.Log;
-using Digimezzo.Utilities.Settings;
+﻿using Digimezzo.Utilities.Settings;
 using Digimezzo.Utilities.Utils;
 using Knowte.Common.Base;
 using Knowte.Common.Prism;

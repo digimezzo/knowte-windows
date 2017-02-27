@@ -415,8 +415,6 @@ namespace Knowte.NotesModule.Views
 
             try
             {
-                string applicationFolder = SettingsClient.ApplicationFolder();
-
                 if (this.InitialTitle.Equals(this.TextBoxTitle.Text) | !this.noteService.NoteExists(this.TextBoxTitle.Text))
                 {
                     if (!this.TextBoxTitle.Text.Trim().Equals(""))
