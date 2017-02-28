@@ -12,7 +12,15 @@ namespace Knowte.Common.Services.Backup
     public class BackupService : IBackupService
     {
         #region Variables
+        private SQLiteConnectionFactory factory;
         private string applicationFolder = SettingsClient.ApplicationFolder();
+        #endregion
+
+        #region Construction
+        public BackupService()
+        {
+            this.factory = new SQLiteConnectionFactory();
+        }
         #endregion
 
         #region IBackupService
@@ -44,8 +52,7 @@ namespace Knowte.Common.Services.Backup
                         }
 
                         // Add database file
-                        var factory = new SQLiteConnectionFactory();
-                        archive.CreateEntryFromFile(factory.DatabaseFile, Path.GetFileName(factory.DatabaseFile));
+                        archive.CreateEntryFromFile(this.factory.DatabaseFile, Path.GetFileName(this.factory.DatabaseFile));
                     }
 
                     File.Move(tempFile, backupFile);
@@ -62,8 +69,50 @@ namespace Knowte.Common.Services.Backup
 
         public async Task<bool> RestoreAsync(string backupFile)
         {
-            // TODO: implement
-            return false;
+            if (string.IsNullOrWhiteSpace(backupFile))
+            {
+                LogClient.Error("Could not perform backup: backupFile is empty.");
+                return false;
+            }
+
+            bool isSuccess = true;
+
+            string notesDirectoryPath = Path.Combine(this.applicationFolder, ApplicationPaths.NotesSubDirectory);
+
+            try
+            {
+                Directory.Move(notesDirectoryPath, notesDirectoryPath + ".old"); // Move Notes directory to Notes.old
+                File.Move(this.factory.DatabaseFile, this.factory.DatabaseFile + ".old"); // Move Knowte.db to Knowte.db.old.
+
+                // Restore backup
+                ZipFile.ExtractToDirectory(backupFile, this.applicationFolder);
+
+                Directory.Delete(notesDirectoryPath + ".old", true); // Delete Notes.old
+                File.Delete(this.factory.DatabaseFile + ".old"); // Delete Knowte.db.old
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+                LogClient.Error("Could not perform restore. Exception: {0}", ex.Message);
+
+                try
+                {
+                    // If restore fails, restore from .old files
+                    LogClient.Error("Trying to restore original files.");
+
+                    if(File.Exists(this.factory.DatabaseFile)) File.Delete(this.factory.DatabaseFile); // Delete Knowte.db
+                    if (Directory.Exists(notesDirectoryPath)) Directory.Delete(notesDirectoryPath, true); // Delete Notes
+
+                    Directory.Move(notesDirectoryPath + ".old", notesDirectoryPath);  // Move Notes.old to Notes
+                    File.Move(this.factory.DatabaseFile + ".old", this.factory.DatabaseFile);  // Move Knowte.db.old to Knowte.db
+                }
+                catch (Exception ex2)
+                {
+                    LogClient.Error("Could not restore original files. Exception: {0}", ex2.Message);
+                }
+            }
+
+            return isSuccess;
         }
         #endregion
     }
