@@ -25,7 +25,6 @@ namespace Knowte.SettingsModule.ViewModels
 
         private Language selectedLanguage;
         private bool checkBoxWindowsColorChecked;
-        private bool checkBoxCheckBoxShowWindowBorderChecked;
         private bool checkBoxSortChecked;
         private IEventAggregator eventAggregator;
         #endregion
@@ -94,17 +93,6 @@ namespace Knowte.SettingsModule.ViewModels
             }
         }
 
-        public bool CheckBoxCheckBoxShowWindowBorderChecked
-        {
-            get { return this.checkBoxCheckBoxShowWindowBorderChecked; }
-            set
-            {
-                SettingsClient.Set<bool>("Appearance", "ShowWindowBorder", value);
-                SetProperty<bool>(ref this.checkBoxCheckBoxShowWindowBorderChecked, value);
-                Application.Current.Dispatcher.Invoke(() => this.eventAggregator.GetEvent<SettingShowWindowBorderChanged>().Publish(value));
-            }
-        }
-
         public bool CheckBoxSortChecked
         {
             get { return this.checkBoxSortChecked; }
@@ -146,7 +134,6 @@ namespace Knowte.SettingsModule.ViewModels
         private void LoadCheckBoxStates()
         {
             this.CheckBoxWindowsColorChecked = SettingsClient.Get<bool>("Appearance", "FollowWindowsColor");
-            this.CheckBoxCheckBoxShowWindowBorderChecked = SettingsClient.Get<bool>("Appearance", "ShowWindowBorder");
             this.CheckBoxSortChecked = SettingsClient.Get<bool>("Appearance", "SortByModificationDate");
         }
 

@@ -49,8 +49,4 @@ namespace Knowte.Common.Prism
     public class TriggerLoadNoteAnimationEvent : PubSubEvent<string>
     {
     }
-
-    public class SettingShowWindowBorderChanged : PubSubEvent<bool>
-    {
-    }
 }

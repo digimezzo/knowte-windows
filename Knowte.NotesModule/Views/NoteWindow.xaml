@@ -22,30 +22,30 @@
                         xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
                         prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
-    <Border x:Name="WindowBorder">
-        <Grid>
-            <Border x:Name="BottomControlsBackground" Panel.ZIndex="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="42" Background="{DynamicResource RG_BottomControlsBackgroundBrush}"/>
-            <Border Panel.ZIndex="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,42" Background="{DynamicResource RG_WindowBackgroundBrush}"/>
-            <DockPanel Grid.Row="0" Grid.Column="0" Panel.ZIndex="2">
-                <DockPanel DockPanel.Dock="Top">
-                    <StackPanel DockPanel.Dock="Top">
-                        <DockPanel x:Name="HeaderMain" MinHeight="50" Margin="20,20,20,10">
-                            <Viewbox Width="50" Height="50" VerticalAlignment="Top">
-                                <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_AccentBrush}"/>
-                            </Viewbox>
-                            <StackPanel VerticalAlignment="Center" Margin="20,0,0,0">
-                                <DockPanel>
-                                    <ComboBox x:Name="NotebooksComboBox" DockPanel.Dock="Left" Margin="0,0,0,0" Style="{StaticResource ComboBoxNotebooks}" ToolTip="{DynamicResource Language_Click_Here_To_Change_Notebook}" SelectionChanged="NotebooksComboBox_SelectionChanged" VerticalAlignment="Top"/>
-                                    <StackPanel/>
-                                </DockPanel>
-                                <TextBox x:Name="TextBoxTitle" TextWrapping="Wrap" Margin="0,0,10,0" ToolTip="{DynamicResource Language_Click_Here_To_Change_Title}" Foreground="{DynamicResource RG_AccentBrush}" Background="Transparent" BorderThickness="0" FontSize="22" FontWeight="Light" VerticalAlignment="Center" VerticalContentAlignment="Center" PreviewKeyDown="TextBoxTitle_PreviewKeyDown" TextChanged="TextBoxTitle_TextChanged"/>
-                            </StackPanel>
-                        </DockPanel>
-                        <DockPanel x:Name="SearchPanel" DockPanel.Dock="Top">
-                            <Button x:Name="HideSearchIcon" DockPanel.Dock="Right" Margin="10,0,0,0" ToolTip="{DynamicResource Language_Hide_Search}" Click="HideSearchIcon_Click">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <controls:FontIcon 
+    <Grid>
+        <Border Panel.ZIndex="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,42" Background="{DynamicResource RG_WindowBackgroundBrush}"/>
+        <Border Panel.ZIndex="1" x:Name="WindowBorder" BorderThickness="1" BorderBrush="{DynamicResource RG_BorderBrush}"/>
+        <Border Panel.ZIndex="2" x:Name="BottomControlsBackground" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="42" Background="{DynamicResource RG_BottomControlsBackgroundBrush}"/>
+        <DockPanel Panel.ZIndex="3" Grid.Row="0" Grid.Column="0">
+            <DockPanel DockPanel.Dock="Top">
+                <StackPanel DockPanel.Dock="Top">
+                    <DockPanel x:Name="HeaderMain" MinHeight="50" Margin="20,20,20,10">
+                        <Viewbox Width="50" Height="50" VerticalAlignment="Top">
+                            <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_AccentBrush}"/>
+                        </Viewbox>
+                        <StackPanel VerticalAlignment="Center" Margin="20,0,0,0">
+                            <DockPanel>
+                                <ComboBox x:Name="NotebooksComboBox" DockPanel.Dock="Left" Margin="0,0,0,0" Style="{StaticResource ComboBoxNotebooks}" ToolTip="{DynamicResource Language_Click_Here_To_Change_Notebook}" SelectionChanged="NotebooksComboBox_SelectionChanged" VerticalAlignment="Top"/>
+                                <StackPanel/>
+                            </DockPanel>
+                            <TextBox x:Name="TextBoxTitle" TextWrapping="Wrap" Margin="0,0,10,0" ToolTip="{DynamicResource Language_Click_Here_To_Change_Title}" Foreground="{DynamicResource RG_AccentBrush}" Background="Transparent" BorderThickness="0" FontSize="22" FontWeight="Light" VerticalAlignment="Center" VerticalContentAlignment="Center" PreviewKeyDown="TextBoxTitle_PreviewKeyDown" TextChanged="TextBoxTitle_TextChanged"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <DockPanel x:Name="SearchPanel" DockPanel.Dock="Top">
+                        <Button x:Name="HideSearchIcon" DockPanel.Dock="Right" Margin="10,0,0,0" ToolTip="{DynamicResource Language_Hide_Search}" Click="HideSearchIcon_Click">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <controls:FontIcon 
                                     x:Name="TheIcon"
                                     Glyph="&#xE711;"
                                     Width="24" 
@@ -54,25 +54,25 @@
                                     HorizontalAlignment="Center" 
                                     VerticalAlignment="Center" 
                                     Foreground="{DynamicResource RG_AccentBrush}"/>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="TheIcon" Property="Opacity" Value="0.8"/>
-                                            </Trigger>
-                                            <Trigger Property="Button.IsPressed" Value="true">
-                                                <Setter TargetName="TheIcon" Property="Opacity" Value="0.6"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                            <controls:SearchBox x:Name="SearchBox" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" TextChanged="SearchBox_TextChanged" Background="{DynamicResource RG_SearchInvisibleBackgroundBrush}"  VisibleBackground="{DynamicResource RG_SearchBackgroundBrush}" Foreground="{DynamicResource RG_ForegroundBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_ForegroundBrush}"/>
-                        </DockPanel>
-                    </StackPanel>
-                    <DockPanel>
-                        <Grid DockPanel.Dock="Bottom">
-                            <DockPanel x:Name="MainPanel" Grid.Column="0" Grid.Row="0" Height="42" Panel.ZIndex="{Binding MainPanelZIndex}">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <controls:DropUpButton
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="TheIcon" Property="Opacity" Value="0.8"/>
+                                        </Trigger>
+                                        <Trigger Property="Button.IsPressed" Value="true">
+                                            <Setter TargetName="TheIcon" Property="Opacity" Value="0.6"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <controls:SearchBox x:Name="SearchBox" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" TextChanged="SearchBox_TextChanged" Background="{DynamicResource RG_SearchInvisibleBackgroundBrush}"  VisibleBackground="{DynamicResource RG_SearchBackgroundBrush}" Foreground="{DynamicResource RG_BlackBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_BlackBrush}"/>
+                    </DockPanel>
+                </StackPanel>
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <DockPanel x:Name="MainPanel" Grid.Column="0" Grid.Row="0" Height="42" Panel.ZIndex="{Binding MainPanelZIndex}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <controls:DropUpButton
                               x:Name="BtnText"
                               Width="30"
                               Height="30"
@@ -80,25 +80,25 @@
                               VerticalAlignment="Center"
                               Style="{StaticResource CommandButtonStyle}" 
                               Margin="0,0,15,0">
-                                        <Button.ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource Language_Text}"/>
-                                                <TextBlock Text="..."/>
-                                            </StackPanel>
-                                        </Button.ToolTip>
-                                        <Button.ContextMenu>
-                                            <ContextMenu VerticalOffset="-5">
-                                                <MenuItem Header="{DynamicResource Language_Bold}" InputGestureText="Ctrl+B" Click="BtnBold_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
-                                                <MenuItem Header="{DynamicResource Language_Italic}" InputGestureText="Ctrl+I" Click="BtnItalic_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
-                                                <MenuItem Header="{DynamicResource Language_Underline}" InputGestureText="Ctrl+U" Click="BtnUnderline_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
-                                                <MenuItem Header="{DynamicResource Language_Strikeout}" InputGestureText="Ctrl+S" Click="BtnStrikeout_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
-                                                <MenuItem Header="{DynamicResource Language_Fixed_Width}" InputGestureText="Ctrl+T" Click="ButtonFixedWidth_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
-                                                <MenuItem Header="{DynamicResource Language_Highlight}" InputGestureText="Ctrl+H" Click="ButtonHighlight_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
-                                            </ContextMenu>
-                                        </Button.ContextMenu>
-                                        <controls:FontIcon Glyph="&#xE8E9;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </controls:DropUpButton>
-                                    <Button
+                                    <Button.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource Language_Text}"/>
+                                            <TextBlock Text="..."/>
+                                        </StackPanel>
+                                    </Button.ToolTip>
+                                    <Button.ContextMenu>
+                                        <ContextMenu VerticalOffset="-5">
+                                            <MenuItem Header="{DynamicResource Language_Bold}" InputGestureText="Ctrl+B" Click="BtnBold_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
+                                            <MenuItem Header="{DynamicResource Language_Italic}" InputGestureText="Ctrl+I" Click="BtnItalic_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
+                                            <MenuItem Header="{DynamicResource Language_Underline}" InputGestureText="Ctrl+U" Click="BtnUnderline_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
+                                            <MenuItem Header="{DynamicResource Language_Strikeout}" InputGestureText="Ctrl+S" Click="BtnStrikeout_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
+                                            <MenuItem Header="{DynamicResource Language_Fixed_Width}" InputGestureText="Ctrl+T" Click="ButtonFixedWidth_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
+                                            <MenuItem Header="{DynamicResource Language_Highlight}" InputGestureText="Ctrl+H" Click="ButtonHighlight_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                    <controls:FontIcon Glyph="&#xE8E9;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </controls:DropUpButton>
+                                <Button
                               x:Name="BtnLink"
                               Width="30"
                               Height="30"
@@ -107,15 +107,15 @@
                               Style="{StaticResource CommandButtonStyle}" 
                               Margin="0,0,15,0" 
                               Click="BtnLink_Click">
-                                        <Button.ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource Language_Link}"/>
-                                                <TextBlock Text=" (Ctrl+L)"/>
-                                            </StackPanel>
-                                        </Button.ToolTip>
-                                        <controls:FontIcon Glyph="&#xE71B;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </Button>
-                                    <Button
+                                    <Button.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource Language_Link}"/>
+                                            <TextBlock Text=" (Ctrl+L)"/>
+                                        </StackPanel>
+                                    </Button.ToolTip>
+                                    <controls:FontIcon Glyph="&#xE71B;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </Button>
+                                <Button
                               x:Name="BtnList"
                               Width="30"
                               Height="30"
@@ -125,9 +125,9 @@
                               Margin="0,0,15,0" 
                               ToolTip="{DynamicResource Language_List}"
                               Click="BtnList_Click">
-                                        <controls:FontIcon Glyph="&#xE8FD;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </Button>
-                                    <Button
+                                    <controls:FontIcon Glyph="&#xE8FD;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </Button>
+                                <Button
                               x:Name="BtnUndo"
                               Width="30"
                               Height="30"
@@ -136,15 +136,15 @@
                               Style="{StaticResource CommandButtonStyle}" 
                               Margin="0,0,15,0" 
                               Click="BtnUndo_Click">
-                                        <Button.ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource Language_Undo}"/>
-                                                <TextBlock Text=" (Ctrl+Z)"/>
-                                            </StackPanel>
-                                        </Button.ToolTip>
-                                        <controls:FontIcon Glyph="&#xE7A7;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </Button>
-                                    <Button
+                                    <Button.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource Language_Undo}"/>
+                                            <TextBlock Text=" (Ctrl+Z)"/>
+                                        </StackPanel>
+                                    </Button.ToolTip>
+                                    <controls:FontIcon Glyph="&#xE7A7;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </Button>
+                                <Button
                               x:Name="BtnRedo"
                               Width="30"
                               Height="30"
@@ -153,15 +153,15 @@
                               Style="{StaticResource CommandButtonStyle}" 
                               Margin="0,0,15,0" 
                               Click="BtnRedo_Click">
-                                        <Button.ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource Language_Redo}"/>
-                                                <TextBlock Text=" (Ctrl+Y)"/>
-                                            </StackPanel>
-                                        </Button.ToolTip>
-                                        <controls:FontIcon Glyph="&#xE7A6;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </Button>
-                                    <controls:DropUpButton
+                                    <Button.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource Language_Redo}"/>
+                                            <TextBlock Text=" (Ctrl+Y)"/>
+                                        </StackPanel>
+                                    </Button.ToolTip>
+                                    <controls:FontIcon Glyph="&#xE7A6;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </Button>
+                                <controls:DropUpButton
                               x:Name="BtnExport"
                               Width="30"
                               Height="30"
@@ -169,21 +169,21 @@
                               VerticalAlignment="Center"
                               Style="{StaticResource CommandButtonStyle}" 
                               Margin="0,0,15,0">
-                                        <Button.ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource Language_Export}"/>
-                                                <TextBlock Text="..."/>
-                                            </StackPanel>
-                                        </Button.ToolTip>
-                                        <Button.ContextMenu>
-                                            <ContextMenu VerticalOffset="-5">
-                                                <MenuItem Header="{DynamicResource Language_Export_To_Rtf}" Click="BtnExportRtf_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
-                                                <MenuItem Header="{DynamicResource Language_Export_Note}" Click="BtnExportNote_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
-                                            </ContextMenu>
-                                        </Button.ContextMenu>
-                                        <controls:FontIcon Glyph="&#xE1AD;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </controls:DropUpButton>
-                                    <Button
+                                    <Button.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource Language_Export}"/>
+                                            <TextBlock Text="..."/>
+                                        </StackPanel>
+                                    </Button.ToolTip>
+                                    <Button.ContextMenu>
+                                        <ContextMenu VerticalOffset="-5">
+                                            <MenuItem Header="{DynamicResource Language_Export_To_Rtf}" Click="BtnExportRtf_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
+                                            <MenuItem Header="{DynamicResource Language_Export_Note}" Click="BtnExportNote_Click" Foreground="{DynamicResource RG_BlackBrush}"/>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                    <controls:FontIcon Glyph="&#xE1AD;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </controls:DropUpButton>
+                                <Button
                               x:Name="BtnPrint"
                               Width="30"
                               Height="30"
@@ -192,15 +192,15 @@
                               Style="{StaticResource CommandButtonStyle}" 
                               Margin="0,0,15,0" 
                               Click="BtnPrint_Click">
-                                        <Button.ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource Language_Print}"/>
-                                                <TextBlock Text=" (Ctrl+P)"/>
-                                            </StackPanel>
-                                        </Button.ToolTip>
-                                        <controls:FontIcon Glyph="&#xE2F6;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </Button>
-                                    <Button
+                                    <Button.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource Language_Print}"/>
+                                            <TextBlock Text=" (Ctrl+P)"/>
+                                        </StackPanel>
+                                    </Button.ToolTip>
+                                    <controls:FontIcon Glyph="&#xE2F6;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </Button>
+                                <Button
                               x:Name="BtnSearch"
                               Width="30"
                               Height="30"
@@ -209,15 +209,15 @@
                               Style="{StaticResource CommandButtonStyle}" 
                               Margin="0,0,15,0" 
                               Click="BtnSearch_Click">
-                                        <Button.ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource Language_Search}"/>
-                                                <TextBlock Text=" (Ctrl+F)"/>
-                                            </StackPanel>
-                                        </Button.ToolTip>
-                                        <controls:FontIcon Glyph="&#xE11A;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </Button>
-                                    <Button
+                                    <Button.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource Language_Search}"/>
+                                            <TextBlock Text=" (Ctrl+F)"/>
+                                        </StackPanel>
+                                    </Button.ToolTip>
+                                    <controls:FontIcon Glyph="&#xE11A;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </Button>
+                                <Button
                               x:Name="BtnFlag"
                               Width="30"
                               Height="30"
@@ -226,15 +226,15 @@
                               Style="{StaticResource CommandButtonStyle}" 
                               Margin="0,0,15,0" 
                               Click="BtnFlag_Click">
-                                        <Button.ToolTip>
-                                            <TextBlock Text="{DynamicResource Language_Flag_This_Note}"/>
-                                        </Button.ToolTip>
-                                        <Grid>
-                                            <controls:FontIcon x:Name="UnFlaggedIcon" Glyph="&#xE006;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                            <controls:FontIcon x:Name="FlaggedIcon" Glyph="&#xE0A5;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                        </Grid>
-                                    </Button>
-                                    <Button
+                                    <Button.ToolTip>
+                                        <TextBlock Text="{DynamicResource Language_Flag_This_Note}"/>
+                                    </Button.ToolTip>
+                                    <Grid>
+                                        <controls:FontIcon x:Name="UnFlaggedIcon" Glyph="&#xE006;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                        <controls:FontIcon x:Name="FlaggedIcon" Glyph="&#xE0A5;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                    </Grid>
+                                </Button>
+                                <Button
                               x:Name="BtnDelete"
                               Width="30"
                               Height="30"
@@ -244,19 +244,19 @@
                               Margin="0,0,15,0" 
                               ToolTip="{DynamicResource Language_Delete_This_Note}"
                               Click="ButtonDelete_Click">
-                                        <controls:FontIcon Glyph="&#xE894;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                                    </Button>
-                                </StackPanel>
-                            </DockPanel>
-                        </Grid>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <RichTextBox 
+                                    <controls:FontIcon Glyph="&#xE894;" FontSize="20" Foreground="{DynamicResource RG_WhiteBrush}"/>
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+                    </Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <RichTextBox 
                                 x:Name="XAMLRichTextBox" 
                                 ScrollViewer.ScrollChanged="XAMLRichTextBox_ScrollChanged" 
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -274,52 +274,51 @@
                                 KeyUp="XAMLRichTextBox_KeyUp" 
                                 PreviewMouseUp="XAMLRichTextBox_PreviewMouseUp" 
                                 LostFocus="XAMLRichTextBox_LostFocus">
-                                <RichTextBox.Resources>
-                                    <ResourceDictionary>
-                                        <Style TargetType="{x:Type Paragraph}">
-                                            <Setter Property="Margin" Value="0"/>
-                                        </Style>
-                                        <Style TargetType="{x:Type Table}">
-                                            <Setter Property="Margin" Value="0"/>
-                                        </Style>
-                                        <Style TargetType="{x:Type List}">
-                                            <Setter Property="Margin" Value="0"/>
-                                            <Style.Resources>
-                                                <Style TargetType="{x:Type ListItem}">
-                                                    <Style.Resources>
-                                                        <Style TargetType="{x:Type Paragraph}">
-                                                            <Setter Property="Margin" Value="0"/>
-                                                        </Style>
-                                                    </Style.Resources>
-                                                </Style>
-                                            </Style.Resources>
-                                        </Style>
-                                    </ResourceDictionary>
-                                </RichTextBox.Resources>
-                            </RichTextBox>
-                        </Grid>
-                    </DockPanel>
+                            <RichTextBox.Resources>
+                                <ResourceDictionary>
+                                    <Style TargetType="{x:Type Paragraph}">
+                                        <Setter Property="Margin" Value="0"/>
+                                    </Style>
+                                    <Style TargetType="{x:Type Table}">
+                                        <Setter Property="Margin" Value="0"/>
+                                    </Style>
+                                    <Style TargetType="{x:Type List}">
+                                        <Setter Property="Margin" Value="0"/>
+                                        <Style.Resources>
+                                            <Style TargetType="{x:Type ListItem}">
+                                                <Style.Resources>
+                                                    <Style TargetType="{x:Type Paragraph}">
+                                                        <Setter Property="Margin" Value="0"/>
+                                                    </Style>
+                                                </Style.Resources>
+                                            </Style>
+                                        </Style.Resources>
+                                    </Style>
+                                </ResourceDictionary>
+                            </RichTextBox.Resources>
+                        </RichTextBox>
+                    </Grid>
                 </DockPanel>
             </DockPanel>
-            <ItemsControl ItemsSource="{Binding Path=SearchRectangles,ElementName=MyNoteWindow}" Grid.Row="0" Grid.Column="0" Panel.ZIndex="1">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="{DynamicResource RG_AccentBrush}" Opacity="0.5"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Canvas.Top" Value="{Binding Top}"/>
-                        <Setter Property="Canvas.Left" Value="{Binding Left}"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-        </Grid>
-    </Border>
+        </DockPanel>
+        <ItemsControl ItemsSource="{Binding Path=SearchRectangles,ElementName=MyNoteWindow}" Grid.Row="0" Grid.Column="0" Panel.ZIndex="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="{DynamicResource RG_AccentBrush}" Opacity="0.5"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Top" Value="{Binding Top}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding Left}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+    </Grid>
 </controls:KnowteWindow>
 

@@ -4,7 +4,7 @@
     xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
     xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
     Background="Transparent"
-    Foreground="{DynamicResource RG_ForegroundBrush}"
+    Foreground="{DynamicResource RG_BlackBrush}"
     ShowWindowControls="False">
 
     <Border Background="{DynamicResource RG_WindowBackgroundBrush}" Margin="-1">
@@ -20,7 +20,7 @@
                           VerticalAlignment="Center" 
                           Foreground="{DynamicResource RG_WhiteBrush}" />
                 </Grid>
-                <TextBlock x:Name="TextBlockTitle" Margin="15,-2,0,0" FontWeight="Light" FontSize="28" Foreground="{DynamicResource RG_ForegroundBrush}"/>
+                <TextBlock x:Name="TextBlockTitle" Margin="15,-2,0,0" FontWeight="Light" FontSize="28" Foreground="{DynamicResource RG_BlackBrush}"/>
             </StackPanel>
             <DockPanel x:Name="Content" Margin="0,15,0,0">
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0,30,0,0">

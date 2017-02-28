@@ -110,7 +110,7 @@
     </UserControl.Resources>
 
     <DockPanel x:Name="MainWhole">
-        <Border BorderThickness="0,0,1,0" DockPanel.Dock="Left" BorderBrush="{DynamicResource RG_ControlsBorderBrush}" UseLayoutRounding="True">
+        <Border BorderThickness="0,0,1,0" DockPanel.Dock="Left" BorderBrush="{DynamicResource RG_BorderBrush}" UseLayoutRounding="True">
             <DockPanel x:Name="MainLeft" Width="300" Margin="0,0,20,0">
                 <StackPanel DockPanel.Dock="Top">
                     <DockPanel>

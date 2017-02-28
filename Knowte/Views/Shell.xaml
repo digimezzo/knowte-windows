@@ -47,26 +47,25 @@
         </StackPanel>
     </controls:KnowteWindow.WindowCommands>
 
-    <Border x:Name="WindowBorder">
-        <Grid>
-            <Border x:Name="HeaderBackground" Panel.ZIndex="0" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" Background="{DynamicResource RG_WindowHeaderBackgroundBrush}" Opacity="0.8"/>
-            <Border Panel.ZIndex="0" Margin="0,75,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource RG_WindowBackgroundBrush}"/>
-            <Ellipse Panel.ZIndex="1" Fill="{DynamicResource RG_WhiteBrush}" Margin="25,40,0,0" Width="70" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            <Viewbox Panel.ZIndex="2" Width="80" Height="80" Margin="20,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_AccentBrush}"/>
-            </Viewbox>
-            <DockPanel>
-                <DockPanel DockPanel.Dock="Top" Margin="100,32,0,0">
-                    <controls:TransitioningContentControl Height="35" Name="SubMenuRegion" DockPanel.Dock="Top" FadeIn="True" FadeInTimeout="1" SlideIn="True" SlideInTimeout="0.5" SlideInFrom="{Binding SubMenuSlideInFrom}" SlideInTo="20" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.SubMenuRegion}"/>
-                    <ContentControl Margin="20,20,0,0" Name="MainMenuRegion" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.MainMenuRegion}"/>
-                </DockPanel>
-                <DockPanel Margin="0,-5,0,0">
-                    <Border DockPanel.Dock="Top" HorizontalAlignment="Right" Margin="0,0,20,0">
-                        <controls:TransitioningContentControl Name="SearchRegion" FadeIn="True" FadeInTimeout="1" SlideIn="True" SlideInTimeout="0.5" SlideInFrom="{Binding SearchSlideInFrom}" SlideInTo="0" Margin="0" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.SearchRegion}"/>
-                    </Border>
-                    <controls:TransitioningContentControl Name="ContentRegion" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.ContentRegion}" FadeIn="True" FadeInTimeout="0.5" SlideIn="True" SlideInTimeout="0.25" SlideInFrom="{Binding ContentSlideInFrom}" SlideInTo="0" Margin="0,0,0,20"/>
-                </DockPanel>
+    <Grid>
+        <Border Panel.ZIndex="0" Margin="0,75,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource RG_WindowBackgroundBrush}"/>
+        <Border Panel.ZIndex="1" x:Name="WindowBorder" BorderThickness="1" BorderBrush="{DynamicResource RG_BorderBrush}"/>
+        <Border Panel.ZIndex="2" x:Name="HeaderBackground" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" Background="{DynamicResource RG_WindowContrastBrush}" Opacity="0.8"/>
+        <Ellipse Panel.ZIndex="3" Fill="{DynamicResource RG_WhiteBrush}" Margin="25,40,0,0" Width="70" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Viewbox Panel.ZIndex="4" Width="80" Height="80" Margin="20,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_AccentBrush}"/>
+        </Viewbox>
+        <DockPanel Panel.ZIndex="3">
+            <DockPanel DockPanel.Dock="Top" Margin="100,32,0,0">
+                <controls:TransitioningContentControl Height="35" Name="SubMenuRegion" DockPanel.Dock="Top" FadeIn="True" FadeInTimeout="1" SlideIn="True" SlideInTimeout="0.5" SlideInFrom="{Binding SubMenuSlideInFrom}" SlideInTo="20" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.SubMenuRegion}"/>
+                <ContentControl Margin="20,20,0,0" Name="MainMenuRegion" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.MainMenuRegion}"/>
             </DockPanel>
-        </Grid>
-    </Border>
+            <DockPanel Margin="0,-5,0,0">
+                <Border DockPanel.Dock="Top" HorizontalAlignment="Right" Margin="0,0,20,0">
+                    <controls:TransitioningContentControl Name="SearchRegion" FadeIn="True" FadeInTimeout="1" SlideIn="True" SlideInTimeout="0.5" SlideInFrom="{Binding SearchSlideInFrom}" SlideInTo="0" Margin="0" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.SearchRegion}"/>
+                </Border>
+                <controls:TransitioningContentControl Name="ContentRegion" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.ContentRegion}" FadeIn="True" FadeInTimeout="0.5" SlideIn="True" SlideInTimeout="0.25" SlideInFrom="{Binding ContentSlideInFrom}" SlideInTo="0" Margin="0,0,0,20"/>
+            </DockPanel>
+        </DockPanel>
+    </Grid>
 </controls:KnowteWindow>

@@ -2,7 +2,7 @@
 <Settings>
   <Namespace Name="Configuration">
     <Setting Name="Version">
-      <Value>4</Value>
+      <Value>5</Value>
     </Setting>
     <Setting Name="IsPortable">
       <Value>False</Value>
@@ -32,9 +32,6 @@
     </Setting>
   </Namespace>
   <Namespace Name="Appearance">
-    <Setting Name="ShowWindowBorder">
-      <Value>False</Value>
-    </Setting>
     <Setting Name="SortByModificationDate">
       <Value>False</Value>
     </Setting>

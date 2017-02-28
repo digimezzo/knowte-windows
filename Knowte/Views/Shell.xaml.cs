@@ -55,9 +55,6 @@ namespace Knowte.Views
             this.eventAggregator = eventAggregator;
             this.noteService = noteService;
 
-            // PubSubEvents
-            this.eventAggregator.GetEvent<SettingShowWindowBorderChanged>().Subscribe(showWindowBorder => this.SetWindowBorder(showWindowBorder));
-
             // Theming
             this.appearanceService.ApplyTheme(SettingsClient.Get<string>("Appearance", "Theme"));
             this.appearanceService.ApplyColorScheme(SettingsClient.Get<bool>("Appearance", "FollowWindowsColor"), SettingsClient.Get<string>("Appearance", "ColorScheme"));

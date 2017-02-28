@@ -14,36 +14,27 @@
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="RG_IconGradientBrush" StartPoint="0,0" EndPoint="0,1" Opacity="0.3">
-        <GradientStop Color="White" Offset="0.0" />
+        <GradientStop Color="#FFFFFF" Offset="0.0" />
         <GradientStop Color="Transparent" Offset="1.0" />
     </LinearGradientBrush>
 
-    <!-- Colors -->
-    <SolidColorBrush x:Key="RG_WindowBackgroundBrush" Color="White" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_WindowHeaderBackgroundBrush" Color="#222222" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_ForegroundBrush" Color="#000000" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_WhiteBrush" Color="White" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_BlackBrush" Color="#000000" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_GrayBrush" Color="Gray" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_ControlsBorderBrush" Color="#CCCCCC" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_ButtonBarBrush" Color="#222222" Opacity="1.0"/>
-
-    <!-- Control colors -->
+    <!-- New colors -->
+    <SolidColorBrush x:Key="RG_WindowBackgroundBrush" Color="#FAFAFA"/>
+    <SolidColorBrush x:Key="RG_WindowContrastBrush" Color="#222222"/>
+    <SolidColorBrush x:Key="RG_BlackBrush" Color="#212121"/>
+    <SolidColorBrush x:Key="RG_GrayBrush" Color="#757575"/>
+    <SolidColorBrush x:Key="RG_WhiteBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="RG_BorderBrush" Color="#D2D2D2"/>
+    <SolidColorBrush x:Key="RG_SearchBackgroundBrush" Color="#E0E0E0"/>
+    <SolidColorBrush x:Key="RG_DimBrush" Color="#D2D2D2" Opacity="0.4"/>
+    
+    <!-- Old colors -->
     <SolidColorBrush x:Key="RG_HoverBrush" Color="Black" Opacity="0.07"/>
     <SolidColorBrush x:Key="RG_SelectedBrush" Color="Black" Opacity="0.07"/>
-    <SolidColorBrush x:Key="RG_ControlsBrush" Color="#252525" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_ScrollbarBrush" Color="#808080" Opacity="1.0"/>
-    <SolidColorBrush x:Key="RG_LighterControlsBrush" Color="#5A5A5A" Opacity="1.0"/>
-
-    <SolidColorBrush x:Key="RG_DimBrush" Color="Black" Opacity="0.2"/>
-
-    <!--<SolidColorBrush x:Key="RG_BaseBehindForegroundBrush" Color="#F2F2F2" Opacity="1.0"/>-->
-
-    <SolidColorBrush x:Key="RG_SearchBackgroundBrush" Color="#EDEDED"/>
+    <SolidColorBrush x:Key="RG_ControlsBrush" Color="#252525"/>
+    <SolidColorBrush x:Key="RG_LighterControlsBrush" Color="#5A5A5A"/>
     <SolidColorBrush x:Key="RG_SearchInvisibleBackgroundBrush" Color="#00FFFFFF"/>
-    <SolidColorBrush x:Key="RG_TextBoxBorderBrush" Color="#CCCCCC"/>
     <SolidColorBrush x:Key="RG_TextBoxBackgroundBrush" Color="White"/>
-    <SolidColorBrush x:Key="RG_SeparatorBrush" Color="#CCCCCC"/>
     <SolidColorBrush x:Key="RG_ControlsSelectedBrush" Color="#DCDCDC"/>
     <SolidColorBrush x:Key="RG_ControlsUnselectedBrush" Color="#E6E6E6"/>
     <SolidColorBrush x:Key="RG_BottomControlsBackgroundBrush" Color="#222222"/>

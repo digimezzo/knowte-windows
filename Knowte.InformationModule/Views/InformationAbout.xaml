@@ -18,8 +18,8 @@
                 <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource RG_BlackBrush}" FontSize="42" Text="{x:Static base:ProductInformation.ApplicationDisplayNameUppercase}" Style="{StaticResource RobotoThin}"/>
             </DockPanel>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                <TextBlock Text="{DynamicResource Language_Version}" Foreground="{DynamicResource RG_ForegroundBrush}"/>
-                <TextBlock Text=":" Margin="0,0,5,0" Foreground="{DynamicResource RG_ForegroundBrush}"/>
+                <TextBlock Text="{DynamicResource Language_Version}" Foreground="{DynamicResource RG_BlackBrush}"/>
+                <TextBlock Text=":" Margin="0,0,5,0" Foreground="{DynamicResource RG_BlackBrush}"/>
                 <TextBlock Text="{Binding Package.FormattedVersion}" Margin="0,0,5,0"/>
                 <Border Background="{DynamicResource RG_AccentBrush}" Padding="4,2,4,2" CornerRadius="2">
                     <TextBlock Text="{Binding Package.Label}" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource RG_WhiteBrush}"/>
@@ -38,7 +38,7 @@
                                 <Button Content="{Binding Name}" HorizontalAlignment="Left" Style="{StaticResource LinkButton}" ToolTip="{Binding Link}" Command="{x:Static commonprism:ApplicationCommands.OpenLinkCommand}" CommandParameter="{Binding Url}"/>
                                 <Label/>
                             </DockPanel>
-                            <TextBlock Text="{Binding Description}" Foreground="{DynamicResource RG_ForegroundBrush}"/>
+                            <TextBlock Text="{Binding Description}" Foreground="{DynamicResource RG_BlackBrush}"/>
                         </DockPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

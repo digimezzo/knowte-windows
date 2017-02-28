@@ -87,8 +87,6 @@
   <Text Key="Link_Does_Not_Work_Anymore">Deze link werkt niet meer.</Text>
   <Text Key="License">Licentie</Text>
   <Text Key="Backup_And_Restore">Back-up en herstel</Text>
-  <Text Key="Border">Rand</Text>
-  <Text Key="Show_Window_Border">Geef een rand van 1 px weer rond het venster</Text>
   <Text Key="Log_File">Log bestand</Text>
   <Text Key="Version">Versie</Text>
   <Text Key="Could_Not_Open_Note">De notitie kon niet worden geopened. Raadpleeg het log bestand voor meer informatie.</Text>

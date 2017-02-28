@@ -44,21 +44,7 @@ namespace Knowte.Common.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            this.SetWindowBorder(SettingsClient.Get<bool>("Appearance", "ShowWindowBorder"));
             this.InitializeWindow();
-        }
-
-        protected override void OnStateChanged(EventArgs e)
-        {
-            base.OnStateChanged(e);
-
-            this.SetWindowBorder(this.hasBorder);
-        }
-
-        protected override void BorderlessWindowBase_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            base.BorderlessWindowBase_SizeChanged(sender, e);
         }
         #endregion
 
@@ -82,33 +68,6 @@ namespace Knowte.Common.Controls
 
             System.Threading.Thread t = new System.Threading.Thread(Deactivate);
             t.Start();
-        }
-
-        /// <summary>
-        /// Sets the border
-        /// </summary>
-        /// <remarks></remarks>
-        public void SetWindowBorder(bool hasBorder)
-        {
-            this.hasBorder = hasBorder;
-
-            if (this.windowBorder == null) return;
-
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.SetBorderThickness(new Thickness(6));
-            }
-            else
-            {
-                if (this.HasBorder)
-                {
-                    this.SetBorderThickness(new Thickness(1));
-                }
-                else
-                {
-                    this.SetBorderThickness(new Thickness(0));
-                }
-            }
         }
         #endregion
 

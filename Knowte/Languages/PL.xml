@@ -87,8 +87,6 @@
   <Text Key="Link_Does_Not_Work_Anymore">Ten link już nie działa</Text>
   <Text Key="License">Licentie</Text>
   <Text Key="Backup_And_Restore">Backup en restore</Text>
-  <Text Key="Border">Rand</Text>
-  <Text Key="Show_Window_Border">Geef een rand van 1 px weer rond het venster</Text>
   <Text Key="Log_File">Log bestand</Text>
   <Text Key="Version">Versie</Text>
   <Text Key="Could_Not_Open_Note">The note could not be opened. Please consult the log file for more information.</Text>

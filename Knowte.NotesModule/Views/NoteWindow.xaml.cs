@@ -114,9 +114,6 @@ namespace Knowte.NotesModule.Views
             // Initial button status
             this.SetButtonsStatus();
 
-            // PubSubEvents
-            this.eventAggregator.GetEvent<SettingShowWindowBorderChanged>().Subscribe(showWindowBorder => this.SetWindowBorder(showWindowBorder));
-
             // Event Handling
             this.appearanceService.AppearanceChanged += AppearanceChangedHandler;
 

@@ -98,13 +98,13 @@
                         Grid.Column="2"
                         Focusable="false"
                         ClickMode="Press"
-                        Foreground="{DynamicResource RG_ForegroundBrush}"
+                        Foreground="{DynamicResource RG_BlackBrush}"
                         Background="Transparent"
                         IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, 
               RelativeSource={RelativeSource TemplatedParent}}"/>
                         <Label x:Name="ContentSite"
                             IsHitTestVisible="False"
-                            Foreground="{DynamicResource RG_ForegroundBrush}"
+                            Foreground="{DynamicResource RG_BlackBrush}"
                             Padding="0"
                             Content="{TemplateBinding SelectionBoxItem}"
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"

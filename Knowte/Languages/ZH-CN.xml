@@ -87,8 +87,6 @@
   <Text Key="Link_Does_Not_Work_Anymore">链接无效</Text>
   <Text Key="License">许可</Text>
   <Text Key="Backup_And_Restore">备份与还原</Text>
-  <Text Key="Border">边框</Text>
-  <Text Key="Show_Window_Border">在窗口周围显示 1px 的边框</Text>
   <Text Key="Log_File">日志文件</Text>
   <Text Key="Version">版本</Text>
   <Text Key="Could_Not_Open_Note">笔记无法打开。请查看日志文件获取更多信息。</Text>
