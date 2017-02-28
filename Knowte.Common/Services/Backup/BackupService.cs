@@ -2,6 +2,7 @@
 using Digimezzo.Utilities.Settings;
 using Knowte.Common.Database;
 using Knowte.Common.IO;
+using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.Note;
 using System;
 using System.IO;
@@ -15,21 +16,21 @@ namespace Knowte.Common.Services.Backup
         #region Variables
         private SQLiteConnectionFactory factory;
         private INoteService noteService;
+        private IDialogService dialogService;
         private string applicationFolder = SettingsClient.ApplicationFolder();
         #endregion
 
         #region Construction
-        public BackupService(INoteService noteService)
+        public BackupService(INoteService noteService, IDialogService dialogService)
         {
             this.noteService = noteService;
+            this.dialogService = dialogService;
             this.factory = new SQLiteConnectionFactory();
         }
         #endregion
 
-        #region IBackupService
-        public event EventHandler BackupRestored = delegate { };
-
-        public async Task<bool> BackupAsync(string backupFile)
+        #region Private
+        private async Task<bool> BackupAsyncCallback(string backupFile)
         {
             if (string.IsNullOrWhiteSpace(backupFile))
             {
@@ -72,7 +73,7 @@ namespace Knowte.Common.Services.Backup
             return isSuccess;
         }
 
-        public async Task<bool> RestoreAsync(string backupFile)
+        private async Task<bool> RestoreAsyncCallback(string backupFile)
         {
             if (string.IsNullOrWhiteSpace(backupFile))
             {
@@ -83,7 +84,7 @@ namespace Knowte.Common.Services.Backup
             bool isSuccess = true;
 
             string notesDirectoryPath = Path.Combine(this.applicationFolder, ApplicationPaths.NotesSubDirectory);
-            
+
             try
             {
                 // Close all note windows
@@ -91,7 +92,7 @@ namespace Knowte.Common.Services.Backup
 
                 await Task.Run(() =>
                 {
-                    if(Directory.Exists(notesDirectoryPath + ".old")) Directory.Delete(notesDirectoryPath + ".old", true); // Delete Knowte.db.old
+                    if (Directory.Exists(notesDirectoryPath + ".old")) Directory.Delete(notesDirectoryPath + ".old", true); // Delete Knowte.db.old
                     if (File.Exists(this.factory.DatabaseFile + ".old")) File.Delete(this.factory.DatabaseFile + ".old"); // Delete Notes.old
 
                     Directory.Move(notesDirectoryPath, notesDirectoryPath + ".old"); // Move Notes directory to Notes.old
@@ -129,8 +130,24 @@ namespace Knowte.Common.Services.Backup
                 }
             }
 
-            this.BackupRestored(this,new EventArgs());
+            this.BackupRestored(this, new EventArgs());
 
+            return isSuccess;
+        }
+        #endregion
+
+        #region IBackupService
+        public event EventHandler BackupRestored = delegate { };
+
+        public async Task<bool> BackupAsync(string backupFile)
+        {
+            bool isSuccess = this.dialogService.ShowBusyDialog(null, "title", "content", 1000, () => this.BackupAsyncCallback(backupFile));
+            return isSuccess;
+        }
+
+        public async Task<bool> RestoreAsync(string backupFile)
+        {
+            bool isSuccess = this.dialogService.ShowBusyDialog(null, "title", "content", 1000, () => this.RestoreAsyncCallback(backupFile));
             return isSuccess;
         }
         #endregion

@@ -15,14 +15,23 @@ namespace Knowte.Common.Services.Dialog
         private void ShowDialog(Window window)
         {
             this.openDialogCount += 1;
-            if (this.DialogVisibleChanged != null) this.DialogVisibleChanged(this.openDialogCount > 0);
+            this.DialogVisibleChanged(this.openDialogCount > 0);
             window.ShowDialog();
             this.openDialogCount -= 1;
-            if (this.DialogVisibleChanged != null) this.DialogVisibleChanged(this.openDialogCount > 0);
+            this.DialogVisibleChanged(this.openDialogCount > 0);
         }
         #endregion
 
         #region IDialogService
+        public bool ShowBusyDialog(Window parent, string title, string content, int delayMilliseconds, Func<Task<bool>> callback)
+        {
+            var dialog = new BusyDialog(parent: parent, title: title, content: content, delayMilliseconds: delayMilliseconds, callback: callback);
+
+            this.ShowDialog(dialog);
+
+            return dialog.DialogResult.HasValue & dialog.DialogResult.Value;
+        }
+
         public bool ShowConfirmationDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, string cancelText)
         {
             var dialog = new ConfirmationDialog(parent: parent, iconCharCode: iconCharCode, iconSize: iconSize, title: title, content: content, okText: okText, cancelText: cancelText);
@@ -34,7 +43,7 @@ namespace Knowte.Common.Services.Dialog
 
         public bool ShowNotificationDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, bool showViewLogs, string viewLogsText = "Log file")
         {
-            var dialog = new NotificationDialog(parent: parent, iconCharCode : iconCharCode, iconSize: iconSize, title: title, content: content, okText: okText, showViewLogs: showViewLogs, viewLogsText: viewLogsText);
+            var dialog = new NotificationDialog(parent: parent, iconCharCode: iconCharCode, iconSize: iconSize, title: title, content: content, okText: okText, showViewLogs: showViewLogs, viewLogsText: viewLogsText);
 
             this.ShowDialog(dialog);
 
@@ -70,7 +79,7 @@ namespace Knowte.Common.Services.Dialog
         #endregion
 
         #region Events
-        public event DialogVisibleChangedEventHandler DialogVisibleChanged;
+        public event DialogVisibleChangedEventHandler DialogVisibleChanged = delegate { };
         #endregion
     }
 }

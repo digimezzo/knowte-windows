@@ -205,6 +205,9 @@
     <Compile Include="Services\Backup\IBackupService.cs" />
     <Compile Include="Services\Command\CommandService.cs" />
     <Compile Include="Services\Command\ICommandService.cs" />
+    <Compile Include="Services\Dialog\BusyDialog.xaml.cs">
+      <DependentUpon>BusyDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\Dialog\ConfirmationDialog.xaml.cs">
       <DependentUpon>ConfirmationDialog.xaml</DependentUpon>
     </Compile>
@@ -376,6 +379,10 @@
     <Page Include="Resources\Themes\Light.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Services\Dialog\BusyDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Services\Dialog\ConfirmationDialog.xaml">
       <SubType>Designer</SubType>

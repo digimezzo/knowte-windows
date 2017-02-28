@@ -10,10 +10,11 @@ namespace Knowte.Common.Services.Dialog
 
     public interface IDialogService
     {
-        event DialogVisibleChangedEventHandler DialogVisibleChanged;
+        bool ShowBusyDialog(Window parent, string title, string content, int delayMilliseconds, Func<Task<bool>> callback);
         bool ShowConfirmationDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, string cancelText);
         bool ShowNotificationDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, bool showViewLogs, string viewLogsText = "Log file");
         bool ShowCustomDialog(Window parent, int iconCharCode, int iconSize, string title, UserControl content, int width, int height, bool canResize, bool showCancelButton, string okText, string cancelText, Func<Task<bool>> callback);
         bool ShowInputDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, string cancelText, ref string responeText);
+        event DialogVisibleChangedEventHandler DialogVisibleChanged;
     }
 }

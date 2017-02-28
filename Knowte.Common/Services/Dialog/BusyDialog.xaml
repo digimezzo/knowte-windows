@@ -1,0 +1,19 @@
+﻿<dc:BorderlessWindows8Window x:Class="Knowte.Common.Services.Dialog.BusyDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+        xmlns:local="clr-namespace:Knowte.Common.Services.Dialog"
+        mc:Ignorable="d"
+        Height="150" Width="350"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        Foreground="{DynamicResource RG_BlackBrush}"
+        Loaded="BusyDialog_Loaded"
+        ShowWindowControls="False">
+
+    <Border Background="{DynamicResource RG_WindowBackgroundBrush}" Margin="-1">
+        
+    </Border>
+</dc:BorderlessWindows8Window>
