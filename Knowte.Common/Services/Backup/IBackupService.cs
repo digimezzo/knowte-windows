@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Knowte.Common.Services.Backup
 {
@@ -6,5 +7,6 @@ namespace Knowte.Common.Services.Backup
     {
         Task<bool> BackupAsync(string backupFile);
         Task<bool> RestoreAsync(string backupFile);
+        event EventHandler BackupRestored;
     }
 }

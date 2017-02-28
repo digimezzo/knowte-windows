@@ -24,6 +24,8 @@ namespace Knowte.Common.Services.Backup
         #endregion
 
         #region IBackupService
+        public event EventHandler BackupRestored = delegate { };
+
         public async Task<bool> BackupAsync(string backupFile)
         {
             if (string.IsNullOrWhiteSpace(backupFile))
@@ -78,7 +80,7 @@ namespace Knowte.Common.Services.Backup
             bool isSuccess = true;
 
             string notesDirectoryPath = Path.Combine(this.applicationFolder, ApplicationPaths.NotesSubDirectory);
-
+            
             try
             {
                 await Task.Run(() =>
@@ -117,6 +119,8 @@ namespace Knowte.Common.Services.Backup
                     LogClient.Error("Could not restore original files. Exception: {0}", ex2.Message);
                 }
             }
+
+            this.BackupRestored(this,new EventArgs());
 
             return isSuccess;
         }

@@ -4,6 +4,7 @@ using Knowte.Common.Base;
 using Knowte.Common.Database.Entities;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
+using Knowte.Common.Services.Backup;
 using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.I18n;
 using Knowte.Common.Services.Note;
@@ -48,6 +49,7 @@ namespace Knowte.NotesModule.ViewModels
         private ISearchService searchService;
         private IDialogService dialogService;
         private I18nService i18nService;
+        private IBackupService backupService;
         private bool triggerRefreshNotesAnimation;
         #endregion
 
@@ -144,7 +146,7 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Construction
-        public NotesListsViewModel(IEventAggregator eventAggregator, INoteService noteService, IAppearanceService appearanceService, IJumpListService jumpListService, ISearchService searchService, IDialogService dialogService, I18nService i18nService)
+        public NotesListsViewModel(IEventAggregator eventAggregator, INoteService noteService, IAppearanceService appearanceService, IJumpListService jumpListService, ISearchService searchService, IDialogService dialogService, I18nService i18nService, IBackupService backupService)
         {
             this.eventAggregator = eventAggregator;
             this.noteService = noteService;
@@ -153,6 +155,7 @@ namespace Knowte.NotesModule.ViewModels
             this.searchService = searchService;
             this.dialogService = dialogService;
             this.i18nService = i18nService;
+            this.backupService = backupService;
 
             this.eventAggregator.GetEvent<TriggerLoadNoteAnimationEvent>().Subscribe((x) =>
             {
@@ -176,8 +179,12 @@ namespace Knowte.NotesModule.ViewModels
             });
 
             this.i18nService.LanguageChanged += LanguageChangedHandler;
-
             this.noteService.FlagUpdated += (sender, e) => { this.RefreshNotes(); };
+            this.backupService.BackupRestored += (sender, e) =>
+            {
+                this.RefreshNotebooks();
+                this.RefreshNotes();
+            };
 
             this.Notes = new ObservableCollection<NoteViewModel>();
 
