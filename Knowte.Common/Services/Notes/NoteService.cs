@@ -2,6 +2,7 @@
 using Digimezzo.Utilities.Settings;
 using Ionic.Zip;
 using Knowte.Common.Base;
+using Knowte.Common.Controls;
 using Knowte.Common.Database;
 using Knowte.Common.Database.Entities;
 using Knowte.Common.Extensions;
@@ -35,6 +36,17 @@ namespace Knowte.Common.Services.Note
 
         #region INoteService
         public event EventHandler FlagUpdated = delegate { };
+
+        public void CloseAllNoteWindows()
+        {
+            foreach (Window win in Application.Current.Windows)
+            {
+                if (win is KnowteWindow && !((KnowteWindow)win).IsMainWindow)
+                {
+                    win.Close();
+                }
+            }
+        }
 
         public void NewNotebook(Notebook notebook)
         {

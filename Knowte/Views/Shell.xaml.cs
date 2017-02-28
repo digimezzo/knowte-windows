@@ -153,14 +153,7 @@ namespace Knowte.Views
                 SettingsClient.Write();
             }
 
-            foreach (Window win in Application.Current.Windows)
-            {
-
-                if (!win.Equals(Application.Current.MainWindow))
-                {
-                    win.Close();
-                }
-            }
+            this.noteService.CloseAllNoteWindows();
         }
 
         private void Shell_Loaded(object sender, RoutedEventArgs e)

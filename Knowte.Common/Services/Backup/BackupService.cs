@@ -2,6 +2,7 @@
 using Digimezzo.Utilities.Settings;
 using Knowte.Common.Database;
 using Knowte.Common.IO;
+using Knowte.Common.Services.Note;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -13,12 +14,14 @@ namespace Knowte.Common.Services.Backup
     {
         #region Variables
         private SQLiteConnectionFactory factory;
+        private INoteService noteService;
         private string applicationFolder = SettingsClient.ApplicationFolder();
         #endregion
 
         #region Construction
-        public BackupService()
+        public BackupService(INoteService noteService)
         {
+            this.noteService = noteService;
             this.factory = new SQLiteConnectionFactory();
         }
         #endregion
@@ -83,8 +86,14 @@ namespace Knowte.Common.Services.Backup
             
             try
             {
+                // Close all note windows
+                this.noteService.CloseAllNoteWindows();
+
                 await Task.Run(() =>
                 {
+                    if(Directory.Exists(notesDirectoryPath + ".old")) Directory.Delete(notesDirectoryPath + ".old", true); // Delete Knowte.db.old
+                    if (File.Exists(this.factory.DatabaseFile + ".old")) File.Delete(this.factory.DatabaseFile + ".old"); // Delete Notes.old
+
                     Directory.Move(notesDirectoryPath, notesDirectoryPath + ".old"); // Move Notes directory to Notes.old
                     File.Move(this.factory.DatabaseFile, this.factory.DatabaseFile + ".old"); // Move Knowte.db to Knowte.db.old.
 

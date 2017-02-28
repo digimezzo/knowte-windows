@@ -1,6 +1,4 @@
-﻿using Digimezzo.Utilities.Settings;
-using Digimezzo.WPFControls;
-using System;
+﻿using Digimezzo.WPFControls;
 using System.Windows;
 using System.Windows.Media;
 
@@ -10,7 +8,6 @@ namespace Knowte.Common.Controls
     {
         #region Variables
         private bool oldTopMost;
-        private bool hasBorder;
         #endregion
 
         #region Properties
@@ -21,14 +18,17 @@ namespace Knowte.Common.Controls
             set { SetValue(AccentProperty, value); }
         }
 
-        public bool HasBorder
+        public bool IsMainWindow
         {
-            get { return this.hasBorder; }
+            get { return (bool)GetValue(IsMainWindowProperty); }
+
+            set { SetValue(IsMainWindowProperty, value); }
         }
         #endregion
 
         #region Dependency Properties
         public static readonly DependencyProperty AccentProperty = DependencyProperty.Register("Accent", typeof(Brush), typeof(KnowteWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty IsMainWindowProperty = DependencyProperty.Register("IsMainWindow", typeof(bool), typeof(KnowteWindow), new PropertyMetadata(null));
         #endregion
 
         #region Construction

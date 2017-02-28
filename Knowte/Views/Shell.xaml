@@ -5,6 +5,7 @@
     xmlns:commonprism="clr-namespace:Knowte.Common.Prism;assembly=Knowte.Common"
     xmlns:prism="http://www.codeplex.com/prism"
     Title="Knowte"
+    IsMainWindow ="true"
     MinWidth="750"
     MinHeight="550"
     Closing="Shell_Closing"

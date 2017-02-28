@@ -7,6 +7,7 @@ namespace Knowte.Common.Services.Note
 {
     public interface INoteService
     {
+        void CloseAllNoteWindows();
         void NewNotebook(Notebook notebook);
         void DeleteNotebook(string id);
         void UpdateNotebook(string id, string newTitle);
