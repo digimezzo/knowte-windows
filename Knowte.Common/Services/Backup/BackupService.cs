@@ -71,7 +71,7 @@ namespace Knowte.Common.Services.Backup
         {
             if (string.IsNullOrWhiteSpace(backupFile))
             {
-                LogClient.Error("Could not perform backup: backupFile is empty.");
+                LogClient.Error("Could not perform restore: backupFile is empty.");
                 return false;
             }
 
@@ -81,14 +81,17 @@ namespace Knowte.Common.Services.Backup
 
             try
             {
-                Directory.Move(notesDirectoryPath, notesDirectoryPath + ".old"); // Move Notes directory to Notes.old
-                File.Move(this.factory.DatabaseFile, this.factory.DatabaseFile + ".old"); // Move Knowte.db to Knowte.db.old.
+                await Task.Run(() =>
+                {
+                    Directory.Move(notesDirectoryPath, notesDirectoryPath + ".old"); // Move Notes directory to Notes.old
+                    File.Move(this.factory.DatabaseFile, this.factory.DatabaseFile + ".old"); // Move Knowte.db to Knowte.db.old.
 
-                // Restore backup
-                ZipFile.ExtractToDirectory(backupFile, this.applicationFolder);
+                    // Restore backup
+                    ZipFile.ExtractToDirectory(backupFile, this.applicationFolder);
 
-                Directory.Delete(notesDirectoryPath + ".old", true); // Delete Notes.old
-                File.Delete(this.factory.DatabaseFile + ".old"); // Delete Knowte.db.old
+                    Directory.Delete(notesDirectoryPath + ".old", true); // Delete Notes.old
+                    File.Delete(this.factory.DatabaseFile + ".old"); // Delete Knowte.db.old
+                });
             }
             catch (Exception ex)
             {
@@ -97,14 +100,17 @@ namespace Knowte.Common.Services.Backup
 
                 try
                 {
-                    // If restore fails, restore from .old files
-                    LogClient.Error("Trying to restore original files.");
+                    await Task.Run(() =>
+                    {
+                        // If restore fails, restore from .old files
+                        LogClient.Error("Trying to restore original files.");
 
-                    if(File.Exists(this.factory.DatabaseFile)) File.Delete(this.factory.DatabaseFile); // Delete Knowte.db
-                    if (Directory.Exists(notesDirectoryPath)) Directory.Delete(notesDirectoryPath, true); // Delete Notes
+                        if (File.Exists(this.factory.DatabaseFile)) File.Delete(this.factory.DatabaseFile); // Delete Knowte.db
+                        if (Directory.Exists(notesDirectoryPath)) Directory.Delete(notesDirectoryPath, true); // Delete Notes
 
-                    Directory.Move(notesDirectoryPath + ".old", notesDirectoryPath);  // Move Notes.old to Notes
-                    File.Move(this.factory.DatabaseFile + ".old", this.factory.DatabaseFile);  // Move Knowte.db.old to Knowte.db
+                        Directory.Move(notesDirectoryPath + ".old", notesDirectoryPath);  // Move Notes.old to Notes
+                        File.Move(this.factory.DatabaseFile + ".old", this.factory.DatabaseFile);  // Move Knowte.db.old to Knowte.db
+                    });
                 }
                 catch (Exception ex2)
                 {

@@ -98,7 +98,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             if ((bool)dlg.ShowDialog())
             {
-                backupFile = Path.Combine(dlg.FileName);
+                backupFile = dlg.FileName;
                 return true;
             }
 
@@ -125,6 +125,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             if ((bool)dlg.ShowDialog())
             {
+                backupFile = dlg.FileName;
                 return true;
             }
 
