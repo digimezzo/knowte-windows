@@ -8,5 +8,5 @@
              xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
              prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
-    <controls:SearchBox x:Name="SearchBox" Width="200" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource RG_SearchInvisibleBackgroundBrush}"  VisibleBackground="{DynamicResource RG_SearchBackgroundBrush}" Foreground="{DynamicResource RG_BlackBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_BlackBrush}"/>
+    <controls:SearchBox x:Name="SearchBox" Width="200" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource RG_InvisibleWhiteBrush}"  VisibleBackground="{DynamicResource RG_DarkGrayBrush}" Foreground="{DynamicResource RG_BlackBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_BlackBrush}"/>
 </UserControl>

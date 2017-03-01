@@ -49,9 +49,9 @@
     </controls:KnowteWindow.WindowCommands>
 
     <Grid>
-        <Border Panel.ZIndex="0" Margin="0,75,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource RG_WindowBackgroundBrush}"/>
+        <Border Panel.ZIndex="0" Margin="0,75,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource RG_WhiteBrush}"/>
         <Border Panel.ZIndex="1" x:Name="WindowBorder" BorderThickness="1" BorderBrush="{DynamicResource RG_BorderBrush}"/>
-        <Border Panel.ZIndex="2" x:Name="HeaderBackground" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" Background="{DynamicResource RG_WindowContrastBrush}" Opacity="0.8"/>
+        <Border Panel.ZIndex="2" x:Name="HeaderBackground" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" Background="{DynamicResource RG_BlackBrush}" Opacity="0.8"/>
         <Ellipse Panel.ZIndex="3" Fill="{DynamicResource RG_WhiteBrush}" Margin="25,40,0,0" Width="70" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Viewbox Panel.ZIndex="4" Width="80" Height="80" Margin="20,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
             <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_AccentBrush}"/>

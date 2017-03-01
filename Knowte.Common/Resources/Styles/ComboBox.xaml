@@ -65,16 +65,7 @@
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_EditableTextBox"
-                                                Storyboard.TargetProperty="(TextElement.Foreground).
-                      (SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                         Value="#FFFFFF" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="EditStates">
                                 <VisualState x:Name="Editable">
@@ -102,7 +93,7 @@
                         ClickMode="Press"
                         BorderBrush="{DynamicResource RG_BorderBrush}"
                         Foreground="{DynamicResource RG_BlackBrush}"
-                        Background="{DynamicResource RG_TextBoxBackgroundBrush}"   
+                        Background="{DynamicResource RG_WhiteBrush}"   
                         IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, 
               RelativeSource={RelativeSource TemplatedParent}}"/>
                         <Label x:Name="ContentSite"
@@ -140,7 +131,7 @@
                                   MinWidth="{TemplateBinding ActualWidth}"
                                   MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                     <!-- This helper border avoids text coming through the sides of the popup at desktop scaling > 100% -->
-                                    <Border BorderThickness="0" Margin="0.5" Background="{DynamicResource RG_TextBoxBackgroundBrush}"/>
+                                    <Border BorderThickness="0" Margin="0.5" Background="{DynamicResource RG_WhiteBrush}"/>
                                     <Border x:Name="DropDownBorder"
                                         Background="{DynamicResource RG_WhiteBrush}">
                                         <ScrollViewer>
@@ -181,9 +172,7 @@
                             <Setter TargetName="ToggleButton" Property="Background" Value="{DynamicResource RG_AccentBrush}" />
                         </Trigger>
                         <Trigger SourceName="ToggleButton" Property="IsMouseOver" Value="true">
-                            <!--<Setter TargetName="ContentSite" Property="Foreground" Value="{DynamicResource RG_BlackBrush}" />
-                            <Setter TargetName="ToggleButton" Property="Foreground" Value="{DynamicResource RG_BlackBrush}" />-->
-                            <Setter TargetName="ToggleButton" Property="Background" Value="{DynamicResource RG_ControlsUnselectedBrush}" />
+                            <Setter TargetName="ToggleButton" Property="Background" Value="{DynamicResource RG_DarkGrayBrush}" />
                         </Trigger>
 
                         <MultiTrigger>
@@ -216,7 +205,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource RG_ControlsUnselectedBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource RG_DarkGrayBrush}" />
                             <Setter TargetName="Label" Property="Foreground" Value="{DynamicResource RG_BlackBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">

@@ -13,30 +13,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Border Name="Border" CornerRadius="0" Padding="0" BorderThickness="1">
-                        <Border.Background>
-                            <SolidColorBrush Color="#FFFFFF" />
-                        </Border.Background>
-                        <Border.BorderBrush>
-                            <SolidColorBrush Color="#CCCCCC" />
-                        </Border.BorderBrush>
+                    <Border Name="Border" CornerRadius="0" Padding="0" BorderThickness="1" Background="{DynamicResource RG_WhiteBrush}" BorderBrush="{DynamicResource RG_BorderBrush}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0" Value="#CCCCCC" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="ReadOnly">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0" Value="#CCCCCC" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Disabled" />
+                                <VisualState x:Name="ReadOnly" />
                                 <VisualState x:Name="MouseOver" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>

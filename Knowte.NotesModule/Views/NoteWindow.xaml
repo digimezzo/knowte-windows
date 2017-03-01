@@ -23,9 +23,9 @@
                         prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
     <Grid>
-        <Border Panel.ZIndex="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,42" Background="{DynamicResource RG_WindowBackgroundBrush}"/>
+        <Border Panel.ZIndex="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,42" Background="{DynamicResource RG_WhiteBrush}"/>
         <Border Panel.ZIndex="1" x:Name="WindowBorder" BorderThickness="1" BorderBrush="{DynamicResource RG_BorderBrush}"/>
-        <Border Panel.ZIndex="2" x:Name="BottomControlsBackground" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="42" Background="{DynamicResource RG_BottomControlsBackgroundBrush}"/>
+        <Border Panel.ZIndex="2" x:Name="BottomControlsBackground" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="42" Background="{DynamicResource RG_BlackBrush}"/>
         <DockPanel Panel.ZIndex="3" Grid.Row="0" Grid.Column="0">
             <DockPanel DockPanel.Dock="Top">
                 <StackPanel DockPanel.Dock="Top">
@@ -65,7 +65,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <controls:SearchBox x:Name="SearchBox" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" TextChanged="SearchBox_TextChanged" Background="{DynamicResource RG_SearchInvisibleBackgroundBrush}"  VisibleBackground="{DynamicResource RG_SearchBackgroundBrush}" Foreground="{DynamicResource RG_BlackBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_BlackBrush}"/>
+                        <controls:SearchBox x:Name="SearchBox" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" TextChanged="SearchBox_TextChanged" Background="{DynamicResource RG_InvisibleWhiteBrush}"  VisibleBackground="{DynamicResource RG_DarkGrayBrush}" Foreground="{DynamicResource RG_BlackBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_BlackBrush}"/>
                     </DockPanel>
                 </StackPanel>
                 <DockPanel>

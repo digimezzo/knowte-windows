@@ -9,7 +9,7 @@
     Foreground="{DynamicResource RG_BlackBrush}"
     ShowWindowControls="False">
 
-    <Border Background="{DynamicResource RG_WindowBackgroundBrush}" Margin="-1">
+    <Border Background="{DynamicResource RG_WhiteBrush}" Margin="-1">
         <DockPanel Margin="16">
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                 <Grid>
