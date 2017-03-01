@@ -90,14 +90,14 @@
   <Text Key="Log_File">Log bestand</Text>
   <Text Key="Version">Versie</Text>
   <Text Key="Could_Not_Open_Note">De notitie kon niet worden geopened. Raadpleeg het log bestand voor meer informatie.</Text>
-  <Text Key="Backup">Back up</Text>
-  <Text Key="Backup_Description">Maak een back-up van jouw notities.</Text>
+  <Text Key="Backup">Back-up</Text>
+  <Text Key="Backup_Description">Maak een back-up van jouw notities</Text>
   <Text Key="Restore">Herstel</Text>
-  <Text Key="Restore_Description">Herstel jouw notities uit een back-up. Jouw huidige notities worden overschreven.</Text>
+  <Text Key="Restore_Description">Herstel jouw notities uit een back-up</Text>
   <Text Key="Error_Backup_Error">Er is een fout opgetreden tijdens de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Error_Restore_Error">Er is een fout opgetreden tijdens het herstellen van de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
-  <Text Key="Creating_Backup">Back up wordt gemaakt</Text>
-  <Text Key="Restoring_Backup">Back up wordt hersteld</Text>
+  <Text Key="Creating_Backup">Back-up wordt gemaakt</Text>
+  <Text Key="Restoring_Backup">Back-up wordt hersteld</Text>
   <Text Key="Storage">Opslag</Text>
   <Text Key="Your_Notes_Are_Stored_Here">Jouw notities worden hier opgeslagen</Text>
   <Text Key="Change">Veranderen</Text>
@@ -105,4 +105,5 @@
   <Text Key="Move_Notes">Notities verplaatsen</Text>
   <Text Key="Confirm_Move_Notes">Wil je jouw notities verplaatsen naar '%newstoragelocation%'?</Text>
   <Text Key="Error_Change_Storage_Location_Error">Er is een fout opgetreden tijdens het veranderen van de opslagplaats van jouw notities. Raadpleeg het log bestand voor meer informatie.</Text>
+  <Text Key="Backup_Was_Successful">De back-up is geslaagd!</Text>
 </Language>

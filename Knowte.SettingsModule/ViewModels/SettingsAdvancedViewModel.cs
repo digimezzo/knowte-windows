@@ -212,9 +212,21 @@ namespace Knowte.SettingsModule.ViewModels
             // Update LastBackupDirectory setting
             if (isBackupSuccess) SettingsClient.Set<string>("General", "LastBackupDirectory", Path.GetDirectoryName(backupFile));
 
-            // Show error if backup failed
-            if (!isBackupSuccess)
+            if (isBackupSuccess)
             {
+                // Show notification if backup succeeded
+                this.dialogService.ShowNotificationDialog(
+                    null,
+                    iconCharCode: DialogIcons.CheckMarkIconCode,
+                    iconSize: DialogIcons.CheckMarkIconSize,
+                    title: ResourceUtils.GetStringResource("Language_Backup"),
+                    content: ResourceUtils.GetStringResource("Language_Backup_Was_Successful"),
+                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    showViewLogs: false);
+            }
+            else
+            {
+                // Show error if backup failed
                 this.dialogService.ShowNotificationDialog(
                     null,
                     iconCharCode: DialogIcons.ErrorIconCode,
@@ -236,20 +248,20 @@ namespace Knowte.SettingsModule.ViewModels
             if (!isBackupFileChosen) return;
 
             // Perform the restore from file
-            isRestoreSuccess = this.backupService.Restore(backupFile);
+            //isRestoreSuccess = this.backupService.FullRestore(backupFile);
 
-            // Show error if restore failed
-            if (!isRestoreSuccess)
-            {
-                this.dialogService.ShowNotificationDialog(
-                    null,
-                    iconCharCode: DialogIcons.ErrorIconCode,
-                    iconSize: DialogIcons.ErrorIconSize,
-                    title: ResourceUtils.GetStringResource("Language_Error"),
-                    content: ResourceUtils.GetStringResource("Language_Error_Restore_Error"),
-                    okText: ResourceUtils.GetStringResource("Language_Ok"),
-                    showViewLogs: true);
-            }
+            //// Show error if restore failed
+            //if (!isRestoreSuccess)
+            //{
+            //    this.dialogService.ShowNotificationDialog(
+            //        null,
+            //        iconCharCode: DialogIcons.ErrorIconCode,
+            //        iconSize: DialogIcons.ErrorIconSize,
+            //        title: ResourceUtils.GetStringResource("Language_Error"),
+            //        content: ResourceUtils.GetStringResource("Language_Error_Restore_Error"),
+            //        okText: ResourceUtils.GetStringResource("Language_Ok"),
+            //        showViewLogs: true);
+            //}
         }
 
         private void LoadNumberOfNotesInJumplist()

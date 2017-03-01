@@ -91,9 +91,9 @@
   <Text Key="Version">Version</Text>
   <Text Key="Could_Not_Open_Note">The note could not be opened. Please consult the log file for more information.</Text>
   <Text Key="Backup">Backup</Text>
-  <Text Key="Backup_Description">Create a backup of your notes.</Text>
+  <Text Key="Backup_Description">Create a backup of your notes</Text>
   <Text Key="Restore">Restore</Text>
-  <Text Key="Restore_Description">Restore your notes from a backup. Your current notes will be overwritten.</Text>
+  <Text Key="Restore_Description">Restore your notes from a backup</Text>
   <Text Key="Error_Backup_Error">An error occurred during the backup. Please consult the log file for more information.</Text>
   <Text Key="Error_Restore_Error">An error occurred during the restore. Please consult the log file for more information.</Text>
   <Text Key="Creating_Backup">Creating backup</Text>
@@ -105,4 +105,5 @@
   <Text Key="Move_Notes">Move notes</Text>
   <Text Key="Confirm_Move_Notes">Do you want to move your notes to '%newstoragelocation%'?</Text>
   <Text Key="Error_Change_Storage_Location_Error">An error occurred while changing the storage location of your notes. Please consult the log file for more information.</Text>
+  <Text Key="Backup_Was_Successful">The backup was successful!</Text>
 </Language>

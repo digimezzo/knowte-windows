@@ -151,13 +151,25 @@ namespace Knowte.Common.Services.Backup
             return isSuccess;
         }
 
-        public bool Restore(string backupFile)
+        public bool FullRestore(string backupFile)
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
                  ResourceUtils.GetStringResource("Language_Restore"), 
                 ResourceUtils.GetStringResource("Language_Restoring_Backup"), 
                 1000, 
+                () => this.RestoreAsyncCallback(backupFile));
+
+            return isSuccess;
+        }
+
+        public bool MergeRestore(string backupFile)
+        {
+            bool isSuccess = this.dialogService.ShowBusyDialog(
+                null,
+                 ResourceUtils.GetStringResource("Language_Restore"),
+                ResourceUtils.GetStringResource("Language_Restoring_Backup"),
+                1000,
                 () => this.RestoreAsyncCallback(backupFile));
 
             return isSuccess;

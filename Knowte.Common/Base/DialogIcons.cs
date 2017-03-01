@@ -17,5 +17,9 @@
         // Edit
         public static int EditIconCode = 0xE70F;
         public static int EditIconSize = 16;
+
+        // Check mark
+        public static int CheckMarkIconCode = 0xE73E;
+        public static int CheckMarkIconSize = 16;
     }
 }
