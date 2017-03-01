@@ -1,7 +1,9 @@
-2017-02-19: Knowte 1.1 Build 474 (Preview)
+2017-02-19: Knowte 1.1 Build 475 (Preview)
 ------------------------------------------
 
 - [Added] Window borders are more visible when Windows doesn't display a drop shadow
+- [Added] Backup and restore of notes
+- [Added] Notes storage location can be changed
 - [Added] Simplified Chinese translation
 - [Added] Russian translation
 - [Added] Portuguese translation

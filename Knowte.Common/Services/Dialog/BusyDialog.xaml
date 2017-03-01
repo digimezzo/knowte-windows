@@ -9,6 +9,7 @@
         Height="150" Width="350"
         ResizeMode="NoResize"
         Background="Transparent"
+        IsMovable="False"
         Foreground="{DynamicResource RG_BlackBrush}"
         Loaded="BusyDialog_Loaded"
         ShowWindowControls="False">
