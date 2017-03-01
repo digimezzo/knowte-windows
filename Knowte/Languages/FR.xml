@@ -96,4 +96,7 @@
   <Text Key="Restore_Description">Restaurez vos notes et blocs-notes à partir d'une sauvegarde. Vos notes et blocs-notes actuels seront écrasés.</Text>
   <Text Key="Error_Backup_Error">Une erreur s'est produite durant la sauvegarde. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Error_Restore_Error">Une erreur s'est produite durant la restauration. Consultez le fichier log pour plus de détails.</Text>
+  <Text Key="Creating_Backup">Sauvegarde en cours</Text>
+  <Text Key="Restoring_Backup">Restauration en cours</Text>
+  <Text Key="Storage">Stockage</Text>
 </Language>

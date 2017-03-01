@@ -32,6 +32,8 @@
                     <TextBlock Text="{DynamicResource Language_Restore_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
                 </DockPanel>
             </StackPanel>
+            <Separator Height="20" Background="Transparent" />
+            <Label Content="{DynamicResource Language_Storage}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

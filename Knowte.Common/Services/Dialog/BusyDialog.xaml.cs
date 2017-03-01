@@ -19,6 +19,8 @@ namespace Knowte.Common.Services.Dialog
             InitializeComponent();
             this.delayMilliseconds = delayMilliseconds;
             this.callback = callback;
+            this.Title = title;
+            this.Content.Text = content;
             this.CenterWindow(parent);
         }
         #endregion

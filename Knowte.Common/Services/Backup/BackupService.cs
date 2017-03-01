@@ -1,5 +1,6 @@
 ﻿using Digimezzo.Utilities.Log;
 using Digimezzo.Utilities.Settings;
+using Digimezzo.Utilities.Utils;
 using Knowte.Common.Database;
 using Knowte.Common.IO;
 using Knowte.Common.Services.Dialog;
@@ -61,6 +62,7 @@ namespace Knowte.Common.Services.Backup
                         archive.CreateEntryFromFile(this.factory.DatabaseFile, Path.GetFileName(this.factory.DatabaseFile));
                     }
 
+                    if (File.Exists(backupFile)) File.Delete(backupFile);
                     File.Move(tempFile, backupFile);
                 });
             }
@@ -141,13 +143,25 @@ namespace Knowte.Common.Services.Backup
 
         public async Task<bool> BackupAsync(string backupFile)
         {
-            bool isSuccess = this.dialogService.ShowBusyDialog(null, "title", "content", 1000, () => this.BackupAsyncCallback(backupFile));
+            bool isSuccess = this.dialogService.ShowBusyDialog(
+                null,
+                ResourceUtils.GetStringResource("Language_Backup"), 
+                ResourceUtils.GetStringResource("Language_Creating_Backup"), 
+                1000, 
+                () => this.BackupAsyncCallback(backupFile));
+
             return isSuccess;
         }
 
         public async Task<bool> RestoreAsync(string backupFile)
         {
-            bool isSuccess = this.dialogService.ShowBusyDialog(null, "title", "content", 1000, () => this.RestoreAsyncCallback(backupFile));
+            bool isSuccess = this.dialogService.ShowBusyDialog(
+                null,
+                 ResourceUtils.GetStringResource("Language_Restore"), 
+                ResourceUtils.GetStringResource("Language_Restoring_Backup"), 
+                1000, 
+                () => this.RestoreAsyncCallback(backupFile));
+
             return isSuccess;
         }
         #endregion
