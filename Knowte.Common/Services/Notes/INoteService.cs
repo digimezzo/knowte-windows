@@ -7,6 +7,7 @@ namespace Knowte.Common.Services.Note
 {
     public interface INoteService
     {
+        bool ChangeStorageLocation(string newStorageLocation, bool moveCurrentNotes);
         void CloseAllNoteWindows();
         void NewNotebook(Notebook notebook);
         void DeleteNotebook(string id);

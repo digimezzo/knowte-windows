@@ -102,4 +102,7 @@
   <Text Key="Your_Notes_Are_Stored_Here">Your notes are stored here</Text>
   <Text Key="Change">Change</Text>
   <Text Key="Change_Description">Change where your notes are stored</Text>
+  <Text Key="Move_Notes">Move notes</Text>
+  <Text Key="Confirm_Move_Notes">Do you want to move your notes to '%newstoragelocation%'?</Text>
+  <Text Key="Error_Change_Storage_Location_Error">An error occurred while changing the storage location of your notes. Please consult the log file for more information.</Text>
 </Language>

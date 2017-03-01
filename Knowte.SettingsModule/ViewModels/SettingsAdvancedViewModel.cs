@@ -6,6 +6,7 @@ using Knowte.Common.IO;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Backup;
 using Knowte.Common.Services.Dialog;
+using Knowte.Common.Services.Note;
 using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
@@ -14,6 +15,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using WPFFolderBrowser;
 
 namespace Knowte.SettingsModule.ViewModels
 {
@@ -22,6 +24,7 @@ namespace Knowte.SettingsModule.ViewModels
         #region Variables
         private IBackupService backupService;
         private IDialogService dialogService;
+        private INoteService noteService;
         private IEventAggregator eventAggregator;
         private ObservableCollection<int> numberOfNotesInJumpList;
         private int selectedNumberOfNotesInJumpList;
@@ -69,12 +72,13 @@ namespace Knowte.SettingsModule.ViewModels
         #endregion
 
         #region Construction
-        public SettingsAdvancedViewModel(IBackupService backupService, IDialogService dialogService, IEventAggregator eventAggregator)
+        public SettingsAdvancedViewModel(IBackupService backupService, IDialogService dialogService, INoteService noteService, IEventAggregator eventAggregator)
         {
             // Injection
             this.eventAggregator = eventAggregator;
             this.backupService = backupService;
             this.dialogService = dialogService;
+            this.noteService = noteService;
 
             // Storage location
             // TODO
@@ -83,7 +87,7 @@ namespace Knowte.SettingsModule.ViewModels
             this.BackupCommand = new DelegateCommand(() => this.Backup());
             this.RestoreCommand = new DelegateCommand(() => this.Restore());
             this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.NoteStorageLocation));
-            this.ChangeStorageLocationCommand = new DelegateCommand(() => { this.ChangeStorageLocationAsync(); });
+            this.ChangeStorageLocationCommand = new DelegateCommand(() => { this.ChangeStorageLocation(); });
 
             // Initialize
             this.LoadNumberOfNotesInJumplist();
@@ -91,9 +95,51 @@ namespace Knowte.SettingsModule.ViewModels
         #endregion
 
         #region Private
-        private void ChangeStorageLocationAsync()
+        private void ChangeStorageLocation()
         {
-            // TODO
+            var dlg = new WPFFolderBrowserDialog();
+
+            string customStorageLocation = SettingsClient.Get<string>("General", "NoteStorageLocation");
+
+            if (!string.IsNullOrWhiteSpace(customStorageLocation))
+            {
+                // If there is a custom storage location set, open that location.
+                dlg.InitialDirectory = ApplicationPaths.NoteStorageLocation;
+            }
+            else
+            {
+                // If there is no custom storage location set, open My Documents.
+                dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
+
+            if ((bool)dlg.ShowDialog())
+            {
+                string selectedFolder = dlg.FileName;
+
+                bool moveCurrentNotes = this.dialogService.ShowConfirmationDialog(
+                    null,
+                    iconCharCode: DialogIcons.QuestionIconCode,
+                    iconSize: DialogIcons.QuestionIconSize,
+                    title: ResourceUtils.GetStringResource("Language_Move_Notes"),
+                    content: ResourceUtils.GetStringResource("Language_Confirm_Move_Notes").Replace("%newstoragelocation%", selectedFolder),
+                    okText: ResourceUtils.GetStringResource("Language_Yes"),
+                    cancelText: ResourceUtils.GetStringResource("Language_No"));
+
+                bool isChangeStorageLocationSuccess = this.noteService.ChangeStorageLocation(selectedFolder, moveCurrentNotes);
+
+                // Show error if changing storage location failed
+                if (!isChangeStorageLocationSuccess)
+                {
+                    this.dialogService.ShowNotificationDialog(
+                        null,
+                        iconCharCode: DialogIcons.ErrorIconCode,
+                        iconSize: DialogIcons.ErrorIconSize,
+                        title: ResourceUtils.GetStringResource("Language_Error"),
+                        content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
+                        okText: ResourceUtils.GetStringResource("Language_Ok"),
+                        showViewLogs: true);
+                }
+            }
         }
 
         private bool SaveBackupFile(ref string backupFile)

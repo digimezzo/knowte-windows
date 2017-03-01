@@ -102,4 +102,7 @@
   <Text Key="Your_Notes_Are_Stored_Here">Jouw notities worden hier opgeslagen</Text>
   <Text Key="Change">Veranderen</Text>
   <Text Key="Change_Description">Verander de opslagplaats van jouw notities</Text>
+  <Text Key="Move_Notes">Notities verplaatsen</Text>
+  <Text Key="Confirm_Move_Notes">Wil je jouw notities verplaatsen naar '%newstoragelocation%'?</Text>
+  <Text Key="Error_Change_Storage_Location_Error">Er is een fout opgetreden tijdens het veranderen van de opslagplaats van jouw notities. Raadpleeg het log bestand voor meer informatie.</Text>
 </Language>

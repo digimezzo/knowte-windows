@@ -1,5 +1,4 @@
 ﻿using Digimezzo.Utilities.Log;
-using Digimezzo.Utilities.Settings;
 using Ionic.Zip;
 using Knowte.Common.Base;
 using Knowte.Common.Controls;
@@ -35,6 +34,12 @@ namespace Knowte.Common.Services.Note
 
         #region INoteService
         public event EventHandler FlagUpdated = delegate { };
+
+        public bool ChangeStorageLocation(string newStorageLocation, bool moveCurrentNotes)
+        {
+            // TODO implement
+            return true;
+        }
 
         public void CloseAllNoteWindows()
         {
