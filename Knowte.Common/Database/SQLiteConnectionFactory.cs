@@ -1,6 +1,7 @@
 ﻿using Digimezzo.Utilities.IO;
 using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
+using Knowte.Common.IO;
 using SQLite;
 
 namespace Knowte.Common.Database
@@ -21,7 +22,7 @@ namespace Knowte.Common.Database
         #region Construction
         public SQLiteConnectionFactory()
         {
-            this.databaseFile = System.IO.Path.Combine(SettingsClient.ApplicationFolder(), ProcessExecutable.Name() + ".db");
+            this.databaseFile = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ProcessExecutable.Name() + ".db");
         }
         #endregion
 

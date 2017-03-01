@@ -2,7 +2,7 @@
 <Settings>
   <Namespace Name="Configuration">
     <Setting Name="Version">
-      <Value>5</Value>
+      <Value>7</Value>
     </Setting>
     <Setting Name="IsPortable">
       <Value>False</Value>
@@ -28,6 +28,9 @@
       <Value></Value>
     </Setting>
     <Setting Name="LastBackupDirectory">
+      <Value></Value>
+    </Setting>
+    <Setting Name="NoteStorageLocation">
       <Value></Value>
     </Setting>
   </Namespace>

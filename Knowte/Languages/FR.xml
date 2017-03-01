@@ -91,12 +91,15 @@
   <Text Key="Version">Version</Text>
   <Text Key="Could_Not_Open_Note">La note n'a pas pu être ouverte. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Backup">Sauvegarde</Text>
-  <Text Key="Backup_Description">Créez une sauvegarde de vos notes et blocs-notes.</Text>
+  <Text Key="Backup_Description">Créez une sauvegarde de vos notes.</Text>
   <Text Key="Restore">Restauration</Text>
-  <Text Key="Restore_Description">Restaurez vos notes et blocs-notes à partir d'une sauvegarde. Vos notes et blocs-notes actuels seront écrasés.</Text>
+  <Text Key="Restore_Description">Restaurez vos notes à partir d'une sauvegarde. Vos notes actueles seront écrasées.</Text>
   <Text Key="Error_Backup_Error">Une erreur s'est produite durant la sauvegarde. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Error_Restore_Error">Une erreur s'est produite durant la restauration. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Creating_Backup">Sauvegarde en cours</Text>
   <Text Key="Restoring_Backup">Restauration en cours</Text>
   <Text Key="Storage">Stockage</Text>
+  <Text Key="Your_Notes_Are_Stored_Here">Vos notes sont stockées ici</Text>
+  <Text Key="Change">Modifier</Text>
+  <Text Key="Change_Description">Changer l'endroit de stockage de vos notes</Text>
 </Language>

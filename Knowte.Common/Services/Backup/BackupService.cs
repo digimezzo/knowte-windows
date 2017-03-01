@@ -1,5 +1,4 @@
 ﻿using Digimezzo.Utilities.Log;
-using Digimezzo.Utilities.Settings;
 using Digimezzo.Utilities.Utils;
 using Knowte.Common.Database;
 using Knowte.Common.IO;
@@ -18,7 +17,6 @@ namespace Knowte.Common.Services.Backup
         private SQLiteConnectionFactory factory;
         private INoteService noteService;
         private IDialogService dialogService;
-        private string applicationFolder = SettingsClient.ApplicationFolder();
         #endregion
 
         #region Construction
@@ -50,7 +48,7 @@ namespace Knowte.Common.Services.Backup
                     using (ZipArchive archive = ZipFile.Open(tempFile, ZipArchiveMode.Create))
                     {
                         // Add the "Notes" subfolder    
-                        var di = new DirectoryInfo(Path.Combine(this.applicationFolder, ApplicationPaths.NotesSubDirectory));
+                        var di = new DirectoryInfo(Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory));
                         FileInfo[] fi = di.GetFiles();
 
                         foreach (FileInfo f in fi)
@@ -85,7 +83,7 @@ namespace Knowte.Common.Services.Backup
 
             bool isSuccess = true;
 
-            string notesDirectoryPath = Path.Combine(this.applicationFolder, ApplicationPaths.NotesSubDirectory);
+            string notesDirectoryPath = Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
 
             try
             {
@@ -101,7 +99,7 @@ namespace Knowte.Common.Services.Backup
                     File.Move(this.factory.DatabaseFile, this.factory.DatabaseFile + ".old"); // Move Knowte.db to Knowte.db.old.
 
                     // Restore backup
-                    ZipFile.ExtractToDirectory(backupFile, this.applicationFolder);
+                    ZipFile.ExtractToDirectory(backupFile, ApplicationPaths.NoteStorageLocation);
 
                     Directory.Delete(notesDirectoryPath + ".old", true); // Delete Notes.old
                     File.Delete(this.factory.DatabaseFile + ".old"); // Delete Knowte.db.old

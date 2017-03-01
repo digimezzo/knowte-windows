@@ -1,6 +1,8 @@
-﻿using Digimezzo.Utilities.Settings;
+﻿using Digimezzo.Utilities.IO;
+using Digimezzo.Utilities.Settings;
 using Digimezzo.Utilities.Utils;
 using Knowte.Common.Base;
+using Knowte.Common.IO;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Backup;
 using Knowte.Common.Services.Dialog;
@@ -28,9 +30,15 @@ namespace Knowte.SettingsModule.ViewModels
         #region Commands
         public DelegateCommand BackupCommand { get; set; }
         public DelegateCommand RestoreCommand { get; set; }
+        public DelegateCommand OpenStorageLocationCommand { get; set; }
         #endregion
 
         #region Properties
+        public string StorageLocation
+        {
+            get { return ApplicationPaths.NoteStorageLocation; }
+        }
+
         public ObservableCollection<int> NumberOfNotesInJumpList
         {
             get
@@ -67,9 +75,13 @@ namespace Knowte.SettingsModule.ViewModels
             this.backupService = backupService;
             this.dialogService = dialogService;
 
+            // Storage location
+            // TODO
+
             // Commands
             this.BackupCommand = new DelegateCommand(async () => this.BackupAsync());
             this.RestoreCommand = new DelegateCommand(async () => this.RestoreAsync());
+            this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.NoteStorageLocation));
 
             // Initialize
             this.LoadNumberOfNotesInJumplist();

@@ -91,12 +91,15 @@
   <Text Key="Version">Version</Text>
   <Text Key="Could_Not_Open_Note">The note could not be opened. Please consult the log file for more information.</Text>
   <Text Key="Backup">Backup</Text>
-  <Text Key="Backup_Description">Create a backup of your notes and notebooks.</Text>
+  <Text Key="Backup_Description">Create a backup of your notes.</Text>
   <Text Key="Restore">Restore</Text>
-  <Text Key="Restore_Description">Restore your notes and notebooks from a backup. Your current notes and notebooks will be overwritten.</Text>
+  <Text Key="Restore_Description">Restore your notes from a backup. Your current notes will be overwritten.</Text>
   <Text Key="Error_Backup_Error">An error occurred during the backup. Please consult the log file for more information.</Text>
   <Text Key="Error_Restore_Error">An error occurred during the restore. Please consult the log file for more information.</Text>
   <Text Key="Creating_Backup">Creating backup</Text>
   <Text Key="Restoring_Backup">Restoring backup</Text>
   <Text Key="Storage">Storage</Text>
+  <Text Key="Your_Notes_Are_Stored_Here">Your notes are stored here</Text>
+  <Text Key="Change">Change</Text>
+  <Text Key="Change_Description">Change where your notes are stored</Text>
 </Language>
