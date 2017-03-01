@@ -39,6 +39,7 @@
         <File>SQLitePCL.batteries.dll</File>
         <File>SQLitePCL.raw.dll</File>
         <File>SQLitePCLPlugin_esqlite3.dll</File>
+        <File>WPFFolderBrowser</File>
       </Files>
     </Portable>
   </Packaging>

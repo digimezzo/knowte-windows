@@ -90,6 +90,7 @@
               <File Source="Licenses\Unity.txt" />
               <File Source="Licenses\Unity.WCF.txt" />
               <File Source="Licenses\WiX.txt" />
+              <File Source="Licenses\WPFFolderBrowser.txt" />
             </Component>
           </Directory>
           <!-- Application -->
@@ -123,6 +124,7 @@
             <File Source="SQLitePCL.batteries.dll" />
             <File Source="SQLitePCL.raw.dll" />
             <File Source="SQLitePCLPlugin_esqlite3.dll" />
+            <File Source="WPFFolderBrowser.dll" />
           </Component>
         </Directory>
       </Directory>

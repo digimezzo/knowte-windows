@@ -569,7 +569,6 @@ namespace Knowte.NotesModule.Views
             catch (Exception)
             {
             }
-
         }
 
         private void BtnUndo_Click(object sender, RoutedEventArgs e)
@@ -583,7 +582,6 @@ namespace Knowte.NotesModule.Views
             XAMLRichTextBox.Redo();
             this.VisualizeUndoState();
         }
-
 
         private void MetroWindow_KeyUp(object sender, KeyEventArgs e)
         {
@@ -671,7 +669,6 @@ namespace Knowte.NotesModule.Views
                 this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
 
                 this.Close();
-
             }
         }
 
@@ -1495,7 +1492,6 @@ namespace Knowte.NotesModule.Views
             {
                 this.SearchRectangles.Add(rect);
             }
-
         }
 
         public void ClearSearch()

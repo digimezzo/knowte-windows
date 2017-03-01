@@ -31,6 +31,7 @@ namespace Knowte.SettingsModule.ViewModels
         public DelegateCommand BackupCommand { get; set; }
         public DelegateCommand RestoreCommand { get; set; }
         public DelegateCommand OpenStorageLocationCommand { get; set; }
+        public DelegateCommand ChangeStorageLocationCommand { get; set; }
         #endregion
 
         #region Properties
@@ -79,9 +80,10 @@ namespace Knowte.SettingsModule.ViewModels
             // TODO
 
             // Commands
-            this.BackupCommand = new DelegateCommand(async () => this.BackupAsync());
-            this.RestoreCommand = new DelegateCommand(async () => this.RestoreAsync());
+            this.BackupCommand = new DelegateCommand(() => this.Backup());
+            this.RestoreCommand = new DelegateCommand(() => this.Restore());
             this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.NoteStorageLocation));
+            this.ChangeStorageLocationCommand = new DelegateCommand(() => { this.ChangeStorageLocationAsync(); });
 
             // Initialize
             this.LoadNumberOfNotesInJumplist();
@@ -89,6 +91,11 @@ namespace Knowte.SettingsModule.ViewModels
         #endregion
 
         #region Private
+        private void ChangeStorageLocationAsync()
+        {
+            // TODO
+        }
+
         private bool SaveBackupFile(ref string backupFile)
         {
             var dlg = new SaveFileDialog();
@@ -144,7 +151,7 @@ namespace Knowte.SettingsModule.ViewModels
             return false;
         }
 
-        private async Task BackupAsync()
+        private void Backup()
         {
             bool isBackupSuccess = false;
 
@@ -154,7 +161,7 @@ namespace Knowte.SettingsModule.ViewModels
             if (!isBackupFileChosen) return;
 
             // Perform the backup to file
-            isBackupSuccess = await this.backupService.BackupAsync(backupFile);
+            isBackupSuccess = this.backupService.Backup(backupFile);
 
             // Update LastBackupDirectory setting
             if (isBackupSuccess) SettingsClient.Set<string>("General", "LastBackupDirectory", Path.GetDirectoryName(backupFile));
@@ -173,7 +180,7 @@ namespace Knowte.SettingsModule.ViewModels
             }
         }
 
-        private async Task RestoreAsync()
+        private void Restore()
         {
             bool isRestoreSuccess = false;
 
@@ -183,7 +190,7 @@ namespace Knowte.SettingsModule.ViewModels
             if (!isBackupFileChosen) return;
 
             // Perform the restore from file
-            isRestoreSuccess = await this.backupService.RestoreAsync(backupFile);
+            isRestoreSuccess = this.backupService.Restore(backupFile);
 
             // Show error if restore failed
             if (!isRestoreSuccess)

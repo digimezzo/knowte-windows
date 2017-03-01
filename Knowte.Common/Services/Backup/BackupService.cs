@@ -139,7 +139,7 @@ namespace Knowte.Common.Services.Backup
         #region IBackupService
         public event EventHandler BackupRestored = delegate { };
 
-        public async Task<bool> BackupAsync(string backupFile)
+        public bool Backup(string backupFile)
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
@@ -151,7 +151,7 @@ namespace Knowte.Common.Services.Backup
             return isSuccess;
         }
 
-        public async Task<bool> RestoreAsync(string backupFile)
+        public bool Restore(string backupFile)
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,

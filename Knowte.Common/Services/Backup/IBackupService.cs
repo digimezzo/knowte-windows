@@ -5,8 +5,8 @@ namespace Knowte.Common.Services.Backup
 {
     public interface IBackupService
     {
-        Task<bool> BackupAsync(string backupFile);
-        Task<bool> RestoreAsync(string backupFile);
+        bool Backup(string backupFile);
+        bool Restore(string backupFile);
         event EventHandler BackupRestored;
     }
 }

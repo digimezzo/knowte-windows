@@ -172,6 +172,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Licenses\WPFFolderBrowser.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Splash.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -232,6 +235,7 @@
     </Content>
     <Content Include="Libaries\Digimezzo.Utilities.dll" />
     <Content Include="Libaries\Digimezzo.WPFControls.dll" />
+    <Content Include="Libaries\WPFFolderBrowser.dll" />
     <Content Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

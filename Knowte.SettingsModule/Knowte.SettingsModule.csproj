@@ -97,6 +97,9 @@
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
+    <Reference Include="WPFFolderBrowser">
+      <HintPath>..\Knowte\Libaries\WPFFolderBrowser.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Knowte\SharedAssemblyInfo.cs">
