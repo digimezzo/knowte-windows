@@ -107,4 +107,6 @@
   <Text Key="Error_Change_Storage_Location_Error">Er is een fout opgetreden tijdens het veranderen van de opslagplaats van jouw notities. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Backup_Was_Successful">De back-up is geslaagd!</Text>
   <Text Key="Restore_Was_Successful">Het herstellen is geslaagd!</Text>
+  <Text Key="Combine">Combineren</Text>
+  <Text Key="Erase">Wissen</Text>
 </Language>

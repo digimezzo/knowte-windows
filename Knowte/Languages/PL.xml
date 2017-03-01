@@ -107,4 +107,6 @@
   <Text Key="Error_Change_Storage_Location_Error">An error occurred while changing the storage location of your notes. Please consult the log file for more information.</Text>
   <Text Key="Backup_Was_Successful">The backup was successful!</Text>
   <Text Key="Restore_Was_Successful">The restore was successful!</Text>
+  <Text Key="Combine">Combine</Text>
+  <Text Key="Erase">Erase</Text>
 </Language>

@@ -119,6 +119,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SettingsModule.cs" />
+    <Compile Include="ViewModels\SettingsAdvancedRestoreViewModel.cs" />
     <Compile Include="ViewModels\SettingsAdvancedViewModel.cs" />
     <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
     <Compile Include="ViewModels\SettingsNotesViewModel.cs" />
@@ -128,6 +129,9 @@
     </Compile>
     <Compile Include="Views\SettingsAdvanced.xaml.cs">
       <DependentUpon>SettingsAdvanced.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsAdvancedRestore.xaml.cs">
+      <DependentUpon>SettingsAdvancedRestore.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsAppearance.xaml.cs">
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
@@ -163,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsAdvanced.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsAdvancedRestore.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
