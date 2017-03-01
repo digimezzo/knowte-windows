@@ -106,4 +106,5 @@
   <Text Key="Confirm_Move_Notes">Do you want to move your notes to '%newstoragelocation%'?</Text>
   <Text Key="Error_Change_Storage_Location_Error">An error occurred while changing the storage location of your notes. Please consult the log file for more information.</Text>
   <Text Key="Backup_Was_Successful">The backup was successful!</Text>
+  <Text Key="Restore_Was_Successful">The restore was successful!</Text>
 </Language>
