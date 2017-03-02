@@ -73,7 +73,7 @@ namespace Knowte.Common.Services.Backup
             return isSuccess;
         }
 
-        private async Task<bool> RestoreAsyncCallback(string backupFile, bool isImport)
+        private async Task<bool> RestoreAsyncCallback(string backupFile, bool deleteCurrentNotes)
         {
             if (string.IsNullOrWhiteSpace(backupFile))
             {
@@ -158,7 +158,7 @@ namespace Knowte.Common.Services.Backup
                 ResourceUtils.GetStringResource("Language_Import"),
                 ResourceUtils.GetStringResource("Language_Importing_Backup"),
                 1000,
-                () => this.RestoreAsyncCallback(backupFile, true));
+                () => this.RestoreAsyncCallback(backupFile, false));
 
             return isSuccess;
         }
@@ -170,7 +170,7 @@ namespace Knowte.Common.Services.Backup
                 ResourceUtils.GetStringResource("Language_Restore"), 
                 ResourceUtils.GetStringResource("Language_Restoring_Backup"), 
                 1000, 
-                () => this.RestoreAsyncCallback(backupFile, false));
+                () => this.RestoreAsyncCallback(backupFile, true));
 
             return isSuccess;
         }

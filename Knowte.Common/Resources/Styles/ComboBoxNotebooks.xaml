@@ -28,7 +28,7 @@
                     <SolidColorBrush Color="Transparent"/>
                 </Border.Background>
             </Border>
-            <Viewbox x:Name="Arrow" Width="8" Height="8" Margin="-5,0,0,0" SnapsToDevicePixels="False" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Viewbox x:Name="Arrow" Width="8" Height="8" Margin="-5,2,0,0" SnapsToDevicePixels="False" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Canvas Width="272.96" Height="272.96">
                     <Path Data="F1 M 0,0 L -38.88,39.04 4.96,83.04 58.56,136.64 97.44,175.52 136.48,136.64 178.72,94.24
 		 178.88,94.4 234.08,39.04 195.04,0 97.6,97.6 0,0 z" RenderTransform="1,0,0,1,38.88,48.64" Clip="M -38.88,0 L 234.08,0 234.08,175.68 -38.88,175.68 z"  Fill="{TemplateBinding Foreground}" />
@@ -83,13 +83,13 @@
                         Grid.Column="2"
                         Focusable="false"
                         ClickMode="Press"
-                        Foreground="{DynamicResource RG_BlackBrush}"
+                        Foreground="{DynamicResource RG_GrayBrush}"
                         Background="Transparent"
                         IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, 
               RelativeSource={RelativeSource TemplatedParent}}"/>
                         <Label x:Name="ContentSite"
                             IsHitTestVisible="False"
-                            Foreground="{DynamicResource RG_BlackBrush}"
+                            Foreground="{DynamicResource RG_GrayBrush}"
                             Padding="0"
                             Content="{TemplateBinding SelectionBoxItem}"
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
