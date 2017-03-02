@@ -38,12 +38,12 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Content="{Binding Source={StaticResource BackupProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding BackupCommand}"/>
+                <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource BackupProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding BackupCommand}"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{DynamicResource Language_Backup_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,0,0" Foreground="{DynamicResource RG_BlackBrush}" Text="{DynamicResource Language_Two_Ways_To_Restore}"/>
-                <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Content="{Binding Source={StaticResource ImportProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding RestoreCommand}"/>
+                <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource ImportProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding RestoreCommand}"/>
                 <TextBlock Grid.Row="4" Grid.Column="1" Text="{DynamicResource Language_Import_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
-                <Button Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Content="{Binding Source={StaticResource RestoreProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding RestoreCommand}"/>
+                <Button Grid.Row="6" Grid.Column="0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource RestoreProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding RestoreCommand}"/>
                 <TextBlock Grid.Row="6" Grid.Column="1" Text="{DynamicResource Language_Restore_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
             </Grid>
             <Separator Height="20" Background="Transparent" />
