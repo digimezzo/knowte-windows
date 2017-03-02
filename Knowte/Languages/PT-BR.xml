@@ -110,4 +110,7 @@
   <Text Key="Import">Import</Text>
   <Text Key="Import_Description">Import notes from a backup. Your current notes will not be erased.</Text>
   <Text Key="Restore_Description">Restore notes from a backup. Your current notes will be erased.</Text>
+  <Text Key="Error_Import_Error">An error occurred during the import. Please consult the log file for more information.</Text>
+  <Text Key="Import_Was_Successful">The import was successful!</Text>
+  <Text Key="Importing_Backup">Importing backup</Text>
 </Language>

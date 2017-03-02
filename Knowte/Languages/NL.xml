@@ -110,4 +110,7 @@
   <Text Key="Import">Import</Text>
   <Text Key="Import_Description">Notities importeren uit een back-up. Huidige notities worden niet gewist.</Text>
   <Text Key="Restore_Description">Notities herstellen uit een back-up. Huidige notities worden gewist.</Text>
+  <Text Key="Error_Import_Error">Er is een fout opgetreden tijdens het importeren vanuit de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
+  <Text Key="Import_Was_Successful">De import is geslaagd!</Text>
+  <Text Key="Importing_Backup">Back-up wordt geïmporteerd</Text>
 </Language>

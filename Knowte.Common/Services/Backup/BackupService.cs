@@ -73,7 +73,7 @@ namespace Knowte.Common.Services.Backup
             return isSuccess;
         }
 
-        private async Task<bool> ImportAsyncCallback(string backupFile)
+        private async Task<bool> RestoreAsyncCallback(string backupFile, bool isImport)
         {
             if (string.IsNullOrWhiteSpace(backupFile))
             {
@@ -155,10 +155,10 @@ namespace Knowte.Common.Services.Backup
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
-                 ResourceUtils.GetStringResource("Language_Restore"),
-                ResourceUtils.GetStringResource("Language_Restoring_Backup"),
+                ResourceUtils.GetStringResource("Language_Import"),
+                ResourceUtils.GetStringResource("Language_Importing_Backup"),
                 1000,
-                () => this.ImportAsyncCallback(backupFile));
+                () => this.RestoreAsyncCallback(backupFile, true));
 
             return isSuccess;
         }
@@ -167,10 +167,10 @@ namespace Knowte.Common.Services.Backup
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
-                 ResourceUtils.GetStringResource("Language_Restore"), 
+                ResourceUtils.GetStringResource("Language_Restore"), 
                 ResourceUtils.GetStringResource("Language_Restoring_Backup"), 
                 1000, 
-                () => this.ImportAsyncCallback(backupFile));
+                () => this.RestoreAsyncCallback(backupFile, false));
 
             return isSuccess;
         }

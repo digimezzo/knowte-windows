@@ -14,7 +14,6 @@ using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading.Tasks;
 using WPFFolderBrowser;
 
 namespace Knowte.SettingsModule.ViewModels
@@ -32,6 +31,7 @@ namespace Knowte.SettingsModule.ViewModels
 
         #region Commands
         public DelegateCommand BackupCommand { get; set; }
+        public DelegateCommand ImportCommand { get; set; }
         public DelegateCommand RestoreCommand { get; set; }
         public DelegateCommand OpenStorageLocationCommand { get; set; }
         public DelegateCommand ChangeStorageLocationCommand { get; set; }
@@ -85,6 +85,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             // Commands
             this.BackupCommand = new DelegateCommand(() => this.Backup());
+            this.ImportCommand = new DelegateCommand(() => this.Import());
             this.RestoreCommand = new DelegateCommand(() => this.Restore());
             this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.NoteStorageLocation));
             this.ChangeStorageLocationCommand = new DelegateCommand(() => { this.ChangeStorageLocation(); });
@@ -238,6 +239,44 @@ namespace Knowte.SettingsModule.ViewModels
             }
         }
 
+        private void Import()
+        {
+            bool isImportSuccess = false;
+
+            // Choose a backup file
+            string backupFile = string.Empty;
+            bool isBackupFileChosen = this.OpenBackupFile(ref backupFile);
+            if (!isBackupFileChosen) return;
+
+            // Perform the restore from file
+            isImportSuccess = this.backupService.Import(backupFile);
+
+            if (isImportSuccess)
+            {
+                // Show notification if import succeeded
+                this.dialogService.ShowNotificationDialog(
+                    null,
+                    iconCharCode: DialogIcons.CheckMarkIconCode,
+                    iconSize: DialogIcons.CheckMarkIconSize,
+                    title: ResourceUtils.GetStringResource("Language_Import"),
+                    content: ResourceUtils.GetStringResource("Language_Import_Was_Successful"),
+                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    showViewLogs: false);
+            }
+            else
+            {
+                // Show error if import failed
+                this.dialogService.ShowNotificationDialog(
+                                   null,
+                                   iconCharCode: DialogIcons.ErrorIconCode,
+                                   iconSize: DialogIcons.ErrorIconSize,
+                                   title: ResourceUtils.GetStringResource("Language_Error"),
+                                   content: ResourceUtils.GetStringResource("Language_Error_Import_Error"),
+                                   okText: ResourceUtils.GetStringResource("Language_Ok"),
+                                   showViewLogs: true);
+            }
+        }
+
         private void Restore()
         {
             bool isRestoreSuccess = false;
@@ -248,20 +287,32 @@ namespace Knowte.SettingsModule.ViewModels
             if (!isBackupFileChosen) return;
 
             // Perform the restore from file
-            //isRestoreSuccess = this.backupService.FullRestore(backupFile);
+            isRestoreSuccess = this.backupService.Restore(backupFile);
 
-            //// Show error if restore failed
-            //if (!isRestoreSuccess)
-            //{
-            //    this.dialogService.ShowNotificationDialog(
-            //        null,
-            //        iconCharCode: DialogIcons.ErrorIconCode,
-            //        iconSize: DialogIcons.ErrorIconSize,
-            //        title: ResourceUtils.GetStringResource("Language_Error"),
-            //        content: ResourceUtils.GetStringResource("Language_Error_Restore_Error"),
-            //        okText: ResourceUtils.GetStringResource("Language_Ok"),
-            //        showViewLogs: true);
-            //}
+            if (isRestoreSuccess)
+            {
+                // Show notification if restore succeeded
+                this.dialogService.ShowNotificationDialog(
+                    null,
+                    iconCharCode: DialogIcons.CheckMarkIconCode,
+                    iconSize: DialogIcons.CheckMarkIconSize,
+                    title: ResourceUtils.GetStringResource("Language_Restore"),
+                    content: ResourceUtils.GetStringResource("Language_Restore_Was_Successful"),
+                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    showViewLogs: false);
+            }
+            else
+            {
+                // Show error if restore failed
+                this.dialogService.ShowNotificationDialog(
+                    null,
+                    iconCharCode: DialogIcons.ErrorIconCode,
+                    iconSize: DialogIcons.ErrorIconSize,
+                    title: ResourceUtils.GetStringResource("Language_Error"),
+                    content: ResourceUtils.GetStringResource("Language_Error_Restore_Error"),
+                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    showViewLogs: true);
+            }
         }
 
         private void LoadNumberOfNotesInJumplist()

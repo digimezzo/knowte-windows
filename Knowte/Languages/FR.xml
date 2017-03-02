@@ -110,4 +110,7 @@
   <Text Key="Import">Import</Text>
   <Text Key="Import_Description">Importer des notes à partir d'une sauvegarde. Vos notes actuèles ne seront pas effacées.</Text>
   <Text Key="Restore_Description">Restaurer des notes à partir d'une sauvegarde. Vos notes actuèles seront effacées.</Text>
+  <Text Key="Error_Import_Error">Une erreur s'est produite durant l'import. Consultez le fichier log pour plus de détails.</Text>
+  <Text Key="Import_Was_Successful">L'import a réussi!</Text>
+  <Text Key="Importing_Backup">Import en cours</Text>
 </Language>
