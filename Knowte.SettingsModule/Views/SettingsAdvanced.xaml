@@ -12,6 +12,7 @@
         <StackPanel>
             <StackPanel.Resources>
                 <presentationutils:BindingProxy x:Key="BackupProxy" Data="{DynamicResource Language_Backup}"/>
+                <presentationutils:BindingProxy x:Key="ImportProxy" Data="{DynamicResource Language_Import}"/>
                 <presentationutils:BindingProxy x:Key="RestoreProxy" Data="{DynamicResource Language_Restore}"/>
                 <presentationutils:BindingProxy x:Key="ChangeProxy" Data="{DynamicResource Language_Change}"/>
             </StackPanel.Resources>
@@ -27,6 +28,11 @@
                 <DockPanel Margin="5,0,0,0">
                     <Button DockPanel.Dock="Left" Content="{Binding Source={StaticResource BackupProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding BackupCommand}"/>
                     <TextBlock Text="{DynamicResource Language_Backup_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
+                </DockPanel>
+                <TextBlock Margin="5,20,0,0" Foreground="{DynamicResource RG_BlackBrush}" Text="{DynamicResource Language_Two_Ways_To_Restore}"/>
+                <DockPanel Margin="5,10,0,0">
+                    <Button DockPanel.Dock="Left" Content="{Binding Source={StaticResource ImportProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding RestoreCommand}"/>
+                    <TextBlock Text="{DynamicResource Language_Import_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
                 </DockPanel>
                 <DockPanel Margin="5,10,0,0">
                     <Button DockPanel.Dock="Left" Content="{Binding Source={StaticResource RestoreProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Margin="0,0,15,0" Command="{Binding RestoreCommand}"/>

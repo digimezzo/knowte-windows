@@ -93,7 +93,7 @@
   <Text Key="Backup">Back-up</Text>
   <Text Key="Backup_Description">Maak een back-up van jouw notities</Text>
   <Text Key="Restore">Herstel</Text>
-  <Text Key="Restore_Description">Herstel jouw notities uit een back-up</Text>
+  <Text Key="Two_Ways_To_Restore">Er zijn 2 manieren om notities te herstellen uit een back-up</Text>
   <Text Key="Error_Backup_Error">Er is een fout opgetreden tijdens de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Error_Restore_Error">Er is een fout opgetreden tijdens het herstellen van de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Creating_Backup">Back-up wordt gemaakt</Text>
@@ -107,6 +107,7 @@
   <Text Key="Error_Change_Storage_Location_Error">Er is een fout opgetreden tijdens het veranderen van de opslagplaats van jouw notities. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Backup_Was_Successful">De back-up is geslaagd!</Text>
   <Text Key="Restore_Was_Successful">Het herstellen is geslaagd!</Text>
-  <Text Key="Combine">Combineren</Text>
-  <Text Key="Erase">Wissen</Text>
+  <Text Key="Import">Import</Text>
+  <Text Key="Import_Description">Notities importeren uit een back-up. Huidige notities worden niet gewist.</Text>
+  <Text Key="Restore_Description">Notities herstellen uit een back-up. Huidige notities worden gewist.</Text>
 </Language>

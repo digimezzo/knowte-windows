@@ -5,8 +5,8 @@ namespace Knowte.Common.Services.Backup
     public interface IBackupService
     {
         bool Backup(string backupFile);
-        bool CombineRestore(string backupFile);
-        bool EraseRestore(string backupFile);
+        bool Import(string backupFile);
+        bool Restore(string backupFile);
         event EventHandler BackupRestored;
     }
 }

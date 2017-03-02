@@ -93,7 +93,7 @@
   <Text Key="Backup">Backup</Text>
   <Text Key="Backup_Description">Create a backup of your notes</Text>
   <Text Key="Restore">Restore</Text>
-  <Text Key="Restore_Description">Restore your notes from a backup</Text>
+  <Text Key="Two_Ways_To_Restore">There are 2 ways to restore notes from a backup</Text>
   <Text Key="Error_Backup_Error">An error occurred during the backup. Please consult the log file for more information.</Text>
   <Text Key="Error_Restore_Error">An error occurred during the restore. Please consult the log file for more information.</Text>
   <Text Key="Creating_Backup">Creating backup</Text>
@@ -107,8 +107,7 @@
   <Text Key="Error_Change_Storage_Location_Error">An error occurred while changing the storage location of your notes. Please consult the log file for more information.</Text>
   <Text Key="Backup_Was_Successful">The backup was successful!</Text>
   <Text Key="Restore_Was_Successful">The restore was successful!</Text>
-  <Text Key="Combine">Combine</Text>
-  <Text Key="Combine_Description"></Text>
-  <Text Key="Erase">Erase</Text>
-  <Text Key="Erase_Description"></Text>
+  <Text Key="Import">Import</Text>
+  <Text Key="Import_Description">Import notes from a backup. Your current notes will not be erased.</Text>
+  <Text Key="Restore_Description">Restore notes from a backup. Your current notes will be erased.</Text>
 </Language>

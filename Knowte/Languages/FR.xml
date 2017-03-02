@@ -93,7 +93,7 @@
   <Text Key="Backup">Sauvegarde</Text>
   <Text Key="Backup_Description">Créez une sauvegarde de vos notes</Text>
   <Text Key="Restore">Restauration</Text>
-  <Text Key="Restore_Description">Restaurez vos notes à partir d'une sauvegarde</Text>
+  <Text Key="Two_Ways_To_Restore">Il y a 2 façons pour restaurer des notes à partir d'une sauvegarde</Text>
   <Text Key="Error_Backup_Error">Une erreur s'est produite durant la sauvegarde. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Error_Restore_Error">Une erreur s'est produite durant la restauration. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Creating_Backup">Sauvegarde en cours</Text>
@@ -107,6 +107,7 @@
   <Text Key="Error_Change_Storage_Location_Error">Une erreur s'est produite durant le déplacement de vos notes. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Backup_Was_Successful">La sauvegarde a réussie!</Text>
   <Text Key="Restore_Was_Successful">La restauration a réussie!</Text>
-  <Text Key="Combine">Combiner</Text>
-  <Text Key="Erase">Ecraser</Text>
+  <Text Key="Import">Import</Text>
+  <Text Key="Import_Description">Importer des notes à partir d'une sauvegarde. Vos notes actuèles ne seront pas effacées.</Text>
+  <Text Key="Restore_Description">Restaurer des notes à partir d'une sauvegarde. Vos notes actuèles seront effacées.</Text>
 </Language>
