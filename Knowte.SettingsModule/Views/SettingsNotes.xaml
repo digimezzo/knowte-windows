@@ -20,7 +20,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Label Margin="10,0,0,0" Padding="0" Content="{DynamicResource Language_Preview}" Foreground="Black" Background="White" Height="30" Width="150" BorderThickness="1"  BorderBrush="{DynamicResource Language_BorderBrush}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="{Binding Path=PreviewFontSize}" FontFamily="Calibri"/>
+                <Label Margin="10,0,0,0" Padding="0" Content="{DynamicResource Language_Preview}" Foreground="Black" Background="White" Height="30" Width="150" BorderThickness="1"  BorderBrush="{DynamicResource RG_BorderBrush}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="{Binding Path=PreviewFontSize}" FontFamily="Calibri"/>
             </StackPanel>
             <Separator Height="20" Background="Transparent" />
             <!-- Closing -->
