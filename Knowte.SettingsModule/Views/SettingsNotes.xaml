@@ -22,9 +22,8 @@
                 </ComboBox>
                 <Label Margin="10,0,0,0" Padding="0" Content="{DynamicResource Language_Preview}" Foreground="Black" Background="White" Height="30" Width="150" BorderThickness="1"  BorderBrush="{DynamicResource RG_BorderBrush}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="{Binding Path=PreviewFontSize}" FontFamily="Calibri"/>
             </StackPanel>
-            <Separator Height="20" Background="Transparent" />
             <!-- Closing -->
-            <Label Content="{DynamicResource Language_Closing}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+            <Label Margin="0,20,0,0" Content="{DynamicResource Language_Closing}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
             <Label Content="{DynamicResource Language_Close_notes_with_escape}"/>
             <dc:Windows10ToggleSwitch x:Name="CheckBoxEscape" HorizontalAlignment="Left" Margin="5,5,0,0" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" IsChecked="{Binding CheckBoxEscapeChecked}" Accent="{DynamicResource RG_AccentBrush}"/>
         </StackPanel>

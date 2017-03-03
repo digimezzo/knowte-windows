@@ -16,8 +16,7 @@
             <Label Content="{DynamicResource Language_Color}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
             <Label Content="{DynamicResource Language_Follow_Windows_Color}"/>
             <dc:Windows10ToggleSwitch x:Name="CheckBoxWindowsColor" HorizontalAlignment="Left" Margin="5,5,0,0" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" IsChecked="{Binding CheckBoxWindowsColorChecked}" Accent="{DynamicResource RG_AccentBrush}"/>
-            <Separator Height="20" Background="Transparent" />
-            <ListBox Name="ListBoxColorSchemes" DockPanel.Dock="Left" Background="Transparent" Style="{StaticResource ColorSchemeButtons}" ItemsSource="{Binding Path=ColorSchemes}" SelectedItem="{Binding SelectedColorScheme,Mode=TwoWay}" IsHitTestVisible="{Binding Path=CheckBoxWindowsColorChecked, Converter={StaticResource InvertingBooleanConverter}}" >
+            <ListBox Margin="0,20,0,0" Name="ListBoxColorSchemes" DockPanel.Dock="Left" Background="Transparent" Style="{StaticResource ColorSchemeButtons}" ItemsSource="{Binding Path=ColorSchemes}" SelectedItem="{Binding SelectedColorScheme,Mode=TwoWay}" IsHitTestVisible="{Binding Path=CheckBoxWindowsColorChecked, Converter={StaticResource InvertingBooleanConverter}}" >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
@@ -25,16 +24,14 @@
                 </ListBox.ItemsPanel>
             </ListBox>
             <controls:IconTextButton Data="{StaticResource TextButtonPlus}" Margin="5,10,0,0" HorizontalAlignment="Left" Content="{DynamicResource Language_Add_More_Colors}" Foreground="{DynamicResource RG_AccentBrush}" Command="{x:Static commonprism:ApplicationCommands.OpenPathCommand}" CommandParameter="{Binding Path=ColorSchemesDirectory}" />
-            <Separator Height="20" Background="Transparent" />
             <!-- Language -->
-            <Label Content="{DynamicResource Language_Language}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+            <Label Margin="0,20,0,0" Content="{DynamicResource Language_Language}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
             <StackPanel>
                 <Label Content="{DynamicResource Language_Choose_Language}"/>
                 <ComboBox x:Name="ComboBoxLanguage" Padding="0" Height="30" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="150"  Margin="5,10,0,0" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"/>
             </StackPanel>
-            <Separator Height="20" Background="Transparent" />
             <!-- Sorting -->
-            <Label Content="{DynamicResource Language_Sorting}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+            <Label Margin="0,20,0,0" Content="{DynamicResource Language_Sorting}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
             <StackPanel>
                 <Label Content="{DynamicResource Language_Sort_Notes_By_modification_Date}"/>
                 <DockPanel>
