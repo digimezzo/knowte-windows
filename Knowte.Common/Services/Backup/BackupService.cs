@@ -192,6 +192,9 @@ namespace Knowte.Common.Services.Backup
                             currentConn.Insert(backupNote);
                         }
                     }
+
+                    // Fix links to missing notebooks
+                    currentConn.Execute("UPDATE Note SET NotebookId = '' WHERE NotebookId NOT IN (SELECT Id FROM Notebook);");
                 }
             });
         }
