@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Language Code="ZH-CN" Name="Chinese (Simplified)" Author="gjhwssg, EMLVIRUS">
+<Language Code="ZH-CN" Name="Chinese (Simplified)">
   <Text Key="Ok">确认</Text>
   <Text Key="Cancel">取消</Text>
   <Text Key="Yes">是</Text>
@@ -93,7 +93,6 @@
   <Text Key="Backup">备份</Text>
   <Text Key="Backup_Description">为你的笔记创建一个备份</Text>
   <Text Key="Restore">Restore</Text>
-  <Text Key="Two_Ways_To_Restore">有两种从备份还原的方式</Text>
   <Text Key="Error_Backup_Error">备份过程中出现一个错误。请查看日志获取更多信息。</Text>
   <Text Key="Error_Restore_Error">还原过程中出现一个错误。请查看日志获取更多信息。</Text>
   <Text Key="Creating_Backup">创建备份</Text>
@@ -101,9 +100,7 @@
   <Text Key="Storage">存储</Text>
   <Text Key="Your_Notes_Are_Stored_Here">你的笔记在此处保存</Text>
   <Text Key="Change">更改</Text>
-  <Text Key="Change_Description">更改笔记保存位置</Text>
-  <Text Key="Move_Notes">移动笔记</Text>
-  <Text Key="Confirm_Move_Notes">你希望把笔记移动到'%newstoragelocation%'吗？</Text>
+  <Text Key="Change_Description">更改笔记保存位置</Text>  
   <Text Key="Error_Change_Storage_Location_Error">更改笔记保存位置过程中出现一个错误。请查看日志获取更多信息。</Text>
   <Text Key="Backup_Was_Successful">备份成功！</Text>
   <Text Key="Restore_Was_Successful">还原成功！</Text>
@@ -114,4 +111,7 @@
   <Text Key="Import_Was_Successful">导入成功！</Text>
   <Text Key="Importing_Backup">备份导入中</Text>
   <Text Key="Success">成功</Text>
+  <Text Key="Move">Move</Text>
+  <Text Key="Change_Storage_Location_Was_Successful">Changing the storage location of your notes was successful!</Text>
+  <Text Key="Move_Description">Change where your notes are stored. Your current notes will be moved to the new storage location.</Text>
 </Language>

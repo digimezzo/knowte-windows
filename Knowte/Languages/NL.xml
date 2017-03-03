@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Language Code="NL" Name="Dutch" Author="Raphaël Godart">
+<Language Code="NL" Name="Dutch">
   <Text Key="Ok">OK</Text>
   <Text Key="Cancel">Annuleren</Text>
   <Text Key="Yes">Ja</Text>
@@ -93,7 +93,6 @@
   <Text Key="Backup">Back-up</Text>
   <Text Key="Backup_Description">Maak een back-up van jouw notities</Text>
   <Text Key="Restore">Herstel</Text>
-  <Text Key="Two_Ways_To_Restore">Er zijn 2 manieren om notities te herstellen uit een back-up</Text>
   <Text Key="Error_Backup_Error">Er is een fout opgetreden tijdens de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Error_Restore_Error">Er is een fout opgetreden tijdens het herstellen van de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Creating_Backup">Back-up wordt gemaakt</Text>
@@ -101,9 +100,7 @@
   <Text Key="Storage">Opslag</Text>
   <Text Key="Your_Notes_Are_Stored_Here">Jouw notities worden hier opgeslagen</Text>
   <Text Key="Change">Veranderen</Text>
-  <Text Key="Change_Description">Verander de opslagplaats van jouw notities</Text>
-  <Text Key="Move_Notes">Notities verplaatsen</Text>
-  <Text Key="Confirm_Move_Notes">Wil je jouw notities verplaatsen naar '%newstoragelocation%'?</Text>
+  <Text Key="Change_Description">Verander de opslagplaats van jouw notities. Jouw actuele notities worden niet verplaatst naar de nieuwe opslagplaats.</Text>
   <Text Key="Error_Change_Storage_Location_Error">Er is een fout opgetreden tijdens het veranderen van de opslagplaats van jouw notities. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Backup_Was_Successful">De back-up is geslaagd!</Text>
   <Text Key="Restore_Was_Successful">Het herstellen is geslaagd!</Text>
@@ -114,4 +111,7 @@
   <Text Key="Import_Was_Successful">De import is geslaagd!</Text>
   <Text Key="Importing_Backup">Back-up wordt geïmporteerd</Text>
   <Text Key="Success">Geslaagd</Text>
+  <Text Key="Move">Verplaatsen</Text>
+  <Text Key="Change_Storage_Location_Was_Successful">Veranderen van de opslagplaats van jouw notities is geslaagd!</Text>
+  <Text Key="Move_Description">Verander de opslagplaats van jouw notities. Jouw actuele notities worden verplaatst naar de nieuwe opslagplaats.</Text>
 </Language>
