@@ -17,7 +17,7 @@
                 <TextBox x:Name="TextBoxResponse" Style="{StaticResource MetroTextBox}" Margin="0,20,0,0"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
                     <Button x:Name="ButtonOK" Style="{StaticResource ColoredButton}" IsDefault="True" Click="ButtonOK_Click"/>
-                    <Button x:Name="ButtonCancel" Style="{StaticResource ColoredButton}" IsCancel="True" Margin="10,0,0,0" Click="ButtonCancel_Click"/>
+                    <Button x:Name="ButtonCancel" Style="{StaticResource ColoredButtonSubtle}" IsCancel="True" Margin="10,0,0,0" Click="ButtonCancel_Click"/>
                 </StackPanel>
             </StackPanel>
         </DockPanel>

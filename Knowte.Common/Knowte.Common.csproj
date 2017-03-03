@@ -363,6 +363,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\ColoredButtonSubtle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Styles\Tooltip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

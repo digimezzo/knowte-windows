@@ -59,7 +59,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <controls:SearchBox x:Name="SearchBox" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" TextChanged="SearchBox_TextChanged" Background="{DynamicResource RG_InvisibleWhiteBrush}"  VisibleBackground="{DynamicResource RG_DarkGrayBrush}" Foreground="{DynamicResource RG_BlackBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_BlackBrush}"/>
+                        <controls:SearchBox x:Name="SearchBox" FocusVisualStyle="{DynamicResource Null}" HorizontalAlignment="Stretch" TextChanged="SearchBox_TextChanged" Background="{DynamicResource RG_InvisibleWhiteBrush}"  VisibleBackground="{DynamicResource RG_LightGrayBrush}" Foreground="{DynamicResource RG_BlackBrush}" Accent="{DynamicResource RG_AccentBrush}" SearchGlassForeground="{DynamicResource RG_BlackBrush}"/>
                     </DockPanel>
                 </StackPanel>
                 <DockPanel>

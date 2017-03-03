@@ -4,6 +4,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ButtonTemplates.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ColoredButton.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ColoredButtonSubtle.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ColorSchemeButtons.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ComboBox.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ComboBoxNotebooks.xaml" />
