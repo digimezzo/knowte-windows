@@ -1,4 +1,5 @@
 ﻿using Digimezzo.Utilities.Log;
+using Digimezzo.Utilities.Settings;
 using Ionic.Zip;
 using Knowte.Common.Base;
 using Knowte.Common.Controls;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -34,10 +36,32 @@ namespace Knowte.Common.Services.Note
 
         #region INoteService
         public event EventHandler FlagUpdated = delegate { };
+        public event EventHandler StorageLocationChanged = delegate { };
 
-        public bool ChangeStorageLocation(string newStorageLocation, bool moveCurrentNotes)
+        private async Task MoveNotesAsync(string newLocation)
         {
-            // TODO implement
+            await Task.Run(() =>
+            {
+                string oldLocation = ApplicationPaths.NoteStorageLocation;
+                // TODO
+            });
+        }
+
+        public async Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes)
+        {
+            try
+            {
+                if (moveCurrentNotes) await this.MoveNotesAsync(newStorageLocation);
+                SettingsClient.Set<string>("General", "NoteStorageLocation", newStorageLocation);
+                // TODO: create Knowte.db and Notes directory if not yet existing.
+            }
+            catch (Exception ex)
+            {
+                LogClient.Error("An error occurred while changing the storage location. MoveCurrentNotes={0}. Exception: {1}", moveCurrentNotes.ToString(), ex.Message);
+            }
+
+            this.StorageLocationChanged(this, new EventArgs());
+
             return true;
         }
 
@@ -330,7 +354,7 @@ namespace Knowte.Common.Services.Note
             {
                 Database.Entities.Note noteToUpdate = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
 
-                if(noteToUpdate != null)
+                if (noteToUpdate != null)
                 {
                     noteToUpdate.Title = title;
                     noteToUpdate.ModificationDate = modificationDate.Ticks;
@@ -345,7 +369,7 @@ namespace Knowte.Common.Services.Note
                         noteToUpdate.Left = Convert.ToInt64(left);
                     }
 
-                    noteToUpdate.Maximized = maximized? 1 : 0;
+                    noteToUpdate.Maximized = maximized ? 1 : 0;
 
                     conn.Update(noteToUpdate);
                 }
@@ -402,7 +426,7 @@ namespace Knowte.Common.Services.Note
             {
                 Database.Entities.Note noteToDelete = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
 
-                if(noteToDelete != null)
+                if (noteToDelete != null)
                 {
                     // Delete Note from database
                     conn.Delete(noteToDelete);
@@ -655,7 +679,7 @@ namespace Knowte.Common.Services.Note
 
             return mergedDocument;
         }
-        
+
         public void ExportFile(string noteId, string filename)
         {
             // First, we set some defaults

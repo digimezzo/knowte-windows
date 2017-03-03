@@ -186,6 +186,12 @@ namespace Knowte.NotesModule.ViewModels
                 this.RefreshNotes();
             };
 
+            this.noteService.StorageLocationChanged += (sender, e) =>
+            {
+                this.RefreshNotebooks();
+                this.RefreshNotes();
+            };
+
             this.Notes = new ObservableCollection<NoteViewModel>();
 
             this.RefreshNotebooks();

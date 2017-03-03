@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Language Code="PL" Name="Polish" Author="www.portable.info.pl">
+<Language Code="PL" Name="Polish">
   <Text Key="Ok">OK</Text>
   <Text Key="Cancel">Anuluj</Text>
   <Text Key="Yes">Tak</Text>
@@ -93,7 +93,6 @@
   <Text Key="Backup">Backup</Text>
   <Text Key="Backup_Description">Create a backup of your notes</Text>
   <Text Key="Restore">Restore</Text>
-  <Text Key="Two_Ways_To_Restore">There are 2 ways to restore notes from a backup</Text>
   <Text Key="Error_Backup_Error">An error occurred during the backup. Please consult the log file for more information.</Text>
   <Text Key="Error_Restore_Error">An error occurred during the restore. Please consult the log file for more information.</Text>
   <Text Key="Creating_Backup">Creating backup</Text>
@@ -101,9 +100,7 @@
   <Text Key="Storage">Storage</Text>
   <Text Key="Your_Notes_Are_Stored_Here">Your notes are stored here</Text>
   <Text Key="Change">Change</Text>
-  <Text Key="Change_Description">Change where your notes are stored</Text>
-  <Text Key="Move_Notes">Move notes</Text>
-  <Text Key="Confirm_Move_Notes">Do you want to move your notes to '%newstoragelocation%'?</Text>
+  <Text Key="Change_Description">Change where your notes are stored. Your current notes will not be moved to the new storage location.</Text>
   <Text Key="Error_Change_Storage_Location_Error">An error occurred while changing the storage location of your notes. Please consult the log file for more information.</Text>
   <Text Key="Backup_Was_Successful">The backup was successful!</Text>
   <Text Key="Restore_Was_Successful">The restore was successful!</Text>
@@ -114,4 +111,7 @@
   <Text Key="Import_Was_Successful">The import was successful!</Text>
   <Text Key="Importing_Backup">Importing backup</Text>
   <Text Key="Success">Success</Text>
+  <Text Key="Move">Move</Text>
+  <Text Key="Change_Storage_Location_Was_Successful">Changing the storage location of your notes was successful!</Text>
+  <Text Key="Move_Description">Change where your notes are stored. Your current notes will be moved to the new storage location.</Text>
 </Language>

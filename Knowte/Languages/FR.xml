@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Language Code="FR" Name="French" Author="Raphaël Godart">
+<Language Code="FR" Name="French">
   <Text Key="Ok">OK</Text>
   <Text Key="Cancel">Annuler</Text>
   <Text Key="Yes">Oui</Text>
@@ -93,7 +93,6 @@
   <Text Key="Backup">Sauvegarde</Text>
   <Text Key="Backup_Description">Créez une sauvegarde de vos notes</Text>
   <Text Key="Restore">Restauration</Text>
-  <Text Key="Two_Ways_To_Restore">Il y a 2 façons pour restaurer des notes à partir d'une sauvegarde</Text>
   <Text Key="Error_Backup_Error">Une erreur s'est produite durant la sauvegarde. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Error_Restore_Error">Une erreur s'est produite durant la restauration. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Creating_Backup">Sauvegarde en cours</Text>
@@ -101,17 +100,17 @@
   <Text Key="Storage">Stockage</Text>
   <Text Key="Your_Notes_Are_Stored_Here">Vos notes sont stockées ici</Text>
   <Text Key="Change">Modifier</Text>
-  <Text Key="Change_Description">Changer l'endroit de stockage de vos notes</Text>
-  <Text Key="Move_Notes">Déplacer notes</Text>
-  <Text Key="Confirm_Move_Notes">Voulez-vous déplacer vos notes vers '%newstoragelocation%'?</Text>
-  <Text Key="Error_Change_Storage_Location_Error">Une erreur s'est produite durant le déplacement de vos notes. Consultez le fichier log pour plus de détails.</Text>
+  <Text Key="Change_Description">Changer l'endroit de stockage de vos notes. Vos notes actuelles ne seront pas déplacées vers le nouvel endroit de stockage.</Text>
+  <Text Key="Error_Change_Storage_Location_Error">Une erreur s'est produite durant le changement de l'endroit de stockage de vos notes. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Backup_Was_Successful">La sauvegarde a réussie!</Text>
   <Text Key="Restore_Was_Successful">La restauration a réussie!</Text>
   <Text Key="Import">Import</Text>
-  <Text Key="Import_Description">Importer des notes à partir d'une sauvegarde. Vos notes actuèles ne seront pas effacées.</Text>
-  <Text Key="Restore_Description">Restaurer des notes à partir d'une sauvegarde. Vos notes actuèles seront effacées.</Text>
+  <Text Key="Import_Description">Importer des notes à partir d'une sauvegarde. Vos notes actuelles ne seront pas effacées.</Text>
+  <Text Key="Restore_Description">Restaurer des notes à partir d'une sauvegarde. Vos notes actuelles seront effacées.</Text>
   <Text Key="Error_Import_Error">Une erreur s'est produite durant l'import. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Import_Was_Successful">L'import a réussi!</Text>
   <Text Key="Importing_Backup">Import en cours</Text>
   <Text Key="Success">Succès</Text>
+  <Text Key="Move">Déplacer</Text>
+  <Text Key="Move_Description">Changer l'endroit de stockage de vos notes. Vos notes actuelles seront déplacées vers le nouvel endroit de stockage.</Text>
 </Language>

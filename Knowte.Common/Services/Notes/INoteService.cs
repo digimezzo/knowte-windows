@@ -1,13 +1,14 @@
 ﻿using Knowte.Common.Database.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Documents;
 
 namespace Knowte.Common.Services.Note
 {
     public interface INoteService
     {
-        bool ChangeStorageLocation(string newStorageLocation, bool moveCurrentNotes);
+        Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes);
         void CloseAllNoteWindows();
         void NewNotebook(Notebook notebook);
         void DeleteNotebook(string id);
@@ -40,5 +41,6 @@ namespace Knowte.Common.Services.Note
         void ExportFile(string noteId, string fileName);
         void ImportFile(string filename);
         event EventHandler FlagUpdated;
+        event EventHandler StorageLocationChanged;
     }
 }

@@ -15,6 +15,7 @@
                 <presentationutils:BindingProxy x:Key="ImportProxy" Data="{DynamicResource Language_Import}"/>
                 <presentationutils:BindingProxy x:Key="RestoreProxy" Data="{DynamicResource Language_Restore}"/>
                 <presentationutils:BindingProxy x:Key="ChangeProxy" Data="{DynamicResource Language_Change}"/>
+                <presentationutils:BindingProxy x:Key="MoveProxy" Data="{DynamicResource Language_Move}"/>
             </StackPanel.Resources>
             <!-- Notes in jumplist -->
             <Label Content="{DynamicResource Language_Jump_List}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
@@ -42,19 +43,20 @@
                 <Button Grid.Row="1" Grid.Column="0" Margin="5,0,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource BackupProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Command="{Binding BackupCommand}"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{DynamicResource Language_Backup_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
                 <Label Grid.Row="2" Grid.ColumnSpan="2"  Margin="0,20,0,5" Content="{DynamicResource Language_Restore}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
-                <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Margin="5,0,10,10" Foreground="{DynamicResource RG_BlackBrush}" Text="{DynamicResource Language_Two_Ways_To_Restore}"/>
-                <Button Grid.Row="4" Grid.Column="0" Margin="5,0,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource ImportProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButtonSubtle}" Command="{Binding ImportCommand}"/>
-                <TextBlock Grid.Row="4" Grid.Column="1" Text="{DynamicResource Language_Import_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
-                <Button Grid.Row="5" Grid.Column="0" Margin="5,10,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource RestoreProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Command="{Binding RestoreCommand}"/>
-                <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,10,0,0" Text="{DynamicResource Language_Restore_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
-                <Label Grid.Row="6" Grid.ColumnSpan="2" Margin="0,20,0,5" Content="{DynamicResource Language_Storage}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
-                <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Margin="5,0,0,0"  Orientation="Horizontal">
+                <Button Grid.Row="3" Grid.Column="0" Margin="5,0,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource RestoreProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Command="{Binding RestoreCommand}"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{DynamicResource Language_Restore_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
+                <Button Grid.Row="4" Grid.Column="0" Margin="5,10,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource ImportProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButtonSubtle}" Command="{Binding ImportCommand}"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Margin="0,10,0,0" Text="{DynamicResource Language_Import_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
+                <Label Grid.Row="5" Grid.ColumnSpan="2" Margin="0,20,0,5" Content="{DynamicResource Language_Storage}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Margin="5,0,0,0"  Orientation="Horizontal">
                     <TextBlock Foreground="{DynamicResource RG_ForegroundBrush}" Margin="0,0,0,10" Text="{DynamicResource Language_Your_Notes_Are_Stored_Here}"/>
                     <TextBlock Foreground="{DynamicResource RG_ForegroundBrush}" Text=":" Margin="0,0,5,0"/>
                     <Button Style="{StaticResource LinkButton}" Content="{Binding StorageLocation}" Command="{Binding OpenStorageLocationCommand}"/>
                 </StackPanel>
-                <Button Grid.Row="8" Grid.Column="0" Margin="5,0,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource ChangeProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Command="{Binding ChangeStorageLocationCommand}"/>
-                <TextBlock Grid.Row="8" Grid.Column="1" Text="{DynamicResource Language_Change_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
+                <Button Grid.Row="7" Grid.Column="0" Margin="5,0,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource MoveProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButton}" Command="{Binding MoveStorageLocationCommand}"/>
+                <TextBlock Grid.Row="7" Grid.Column="1" Text="{DynamicResource Language_Move_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
+                <Button Grid.Row="8" Grid.Column="0" Margin="5,10,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource ChangeProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButtonSubtle}" Command="{Binding ChangeStorageLocationCommand}"/>
+                <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,10,0,0" Text="{DynamicResource Language_Change_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>
