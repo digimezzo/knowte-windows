@@ -66,7 +66,7 @@ namespace Knowte.Common.Services.Appearance
             // If the ColorSchemes subdirectory doesn't exist, create it.
             if (!Directory.Exists(this.ColorSchemesSubDirectory))
             {
-                Directory.CreateDirectory(System.IO.Path.Combine(this.ColorSchemesSubDirectory));
+                Directory.CreateDirectory(Path.Combine(this.ColorSchemesSubDirectory));
             }
 
             // Create the example ColorScheme

@@ -1,4 +1,5 @@
 ﻿using Digimezzo.Utilities.Log;
+using Digimezzo.Utilities.Settings;
 using Digimezzo.Utilities.Utils;
 using Knowte.Common.Database;
 using Knowte.Common.IO;
@@ -17,6 +18,15 @@ namespace Knowte.Common.Services.Backup
         private SQLiteConnectionFactory factory;
         private INoteService noteService;
         private IDialogService dialogService;
+        private string backupSubDirectory = Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.BackupSubDirectory);
+        #endregion
+
+        #region Properties
+        public string BackupSubDirectory
+        {
+            get { return this.backupSubDirectory; }
+        }
+
         #endregion
 
         #region Construction
@@ -25,10 +35,45 @@ namespace Knowte.Common.Services.Backup
             this.noteService = noteService;
             this.dialogService = dialogService;
             this.factory = new SQLiteConnectionFactory();
+
+            // Initialize the Backup directory
+            // -------------------------------
+
+            // If the Backup subdirectory doesn't exist, create it.
+            if (!Directory.Exists(this.BackupSubDirectory))
+            {
+                Directory.CreateDirectory(Path.Combine(this.BackupSubDirectory));
+            }
         }
         #endregion
 
         #region Private
+        private async Task CreateBackupFile(string backupFile)
+        {
+            await Task.Run(() =>
+            {
+                string tempFile = backupFile + ".temp";
+
+                using (ZipArchive archive = ZipFile.Open(tempFile, ZipArchiveMode.Create))
+                {
+                    // Add the "Notes" subfolder    
+                    var di = new DirectoryInfo(Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory));
+                    FileInfo[] fi = di.GetFiles();
+
+                    foreach (FileInfo f in fi)
+                    {
+                        archive.CreateEntryFromFile(f.FullName, f.Directory.Name + "/" + f.Name);
+                    }
+
+                    // Add database file
+                    archive.CreateEntryFromFile(this.factory.DatabaseFile, Path.GetFileName(this.factory.DatabaseFile));
+                }
+
+                if (File.Exists(backupFile)) File.Delete(backupFile);
+                File.Move(tempFile, backupFile);
+            });
+        }
+
         private async Task<bool> BackupAsyncCallback(string backupFile)
         {
             if (string.IsNullOrWhiteSpace(backupFile))
@@ -41,28 +86,7 @@ namespace Knowte.Common.Services.Backup
 
             try
             {
-                await Task.Run(() =>
-                {
-                    string tempFile = backupFile + ".temp";
-
-                    using (ZipArchive archive = ZipFile.Open(tempFile, ZipArchiveMode.Create))
-                    {
-                        // Add the "Notes" subfolder    
-                        var di = new DirectoryInfo(Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory));
-                        FileInfo[] fi = di.GetFiles();
-
-                        foreach (FileInfo f in fi)
-                        {
-                            archive.CreateEntryFromFile(f.FullName, f.Directory.Name + "/" + f.Name);
-                        }
-
-                        // Add database file
-                        archive.CreateEntryFromFile(this.factory.DatabaseFile, Path.GetFileName(this.factory.DatabaseFile));
-                    }
-
-                    if (File.Exists(backupFile)) File.Delete(backupFile);
-                    File.Move(tempFile, backupFile);
-                });
+                await this.CreateBackupFile(backupFile);
             }
             catch (Exception ex)
             {
@@ -73,64 +97,48 @@ namespace Knowte.Common.Services.Backup
             return isSuccess;
         }
 
+        private async Task CleanBackupDirectoryAsync()
+        {
+            await Task.Run(() =>
+            {
+                DirectoryInfo di = new DirectoryInfo(this.BackupSubDirectory);
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+            });
+        }
+
+        private async Task ExtractBackupFileToBackupDirectory(string backupFile)
+        {
+            await Task.Run(() =>
+            {
+                ZipFile.ExtractToDirectory(backupFile, this.BackupSubDirectory);
+            });
+        }
+
         private async Task<bool> RestoreAsyncCallback(string backupFile, bool deleteCurrentNotes)
         {
-            if (string.IsNullOrWhiteSpace(backupFile))
-            {
-                LogClient.Error("Could not perform restore: backupFile is empty.");
-                return false;
-            }
-
             bool isSuccess = true;
-
-            string notesDirectoryPath = Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
 
             try
             {
-                // Close all note windows
-                this.noteService.CloseAllNoteWindows();
+                // Clean the Backup directory
+                await this.CleanBackupDirectoryAsync();
 
-                await Task.Run(() =>
-                {
-                    if (Directory.Exists(notesDirectoryPath + ".old")) Directory.Delete(notesDirectoryPath + ".old", true); // Delete Knowte.db.old
-                    if (File.Exists(this.factory.DatabaseFile + ".old")) File.Delete(this.factory.DatabaseFile + ".old"); // Delete Notes.old
-
-                    Directory.Move(notesDirectoryPath, notesDirectoryPath + ".old"); // Move Notes directory to Notes.old
-                    File.Move(this.factory.DatabaseFile, this.factory.DatabaseFile + ".old"); // Move Knowte.db to Knowte.db.old.
-
-                    // Restore backup
-                    ZipFile.ExtractToDirectory(backupFile, ApplicationPaths.NoteStorageLocation);
-
-                    Directory.Delete(notesDirectoryPath + ".old", true); // Delete Notes.old
-                    File.Delete(this.factory.DatabaseFile + ".old"); // Delete Knowte.db.old
-                });
+                // Extract the backup file to the Backup directory
+                await this.ExtractBackupFileToBackupDirectory(backupFile);
             }
             catch (Exception ex)
             {
                 isSuccess = false;
                 LogClient.Error("Could not perform restore. Exception: {0}", ex.Message);
-
-                try
-                {
-                    await Task.Run(() =>
-                    {
-                        // If restore fails, restore from .old files
-                        LogClient.Error("Trying to restore original files.");
-
-                        if (File.Exists(this.factory.DatabaseFile)) File.Delete(this.factory.DatabaseFile); // Delete Knowte.db
-                        if (Directory.Exists(notesDirectoryPath)) Directory.Delete(notesDirectoryPath, true); // Delete Notes
-
-                        Directory.Move(notesDirectoryPath + ".old", notesDirectoryPath);  // Move Notes.old to Notes
-                        File.Move(this.factory.DatabaseFile + ".old", this.factory.DatabaseFile);  // Move Knowte.db.old to Knowte.db
-                    });
-                }
-                catch (Exception ex2)
-                {
-                    LogClient.Error("Could not restore original files. Exception: {0}", ex2.Message);
-                }
             }
-
-            this.BackupRestored(this, new EventArgs());
 
             return isSuccess;
         }
@@ -143,9 +151,9 @@ namespace Knowte.Common.Services.Backup
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
-                ResourceUtils.GetStringResource("Language_Backup"), 
-                ResourceUtils.GetStringResource("Language_Creating_Backup"), 
-                1000, 
+                ResourceUtils.GetStringResource("Language_Backup"),
+                ResourceUtils.GetStringResource("Language_Creating_Backup"),
+                1000,
                 () => this.BackupAsyncCallback(backupFile));
 
             return isSuccess;
@@ -167,9 +175,9 @@ namespace Knowte.Common.Services.Backup
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
-                ResourceUtils.GetStringResource("Language_Restore"), 
-                ResourceUtils.GetStringResource("Language_Restoring_Backup"), 
-                1000, 
+                ResourceUtils.GetStringResource("Language_Restore"),
+                ResourceUtils.GetStringResource("Language_Restoring_Backup"),
+                1000,
                 () => this.RestoreAsyncCallback(backupFile, true));
 
             return isSuccess;
