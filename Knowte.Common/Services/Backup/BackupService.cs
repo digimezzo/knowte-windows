@@ -6,8 +6,10 @@ using Knowte.Common.IO;
 using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.Note;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Knowte.Common.Services.Backup
@@ -122,17 +124,95 @@ namespace Knowte.Common.Services.Backup
             });
         }
 
+        private async Task RestoreFromBackup(bool deleteCurrentNotes)
+        {
+            string[] databaseFiles = Directory.GetFiles(this.BackupSubDirectory, "*.db"); // Find database files in the backup directory
+
+            string backupDatabaseFile = databaseFiles[0]; // Use the first found database file (there should only be 1)
+            var backupFactory = new SQLiteConnectionFactory(backupDatabaseFile); // SQLiteConnectionFactory that points to the backup database file
+            var backupCreator = new DbCreator(backupDatabaseFile); // DbCreator that points to the backup database file
+            string currentNotesSubDirectoryPath = Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
+            string backupNotesSubDirectoryPath = Path.Combine(this.BackupSubDirectory, ApplicationPaths.NotesSubDirectory);
+
+            List<Database.Entities.Notebook> currentNotebooks;
+            List<Database.Entities.Note> currentNotes;
+
+            List<Database.Entities.Notebook> backupNotebooks;
+            List<Database.Entities.Note> backupNotes;
+
+            await Task.Run(() =>
+            {
+                // Make sure the backup database is at the latest version
+                if (backupCreator.DatabaseNeedsUpgrade()) backupCreator.UpgradeDatabase();
+
+                // Get backup Notebooks and Notes
+                using (var backupConn = backupFactory.GetConnection())
+                {
+                    backupNotebooks = backupConn.Table<Database.Entities.Notebook>().ToList();
+                    backupNotes = backupConn.Table<Database.Entities.Note>().ToList();
+                }
+
+                // If required, delete all current Note files.
+                if (deleteCurrentNotes)
+                {
+                    foreach (string file in Directory.GetFiles(currentNotesSubDirectoryPath, "*.xaml"))
+                    {
+                        File.Delete(file);
+                    }
+                }
+
+                // Restore
+                using (var currentConn = this.factory.GetConnection())
+                {
+                    // If required, delete all current Notebooks and Notes from the current database.
+                    if (deleteCurrentNotes)
+                    {
+                        currentConn.Query<Database.Entities.Notebook>("DELETE FROM Notebook;");
+                        currentConn.Query<Database.Entities.Note>("DELETE FROM Note;");
+                    }
+
+                    // Get current Notebooks and Notes
+                    currentNotebooks = currentConn.Table<Database.Entities.Notebook>().ToList();
+                    currentNotes = currentConn.Table<Database.Entities.Note>().ToList();
+
+                    // Restore only the Notebooks that don't exist
+                    foreach (Database.Entities.Notebook backupNotebook in backupNotebooks)
+                    {
+                        if (!currentNotebooks.Contains(backupNotebook)) currentConn.Insert(backupNotebook);
+                    }
+
+                    // Restore only the Notes that don't exist
+                    foreach (Database.Entities.Note backupNote in backupNotes)
+                    {
+                        string backupNoteFile = Path.Combine(backupNotesSubDirectoryPath, backupNote.Id + ".xaml");
+
+                        if (!currentNotes.Contains(backupNote) && File.Exists(backupNoteFile))
+                        {
+                            File.Copy(backupNoteFile, Path.Combine(currentNotesSubDirectoryPath, backupNote.Id + ".xaml"), true);
+                            currentConn.Insert(backupNote);
+                        }
+                    }
+                }
+            });
+        }
+
         private async Task<bool> RestoreAsyncCallback(string backupFile, bool deleteCurrentNotes)
         {
             bool isSuccess = true;
 
             try
             {
-                // Clean the Backup directory
+                // Clean the backup directory (In case it wasn't cleaned during the last restore, because of a crash for example.)
                 await this.CleanBackupDirectoryAsync();
 
                 // Extract the backup file to the Backup directory
                 await this.ExtractBackupFileToBackupDirectory(backupFile);
+
+                // Restore from backup
+                await this.RestoreFromBackup(deleteCurrentNotes);
+
+                // Clean the backup directory
+                await this.CleanBackupDirectoryAsync();
             }
             catch (Exception ex)
             {
@@ -168,6 +248,8 @@ namespace Knowte.Common.Services.Backup
                 1000,
                 () => this.RestoreAsyncCallback(backupFile, false));
 
+            this.BackupRestored(this, new EventArgs());
+
             return isSuccess;
         }
 
@@ -179,6 +261,8 @@ namespace Knowte.Common.Services.Backup
                 ResourceUtils.GetStringResource("Language_Restoring_Backup"),
                 1000,
                 () => this.RestoreAsyncCallback(backupFile, true));
+
+            this.BackupRestored(this, new EventArgs());
 
             return isSuccess;
         }

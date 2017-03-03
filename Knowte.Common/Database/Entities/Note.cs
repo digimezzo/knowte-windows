@@ -21,5 +21,27 @@ namespace Knowte.Common.Database.Entities
         public long Maximized { get; set; }
         public long Flagged { get; set; }
         #endregion
+
+        #region Overrides
+        public override string ToString()
+        {
+            return this.Title;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+
+            return this.Title.Equals(((Note)obj).Title);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Title.GetHashCode();
+        }
+        #endregion
     }
 }

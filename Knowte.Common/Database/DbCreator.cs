@@ -37,6 +37,11 @@ namespace Knowte.Common.Database
         {
             this.factory = new SQLiteConnectionFactory();
         }
+
+        public DbCreator(string databaseFile)
+        {
+            this.factory = new SQLiteConnectionFactory(databaseFile);
+        }
         #endregion
 
         #region Fresh database setup

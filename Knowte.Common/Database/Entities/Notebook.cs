@@ -15,7 +15,7 @@ namespace Knowte.Common.Database.Entities
         public bool IsDefaultNotebook { get; set; }
         #endregion
 
-        #region Public
+        #region Overrides
         public override string ToString()
         {
             return this.Title;
@@ -28,12 +28,12 @@ namespace Knowte.Common.Database.Entities
                 return false;
             }
 
-            return this.Id.Equals(((Notebook)obj).Id);
+            return this.Title.Equals(((Notebook)obj).Title);
         }
 
         public override int GetHashCode()
         {
-            return this.Id.GetHashCode();
+            return this.Title.GetHashCode();
         }
         #endregion
     }
