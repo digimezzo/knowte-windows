@@ -113,4 +113,5 @@
   <Text Key="Error_Import_Error">Une erreur s'est produite durant l'import. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Import_Was_Successful">L'import a réussi!</Text>
   <Text Key="Importing_Backup">Import en cours</Text>
+  <Text Key="Success">Succès</Text>
 </Language>

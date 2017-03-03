@@ -18,13 +18,11 @@ namespace Knowte.Common.Services.Dialog
         #endregion
 
         #region Construction
-        public CustomDialog(Window parent, int iconCharCode, int iconSize, string title, UserControl content, int width, int height, bool canResize, bool showCancelButton, string okText, string cancelText, Func<Task<bool>> callback) : base()
+        public CustomDialog(Window parent, string title, UserControl content, int width, int height, bool canResize, bool showCancelButton, string okText, string cancelText, Func<Task<bool>> callback) : base()
         {
             InitializeComponent();
 
             this.TitleBarHeight = Defaults.DefaultWindowButtonHeight + 10;
-            this.Icon.Text = char.ConvertFromUtf32(iconCharCode);
-            this.Icon.FontSize = iconSize;
             this.Title = title;
             this.TextBlockTitle.Text = title;
             this.Width = width;

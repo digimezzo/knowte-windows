@@ -32,18 +32,18 @@ namespace Knowte.Common.Services.Dialog
             return dialog.DialogResult.HasValue & dialog.DialogResult.Value;
         }
 
-        public bool ShowConfirmationDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, string cancelText)
+        public bool ShowConfirmationDialog(Window parent, string title, string content, string okText, string cancelText)
         {
-            var dialog = new ConfirmationDialog(parent: parent, iconCharCode: iconCharCode, iconSize: iconSize, title: title, content: content, okText: okText, cancelText: cancelText);
+            var dialog = new ConfirmationDialog(parent: parent, title: title, content: content, okText: okText, cancelText: cancelText);
 
             this.ShowDialog(dialog);
 
             return dialog.DialogResult.HasValue & dialog.DialogResult.Value;
         }
 
-        public bool ShowNotificationDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, bool showViewLogs, string viewLogsText = "Log file")
+        public bool ShowNotificationDialog(Window parent, string title, string content, string okText, bool showViewLogs, string viewLogsText = "Log file")
         {
-            var dialog = new NotificationDialog(parent: parent, iconCharCode: iconCharCode, iconSize: iconSize, title: title, content: content, okText: okText, showViewLogs: showViewLogs, viewLogsText: viewLogsText);
+            var dialog = new NotificationDialog(parent: parent, title: title, content: content, okText: okText, showViewLogs: showViewLogs, viewLogsText: viewLogsText);
 
             this.ShowDialog(dialog);
 
@@ -51,18 +51,18 @@ namespace Knowte.Common.Services.Dialog
             return true;
         }
 
-        public bool ShowCustomDialog(Window parent, int iconCharCode, int iconSize, string title, UserControl content, int width, int height, bool canResize, bool sShowCancelButton, string okText, string cancelText, Func<Task<bool>> callback)
+        public bool ShowCustomDialog(Window parent, string title, UserControl content, int width, int height, bool canResize, bool sShowCancelButton, string okText, string cancelText, Func<Task<bool>> callback)
         {
-            var dialog = new CustomDialog(parent: parent, iconCharCode: iconCharCode, iconSize: iconSize, title: title, content: content, width: width, height: height, canResize: canResize, showCancelButton: sShowCancelButton, okText: okText, cancelText: cancelText, callback: callback);
+            var dialog = new CustomDialog(parent: parent, title: title, content: content, width: width, height: height, canResize: canResize, showCancelButton: sShowCancelButton, okText: okText, cancelText: cancelText, callback: callback);
 
             this.ShowDialog(dialog);
 
             return dialog.DialogResult.HasValue & dialog.DialogResult.Value;
         }
 
-        public bool ShowInputDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, string cancelText, ref string responeText)
+        public bool ShowInputDialog(Window parent, string title, string content, string okText, string cancelText, ref string responeText)
         {
-            var dialog = new InputDialog(parent: parent, iconCharCode: iconCharCode, iconSize: iconSize, title: title, content: content, okText: okText, cancelText: cancelText, defaultResponse: responeText);
+            var dialog = new InputDialog(parent: parent, title: title, content: content, okText: okText, cancelText: cancelText, defaultResponse: responeText);
 
             this.ShowDialog(dialog);
 

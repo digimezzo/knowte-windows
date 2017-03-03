@@ -206,7 +206,7 @@ namespace Knowte.NotesModule.ViewModels
                 this.selectedNotebook = null;
 
                 string responseText = string.Empty;
-                bool dialogResult = this.dialogService.ShowInputDialog(null, iconCharCode: DialogIcons.EditIconCode, iconSize: DialogIcons.EditIconSize, title: ResourceUtils.GetStringResource("Language_New_Notebook"), content: ResourceUtils.GetStringResource("Language_New_Notebook_Enter_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
+                bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_New_Notebook"), content: ResourceUtils.GetStringResource("Language_New_Notebook_Enter_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
 
                 if (dialogResult)
                 {
@@ -240,17 +240,17 @@ namespace Knowte.NotesModule.ViewModels
                             }
                             else
                             {
-                                this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                                this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                             }
                         }
                         catch (Exception)
                         {
-                            this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Notebook"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                            this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Notebook"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                         }
                     }
                     else
                     {
-                        this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                     }
                 }
                 else
@@ -299,7 +299,7 @@ namespace Knowte.NotesModule.ViewModels
                 }
                 catch (Exception)
                 {
-                    this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Note"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Note"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                 }
             });
             Common.Prism.ApplicationCommands.NewNoteCommand.RegisterCommand(this.NewNoteCommand);
@@ -330,7 +330,7 @@ namespace Knowte.NotesModule.ViewModels
                     {
                         if (!MiscUtils.IsValidExportFile(importFile))
                         {
-                            this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Invalid_File"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                            this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Invalid_File"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                         }
                         else
                         {
@@ -342,7 +342,7 @@ namespace Knowte.NotesModule.ViewModels
                     }
                     catch (UnauthorizedAccessException)
                     {
-                        this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                     }
                 }
             });
@@ -584,7 +584,7 @@ namespace Knowte.NotesModule.ViewModels
             {
                 Note theNote = this.noteService.GetNote(obj as string);
 
-                bool dialogResult = this.dialogService.ShowConfirmationDialog(null, iconCharCode: DialogIcons.QuestionIconCode, iconSize: DialogIcons.QuestionIconSize, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", theNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+                bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", theNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
 
 
                 if (dialogResult)
@@ -659,7 +659,7 @@ namespace Knowte.NotesModule.ViewModels
 
         private void DeleteNotebookAction(Notebook notebook)
         {
-            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, iconCharCode: DialogIcons.QuestionIconCode, iconSize: DialogIcons.QuestionIconSize, title: ResourceUtils.GetStringResource("Language_Delete_Notebook"), content: ResourceUtils.GetStringResource("Language_Delete_Notebook_Confirm").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Notebook"), content: ResourceUtils.GetStringResource("Language_Delete_Notebook_Confirm").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
 
             if (dialogResult)
             {
@@ -724,7 +724,7 @@ namespace Knowte.NotesModule.ViewModels
             Notebook notebook = this.noteService.GetNotebook(obj as string);
 
             string responseText = notebook.Title;
-            bool dialogResult = this.dialogService.ShowInputDialog(null, iconCharCode: DialogIcons.EditIconCode, iconSize: DialogIcons.EditIconSize, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
+            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
 
             if (dialogResult)
             {
@@ -740,12 +740,12 @@ namespace Knowte.NotesModule.ViewModels
                     }
                     else
                     {
-                        this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                     }
                 }
                 else
                 {
-                    this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                 }
             }
             else
@@ -767,7 +767,7 @@ namespace Knowte.NotesModule.ViewModels
         // delete note
         public void DeleteNoteExecute()
         {
-            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, iconCharCode: DialogIcons.QuestionIconCode, iconSize: DialogIcons.QuestionIconSize, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.SelectedNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.SelectedNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
 
 
             if (dialogResult)
@@ -800,7 +800,7 @@ namespace Knowte.NotesModule.ViewModels
         public void EditNotebookExecute()
         {
             string responseText = this.selectedNotebook.Title;
-            bool dialogResult = this.dialogService.ShowInputDialog(null, iconCharCode: DialogIcons.EditIconCode, iconSize: DialogIcons.EditIconSize, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", this.selectedNotebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
+            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", this.selectedNotebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
 
             if (dialogResult)
             {
@@ -816,12 +816,12 @@ namespace Knowte.NotesModule.ViewModels
                     }
                     else
                     {
-                        this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                     }
                 }
                 else
                 {
-                    this.dialogService.ShowNotificationDialog(null, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                 }
             }
             else

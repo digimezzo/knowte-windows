@@ -12,13 +12,11 @@ namespace Knowte.Common.Services.Dialog
     public partial class NotificationDialog : BorderlessWindows8Window
     {
         #region Construction
-        public NotificationDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, bool showViewLogs, string viewLogsText) : base()
+        public NotificationDialog(Window parent, string title, string content, string okText, bool showViewLogs, string viewLogsText) : base()
         {
             InitializeComponent();
 
             this.TitleBarHeight = Defaults.DefaultWindowButtonHeight + 10;
-            this.Icon.Text = char.ConvertFromUtf32(iconCharCode);
-            this.Icon.FontSize = iconSize;
             this.Title = title;
             this.TextBlockTitle.Text = title;
             this.TextBlockContent.Text = content;

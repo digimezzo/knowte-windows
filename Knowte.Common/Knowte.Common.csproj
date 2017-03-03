@@ -143,7 +143,6 @@
     </Compile>
     <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\Defaults.cs" />
-    <Compile Include="Base\DialogIcons.cs" />
     <Compile Include="Base\NoteFilters.cs" />
     <Compile Include="Base\ProductInformation.cs" />
     <Compile Include="Controls\AccentButton.cs" />

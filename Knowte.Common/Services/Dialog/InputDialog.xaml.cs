@@ -20,13 +20,12 @@ namespace Knowte.Common.Services.Dialog
         #endregion
 
         #region Construction
-        public InputDialog(Window parent, int iconCharCode, int iconSize, string title, string content, string okText, string cancelText, string defaultResponse) : base()
+        public InputDialog(Window parent, string title, string content, string okText, string cancelText, string defaultResponse) : base()
         {
             InitializeComponent();
 
             this.TitleBarHeight = Defaults.DefaultWindowButtonHeight + 10;
-            this.Icon.Text = char.ConvertFromUtf32(iconCharCode);
-            this.Icon.FontSize = iconSize;
+
             this.Title = title;
             this.TextBlockTitle.Text = title;
             this.TextBlockContent.Text = content;

@@ -113,4 +113,5 @@
   <Text Key="Error_Import_Error">Er is een fout opgetreden tijdens het importeren vanuit de back-up. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Import_Was_Successful">De import is geslaagd!</Text>
   <Text Key="Importing_Backup">Back-up wordt geïmporteerd</Text>
+  <Text Key="Success">Geslaagd</Text>
 </Language>

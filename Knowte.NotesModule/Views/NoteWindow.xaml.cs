@@ -361,8 +361,6 @@ namespace Knowte.NotesModule.Views
             {
                 this.dialogService.ShowNotificationDialog(
                     this,
-                    iconCharCode: DialogIcons.ErrorIconCode,
-                    iconSize: DialogIcons.ErrorIconSize,
                     title: ResourceUtils.GetStringResource("Language_Error"),
                     content: ResourceUtils.GetStringResource("Language_Could_Not_Open_Note"),
                     okText: ResourceUtils.GetStringResource("Language_Ok"),
@@ -452,19 +450,19 @@ namespace Knowte.NotesModule.Views
                     else
                     {
                         this.TextBoxTitle.Text = this.InitialTitle;
-                        this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Note_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(this, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Note_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                     }
                 }
                 else
                 {
                     this.TextBoxTitle.Text = this.InitialTitle;
-                    this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Note_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(this,title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Note_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                 }
             }
             catch (Exception ex)
             {
                 this.TextBoxTitle.Text = this.InitialTitle;
-                this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                this.dialogService.ShowNotificationDialog(this, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                 LogClient.Error("An error occured while saving the Note '{0}'. Exception: {1}", this.TextBoxTitle.Text, ex.Message);
 
                 retVal = false;
@@ -646,7 +644,7 @@ namespace Knowte.NotesModule.Views
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            bool dialogResult = this.dialogService.ShowConfirmationDialog(this, iconCharCode: DialogIcons.QuestionIconCode, iconSize: DialogIcons.QuestionIconSize, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.TextBoxTitle.Text), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+            bool dialogResult = this.dialogService.ShowConfirmationDialog(this,title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.TextBoxTitle.Text), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
 
 
             if (dialogResult)
@@ -824,7 +822,7 @@ namespace Knowte.NotesModule.Views
                     }
                     else
                     {
-                        this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Link_Does_Not_Work_Anymore"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(this, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Link_Does_Not_Work_Anymore"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                     }
                 }
 
@@ -1070,7 +1068,7 @@ namespace Knowte.NotesModule.Views
                     }
                     catch (Exception)
                     {
-                        this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Note"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(this, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Note"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                     }
                 }
                 else
@@ -1354,7 +1352,7 @@ namespace Knowte.NotesModule.Views
             catch (Exception ex)
             {
                 LogClient.Error("Could not export note to rtf. Exception: {0}", ex.Message);
-                this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: true);
+                this.dialogService.ShowNotificationDialog(this,title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: true);
             }
         }
 
@@ -1390,7 +1388,7 @@ namespace Knowte.NotesModule.Views
             catch (Exception ex)
             {
                 LogClient.Error("Could not export note. Exception: {0}", ex.Message);
-                this.dialogService.ShowNotificationDialog(this, iconCharCode: DialogIcons.ErrorIconCode, iconSize: DialogIcons.ErrorIconSize, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: true);
+                this.dialogService.ShowNotificationDialog(this, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: true);
             }
         }
 

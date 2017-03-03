@@ -11,19 +11,7 @@
 
     <Border Background="{DynamicResource RG_WhiteBrush}" Margin="-1">
         <DockPanel Margin="16">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <Grid>
-                    <Border Panel.ZIndex="0" Width="30" Height="30" CornerRadius="15" Background="{DynamicResource RG_AccentBrush}"/>
-                    <TextBlock
-                          x:Name="Icon"
-                          Panel.ZIndex="1"
-                          Style="{StaticResource SegoeAssets}"
-                          HorizontalAlignment="Center" 
-                          VerticalAlignment="Center" 
-                          Foreground="{DynamicResource RG_WhiteBrush}" />
-                </Grid>
-                <TextBlock x:Name="TextBlockTitle" Margin="15,-2,0,0" FontWeight="Light" FontSize="28" Foreground="{DynamicResource RG_BlackBrush}"/>
-            </StackPanel>
+            <TextBlock x:Name="TextBlockTitle" DockPanel.Dock="Top" FontWeight="Light" FontSize="28" Foreground="{DynamicResource RG_AccentBrush}"/>
             <StackPanel x:Name="Content" Margin="0,15,0,0">
                 <TextBlock x:Name="TextBlockContent" TextWrapping="Wrap" Foreground="{DynamicResource RG_BlackBrush}" />
                 <TextBox x:Name="TextBoxResponse" Style="{StaticResource MetroTextBox}" Margin="0,20,0,0"/>

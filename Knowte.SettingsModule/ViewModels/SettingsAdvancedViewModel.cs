@@ -119,8 +119,6 @@ namespace Knowte.SettingsModule.ViewModels
 
                 bool moveCurrentNotes = this.dialogService.ShowConfirmationDialog(
                     null,
-                    iconCharCode: DialogIcons.QuestionIconCode,
-                    iconSize: DialogIcons.QuestionIconSize,
                     title: ResourceUtils.GetStringResource("Language_Move_Notes"),
                     content: ResourceUtils.GetStringResource("Language_Confirm_Move_Notes").Replace("%newstoragelocation%", selectedFolder),
                     okText: ResourceUtils.GetStringResource("Language_Yes"),
@@ -133,8 +131,6 @@ namespace Knowte.SettingsModule.ViewModels
                 {
                     this.dialogService.ShowNotificationDialog(
                         null,
-                        iconCharCode: DialogIcons.ErrorIconCode,
-                        iconSize: DialogIcons.ErrorIconSize,
                         title: ResourceUtils.GetStringResource("Language_Error"),
                         content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
                         okText: ResourceUtils.GetStringResource("Language_Ok"),
@@ -218,8 +214,6 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show notification if backup succeeded
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    iconCharCode: DialogIcons.CheckMarkIconCode,
-                    iconSize: DialogIcons.CheckMarkIconSize,
                     title: ResourceUtils.GetStringResource("Language_Backup"),
                     content: ResourceUtils.GetStringResource("Language_Backup_Was_Successful"),
                     okText: ResourceUtils.GetStringResource("Language_Ok"),
@@ -230,8 +224,6 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show error if backup failed
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    iconCharCode: DialogIcons.ErrorIconCode,
-                    iconSize: DialogIcons.ErrorIconSize,
                     title: ResourceUtils.GetStringResource("Language_Error"),
                     content: ResourceUtils.GetStringResource("Language_Error_Backup_Error"),
                     okText: ResourceUtils.GetStringResource("Language_Ok"),
@@ -256,9 +248,7 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show notification if import succeeded
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    iconCharCode: DialogIcons.CheckMarkIconCode,
-                    iconSize: DialogIcons.CheckMarkIconSize,
-                    title: ResourceUtils.GetStringResource("Language_Import"),
+                    title: ResourceUtils.GetStringResource("Language_Success"),
                     content: ResourceUtils.GetStringResource("Language_Import_Was_Successful"),
                     okText: ResourceUtils.GetStringResource("Language_Ok"),
                     showViewLogs: false);
@@ -268,8 +258,6 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show error if import failed
                 this.dialogService.ShowNotificationDialog(
                                    null,
-                                   iconCharCode: DialogIcons.ErrorIconCode,
-                                   iconSize: DialogIcons.ErrorIconSize,
                                    title: ResourceUtils.GetStringResource("Language_Error"),
                                    content: ResourceUtils.GetStringResource("Language_Error_Import_Error"),
                                    okText: ResourceUtils.GetStringResource("Language_Ok"),
@@ -294,9 +282,7 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show notification if restore succeeded
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    iconCharCode: DialogIcons.CheckMarkIconCode,
-                    iconSize: DialogIcons.CheckMarkIconSize,
-                    title: ResourceUtils.GetStringResource("Language_Restore"),
+                    title: ResourceUtils.GetStringResource("Language_Success"),
                     content: ResourceUtils.GetStringResource("Language_Restore_Was_Successful"),
                     okText: ResourceUtils.GetStringResource("Language_Ok"),
                     showViewLogs: false);
@@ -306,8 +292,6 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show error if restore failed
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    iconCharCode: DialogIcons.ErrorIconCode,
-                    iconSize: DialogIcons.ErrorIconSize,
                     title: ResourceUtils.GetStringResource("Language_Error"),
                     content: ResourceUtils.GetStringResource("Language_Error_Restore_Error"),
                     okText: ResourceUtils.GetStringResource("Language_Ok"),

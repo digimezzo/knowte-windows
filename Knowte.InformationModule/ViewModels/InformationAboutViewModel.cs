@@ -50,8 +50,6 @@ namespace Knowte.InformationModule.ViewModels
 
                 this.dialogService.ShowCustomDialog(
                     null,
-                    0xe73e, 
-                    16, 
                     ResourceUtils.GetStringResource("Language_License"), 
                     view, 
                     400, 

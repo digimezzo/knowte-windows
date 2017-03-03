@@ -9,19 +9,7 @@
 
     <Border Background="{DynamicResource RG_WhiteBrush}" Margin="-1">
         <DockPanel Margin="16">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <Grid>
-                    <Border Panel.ZIndex="0" Width="30" Height="30" CornerRadius="15" Background="{DynamicResource RG_AccentBrush}"/>
-                    <TextBlock
-                          x:Name="Icon"
-                          Panel.ZIndex="1"
-                          Style="{StaticResource SegoeAssets}"
-                          HorizontalAlignment="Center" 
-                          VerticalAlignment="Center" 
-                          Foreground="{DynamicResource RG_WhiteBrush}" />
-                </Grid>
-                <TextBlock x:Name="TextBlockTitle" Margin="15,-2,0,0" FontWeight="Light" FontSize="28" Foreground="{DynamicResource RG_BlackBrush}"/>
-            </StackPanel>
+            <TextBlock x:Name="TextBlockTitle" DockPanel.Dock="Top" FontWeight="Light" FontSize="28" Foreground="{DynamicResource RG_AccentBrush}"/>
             <DockPanel x:Name="Content" Margin="0,15,0,0">
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0,30,0,0">
                     <Button x:Name="ButtonOK" Style="{StaticResource ColoredButton}" IsDefault="True" Click="ButtonOK_Click"/>
