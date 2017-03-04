@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls">
 
     <ContextMenu x:Key="ListboxNotesContextMenu">
         <MenuItem Header="Delete note" Command="{Binding DataContext.DeleteNote, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
@@ -19,11 +20,10 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label x:Name="DummyLabel"></Label>
-                        <Border x:Name="InnerBorder" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" Panel.ZIndex="1" BorderThickness="0" Padding="5,2,0,2">
-                        </Border>
-                        <Border x:Name="DummyBorder" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" Panel.ZIndex="1" BorderThickness="0" Padding="5,2,0,2" Visibility="Hidden">
-                        </Border>
-                        <ContentPresenter Grid.Column="0" Grid.Row="0" Panel.ZIndex="2" Margin="5,5,0,5"/>
+                        <Border x:Name="InnerBorder" Panel.ZIndex="1" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" BorderThickness="0" Padding="5,2,0,2"/>
+                        <Border x:Name="DummyBorder" Panel.ZIndex="1" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" BorderThickness="0" Padding="5,2,0,2" Visibility="Hidden"/>
+                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DurationMilliseconds="500" DoRipple="{TemplateBinding IsSelected}" />
+                        <ContentPresenter Panel.ZIndex="2" Grid.Column="0" Grid.Row="0" Margin="5,5,0,5"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
