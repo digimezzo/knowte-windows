@@ -7,13 +7,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid MinWidth="80" Height="28">
-                        <Border x:Name="MyBorder" Panel.ZIndex="0" MinWidth="80" Height="28" CornerRadius="14" Background="{DynamicResource RG_LightGrayBrush}" BorderThickness="0" VerticalAlignment="Center"/>
-                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DoRipple="{TemplateBinding IsPressed}"/>
-                        <Label x:Name="MyLabel" Panel.ZIndex="2" Content="{TemplateBinding Content}" Foreground="{DynamicResource RG_BlackBrush}" Background="Transparent" Padding="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border x:Name="border" Panel.ZIndex="0" MinWidth="80" Height="28" CornerRadius="14" Background="{DynamicResource RG_LightGrayBrush}" BorderThickness="0" VerticalAlignment="Center"/>
+                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DoRipple="{TemplateBinding IsPressed}">
+                            <dc:Ripple.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=border}" />
+                            </dc:Ripple.OpacityMask>
+                        </dc:Ripple>
+                        <Label Panel.ZIndex="2" Content="{TemplateBinding Content}" Foreground="{DynamicResource RG_BlackBrush}" Background="Transparent" Padding="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="MyBorder" Property="Opacity" Value="0.8"/>
+                            <Setter TargetName="border" Property="Opacity" Value="0.8"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

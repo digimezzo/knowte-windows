@@ -34,6 +34,10 @@ namespace Knowte.Common.Services.Note
         }
         #endregion
 
+        #region Private
+
+        #endregion
+
         #region INoteService
         public event EventHandler FlagUpdated = delegate { };
         public event EventHandler StorageLocationChanged = delegate { };

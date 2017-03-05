@@ -1,24 +1,25 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls">
 
-   <Style x:Key="CommandButtonStyle" TargetType="{x:Type Button}">
-      <Setter Property="Template">
-         <Setter.Value>
-            <ControlTemplate TargetType="Button">
-               <Label x:Name="ContentLabel" Padding="0" Content="{TemplateBinding Content}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-               <ControlTemplate.Triggers>
-                  <Trigger Property="IsMouseOver" Value="True">
-                     <Setter TargetName="ContentLabel" Property="Opacity" Value="0.8"/>
-                  </Trigger>
-                  <Trigger Property="IsPressed" Value="True">
-                     <Setter TargetName="ContentLabel" Property="Opacity" Value="0.6"/>
-                  </Trigger>
-                  <Trigger Property="IsEnabled" Value="false">
-                     <Setter Property="Opacity" Value="0.5"/>
-                  </Trigger>
-               </ControlTemplate.Triggers>
-            </ControlTemplate>
-         </Setter.Value>
-      </Setter>
-   </Style>
+    <Style x:Key="CommandButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Width="30" Height="30">
+                        <Label x:Name="ContentLabel" Padding="0" Content="{TemplateBinding Content}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <dc:Ripple RippleBackground="{DynamicResource RG_RippleBackgroundBrushLight}" DoRipple="{TemplateBinding IsPressed}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ContentLabel" Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
