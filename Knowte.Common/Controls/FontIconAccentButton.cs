@@ -57,6 +57,7 @@ namespace Knowte.Common.Controls
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
             this.CornerRadius = this.ActualHeight / 2;
+            this.MaxWidth = this.ActualWidth; // Workaround for the ripple effect
         }
         #endregion
     }

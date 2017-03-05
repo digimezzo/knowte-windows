@@ -7,16 +7,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:FontIconAccentButton}">
-                    <Grid>
+                    <Grid MinWidth="80" Height="28">
                         <Border 
                             x:Name="border" 
                             Panel.ZIndex="0" 
                             Background="{DynamicResource RG_AccentBrush}" 
-                            Width="{TemplateBinding Width}" 
-                            Height="{TemplateBinding Height}" 
+                            MinWidth="80" 
+                            Height="28"
                             Opacity="0"
                             CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <!--<dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DoRipple="{TemplateBinding IsPressed}"/>-->
+                        <Ellipse x:Name="ellipse" Panel.ZIndex="1" Width="0" Height="{Binding Path=Width,ElementName=ellipse}" Fill="{DynamicResource RG_RippleBrushMedium}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <DockPanel x:Name="foregroundPanel" Panel.ZIndex="2" Margin="15,5" Opacity="1">
                             <TextBlock 
                                 DockPanel.Dock="Left"
@@ -78,6 +78,18 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Width" To="200" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Width" To="0" BeginTime="0:0:0.25" Duration="0:0:0.01" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.25" Duration="0:0:0.01" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
