@@ -28,7 +28,7 @@
                         <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DurationMilliseconds="500" DoRipple="{TemplateBinding IsSelected}" />
                         <!-- Hack because ContentPresenter doesn't allow changing Foreground -->
                         <TextBlock Panel.ZIndex="2" x:Name="Textblock" Padding="10,10,10,10" Text="{Binding Path=Title}" FontWeight="{Binding FontWeight}"/>
-                        <ContentPresenter/>
+                        <ContentPresenter Panel.ZIndex="3"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
