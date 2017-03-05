@@ -21,11 +21,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Grid>
+                    <Grid Height="36">
                         <Border x:Name="DragBorder"  Panel.ZIndex="0" BorderThickness="0" Margin="0" Background="{DynamicResource RG_HoverBrush}" Visibility="{Binding Path=IsDragOver, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <Border x:Name="RealBorder" Panel.ZIndex="0" Margin="0"/>
                         <Border x:Name="DummyBorder" Panel.ZIndex="0" BorderThickness="0" Visibility="Hidden"/>
-                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DurationMilliseconds="500" DoRipple="{TemplateBinding IsSelected}" />
+                        <Ellipse x:Name="ellipse" Panel.ZIndex="1" Width="0" Height="{Binding Path=Width,ElementName=ellipse}" Fill="{DynamicResource RG_RippleBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <!-- Hack because ContentPresenter doesn't allow changing Foreground -->
                         <TextBlock Panel.ZIndex="2" x:Name="Textblock" Padding="10,10,10,10" Text="{Binding Path=Title}" FontWeight="{Binding FontWeight}"/>
                         <ContentPresenter Panel.ZIndex="3"/>
@@ -39,6 +39,16 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="RealBorder" Property="Background" Value="{DynamicResource RG_SelectedBrush}"/>
                             <Setter TargetName="Textblock" Property="ListBox.Foreground" Value="{DynamicResource RG_AccentBrush}"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Width" To="600" Duration="0:0:0.5" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Width" To="0" BeginTime="0:0:0.5" Duration="0:0:0.01" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.5" Duration="0:0:0.01" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -12,17 +12,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Grid>
+                    <Grid Height="44">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="DummyLabel"></Label>
-                        <Border x:Name="InnerBorder" Panel.ZIndex="1" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" BorderThickness="0" Padding="5,2,0,2"/>
-                        <Border x:Name="DummyBorder" Panel.ZIndex="1" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" BorderThickness="0" Padding="5,2,0,2" Visibility="Hidden"/>
-                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DurationMilliseconds="500" DoRipple="{TemplateBinding IsSelected}" />
+                        <Label x:Name="DummyLabel"/>
+                        <Border x:Name="InnerBorder" Panel.ZIndex="0" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" BorderThickness="0" Padding="5,2,0,2"/>
+                        <Border x:Name="DummyBorder" Panel.ZIndex="0" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" BorderThickness="0" Padding="5,2,0,2" Visibility="Hidden"/>
+                        <Ellipse x:Name="ellipse" Panel.ZIndex="1" Width="0" Height="{Binding Path=Width,ElementName=ellipse}" Fill="{DynamicResource RG_RippleBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <ContentPresenter Panel.ZIndex="2" Grid.Column="0" Grid.Row="0" Margin="5,5,0,5"/>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -35,6 +35,16 @@
                             <Setter TargetName="InnerBorder" Property="Background" Value="{DynamicResource RG_SelectedBrush}"/>
                             <Setter TargetName="InnerBorder" Property="Opacity" Value="1.0"/>
                             <Setter TargetName="DummyBorder" Property="Opacity" Value="1.0"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Width" To="1000" Duration="0:0:0.5" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Width" To="0" BeginTime="0:0:0.5" Duration="0:0:0.01" />
+                                        <DoubleAnimation Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.5" Duration="0:0:0.01" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="false">
                             <Setter TargetName="DummyLabel" Property="Foreground" Value="{DynamicResource RG_BlackBrush}"/>
