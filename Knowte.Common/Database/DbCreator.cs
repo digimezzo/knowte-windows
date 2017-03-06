@@ -38,9 +38,9 @@ namespace Knowte.Common.Database
             this.factory = new SQLiteConnectionFactory();
         }
 
-        public DbCreator(string databaseFile)
+        public DbCreator(string storageLocation)
         {
-            this.factory = new SQLiteConnectionFactory(databaseFile);
+            this.factory = new SQLiteConnectionFactory(storageLocation);
         }
         #endregion
 

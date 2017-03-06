@@ -126,11 +126,8 @@ namespace Knowte.Common.Services.Backup
 
         private async Task RestoreFromBackup(bool deleteCurrentNotes)
         {
-            string[] databaseFiles = Directory.GetFiles(this.BackupSubDirectory, "*.db"); // Find database files in the backup directory
-
-            string backupDatabaseFile = databaseFiles[0]; // Use the first found database file (there should only be 1)
-            var backupFactory = new SQLiteConnectionFactory(backupDatabaseFile); // SQLiteConnectionFactory that points to the backup database file
-            var backupCreator = new DbCreator(backupDatabaseFile); // DbCreator that points to the backup database file
+            var backupFactory = new SQLiteConnectionFactory(this.BackupSubDirectory); // SQLiteConnectionFactory that points to the backup database file
+            var backupCreator = new DbCreator(this.BackupSubDirectory); // DbCreator that points to the backup database file
             string currentNotesSubDirectoryPath = Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
             string backupNotesSubDirectoryPath = Path.Combine(this.BackupSubDirectory, ApplicationPaths.NotesSubDirectory);
 
@@ -197,6 +194,11 @@ namespace Knowte.Common.Services.Backup
                     currentConn.Execute("UPDATE Note SET NotebookId = '' WHERE NotebookId NOT IN (SELECT Id FROM Notebook);");
                 }
             });
+        }
+
+        private async Task MigrateAsync()
+        {
+            // TODO
         }
 
         private async Task<bool> RestoreAsyncCallback(string backupFile, bool deleteCurrentNotes)

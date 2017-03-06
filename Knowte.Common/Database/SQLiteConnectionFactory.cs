@@ -25,9 +25,9 @@ namespace Knowte.Common.Database
             this.databaseFile = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ProcessExecutable.Name() + ".db");
         }
 
-        public SQLiteConnectionFactory(string databaseFile)
+        public SQLiteConnectionFactory(string storageLocation)
         {
-            this.databaseFile = databaseFile;
+            this.databaseFile = System.IO.Path.Combine(storageLocation, ProcessExecutable.Name() + ".db");
         }
         #endregion
 

@@ -35,29 +35,50 @@ namespace Knowte.Common.Services.Note
         #endregion
 
         #region Private
+        private async Task MoveNotesAsync(string newLocation)
+        {
+            await Task.Run(() =>
+            {
+                string oldLocation = ApplicationPaths.NoteStorageLocation;
+                // TODO: add notes to existing DB and Notes directory Is it possible to reuse backup function here?
+            });
+        }
 
+        private async Task InitializeStorageIfRequiredAsync(string newLocation)
+        {
+            await Task.Run(() =>
+            {
+                // Database file
+                var creator = new DbCreator(newLocation);
+
+                if (creator.DatabaseExists())
+                {
+                    creator.UpgradeDatabase();
+                }
+                else
+                {
+                    creator.InitializeNewDatabase();
+                }
+
+                // Notes directory
+                string notesDirectoryPath = Path.Combine(newLocation, ApplicationPaths.NotesSubDirectory);
+                if (!Directory.Exists(notesDirectoryPath)) Directory.CreateDirectory(notesDirectoryPath);
+            });
+        }
         #endregion
 
         #region INoteService
         public event EventHandler FlagUpdated = delegate { };
         public event EventHandler StorageLocationChanged = delegate { };
 
-        private async Task MoveNotesAsync(string newLocation)
-        {
-            await Task.Run(() =>
-            {
-                string oldLocation = ApplicationPaths.NoteStorageLocation;
-                // TODO
-            });
-        }
-
         public async Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes)
         {
             try
             {
+                await this.InitializeStorageIfRequiredAsync(newStorageLocation);
                 if (moveCurrentNotes) await this.MoveNotesAsync(newStorageLocation);
+
                 SettingsClient.Set<string>("General", "NoteStorageLocation", newStorageLocation);
-                // TODO: create Knowte.db and Notes directory if not yet existing.
             }
             catch (Exception ex)
             {

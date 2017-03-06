@@ -1,4 +1,4 @@
-2017-03-06: Knowte 1.1 Build 482 (Preview)
+2017-03-06: Knowte 1.1 Build 483 (Preview)
 ------------------------------------------
 
 - [Added] Window borders are more visible when Windows doesn't display a drop shadow
