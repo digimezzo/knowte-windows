@@ -118,7 +118,7 @@
                         <Label Style="{StaticResource CountLabel}" Content="{Binding TotalNotebooks}" />
                     </DockPanel>
                 </StackPanel>
-                <controls:FontIconAccentButton DockPanel.Dock="Bottom" Margin="0,10,0,0" Glyph="&#xE710;" VerticalAlignment="Center" GlyphSize="15" FontSize="13" HorizontalAlignment="Left" Content="{DynamicResource Language_New_Notebook}" Foreground="{DynamicResource RG_AccentBrush}" Command="{x:Static commonprism:ApplicationCommands.NewNotebookCommand}"/>
+                <controls:FontIconAccentButton DockPanel.Dock="Bottom" Margin="0,10,0,0" Glyph="&#xE710;" VerticalAlignment="Center" GlyphSize="15" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" Content="{DynamicResource Language_New_Notebook}" Foreground="{DynamicResource RG_BlackBrush}" Command="{x:Static commonprism:ApplicationCommands.NewNotebookCommand}"/>
                 <ListBox 
                     x:Name="ListBoxNotebooks" 
                     Margin="0,20,0,0" 
@@ -151,8 +151,8 @@
                 </DockPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
-                <controls:FontIconAccentButton Glyph="&#xE710;" VerticalAlignment="Center" GlyphSize="15" FontSize="13" HorizontalAlignment="Left" Content="{DynamicResource Language_New_Note}" Foreground="{DynamicResource RG_AccentBrush}" Command="{x:Static commonprism:ApplicationCommands.NewNoteCommand}"/>
-                <controls:FontIconAccentButton Margin="10,0,0,0" Glyph="&#xE8B5;" VerticalAlignment="Center" GlyphSize="20" FontSize="13" HorizontalAlignment="Left" Content="{DynamicResource Language_Import_Note}" Foreground="{DynamicResource RG_AccentBrush}" Command="{x:Static commonprism:ApplicationCommands.ImportNoteCommand}"/>
+                <controls:FontIconAccentButton Glyph="&#xE710;" VerticalAlignment="Center" GlyphSize="15" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" Content="{DynamicResource Language_New_Note}" Foreground="{DynamicResource RG_BlackBrush}" Command="{x:Static commonprism:ApplicationCommands.NewNoteCommand}"/>
+                <controls:FontIconAccentButton Margin="10,0,0,0" Glyph="&#xE8B5;" VerticalAlignment="Center" GlyphSize="20" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" Content="{DynamicResource Language_Import_Note}" Foreground="{DynamicResource RG_BlackBrush}" Command="{x:Static commonprism:ApplicationCommands.ImportNoteCommand}"/>
             </StackPanel>
             <Border>
                 <ListBox 

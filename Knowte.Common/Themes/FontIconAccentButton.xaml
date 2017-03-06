@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Knowte.Common.Controls"
-                    xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls">
+                    xmlns:controls="clr-namespace:Knowte.Common.Controls">
 
     <Style x:Key="{x:Type controls:FontIconAccentButton}" TargetType="{x:Type controls:FontIconAccentButton}">
         <Setter Property="Template">
@@ -9,16 +8,16 @@
                 <ControlTemplate TargetType="{x:Type controls:FontIconAccentButton}">
                     <Grid>
                         <Border 
-                            x:Name="border" 
+                            x:Name="TheBorder" 
                             Panel.ZIndex="0" 
                             Background="{DynamicResource RG_AccentBrush}" 
                             Width="{TemplateBinding Width}" 
                             Height="{TemplateBinding Height}" 
                             Opacity="0"
                             CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <!--<dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DoRipple="{TemplateBinding IsPressed}"/>-->
-                        <DockPanel x:Name="foregroundPanel" Panel.ZIndex="2" Margin="15,5" Opacity="1">
+                        <DockPanel Panel.ZIndex="1" Margin="15,5">
                             <TextBlock 
+                                x:Name="TheGlyph"
                                 DockPanel.Dock="Left"
                                 Text="{TemplateBinding Glyph}" 
                                 Foreground="{TemplateBinding Foreground}"
@@ -28,6 +27,7 @@
                                 HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                 FontFamily="/Knowte.Common;component/Resources/Fonts/#Segoe MDL2 Assets"/>
                             <Label 
+                                x:Name="TheLabel" 
                                 Padding="0" 
                                 Margin="10,0,0,0" 
                                 Foreground="{TemplateBinding Foreground}" 
@@ -37,44 +37,22 @@
                                 VerticalAlignment="{TemplateBinding VerticalAlignment}"
                                 HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
                         </DockPanel>
-                        <DockPanel x:Name="whitePanel" Panel.ZIndex="2" Margin="15,5" Opacity="0">
-                            <TextBlock 
-                                DockPanel.Dock="Left"
-                                Text="{TemplateBinding Glyph}" 
-                                Foreground="{DynamicResource RG_WhiteBrush}"
-                                FontSize="{TemplateBinding GlyphSize}"
-                                FontWeight="Normal"
-                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                FontFamily="/Knowte.Common;component/Resources/Fonts/#Segoe MDL2 Assets"/>
-                            <Label 
-                                Padding="0" 
-                                Margin="10,0,0,0" 
-                                Foreground="{DynamicResource RG_WhiteBrush}" 
-                                FontSize="{TemplateBinding FontSize}"
-                                FontWeight="{TemplateBinding FontWeight}"
-                                Content="{TemplateBinding Content}"
-                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
-                        </DockPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="TheGlyph" Property="Foreground" Value="{DynamicResource RG_WhiteBrush}"/>
+                            <Setter TargetName="TheLabel" Property="Foreground" Value="{DynamicResource RG_WhiteBrush}"/>
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.15" BeginTime="0:0:0"/>
-                                        <DoubleAnimation Storyboard.TargetName="foregroundPanel" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.15" BeginTime="0:0:0"/>
-                                        <DoubleAnimation Storyboard.TargetName="whitePanel" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.15" BeginTime="0:0:0"/>
+                                        <DoubleAnimation Storyboard.TargetName="TheBorder" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.15" BeginTime="0:0:0"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" BeginTime="0:0:0"/>
-                                        <DoubleAnimation Storyboard.TargetName="foregroundPanel" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" BeginTime="0:0:0"/>
-                                        <DoubleAnimation Storyboard.TargetName="whitePanel" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" BeginTime="0:0:0"/>
+                                        <DoubleAnimation Storyboard.TargetName="TheBorder" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.15" BeginTime="0:0:0"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
