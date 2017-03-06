@@ -64,7 +64,7 @@
                        Grid.Column="3" 
                        Command="{Binding DataContext.DeleteNoteFromList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
                        CommandParameter="{Binding Title}">
-                        <controls:FontIcon Glyph="&#xE894;" FontSize="18" Foreground="{DynamicResource RG_AccentBrush}"/>
+                        <controls:FontIcon Glyph="&#xE894;" FontSize="16" Foreground="{DynamicResource RG_AccentBrush}"/>
                     </Button>
                 </Grid>
             </DataTemplate>
