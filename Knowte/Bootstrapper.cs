@@ -55,8 +55,8 @@ namespace Knowte
             Container.RegisterSingletonType<IJumpListService, JumpListService>();
             Container.RegisterSingletonType<IDialogService, DialogService>();
             Container.RegisterSingletonType<IBackupService, BackupService>();
-            Container.RegisterType<INoteService, NoteService>();
-            Container.RegisterType<ICommandService, CommandService>();
+            Container.RegisterSingletonType<INoteService, NoteService>();
+            Container.RegisterSingletonType<ICommandService, CommandService>();
         }
 
         protected void RegisterViews()
