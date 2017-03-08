@@ -27,7 +27,7 @@ namespace Knowte.Common.Database
         // NOTE: whenever there is a change in the database schema,
         // this version MUST be incremented and a migration method
         // MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 0;
+        protected const int CURRENT_VERSION = 1;
         private int userDatabaseVersion;
         private SQLiteConnectionFactory factory;
         #endregion
@@ -89,16 +89,16 @@ namespace Knowte.Common.Database
         }
         #endregion
 
-        //#region Version 1
-        //[DatabaseVersion(1)]
-        //private void Migrate1()
-        //{
-        //    using (var conn = this.factory.GetConnection())
-        //    {
-        //        conn.Execute("ALTER TABLE Track ADD TestColumn INTEGER;");
-        //    }
-        //}
-        //#endregion
+        #region Version 1
+        [DatabaseVersion(1)]
+        private void Migrate1()
+        {
+            using (var conn = this.factory.GetConnection())
+            {
+                conn.Execute("DELETE FROM Configuration WHERE Key='NewNoteCount';");
+            }
+        }
+        #endregion
 
         #region Public
         public bool DatabaseExists()

@@ -166,6 +166,8 @@ namespace Knowte.Common.Services.Note
 
         public async Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes)
         {
+            bool isSuccess = true;
+
             try
             {
                 SettingsClient.Set<string>("General", "NoteStorageLocation", newStorageLocation);
@@ -175,12 +177,13 @@ namespace Knowte.Common.Services.Note
             }
             catch (Exception ex)
             {
+                isSuccess = false;
                 LogClient.Error("An error occurred while changing the storage location. MoveCurrentNotes={0}. Exception: {1}", moveCurrentNotes.ToString(), ex.Message);
             }
 
             this.StorageLocationChanged(this, new EventArgs());
 
-            return true;
+            return isSuccess;
         }
 
         public void CloseAllNoteWindows()
