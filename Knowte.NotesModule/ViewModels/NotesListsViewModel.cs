@@ -149,6 +149,7 @@ namespace Knowte.NotesModule.ViewModels
         #region Construction
         public NotesListsViewModel(IEventAggregator eventAggregator, INoteService noteService, IAppearanceService appearanceService, IJumpListService jumpListService, ISearchService searchService, IDialogService dialogService, I18nService i18nService, IBackupService backupService)
         {
+            // Injection
             this.eventAggregator = eventAggregator;
             this.noteService = noteService;
             this.appearanceService = appearanceService;
@@ -158,248 +159,75 @@ namespace Knowte.NotesModule.ViewModels
             this.i18nService = i18nService;
             this.backupService = backupService;
 
-            this.eventAggregator.GetEvent<TriggerLoadNoteAnimationEvent>().Subscribe((x) =>
+            // PubSub events
+            this.eventAggregator.GetEvent<TriggerLoadNoteAnimationEvent>().Subscribe((_) =>
             {
                 this.TriggerRefreshNotesAnimation = false;
                 this.TriggerRefreshNotesAnimation = true;
             });
 
-            this.eventAggregator.GetEvent<RefreshJumpListEvent>().Subscribe((x) => this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes()));
+            this.eventAggregator.GetEvent<RefreshJumpListEvent>().Subscribe((_) => this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes()));
             this.eventAggregator.GetEvent<NewNoteEvent>().Subscribe(createUnfiled => this.NewNoteCommand.Execute(createUnfiled));
-            this.eventAggregator.GetEvent<DeleteNoteEvent>().Subscribe((x) => this.DeleteNote.Execute(null));
-            this.eventAggregator.GetEvent<DeleteNotebookEvent>().Subscribe((x) => this.DeleteNotebook.Execute(null));
-            this.eventAggregator.GetEvent<RefreshNotesEvent>().Subscribe((x) => this.RefreshNotes());
+            this.eventAggregator.GetEvent<DeleteNoteEvent>().Subscribe((_) => this.DeleteNote.Execute(null));
+            this.eventAggregator.GetEvent<DeleteNotebookEvent>().Subscribe((_) => this.DeleteNotebook.Execute(null));
+            this.eventAggregator.GetEvent<RefreshNotesEvent>().Subscribe((_) => this.RefreshNotes());
+
             this.eventAggregator.GetEvent<OpenNoteEvent>().Subscribe(noteTitle =>
             {
-                if (!string.IsNullOrEmpty(noteTitle))
-                {
-                    this.SelectedNote = new NoteViewModel { Title = noteTitle };
-                }
-
+                if (!string.IsNullOrEmpty(noteTitle)) this.SelectedNote = new NoteViewModel { Title = noteTitle };
                 this.OpenNoteCommand.Execute(null);
             });
 
+            // Event handlers
             this.i18nService.LanguageChanged += LanguageChangedHandler;
             this.noteService.FlagUpdated += async (noteId, isFlagged) => { await this.UpdateNoteFlagAsync(noteId, isFlagged); };
-            this.backupService.BackupRestored += (sender, e) =>
-            {
-                this.RefreshNotebooks();
-                this.RefreshNotes();
-            };
+            this.noteService.StorageLocationChanged += RefreshAllHandler;
+            this.backupService.BackupRestored += RefreshAllHandler;
+            this.searchService.Searching += (_, __) => TryRefreshNotesOnSearch();
 
-            this.noteService.StorageLocationChanged += (sender, e) =>
-            {
-                this.RefreshNotebooks();
-                this.RefreshNotes();
-            };
-
-            this.Notes = new ObservableCollection<NoteViewModel>();
-
+            // Initialize notebooks
             this.RefreshNotebooks();
+            this.SetDefaultSelectedNotebook();
 
-            this.SelectedNotebook = new NotebookViewModel
-            {
-                Notebook = new Notebook
-                {
-                    Title = ResourceUtils.GetStringResource("Language_All_Notes"),
-                    Id = "0",
-                    CreationDate = DateTime.Now.Ticks,
-                    IsDefaultNotebook = true
-                }
-            };
-            // New Notebook
-            this.NewNotebookCommand = new DelegateCommand<string>((_) =>
-            {
-                this.selectedNotebook = null;
+            // Initialize notes
+            this.NoteFilter = ""; // Must be set before RefreshNotes()
+            this.RefreshNotes();
 
-                string responseText = string.Empty;
-                bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_New_Notebook"), content: ResourceUtils.GetStringResource("Language_New_Notebook_Enter_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
-
-                if (dialogResult)
-                {
-                    if (!string.IsNullOrEmpty(responseText))
-                    {
-                        Notebook newNotebook = new Notebook
-                        {
-                            Id = Guid.NewGuid().ToString(),
-                            Title = responseText,
-                            CreationDate = DateTime.Now.Ticks,
-                            IsDefaultNotebook = false
-                        };
-
-                        try
-                        {
-
-                            if (!this.noteService.NotebookExists(newNotebook))
-                            {
-                                this.noteService.NewNotebook(newNotebook);
-
-                                this.RefreshNotebooks();
-                                this.SelectedNotebook = new NotebookViewModel
-                                {
-                                    Notebook = new Notebook
-                                    {
-                                        Id = newNotebook.Id,
-                                        Title = newNotebook.Title,
-                                        CreationDate = DateTime.Now.Ticks
-                                    }
-                                };
-                            }
-                            else
-                            {
-                                this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Notebook"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                        }
-                    }
-                    else
-                    {
-                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                    }
-                }
-                else
-                {
-                    // The user clicked cancel
-                }
-            });
+            // Commands
+            this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
 
-            // New Note
-            this.NewNoteCommand = new DelegateCommand<object>(param =>
-            {
-                bool createUnfiled = Convert.ToBoolean(param);
-
-                try
-                {
-                    string initialTitle = this.noteService.GetUniqueNoteTitle(ResourceUtils.GetStringResource("Language_New_Note"));
-
-                    FlowDocument flowDoc = new FlowDocument();
-
-                    Notebook theNotebook = default(Notebook);
-
-                    if (!createUnfiled & (this.SelectedNotebook != null && !this.SelectedNotebook.IsDefaultNotebook))
-                    {
-                        theNotebook = this.SelectedNotebook.Notebook;
-                    }
-                    else
-                    {
-                        theNotebook = new Notebook
-                        {
-                            Title = ResourceUtils.GetStringResource("Language_Unfiled_Notes"),
-                            Id = "1",
-                            CreationDate = DateTime.Now.Ticks,
-                            IsDefaultNotebook = true
-                        };
-                    }
-
-                    NoteWindow notewin = new NoteWindow(initialTitle, "", theNotebook, this.searchService.SearchText, true, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
-                    this.dialogService);
-
-                    notewin.ActivateNow();
-
-                    RefreshNotes();
-                }
-                catch (Exception)
-                {
-                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Note"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                }
-            });
+            this.NewNoteCommand = new DelegateCommand<object>(param => this.NewNote(param));
             Common.Prism.ApplicationCommands.NewNoteCommand.RegisterCommand(this.NewNoteCommand);
 
-            // Import Note
-            this.ImportNoteCommand = new DelegateCommand<string>((x) =>
-            {
-                OpenFileDialog dlg = new OpenFileDialog();
-                dlg.Filter = ProductInformation.ApplicationDisplayName + " file (*." + Defaults.ExportFileExtension + ")|*." + Defaults.ExportFileExtension + "|All files (*.*)|*.*";
-
-                string lastExportDirectory = SettingsClient.Get<string>("General", "LastExportDirectory");
-
-                if (!string.IsNullOrEmpty(lastExportDirectory))
-                {
-                    dlg.InitialDirectory = lastExportDirectory;
-                }
-                else
-                {
-                    // If no LastRtfDirectory is set, default to the My Documents folder
-                    dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                }
-
-                if ((bool)dlg.ShowDialog())
-                {
-                    string importFile = dlg.FileName;
-
-                    try
-                    {
-                        if (!MiscUtils.IsValidExportFile(importFile))
-                        {
-                            this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Invalid_File"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                        }
-                        else
-                        {
-                            // Try to import
-                            this.noteService.ImportFile(importFile);
-                            this.RefreshNotes();
-                        }
-
-                    }
-                    catch (UnauthorizedAccessException)
-                    {
-                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                    }
-                }
-            });
+            this.ImportNoteCommand = new DelegateCommand<string>((x) => this.ImportNote());
             Common.Prism.ApplicationCommands.ImportNoteCommand.RegisterCommand(this.ImportNoteCommand);
 
             this.NavigateBetweenNotesCommand = new DelegateCommand<object>(NavigateBetweenNotes);
             Common.Prism.ApplicationCommands.NavigateBetweenNotesCommand.RegisterCommand(this.NavigateBetweenNotesCommand);
 
-            this.OpenNoteCommand = new DelegateCommand<string>((_) =>
+            this.OpenNoteCommand = new DelegateCommand<string>((_) => this.OpenNote());
+
+            // Process jumplist commands
+            this.ProcessJumplistCommands();
+        }
+        #endregion
+
+        #region Private
+        private void TryRefreshNotesOnSearch()
+        {
+            try
             {
-                if (this.SelectedNote == null)
-                {
-                    return;
-                }
-
-                try
-                {
-                    foreach (Window existingWindow in Application.Current.Windows)
-                    {
-                        if (!existingWindow.Equals(Application.Current.MainWindow) && existingWindow.Title == this.SelectedNote.Title)
-                        {
-                            existingWindow.WindowState = WindowState.Normal;
-                            // In case the window is minimized
-
-                            ((NoteWindow)existingWindow).ActivateNow();
-                            return;
-                        }
-                    }
-
-                    NoteWindow newWindow = new NoteWindow(this.SelectedNote.Title, "", this.noteService.GetNotebook(this.SelectedNote.NotebookId), this.searchService.SearchText, false, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
-                    this.dialogService);
-
-                    ((NoteWindow)newWindow).ActivateNow();
-                }
-                catch (Exception ex)
-                {
-                    LogClient.Error("Could not open the note. Exception: {0}", ex.Message);
-                }
-
-            });
-
-            this.searchService.Searching += (_, __) =>
+                Application.Current.Dispatcher.Invoke(() => { this.RefreshNotes(); });
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    Application.Current.Dispatcher.Invoke(() => { this.RefreshNotes(); });
-                }
-                catch (Exception)
-                {
-                }
-            };
+                LogClient.Error("Could not refresh after search. Exception: {0}", ex.Message);
+            }
+        }
 
+        private void ProcessJumplistCommands()
+        {
             try
             {
                 if (this.jumpListService.NewNoteFromJumplist)
@@ -422,14 +250,185 @@ namespace Knowte.NotesModule.ViewModels
                 this.jumpListService.OpenNoteFromJumplist = false;
                 this.jumpListService.OpenNoteFromJumplistTitle = "";
             }
+        }
 
-            this.NoteFilter = "";
-            // Must be set before RefreshNotes()
+        private void OpenNote()
+        {
+            if (this.SelectedNote == null)
+            {
+                return;
+            }
+
+            try
+            {
+                foreach (Window existingWindow in Application.Current.Windows)
+                {
+                    if (!existingWindow.Equals(Application.Current.MainWindow) && existingWindow.Title == this.SelectedNote.Title)
+                    {
+                        existingWindow.WindowState = WindowState.Normal;
+                        // In case the window is minimized
+
+                        ((NoteWindow)existingWindow).ActivateNow();
+                        return;
+                    }
+                }
+
+                NoteWindow newWindow = new NoteWindow(this.SelectedNote.Title, "", this.noteService.GetNotebook(this.SelectedNote.NotebookId), this.searchService.SearchText, false, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
+                this.dialogService);
+
+                ((NoteWindow)newWindow).ActivateNow();
+            }
+            catch (Exception ex)
+            {
+                LogClient.Error("Could not open the note. Exception: {0}", ex.Message);
+            }
+        }
+
+        private void ImportNote()
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = ProductInformation.ApplicationDisplayName + " file (*." + Defaults.ExportFileExtension + ")|*." + Defaults.ExportFileExtension + "|All files (*.*)|*.*";
+
+            string lastExportDirectory = SettingsClient.Get<string>("General", "LastExportDirectory");
+
+            if (!string.IsNullOrEmpty(lastExportDirectory))
+            {
+                dlg.InitialDirectory = lastExportDirectory;
+            }
+            else
+            {
+                // If no LastRtfDirectory is set, default to the My Documents folder
+                dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
+
+            if ((bool)dlg.ShowDialog())
+            {
+                string importFile = dlg.FileName;
+
+                try
+                {
+                    if (!MiscUtils.IsValidExportFile(importFile))
+                    {
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Invalid_File"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    }
+                    else
+                    {
+                        // Try to import
+                        this.noteService.ImportFile(importFile);
+                        this.RefreshNotes();
+                    }
+
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                }
+            }
+        }
+
+        private void NewNote(object param)
+        {
+            bool createUnfiled = Convert.ToBoolean(param);
+
+            try
+            {
+                string initialTitle = this.noteService.GetUniqueNoteTitle(ResourceUtils.GetStringResource("Language_New_Note"));
+
+                FlowDocument flowDoc = new FlowDocument();
+
+                Notebook theNotebook = default(Notebook);
+
+                if (!createUnfiled & (this.SelectedNotebook != null && !this.SelectedNotebook.IsDefaultNotebook))
+                {
+                    theNotebook = this.SelectedNotebook.Notebook;
+                }
+                else
+                {
+                    theNotebook = new Notebook
+                    {
+                        Title = ResourceUtils.GetStringResource("Language_Unfiled_Notes"),
+                        Id = "1",
+                        CreationDate = DateTime.Now.Ticks,
+                        IsDefaultNotebook = true
+                    };
+                }
+
+                NoteWindow notewin = new NoteWindow(initialTitle, "", theNotebook, this.searchService.SearchText, true, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
+                this.dialogService);
+
+                notewin.ActivateNow();
+
+                RefreshNotes();
+            }
+            catch (Exception)
+            {
+                this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Note"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+            }
+        }
+
+        private void NewNotebook()
+        {
+            this.selectedNotebook = null;
+
+            string responseText = string.Empty;
+            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_New_Notebook"), content: ResourceUtils.GetStringResource("Language_New_Notebook_Enter_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
+
+            if (dialogResult)
+            {
+                if (!string.IsNullOrEmpty(responseText))
+                {
+                    Notebook newNotebook = new Notebook
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Title = responseText,
+                        CreationDate = DateTime.Now.Ticks,
+                        IsDefaultNotebook = false
+                    };
+
+                    try
+                    {
+
+                        if (!this.noteService.NotebookExists(newNotebook))
+                        {
+                            this.noteService.NewNotebook(newNotebook);
+
+                            this.RefreshNotebooks();
+                            this.SelectedNotebook = new NotebookViewModel
+                            {
+                                Notebook = new Notebook
+                                {
+                                    Id = newNotebook.Id,
+                                    Title = newNotebook.Title,
+                                    CreationDate = DateTime.Now.Ticks
+                                }
+                            };
+                        }
+                        else
+                        {
+                            this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Notebook"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    }
+                }
+                else
+                {
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                }
+            }
+            else
+            {
+                // The user clicked cancel
+            }
+        }
+
+        private void RefreshAllHandler(object sender, EventArgs e)
+        {
+            this.RefreshNotebooks();
             this.RefreshNotes();
         }
-        #endregion
-
-        #region Private
         private async Task UpdateNoteFlagAsync(string noteId, bool isFlagged)
         {
             if (this.NoteFilter.Equals("Flagged"))
@@ -533,33 +532,19 @@ namespace Knowte.NotesModule.ViewModels
 
         public void RefreshNotes()
         {
-            string formatDate = "D";
+            this.Notes = new ObservableCollection<NoteViewModel>();
 
-            string theText = "";
+            string formatDate = "D";
+            string text = "";
 
             if (this.searchService.SearchText != null)
             {
-                theText = this.searchService.SearchText.Trim();
+                text = this.searchService.SearchText.Trim();
             }
 
             if (this.SelectedNotebook == null)
             {
-                try
-                {
-                    this.SelectedNotebook = new NotebookViewModel
-                    {
-                        Notebook = new Notebook
-                        {
-                            Title = ResourceUtils.GetStringResource("Language_All_Notes"),
-                            Id = "0",
-                            CreationDate = DateTime.Now.Ticks,
-                            IsDefaultNotebook = true
-                        }
-                    };
-                }
-                catch (Exception)
-                {
-                }
+                SetDefaultSelectedNotebook();
             }
 
             this.Notes.Clear();
@@ -569,7 +554,7 @@ namespace Knowte.NotesModule.ViewModels
                 Id = SelectedNotebook.Id,
                 Title = SelectedNotebook.Title,
                 CreationDate = SelectedNotebook.CreationDate.Ticks
-            }, theText, ref this.total, SettingsClient.Get<bool>("Appearance", "SortByModificationDate"), this.NoteFilter))
+            }, text, ref this.total, SettingsClient.Get<bool>("Appearance", "SortByModificationDate"), this.NoteFilter))
             {
                 this.Notes.Add(new NoteViewModel
                 {
@@ -589,6 +574,27 @@ namespace Knowte.NotesModule.ViewModels
             OnPropertyChanged<int>(() => this.Total);
 
             this.eventAggregator.GetEvent<CountNotesEvent>().Publish("");
+        }
+
+        private void SetDefaultSelectedNotebook()
+        {
+            try
+            {
+                this.SelectedNotebook = new NotebookViewModel
+                {
+                    Notebook = new Notebook
+                    {
+                        Title = ResourceUtils.GetStringResource("Language_All_Notes"),
+                        Id = "0",
+                        CreationDate = DateTime.Now.Ticks,
+                        IsDefaultNotebook = true
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                LogClient.Error("Could not set selected notebook. Exception: {0}", ex.Message);
+            }
         }
 
         public void RefreshNotesAnimated()
