@@ -22,7 +22,7 @@ First release of Knowte. Features:
 
 - Write notes and group them in notebooks
 - Search for notes containing specific text
-- Font styling (bold, italic, underine, strike through)
+- Font styling (bold, italic, underline, strike through)
 - Text highlighting
 - Bulleted lists 
 - Custom user interface colors
