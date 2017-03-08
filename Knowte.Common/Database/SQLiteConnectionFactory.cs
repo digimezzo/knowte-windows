@@ -1,6 +1,4 @@
 ﻿using Digimezzo.Utilities.IO;
-using Digimezzo.Utilities.Settings;
-using Knowte.Common.Base;
 using Knowte.Common.IO;
 using SQLite;
 
