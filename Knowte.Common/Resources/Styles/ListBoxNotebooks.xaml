@@ -25,7 +25,7 @@
                         <Border x:Name="DragBorder"  Panel.ZIndex="0" BorderThickness="0" Margin="0" Background="{DynamicResource RG_HoverBrush}" Visibility="{Binding Path=IsDragOver, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <Border x:Name="RealBorder" Panel.ZIndex="0" Margin="0"/>
                         <Border x:Name="DummyBorder" Panel.ZIndex="0" BorderThickness="0" Visibility="Hidden"/>
-                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DurationMilliseconds="500" DoRipple="{TemplateBinding IsSelected}" />
+                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBrush}" DurationMilliseconds="500" DoRipple="{TemplateBinding IsSelected}" />
                         <!-- Hack because ContentPresenter doesn't allow changing Foreground -->
                         <TextBlock Panel.ZIndex="2" x:Name="Textblock" Padding="10,10,10,10" Text="{Binding Path=Title}" FontWeight="{Binding FontWeight}"/>
                         <ContentPresenter Panel.ZIndex="3"/>

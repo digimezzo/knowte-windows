@@ -6,6 +6,8 @@ using System.Windows.Documents;
 
 namespace Knowte.Common.Services.Note
 {
+    public delegate void FlagUpdatedEventHandler(string noteTitle, bool isFlagged);
+
     public interface INoteService
     {
         Task Migrate(string sourceFolder, bool deleteDestination);
@@ -41,7 +43,7 @@ namespace Knowte.Common.Services.Note
         FlowDocument MergeDocument(string id, string title);
         void ExportFile(string noteId, string fileName);
         void ImportFile(string filename);
-        event EventHandler FlagUpdated;
+        event FlagUpdatedEventHandler FlagUpdated;
         event EventHandler StorageLocationChanged;
     }
 }

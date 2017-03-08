@@ -8,7 +8,7 @@
                 <ControlTemplate TargetType="Button">
                     <Grid Width="30" Height="30">
                         <Label x:Name="ContentLabel" Padding="0" Content="{TemplateBinding Content}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <dc:Ripple RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DoRipple="{TemplateBinding IsPressed}" Scale="1.0" StartAtPointer="False"/>
+                        <dc:Ripple RippleBackground="{DynamicResource RG_RippleBrush}" DoRipple="{TemplateBinding IsPressed}" Scale="1.0" StartAtPointer="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

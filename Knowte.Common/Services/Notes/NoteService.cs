@@ -66,7 +66,7 @@ namespace Knowte.Common.Services.Note
         #endregion
 
         #region INoteService
-        public event EventHandler FlagUpdated = delegate { };
+        public event FlagUpdatedEventHandler FlagUpdated = delegate { };
         public event EventHandler StorageLocationChanged = delegate { };
 
         public async Task Migrate(string sourceFolder, bool deleteDestination)
@@ -413,10 +413,10 @@ namespace Knowte.Common.Services.Note
                     noteToUpdate.Flagged = flagged ? 1 : 0;
 
                     conn.Update(noteToUpdate);
+
+                    this.FlagUpdated(noteToUpdate.Title, flagged);
                 }
             }
-
-            this.FlagUpdated(this, new EventArgs());
         }
 
         public void UpdateNote(FlowDocument document, string id, string title, string notebookId, double width, double height, double top, double left, bool maximized)

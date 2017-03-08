@@ -22,7 +22,7 @@
                         <Label x:Name="DummyLabel"></Label>
                         <Border x:Name="InnerBorder" Panel.ZIndex="1" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" BorderThickness="0" Padding="5,2,0,2"/>
                         <Border x:Name="DummyBorder" Panel.ZIndex="1" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" BorderThickness="0" Padding="5,2,0,2" Visibility="Hidden"/>
-                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DurationMilliseconds="500" DoRipple="{TemplateBinding IsSelected}" />
+                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBrush}" DurationMilliseconds="500" DoRipple="{TemplateBinding IsSelected}" />
                         <ContentPresenter Panel.ZIndex="2" Grid.Column="0" Grid.Row="0" Margin="5,5,0,5"/>
                     </Grid>
                     <ControlTemplate.Triggers>

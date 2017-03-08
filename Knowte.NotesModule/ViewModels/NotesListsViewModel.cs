@@ -18,6 +18,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -179,7 +180,7 @@ namespace Knowte.NotesModule.ViewModels
             });
 
             this.i18nService.LanguageChanged += LanguageChangedHandler;
-            this.noteService.FlagUpdated += (sender, e) => { this.RefreshNotes(); };
+            this.noteService.FlagUpdated += async (noteTitle, isFlagged) => { await this.UpdateNoteFlagAsync(noteTitle, isFlagged); };
             this.backupService.BackupRestored += (sender, e) =>
             {
                 this.RefreshNotebooks();
@@ -431,6 +432,19 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
+        private async Task UpdateNoteFlagAsync(string noteTitle, bool isFlagged)
+        {
+            await Task.Run(() => {
+                foreach (NoteViewModel note in this.Notes)
+                {
+                    if (note.Title.Equals(noteTitle))
+                    {
+                        note.Flagged = isFlagged;
+                    }
+                }
+            });
+        }
+
         private void LanguageChangedHandler(object sender, EventArgs e)
         {
             foreach (NotebookViewModel nb in this.Notebooks)

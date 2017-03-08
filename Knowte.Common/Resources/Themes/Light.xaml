@@ -27,5 +27,6 @@
     <SolidColorBrush x:Key="RG_DimBrush" Color="#D2D2D2" Opacity="0.4"/>
     <SolidColorBrush x:Key="RG_HoverBrush" Color="#000000" Opacity="0.07"/>
     <SolidColorBrush x:Key="RG_SelectedBrush" Color="#000000" Opacity="0.07"/>
-    <SolidColorBrush x:Key="RG_RippleBackgroundBrush" Color="#FFFFFF" Opacity="0.5"/>
+    <SolidColorBrush x:Key="RG_RippleBrush" Color="#FFFFFF" Opacity="0.5"/>
+    <SolidColorBrush x:Key="RG_AccentRippleBrush" Color="{StaticResource RG_AccentColor}" Opacity="0.5"/>
 </ResourceDictionary>
