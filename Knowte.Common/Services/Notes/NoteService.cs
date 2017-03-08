@@ -7,6 +7,7 @@ using Knowte.Common.Database;
 using Knowte.Common.Database.Entities;
 using Knowte.Common.Extensions;
 using Knowte.Common.IO;
+using Knowte.Common.Services.Backup;
 using Knowte.Common.Utils;
 using System;
 using System.Collections.Generic;
@@ -24,12 +25,14 @@ namespace Knowte.Common.Services.Note
     public class NoteService : INoteService
     {
         #region Variables
+        private BackupService backupService;
         private SQLiteConnectionFactory factory;
         #endregion
 
         #region Construction
-        public NoteService()
+        public NoteService(BackupService backupService)
         {
+            this.backupService = backupService;
             this.factory = new SQLiteConnectionFactory();
         }
         #endregion
@@ -37,11 +40,8 @@ namespace Knowte.Common.Services.Note
         #region Private
         private async Task MoveNotesAsync(string newLocation)
         {
-            await Task.Run(() =>
-            {
                 string oldLocation = ApplicationPaths.NoteStorageLocation;
-                // TODO: add notes to existing DB and Notes directory Is it possible to reuse backup function here?
-            });
+                await this.backupService.Migrate(oldLocation, false);
         }
 
         private async Task InitializeStorageIfRequiredAsync(string newLocation)
@@ -75,10 +75,10 @@ namespace Knowte.Common.Services.Note
         {
             try
             {
-                await this.InitializeStorageIfRequiredAsync(newStorageLocation);
-                if (moveCurrentNotes) await this.MoveNotesAsync(newStorageLocation);
-
                 SettingsClient.Set<string>("General", "NoteStorageLocation", newStorageLocation);
+
+                await this.InitializeStorageIfRequiredAsync(newStorageLocation);
+                if (moveCurrentNotes) await this.MoveNotesAsync(newStorageLocation); 
             }
             catch (Exception ex)
             {
