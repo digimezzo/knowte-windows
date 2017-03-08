@@ -28,12 +28,12 @@ namespace Knowte.Common.Database.Entities
                 return false;
             }
 
-            return this.Title.Equals(((Notebook)obj).Title);
+            return this.Id.Equals(((Notebook)obj).Id);
         }
 
         public override int GetHashCode()
         {
-            return this.Title.GetHashCode();
+            return this.Id.GetHashCode();
         }
         #endregion
     }
