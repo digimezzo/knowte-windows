@@ -137,7 +137,7 @@ namespace Knowte.Common.Services.Backup
                 await this.ExtractBackupFileToBackupDirectory(backupFile);
 
                 // Restore from backup
-                await this.Migrate(this.BackupSubDirectory, deleteCurrentNotes);
+                await this.noteService.Migrate(this.BackupSubDirectory, deleteCurrentNotes);
 
                 // Clean the backup directory
                 await this.CleanBackupDirectoryAsync();
@@ -154,77 +154,6 @@ namespace Knowte.Common.Services.Backup
 
         #region IBackupService
         public event EventHandler BackupRestored = delegate { };
-
-        public async Task Migrate(string sourceFolder, bool deleteDestination)
-        {
-            var sourceFactory = new SQLiteConnectionFactory(sourceFolder); // SQLiteConnectionFactory that points to the source database file
-            var sourceCreator = new DbCreator(sourceFolder); // DbCreator that points to the source database file
-            string sourceNotesSubDirectoryPath = Path.Combine(sourceFolder, ApplicationPaths.NotesSubDirectory);
-            string destinationNotesSubDirectoryPath = Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
-
-            List<Database.Entities.Notebook> sourceNotebooks;
-            List<Database.Entities.Note> sourceNotes;
-            List<Database.Entities.Notebook> destinationNotebooks;
-            List<Database.Entities.Note> destinationNotes;
-
-            await Task.Run(() =>
-            {
-                // Make sure the source database is at the latest version
-                if (sourceCreator.DatabaseNeedsUpgrade()) sourceCreator.UpgradeDatabase();
-
-                // Get source Notebooks and Notes
-                using (var sourceConn = sourceFactory.GetConnection())
-                {
-                    sourceNotebooks = sourceConn.Table<Database.Entities.Notebook>().ToList();
-                    sourceNotes = sourceConn.Table<Database.Entities.Note>().ToList();
-                }
-
-                // If required, delete all destination Note files.
-                if (deleteDestination)
-                {
-                    foreach (string file in Directory.GetFiles(destinationNotesSubDirectoryPath, "*.xaml"))
-                    {
-                        File.Delete(file);
-                    }
-                }
-
-                // Restore
-                using (var destinationConn = this.factory.GetConnection())
-                {
-                    // If required, delete all Notebooks and Notes from the destination database.
-                    if (deleteDestination)
-                    {
-                        destinationConn.Query<Database.Entities.Notebook>("DELETE FROM Notebook;");
-                        destinationConn.Query<Database.Entities.Note>("DELETE FROM Note;");
-                    }
-
-                    // Get destination Notebooks and Notes
-                    destinationNotebooks = destinationConn.Table<Database.Entities.Notebook>().ToList();
-                    destinationNotes = destinationConn.Table<Database.Entities.Note>().ToList();
-
-                    // Restore only the Notebooks that don't exist
-                    foreach (Database.Entities.Notebook sourceNotebook in sourceNotebooks)
-                    {
-                        if (!destinationNotebooks.Contains(sourceNotebook)) destinationConn.Insert(sourceNotebook);
-                    }
-
-                    // Restore only the Notes that don't exist
-                    foreach (Database.Entities.Note sourceNote in sourceNotes)
-                    {
-                        string sourceNoteFile = Path.Combine(sourceNotesSubDirectoryPath, sourceNote.Id + ".xaml");
-
-                        if (!destinationNotes.Contains(sourceNote) && File.Exists(sourceNoteFile))
-                        {
-                            File.Copy(sourceNoteFile, Path.Combine(destinationNotesSubDirectoryPath, sourceNote.Id + ".xaml"), true);
-                            destinationConn.Insert(sourceNote);
-                        }
-                    }
-
-                    // Fix links to missing notebooks
-                    destinationConn.Execute("UPDATE Note SET NotebookId = '' WHERE NotebookId NOT IN (SELECT Id FROM Notebook);");
-                }
-            });
-        }
 
         public bool Backup(string backupFile)
         {

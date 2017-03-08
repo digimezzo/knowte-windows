@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="ColoredButtonSubtle" TargetType="{x:Type Button}">
         <Setter Property="Template">
@@ -8,16 +7,14 @@
                 <ControlTemplate TargetType="Button">
                     <Grid MinWidth="80" Height="28">
                         <Border x:Name="border" Panel.ZIndex="0" MinWidth="80" Height="28" CornerRadius="14" Background="{DynamicResource RG_LightGrayBrush}" BorderThickness="0" VerticalAlignment="Center"/>
-                        <dc:Ripple Panel.ZIndex="1" RippleBackground="{DynamicResource RG_RippleBackgroundBrush}" DoRipple="{TemplateBinding IsPressed}">
-                            <dc:Ripple.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=border}" />
-                            </dc:Ripple.OpacityMask>
-                        </dc:Ripple>
-                        <Label Panel.ZIndex="2" Content="{TemplateBinding Content}" Foreground="{DynamicResource RG_BlackBrush}" Background="Transparent" Padding="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Label Panel.ZIndex="1" Content="{TemplateBinding Content}" Foreground="{DynamicResource RG_BlackBrush}" Background="Transparent" Padding="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
