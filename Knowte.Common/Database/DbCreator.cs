@@ -57,7 +57,6 @@ namespace Knowte.Common.Database
                              "PRIMARY KEY(Id));");
 
                 conn.Execute("INSERT INTO Configuration (Key, Value) VALUES ('DatabaseVersion', @versionParam)", CURRENT_VERSION);
-                conn.Execute("INSERT INTO Configuration (Key, Value) VALUES ('NewNoteCount', '0')");
             }
         }
 

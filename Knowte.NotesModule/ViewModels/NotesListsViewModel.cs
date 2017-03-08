@@ -268,13 +268,13 @@ namespace Knowte.NotesModule.ViewModels
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
 
             // New Note
-            this.NewNoteCommand = new DelegateCommand<object>(iParam =>
+            this.NewNoteCommand = new DelegateCommand<object>(param =>
             {
-                bool createUnfiled = Convert.ToBoolean(iParam);
+                bool createUnfiled = Convert.ToBoolean(param);
 
                 try
                 {
-                    string initialTitle = ResourceUtils.GetStringResource("Language_New_Note") + " " + (Convert.ToString(this.noteService.GetNewNoteCount() + 1).ToString());
+                    string initialTitle = this.noteService.GetUniqueNoteTitle(ResourceUtils.GetStringResource("Language_New_Note"));
 
                     FlowDocument flowDoc = new FlowDocument();
 
@@ -297,8 +297,6 @@ namespace Knowte.NotesModule.ViewModels
 
                     NoteWindow notewin = new NoteWindow(initialTitle, "", theNotebook, this.searchService.SearchText, true, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
                     this.dialogService);
-
-                    this.noteService.IncreaseNewNoteCount();
 
                     notewin.ActivateNow();
 

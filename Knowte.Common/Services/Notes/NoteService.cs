@@ -7,7 +7,6 @@ using Knowte.Common.Database;
 using Knowte.Common.Database.Entities;
 using Knowte.Common.Extensions;
 using Knowte.Common.IO;
-using Knowte.Common.Services.Backup;
 using Knowte.Common.Utils;
 using System;
 using System.Collections.Generic;
@@ -38,8 +37,8 @@ namespace Knowte.Common.Services.Note
         #region Private
         private async Task MoveNotesAsync(string newLocation)
         {
-                string oldLocation = ApplicationPaths.NoteStorageLocation;
-                await this.Migrate(oldLocation, false);
+            string oldLocation = ApplicationPaths.NoteStorageLocation;
+            await this.Migrate(oldLocation, false);
         }
 
         private async Task InitializeStorageIfRequiredAsync(string newLocation)
@@ -69,6 +68,26 @@ namespace Knowte.Common.Services.Note
         public event FlagUpdatedEventHandler FlagUpdated = delegate { };
         public event EventHandler StorageLocationChanged = delegate { };
 
+        public string GetUniqueNoteTitle(string proposedTitle)
+        {
+            List<string> similarTitles;
+
+            int counter = 1;
+            string uniqueTitle = proposedTitle + " " + counter.ToString();
+
+            using (var conn = this.factory.GetConnection())
+            {
+                similarTitles = conn.Table<Database.Entities.Note>().ToList().Where(n => n.Title.StartsWith(proposedTitle)).OrderBy(n => n.Title).Select(n => n.Title).ToList();
+            }
+
+            while (similarTitles.Contains(uniqueTitle))
+            {
+                counter++;
+                uniqueTitle = proposedTitle + " " + counter.ToString();
+            }
+
+            return uniqueTitle;
+        }
         public async Task Migrate(string sourceFolder, bool deleteDestination)
         {
             var sourceFactory = new SQLiteConnectionFactory(sourceFolder); // SQLiteConnectionFactory that points to the source database file
@@ -76,10 +95,8 @@ namespace Knowte.Common.Services.Note
             string sourceNotesSubDirectoryPath = Path.Combine(sourceFolder, ApplicationPaths.NotesSubDirectory);
             string destinationNotesSubDirectoryPath = Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
 
-            List<Database.Entities.Notebook> sourceNotebooks;
+            List<Notebook> sourceNotebooks;
             List<Database.Entities.Note> sourceNotes;
-            List<Database.Entities.Notebook> destinationNotebooks;
-            List<Database.Entities.Note> destinationNotes;
 
             await Task.Run(() =>
             {
@@ -89,7 +106,7 @@ namespace Knowte.Common.Services.Note
                 // Get source Notebooks and Notes
                 using (var sourceConn = sourceFactory.GetConnection())
                 {
-                    sourceNotebooks = sourceConn.Table<Database.Entities.Notebook>().ToList();
+                    sourceNotebooks = sourceConn.Table<Notebook>().ToList();
                     sourceNotes = sourceConn.Table<Database.Entities.Note>().ToList();
                 }
 
@@ -108,35 +125,40 @@ namespace Knowte.Common.Services.Note
                     // If required, delete all Notebooks and Notes from the destination database.
                     if (deleteDestination)
                     {
-                        destinationConn.Query<Database.Entities.Notebook>("DELETE FROM Notebook;");
+                        destinationConn.Query<Notebook>("DELETE FROM Notebook;");
                         destinationConn.Query<Database.Entities.Note>("DELETE FROM Note;");
                     }
 
-                    // Get destination Notebooks and Notes
-                    destinationNotebooks = destinationConn.Table<Database.Entities.Notebook>().ToList();
-                    destinationNotes = destinationConn.Table<Database.Entities.Note>().ToList();
+                    // Get destination Notebook information
+                    List<string> destinationNotebookIds = destinationConn.Table<Notebook>().ToList().Select(n => n.Id).ToList();
+                    List<string> destinationNotebookTitles = destinationConn.Table<Notebook>().ToList().Select(n => n.Title).ToList();
 
-                    // Restore only the Notebooks that don't exist
-                    foreach (Database.Entities.Notebook sourceNotebook in sourceNotebooks)
+                    // Restore only the Notebooks that don't exist (Id AND Title can't exist at destination. Both need to be unique).
+                    foreach (Notebook sourceNotebook in sourceNotebooks)
                     {
-                        if (!destinationNotebooks.Contains(sourceNotebook)) destinationConn.Insert(sourceNotebook);
+                        if (!destinationNotebookIds.Contains(sourceNotebook.Id) && !destinationNotebookTitles.Contains(sourceNotebook.Title))
+                        {
+                            destinationConn.Insert(sourceNotebook);
+                        }
                     }
 
-                    // Restore only the Notes which don't exist or which are newer
+                    // Get destination note information
+                    List<string> destinationNoteIds = destinationConn.Table<Database.Entities.Note>().ToList().Select(n => n.Id).ToList();
+                    List<string> destinationNoteTitles = destinationConn.Table<Database.Entities.Note>().ToList().Select(n => n.Title).ToList();
+
+                    // Restore only the Notes which don't exist (Id AND Title can't exist at destination. Both need to be unique).
                     foreach (Database.Entities.Note sourceNote in sourceNotes)
                     {
                         string sourceNoteFile = Path.Combine(sourceNotesSubDirectoryPath, sourceNote.Id + ".xaml");
 
-                        Database.Entities.Note destinationNote = destinationNotes.Select(n => n).Where(n => n.Equals(sourceNote)).FirstOrDefault();
-
-                        if (destinationNote == null || (destinationNote != null && destinationNote.ModificationDate > sourceNote.ModificationDate))
+                        if (!destinationNoteIds.Contains(sourceNote.Id) && !destinationNoteTitles.Contains(sourceNote.Title))
                         {
                             File.Copy(sourceNoteFile, Path.Combine(destinationNotesSubDirectoryPath, sourceNote.Id + ".xaml"), true);
                             destinationConn.Insert(sourceNote);
                         }
                     }
 
-                    // Fix links to missing notebooks
+                    // Clear links to missing notebooks
                     destinationConn.Execute("UPDATE Note SET NotebookId = '' WHERE NotebookId NOT IN (SELECT Id FROM Notebook);");
                 }
             });
@@ -149,7 +171,7 @@ namespace Knowte.Common.Services.Note
                 SettingsClient.Set<string>("General", "NoteStorageLocation", newStorageLocation);
 
                 await this.InitializeStorageIfRequiredAsync(newStorageLocation);
-                if (moveCurrentNotes) await this.MoveNotesAsync(newStorageLocation); 
+                if (moveCurrentNotes) await this.MoveNotesAsync(newStorageLocation);
             }
             catch (Exception ex)
             {
@@ -281,40 +303,6 @@ namespace Knowte.Common.Services.Note
             }
 
             return requestedNotebook;
-        }
-
-        public int GetNewNoteCount()
-        {
-            int count = 0;
-
-            using (var conn = this.factory.GetConnection())
-            {
-                Database.Entities.Configuration config = conn.Table<Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").FirstOrDefault();
-
-                if (config != null)
-                {
-                    int.TryParse(config.Value, out count);
-                }
-            }
-
-            return count;
-        }
-
-        public void IncreaseNewNoteCount()
-        {
-            int count = 0;
-
-            using (var conn = this.factory.GetConnection())
-            {
-                Database.Entities.Configuration config = conn.Table<Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").FirstOrDefault();
-
-                if (config != null)
-                {
-                    int.TryParse(config.Value, out count);
-                    config.Value = Convert.ToString(count + 1);
-                    conn.Update(config);
-                }
-            }
         }
 
         public void NewNote(FlowDocument document, string id, string title, string notebookId)

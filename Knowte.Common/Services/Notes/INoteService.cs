@@ -10,6 +10,7 @@ namespace Knowte.Common.Services.Note
 
     public interface INoteService
     {
+        string GetUniqueNoteTitle(string proposedTitle);
         Task Migrate(string sourceFolder, bool deleteDestination);
         Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes);
         void CloseAllNoteWindows();
@@ -21,8 +22,6 @@ namespace Knowte.Common.Services.Note
         List<Notebook> GetNotebooks(ref int totalNotebooks);
         List<Notebook> GetNotebooks();
         Notebook GetNotebook(string id);
-        int GetNewNoteCount();
-        void IncreaseNewNoteCount();
         void NewNote(FlowDocument document, string id, string title, string notebookId);
         void UpdateOpenDate(string id);
         void UpdateNoteParameters(string id, double width, double height, double top, double left, bool maximized);
