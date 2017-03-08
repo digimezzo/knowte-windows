@@ -122,12 +122,14 @@ namespace Knowte.Common.Services.Note
                         if (!destinationNotebooks.Contains(sourceNotebook)) destinationConn.Insert(sourceNotebook);
                     }
 
-                    // Restore only the Notes that don't exist
+                    // Restore only the Notes which don't exist or which are newer
                     foreach (Database.Entities.Note sourceNote in sourceNotes)
                     {
                         string sourceNoteFile = Path.Combine(sourceNotesSubDirectoryPath, sourceNote.Id + ".xaml");
 
-                        if (!destinationNotes.Contains(sourceNote) && File.Exists(sourceNoteFile))
+                        Database.Entities.Note destinationNote = destinationNotes.Select(n => n).Where(n => n.Equals(sourceNote)).FirstOrDefault();
+
+                        if (destinationNote == null || (destinationNote != null && destinationNote.ModificationDate > sourceNote.ModificationDate))
                         {
                             File.Copy(sourceNoteFile, Path.Combine(destinationNotesSubDirectoryPath, sourceNote.Id + ".xaml"), true);
                             destinationConn.Insert(sourceNote);
