@@ -414,7 +414,7 @@ namespace Knowte.Common.Services.Note
 
                     conn.Update(noteToUpdate);
 
-                    this.FlagUpdated(noteToUpdate.Title, flagged);
+                    this.FlagUpdated(noteToUpdate.Id, flagged);
                 }
             }
         }

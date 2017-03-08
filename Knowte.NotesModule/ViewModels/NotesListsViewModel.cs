@@ -180,7 +180,7 @@ namespace Knowte.NotesModule.ViewModels
             });
 
             this.i18nService.LanguageChanged += LanguageChangedHandler;
-            this.noteService.FlagUpdated += async (noteTitle, isFlagged) => { await this.UpdateNoteFlagAsync(noteTitle, isFlagged); };
+            this.noteService.FlagUpdated += async (noteId, isFlagged) => { await this.UpdateNoteFlagAsync(noteId, isFlagged); };
             this.backupService.BackupRestored += (sender, e) =>
             {
                 this.RefreshNotebooks();
@@ -432,17 +432,22 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
-        private async Task UpdateNoteFlagAsync(string noteTitle, bool isFlagged)
+        private async Task UpdateNoteFlagAsync(string noteId, bool isFlagged)
         {
-            await Task.Run(() => {
-                foreach (NoteViewModel note in this.Notes)
-                {
-                    if (note.Title.Equals(noteTitle))
+            if (this.NoteFilter.Equals("Flagged"))
+            {
+                // If we're looking at flagged notes, we need a complete refresh of the list.
+                this.RefreshNotes();
+            }
+            else
+            {
+                await Task.Run(() => {
+                    foreach (NoteViewModel note in this.Notes)
                     {
-                        note.Flagged = isFlagged;
+                        if (note.Id.Equals(noteId)) note.Flagged = isFlagged;
                     }
-                }
-            });
+                });
+            }
         }
 
         private void LanguageChangedHandler(object sender, EventArgs e)

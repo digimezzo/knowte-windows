@@ -6,7 +6,7 @@ using System.Windows.Documents;
 
 namespace Knowte.Common.Services.Note
 {
-    public delegate void FlagUpdatedEventHandler(string noteTitle, bool isFlagged);
+    public delegate void FlagUpdatedEventHandler(string noteId, bool isFlagged);
 
     public interface INoteService
     {
