@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
              xmlns:commonprism="clr-namespace:Knowte.Common.Prism;assembly=Knowte.Common"
-             prismMvvm:ViewModelLocator.AutoWireViewModel="True">
+             prismMvvm:ViewModelLocator.AutoWireViewModel="False">
 
     <StackPanel Orientation="Horizontal">
         <myControls:MainMenuButton x:Name="MenuNotes" GroupName="MainMenuGroup" Foreground="{DynamicResource RG_BlackBrush}" Content="{DynamicResource Language_Notes}" IsChecked="True" Command="{x:Static commonprism:ApplicationCommands.NavigateBetweenMainCommand}" CommandParameter="1"/>

@@ -8,7 +8,7 @@ namespace Knowte.SettingsModule.ViewModels
     public class SettingsViewModel : BindableBase
     {
         #region Variables
-        private readonly IRegionManager regionManager;
+        private IRegionManager regionManager;
         private int slideInFrom;
         private int previousIndex;
         #endregion

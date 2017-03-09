@@ -82,9 +82,6 @@ namespace Knowte.SettingsModule.ViewModels
             this.dialogService = dialogService;
             this.noteService = noteService;
 
-            // Storage location
-            // TODO
-
             // Commands
             this.BackupCommand = new DelegateCommand(() => this.Backup());
             this.ImportCommand = new DelegateCommand(() => this.Import());

@@ -41,7 +41,6 @@ namespace Knowte.MainModule
 
         private void RegisterViewModels()
         {
-            this.container.RegisterType<object, MainMenuViewModel>(typeof(MainMenuViewModel).FullName);
         }
 
         private void RegisterViewsWithRegions()

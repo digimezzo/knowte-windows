@@ -1,7 +1,6 @@
 ﻿using Digimezzo.Utilities.IO;
 using Digimezzo.Utilities.Log;
 using Digimezzo.Utilities.Settings;
-using Knowte.Common.IO;
 using Knowte.Common.Presentation.Views;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
@@ -23,7 +22,7 @@ namespace Knowte.ViewModels
         private II18nService i18nService;
         private IDialogService dialogService;
         private IEventAggregator eventAggregator;
-        private readonly IRegionManager regionManager;
+        private IRegionManager regionManager;
         private bool isDimmed;
         private int subMenuSlideInFrom;
         private int contentSlideInFrom;
@@ -79,11 +78,10 @@ namespace Knowte.ViewModels
         #region Construction
         public ShellViewModel(IAppearanceService appearanceService, II18nService i18nService, IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
-            this.regionManager = regionManager;
-
             MiscUtils.InitializeFiles();
 
             // Dependency injection
+            this.regionManager = regionManager;
             this.appearanceService = appearanceService;
             this.i18nService = i18nService;
             this.dialogService = dialogService;

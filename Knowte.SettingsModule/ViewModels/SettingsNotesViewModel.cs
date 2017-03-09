@@ -65,7 +65,6 @@ namespace Knowte.SettingsModule.ViewModels
             this.CheckBoxEscapeChecked = SettingsClient.Get<bool>("Notes", "PressingEscapeClosesNotes");
         }
 
-
         private void LoadFontSizeCorrections()
         {
             this.FontSizeCorrections = new ObservableCollection<FontSizeCorrection>();

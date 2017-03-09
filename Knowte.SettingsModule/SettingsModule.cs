@@ -10,7 +10,7 @@ namespace Knowte.SettingsModule
     public class SettingsModule : IModule
     {
         #region Variables
-        private readonly IRegionManager regionManager;
+        private IRegionManager regionManager;
         private IUnityContainer container;
         #endregion
 

@@ -11,7 +11,7 @@ namespace Knowte.InformationModule.ViewModels
 {
     public class InformationAboutViewModel : BindableBase
     {
-        #region Private
+        #region Variables
         private IUnityContainer container;
         private IDialogService dialogService;
         private Package package;
@@ -36,6 +36,7 @@ namespace Knowte.InformationModule.ViewModels
             this.dialogService = dialogService;
 
             Configuration config;
+
 #if DEBUG
             config = Configuration.Debug;
 #else
@@ -43,23 +44,24 @@ namespace Knowte.InformationModule.ViewModels
 #endif
 
             this.Package = new Package(ProcessExecutable.Name(), ProcessExecutable.AssemblyVersion(), config);
+            this.ShowLicenseCommand = new DelegateCommand(() => this.ShowLicense());
+        }
 
-            this.ShowLicenseCommand = new DelegateCommand(() => {
+        private void ShowLicense()
+        {
+            var view = this.container.Resolve<InformationAboutLicense>();
 
-                var view = this.container.Resolve<InformationAboutLicense>();
-
-                this.dialogService.ShowCustomDialog(
-                    null,
-                    ResourceUtils.GetStringResource("Language_License"), 
-                    view, 
-                    400, 
-                    0, 
-                    false, 
-                    false, 
-                    ResourceUtils.GetStringResource("Language_Ok"), 
-                    string.Empty, 
-                    null);
-            });
+            this.dialogService.ShowCustomDialog(
+                null,
+                ResourceUtils.GetStringResource("Language_License"),
+                view,
+                400,
+                0,
+                false,
+                false,
+                ResourceUtils.GetStringResource("Language_Ok"),
+                string.Empty,
+                null);
         }
         #endregion
     }

@@ -8,7 +8,7 @@ namespace Knowte.InformationModule.ViewModels
     public class InformationViewModel : BindableBase
     {
         #region Variables
-        private readonly IRegionManager regionManager;
+        private IRegionManager regionManager;
         private int slideInFrom;
         private int previousIndex;
         #endregion
@@ -42,13 +42,11 @@ namespace Knowte.InformationModule.ViewModels
             if (string.IsNullOrWhiteSpace(index)) return;
 
             int localIndex = 0;
-
             int.TryParse(index, out localIndex);
 
             if (localIndex == 0) return;
 
             this.SlideInFrom = localIndex <= this.previousIndex ? -10 : 50;
-
             this.previousIndex = localIndex;
 
             switch (localIndex)

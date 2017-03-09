@@ -23,7 +23,7 @@ namespace Knowte.Views
     {
         #region Variables
         private IUnityContainer container;
-        private readonly IRegionManager regionManager;
+        private IRegionManager regionManager;
         private IEventAggregator eventAggregator;
         private IAppearanceService appearanceService;
         private II18nService i18nService;
@@ -41,9 +41,7 @@ namespace Knowte.Views
 
         #region Construction
         public Shell(IUnityContainer container, IRegionManager regionManager, IAppearanceService appearanceService, II18nService i18nService, IJumpListService jumpListService, IEventAggregator eventAggregator, INoteService noteService)
-        {
-            SourceInitialized += Shell_SourceInitialized;
-            // This call is required by the designer.
+        {    
             InitializeComponent();
 
             // Dependency injection
@@ -65,6 +63,7 @@ namespace Knowte.Views
             // Events
             this.eventAggregator.GetEvent<ShowMainWindowEvent>().Subscribe((x) => this.ActivateNow());
 
+            // Geometry
             this.SetGeometry(SettingsClient.Get<int>("General", "Top"), SettingsClient.Get<int>("General", "Left"), SettingsClient.Get<int>("General", "Width") > 50 ? SettingsClient.Get<int>("General", "Width") : Defaults.DefaultMainWindowWidth, SettingsClient.Get<int>("General", "Height") > 50 ? SettingsClient.Get<int>("General", "Height") : Defaults.DefaultMainWindowHeight, Defaults.DefaultMainWindowLeft, Defaults.DefaultMainWindowTop);
 
             // Main window state

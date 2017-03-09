@@ -17,7 +17,6 @@ namespace Knowte.SettingsModule.ViewModels
     {
         #region Variables
         private IAppearanceService appearanceService;
-
         private II18nService i18nService;
         private ObservableCollection<ColorScheme> colorSchemes = new ObservableCollection<ColorScheme>();
         private ColorScheme selectedColorScheme;

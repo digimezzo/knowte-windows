@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace Knowte.InformationModule.Views
 {
-    /// <summary>
-    /// Interaction logic for InformationAboutLicense.xaml
-    /// </summary>
     public partial class InformationAboutLicense : UserControl
     {
         public InformationAboutLicense()
