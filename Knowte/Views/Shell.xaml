@@ -53,9 +53,12 @@
         <Border Panel.ZIndex="1" x:Name="WindowBorder" BorderThickness="1" BorderBrush="{DynamicResource RG_BorderBrush}"/>
         <Border Panel.ZIndex="2" x:Name="HeaderBackground" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" Background="{DynamicResource RG_BlackBrush}" Opacity="0.8"/>
         <Ellipse Panel.ZIndex="3" Fill="{DynamicResource RG_WhiteBrush}" Margin="25,40,0,0" Width="70" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Viewbox Panel.ZIndex="4" Width="80" Height="80" Margin="20,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_AccentBrush}"/>
-        </Viewbox>
+        <Grid Panel.ZIndex="4" Width="80" Height="80" Margin="20,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Ellipse Panel.ZIndex="0" Width="80" Height="80" Fill="{DynamicResource RG_AccentBrush}"/>
+            <Viewbox Panel.ZIndex="1" Width="38" Height="38">
+                <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_WhiteBrush}"/>
+            </Viewbox>
+        </Grid>
         <DockPanel Panel.ZIndex="3">
             <DockPanel DockPanel.Dock="Top" Margin="100,32,0,0">
                 <controls:TransitioningContentControl Height="35" Name="SubMenuRegion" DockPanel.Dock="Top" FadeIn="True" FadeInTimeout="1" SlideIn="True" SlideInTimeout="0.5" SlideInFrom="{Binding SubMenuSlideInFrom}" SlideInTo="20" prism:RegionManager.RegionName="{x:Static commonprism:RegionNames.SubMenuRegion}"/>

@@ -23,10 +23,10 @@
                         <ColumnDefinition Width="30"/>
                         <ColumnDefinition Width="35"/>
                     </Grid.ColumnDefinitions>
-                    <Grid x:Name="NoteIcon" Grid.Column="0" Width="34" Height="34">
-                        <Ellipse Panel.ZIndex="1" Fill="{DynamicResource RG_WhiteBrush}" Margin="2" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                        <Viewbox Panel.ZIndex="2" Width="34" Height="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_AccentBrush}"/>
+                    <Grid x:Name="NoteIcon" Grid.Column="0"  Width="34" Height="34">
+                        <Ellipse Panel.ZIndex="0" Width="34" Height="34" Fill="{DynamicResource RG_AccentBrush}"/>
+                        <Viewbox Panel.ZIndex="1" Width="16" Height="16">
+                            <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_WhiteBrush}"/>
                         </Viewbox>
                     </Grid>
                     <StackPanel Grid.Column="1" Margin="5,0,0,0">

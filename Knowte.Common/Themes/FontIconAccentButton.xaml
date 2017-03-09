@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Knowte.Common.Controls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/FontFamilies.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
     <Style x:Key="{x:Type controls:FontIconAccentButton}" TargetType="{x:Type controls:FontIconAccentButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -25,7 +29,7 @@
                                 FontWeight="Normal"
                                 VerticalAlignment="{TemplateBinding VerticalAlignment}"
                                 HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                FontFamily="/Knowte.Common;component/Resources/Fonts/#Segoe MDL2 Assets"/>
+                                FontFamily="{StaticResource SegoeAssets}"/>
                             <Label 
                                 x:Name="TheLabel" 
                                 Padding="0" 

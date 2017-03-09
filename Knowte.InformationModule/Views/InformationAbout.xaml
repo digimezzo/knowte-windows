@@ -12,10 +12,13 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="About">
             <DockPanel HorizontalAlignment="Left">
-                <Viewbox Width="75" Height="75" DockPanel.Dock="Left">
-                    <Path x:Name="KnowteIcon" Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_AccentBrush}"/>
-                </Viewbox>
-                <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource RG_BlackBrush}" FontSize="42" Text="{Binding Source={x:Static base:ProductInformation.ApplicationDisplayName},Converter={StaticResource StringToUpperConverter}}" FontFamily="{StaticResource RobotoThin}"/>
+                <Grid Width="80" Height="80" DockPanel.Dock="Left">
+                    <Ellipse Panel.ZIndex="0" Width="80" Height="80" Fill="{DynamicResource RG_AccentBrush}"/>
+                    <Viewbox Panel.ZIndex="1" Width="38" Height="38">
+                        <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_WhiteBrush}"/>
+                    </Viewbox>
+                </Grid>
+                <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource RG_BlackBrush}" FontSize="{Binding Source={x:Static base:Constants.AboutAppNameFontSize}}" Text="{Binding Source={x:Static base:ProductInformation.ApplicationDisplayName},Converter={StaticResource StringToUpperConverter}}" FontFamily="{StaticResource RobotoThin}"/>
             </DockPanel>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                 <TextBlock Text="{DynamicResource Language_Version}" Foreground="{DynamicResource RG_BlackBrush}"/>
