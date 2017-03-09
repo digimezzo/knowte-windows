@@ -33,14 +33,14 @@ namespace Migrator
 
             string noteStudioFolder = Path.Combine(LegacyPaths.AppData(), "NoteStudio");
 
-            var creator = new DbCreator();
+            var migrator = new DbMigrator();
 
             if (Directory.Exists(noteStudioFolder))
             {
-                if (!creator.DatabaseExists())
+                if (!migrator.DatabaseExists())
                 {
                     // Create the database if if doesn't exist
-                    creator.InitializeNewDatabase();
+                    migrator.InitializeNewDatabase();
                 }
 
                 int noteCount = 0;

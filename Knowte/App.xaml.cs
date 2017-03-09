@@ -1,12 +1,12 @@
 ﻿using Digimezzo.Utilities.IO;
 using Digimezzo.Utilities.Log;
 using Digimezzo.Utilities.Settings;
+using Digimezzo.Utilities.Utils;
 using Knowte.Common.Base;
-using Knowte.Common.Database;
 using Knowte.Common.IO;
 using Knowte.Common.Services.Command;
+using Knowte.Views;
 using System;
-using System.Reflection;
 using System.ServiceModel;
 using System.Threading;
 using System.Windows;
@@ -15,47 +15,57 @@ using System.Windows.Threading;
 
 namespace Knowte
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
-        // Application-level events, such as Startup, Exit, and DispatcherUnhandledException
-        // can be handled in this file.
-
+        #region Variables
         private Mutex instanceMutex = null;
+        #endregion
 
+        #region Overrides
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            // Check if the settings need to be upgraded
-            try
+            // Check that there is only one instance of the application running
+            bool isNewInstance = false;
+            instanceMutex = new Mutex(true, string.Format("{0}-{1}", ProductInformation.ApplicationGuid, ProcessExecutable.AssemblyVersion().ToString()), out isNewInstance);
+
+            // Process the commandline arguments
+            this.ProcessCommandLineArguments(isNewInstance);
+
+            if (isNewInstance)
             {
-                // Checks if an upgrade of the settings is needed
-                if (SettingsClient.IsUpgradeNeeded())
-                {
-                    LogClient.Info("Upgrading settings");
-                    SettingsClient.Upgrade();
-                }
+                instanceMutex.ReleaseMutex();
+                this.ExecuteStartup();
             }
-            catch (Exception ex)
+            else
             {
-                LogClient.Error("There was a problem initializing the settings. Exception: {0}", ex.Message);
+                LogClient.Warning("{0} is already running. Shutting down.", ProcessExecutable.Name());
                 this.Shutdown();
             }
+        }
+        #endregion
+
+        #region Private
+        private void ExecuteStartup()
+        {
+            LogClient.Info("### STARTING {0}, version {1}, IsPortable = {2}, Windows version = {3} ({4}) ###", ProcessExecutable.Name(), ProcessExecutable.AssemblyVersion().ToString(), SettingsClient.BaseGet<bool>("Configuration", "IsPortable").ToString(), EnvironmentUtils.GetFriendlyWindowsVersion(), EnvironmentUtils.GetInternalWindowsVersion());
+
+            // Handler for unhandled AppDomain exceptions
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
 
             // Create a jumplist and assign it to the current application
             JumpList jl = new JumpList();
             JumpList.SetJumpList(Application.Current, jl);
 
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            // Show the Splash Window
+            Window splashWin = new Splash();
+            splashWin.Show();
+        }
 
-            // Check that there is only one instance of NoteStudio running...
-            bool isNewInstance = false;
-            instanceMutex = new Mutex(true, string.Format("{0}-{1}", ProductInformation.ApplicationGuid, ProcessExecutable.AssemblyVersion().ToString()), out isNewInstance);
-
-            // Get the commandline arguments
+        private void ProcessCommandLineArguments(bool isNewInstance)
+        {
             string[] args = Environment.GetCommandLineArgs();
 
             try
@@ -77,14 +87,12 @@ namespace Knowte
             }
             catch (Exception ex)
             {
-                LogClient.Error("A problem occured while processing Donate command. Exception: {0}", ex.Message);
+                LogClient.Error("A problem occurred while processing Donate command. Exception: {0}", ex.Message);
             }
 
             if (!isNewInstance)
             {
                 LogClient.Info("There is already another instance of {0} running.", ProductInformation.ApplicationDisplayName);
-
-                instanceMutex = null;
 
                 // Do fancy stuff here to send to the already running instance
                 ICommandService commandServiceProxy = default(ICommandService);
@@ -120,36 +128,8 @@ namespace Knowte
                 }
                 catch (Exception ex)
                 {
-                    LogClient.Error("A problem occured while trying to show the running instance. Exception: {0}", ex.Message);
+                    LogClient.Error("A problem occurred while trying to show the running instance. Exception: {0}", ex.Message);
                 }
-
-                this.Shutdown();
-            }
-            else
-            {
-                // This piece of code is only executed when there is 
-                // no other instance of the application running.
-                LogClient.Info("### STARTING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProcessExecutable.AssemblyVersion().ToString());
-
-                // Show SplashScreen
-                SplashScreen splash = new SplashScreen(Assembly.LoadFrom(System.IO.Path.Combine(ProcessExecutable.ExecutionFolder(), Assembly.GetEntryAssembly().GetName().Name + ".exe")), "Splash.png");
-                splash.Show(true);
-
-                // Create or upgrade the database
-                var creator = new DbCreator();
-
-                if (!creator.DatabaseExists())
-                {
-                    creator.InitializeNewDatabase();
-                }
-                else if (creator.DatabaseNeedsUpgrade())
-                {
-                    creator.UpgradeDatabase();
-                }
-
-                // Bootstrapper
-                Bootstrapper bootstrapper = new Bootstrapper();
-                bootstrapper.Run();
             }
         }
 
@@ -161,34 +141,27 @@ namespace Knowte
             this.ExecuteEmergencyStop(ex);
         }
 
-
         private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             // Prevent default unhandled exception processing
             e.Handled = true;
 
-            if (e.GetType().ToString().Equals("System.OutOfMemoryException"))
-            {
-                LogClient.Warning("Ignored System.OutOfMemoryException");
-                return;
-            }
-
+            // Log the exception and stop the application
             this.ExecuteEmergencyStop(e.Exception);
         }
 
-
-        private void ExecuteEmergencyStop(Exception iException)
+        private void ExecuteEmergencyStop(Exception ex)
         {
-            LogClient.Error(iException.Message);
+            LogClient.Error("Unhandled Exception. {0}", LogClient.GetAllExceptions(ex));
 
-            // Ignore System.OutOfMemoryException. This sometimes happen when pasting invalid data from the clipboard.
-            if (iException.GetType().ToString().Equals("System.OutOfMemoryException"))
-            {
-                LogClient.Warning("Ignored System.OutOfMemoryException");
-                return;
-            }
+            // Close the application to prevent further problems
+            LogClient.Info("### FORCED STOP of {0}, version {1} ###", ProcessExecutable.Name(), ProcessExecutable.AssemblyVersion().ToString());
 
-            this.Shutdown();
+            // Emergency save of the settings
+            SettingsClient.Write();
+
+            Application.Current.Shutdown();
         }
+        #endregion
     }
 }

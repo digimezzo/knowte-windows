@@ -38,7 +38,7 @@
                 Visibility="{Binding IsPreview,Converter={StaticResource BooleanToCollapsedConverter}}">
                 <Button.Content>
                     <TextBlock 
-                        Style="{StaticResource FontAwesome}" 
+                        FontFamily="{StaticResource FontAwesome}" 
                         Text="&#xf188;" 
                         FontSize="16" 
                         HorizontalAlignment="center" 

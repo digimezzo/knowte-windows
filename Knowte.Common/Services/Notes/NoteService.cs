@@ -46,15 +46,15 @@ namespace Knowte.Common.Services.Note
             await Task.Run(() =>
             {
                 // Database file
-                var creator = new DbCreator(newLocation);
+                var migrator = new DbMigrator(newLocation);
 
-                if (creator.DatabaseExists())
+                if (migrator.DatabaseExists())
                 {
-                    creator.UpgradeDatabase();
+                    migrator.UpgradeDatabase();
                 }
                 else
                 {
-                    creator.InitializeNewDatabase();
+                    migrator.InitializeNewDatabase();
                 }
 
                 // Notes directory
@@ -91,7 +91,7 @@ namespace Knowte.Common.Services.Note
         public async Task Migrate(string sourceFolder, bool deleteDestination)
         {
             var sourceFactory = new SQLiteConnectionFactory(sourceFolder); // SQLiteConnectionFactory that points to the source database file
-            var sourceCreator = new DbCreator(sourceFolder); // DbCreator that points to the source database file
+            var sourceMigrator = new DbMigrator(sourceFolder); // DbMigrator that points to the source database file
             string sourceNotesSubDirectoryPath = Path.Combine(sourceFolder, ApplicationPaths.NotesSubDirectory);
             string destinationNotesSubDirectoryPath = Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
 
@@ -101,7 +101,7 @@ namespace Knowte.Common.Services.Note
             await Task.Run(() =>
             {
                 // Make sure the source database is at the latest version
-                if (sourceCreator.DatabaseNeedsUpgrade()) sourceCreator.UpgradeDatabase();
+                if (sourceMigrator.DatabaseNeedsUpgrade()) sourceMigrator.UpgradeDatabase();
 
                 // Get source Notebooks and Notes
                 using (var sourceConn = sourceFactory.GetConnection())

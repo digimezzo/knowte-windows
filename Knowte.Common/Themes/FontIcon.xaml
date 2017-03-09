@@ -2,14 +2,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Knowte.Common.Controls">
 
-   <Style x:Key="{x:Type controls:FontIcon}" TargetType="{x:Type controls:FontIcon}">
-      <Setter Property="FontFamily" Value="/Knowte.Common;component/Resources/Fonts/#Segoe MDL2 Assets"/>
-      <Setter Property="Template">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/FontFamilies.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="{x:Type controls:FontIcon}" TargetType="{x:Type controls:FontIcon}">
+        <Setter Property="Template">
          <Setter.Value>
             <ControlTemplate TargetType="{x:Type controls:FontIcon}">
                <Border x:Name="Border" Background="#00000000" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                   <TextBlock 
                             Text="{TemplateBinding Glyph}" 
+                            FontFamily="{StaticResource SegoeAssets}"
                             Foreground="{TemplateBinding Foreground}"
                             FontSize="{TemplateBinding FontSize}"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"

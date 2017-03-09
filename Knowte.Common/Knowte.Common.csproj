@@ -159,7 +159,7 @@
     <Compile Include="Controls\SearchBox.cs" />
     <Compile Include="Controls\SubMenuButton.cs" />
     <Compile Include="Controls\TransitioningContentControl.cs" />
-    <Compile Include="Database\DbCreator.cs" />
+    <Compile Include="Database\DbMigrator.cs" />
     <Compile Include="Database\Entities\Configuration.cs" />
     <Compile Include="Database\Entities\Note.cs" />
     <Compile Include="Database\Entities\Notebook.cs" />
@@ -307,7 +307,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Styles\FontStyles.xaml">
+    <Page Include="Resources\Styles\FontFamilies.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

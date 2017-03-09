@@ -11,6 +11,7 @@
             <myPresentationConverters:BooleanToCollapsedConverter x:Key="BooleanToCollapsedConverter"/>
             <myPresentationConverters:InvertingBooleanToVisibilityConverter x:Key="InvertingBooleanToVisibilityConverter"/>
             <myPresentationConverters:InvertingBooleanConverter x:Key="InvertingBooleanConverter"/>
+            <myPresentationConverters:StringToUpperConverter x:Key="StringToUpperConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/AllStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

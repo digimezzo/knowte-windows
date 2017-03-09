@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Knowte.Common.Database
 {
-    public class DbCreator
+    public class DbMigrator
     {
         #region DatabaseVersionAttribute
         protected sealed class DatabaseVersionAttribute : Attribute
@@ -32,13 +32,24 @@ namespace Knowte.Common.Database
         private SQLiteConnectionFactory factory;
         #endregion
 
+        #region Properties
+        public string DatabaseFile
+        {
+            get
+            {
+                if(this.factory != null) return this.factory.DatabaseFile;
+                return string.Empty;
+            }
+        }
+        #endregion
+
         #region Construction
-        public DbCreator()
+        public DbMigrator()
         {
             this.factory = new SQLiteConnectionFactory();
         }
 
-        public DbCreator(string storageLocation)
+        public DbMigrator(string storageLocation)
         {
             this.factory = new SQLiteConnectionFactory(storageLocation);
         }
@@ -124,7 +135,7 @@ namespace Knowte.Common.Database
 
         public void UpgradeDatabase()
         {
-            MethodInfo[] methods = typeof(DbCreator).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
+            MethodInfo[] methods = typeof(DbMigrator).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
 
             for (int i = this.userDatabaseVersion + 1; i <= CURRENT_VERSION; i++)
             {

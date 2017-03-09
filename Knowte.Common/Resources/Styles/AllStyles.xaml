@@ -12,7 +12,7 @@
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ContextMenu.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/CountLabel.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ExportButton.xaml" />
-        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/FontStyles.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/FontFamilies.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/Geometries.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ImportNoteButton.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/KnowteWindowMain.xaml" />

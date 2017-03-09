@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <FontFamily x:Key="SegoeAssets">/Knowte.Common;component/Resources/Fonts/#Segoe MDL2 Assets</FontFamily>
+    <FontFamily x:Key="FontAwesome">/Knowte.Common;component/Resources/Fonts/#FontAwesome</FontFamily>
+    <FontFamily x:Key="RobotoThin">/Knowte.Common;component/Resources/Fonts/#Roboto Thin</FontFamily>
+</ResourceDictionary>

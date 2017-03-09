@@ -1,0 +1,214 @@
+﻿<Window x:Class="Knowte.Views.Splash"
+        x:Name="Me"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Knowte.Views"
+        xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+        xmlns:base="clr-namespace:Knowte.Common.Base;assembly=Knowte.Common"
+        mc:Ignorable="d"
+        Title="Splash" 
+        Height="250" 
+        Width="450"
+        Background="Transparent" 
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" 
+        Loaded="Window_Loaded"
+        ShowInTaskbar="False">
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <!-- PART_Border -->
+                    <DoubleAnimation Storyboard.TargetName="PART_Border" 
+                       Storyboard.TargetProperty="Opacity" From="0" To="1" 
+                       Duration="0:0:0.25" BeginTime="0:0:0"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="Local_WhiteBrush" Color="White"/>
+            <SolidColorBrush x:Key="Local_AccentBrush" Color="#1D7DD4"/>
+            <SolidColorBrush x:Key="Local_GrayBrush" Color="#333333"/>
+            <SolidColorBrush x:Key="Local_BlackBrush" Color="#212121"/>
+            <Style x:Key="SplashButton" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid MinWidth="80" Height="28">
+                                <Border x:Name="border" Panel.ZIndex="0" MinWidth="80" Height="28" CornerRadius="14" Background="{StaticResource Local_AccentBrush}" BorderThickness="0" VerticalAlignment="Center"/>
+                                <Label Panel.ZIndex="1" Content="{TemplateBinding Content}" Foreground="{StaticResource Local_WhiteBrush}" Background="Transparent" Padding="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.6"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SplashButtonSubtle" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid MinWidth="80" Height="28">
+                                <Border x:Name="border" Panel.ZIndex="0" MinWidth="80" Height="28" CornerRadius="14" Background="{StaticResource Local_GrayBrush}" BorderThickness="0" VerticalAlignment="Center"/>
+                                <Label Panel.ZIndex="1" Content="{TemplateBinding Content}" Foreground="{StaticResource Local_WhiteBrush}" Background="Transparent" Padding="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.6"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border x:Name="PART_Border" BorderThickness="0" Background="{StaticResource Local_BlackBrush}">
+        <Grid>
+            <Grid x:Name="SplashPanel" Opacity="1" Panel.ZIndex="0">
+                <Grid.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=ShowErrorPanel,ElementName=Me}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Grid>
+                        <Ellipse
+                            Width="56"
+                            Height="56"
+                            Fill="{StaticResource Local_AccentBrush}"/>
+                        <Grid Panel.ZIndex="1">
+                            <Viewbox Opacity="1" Width="28" Height="28">
+                                <Viewbox.Style>
+                                    <Style>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=ShowProgressRing,ElementName=Me}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.25"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.25"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Viewbox.Style>
+                                <Path x:Name="KnowteIcon" Data="{StaticResource KnowteIcon}" Fill="{StaticResource Local_WhiteBrush}"/>
+                            </Viewbox>
+                            <dc:ProgressRing 
+                                    Opacity="0"
+                                    Margin="3"
+                                    Visibility="{Binding Path=ShowProgressRing,ElementName=Me,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Width="40" 
+                                    Height="40" 
+                                    IsActive="True" 
+                                    Foreground="White">
+                                <dc:ProgressRing.Style>
+                                    <Style>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=ShowProgressRing,ElementName=Me}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.25"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.25"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </dc:ProgressRing.Style>
+                            </dc:ProgressRing>
+                        </Grid>
+                    </Grid>
+                    <StackPanel>
+                        <TextBlock 
+                            Margin="15,5,0,0" 
+                            Padding="0" 
+                            Text="{Binding Source={x:Static base:ProductInformation.ApplicationDisplayName},Converter={StaticResource StringToUpperConverter}}" 
+                            Foreground="{StaticResource Local_WhiteBrush}" 
+                            FontFamily="{StaticResource RobotoThin}"
+                            FontSize="{Binding Source={x:Static base:Constants.SplashAppNameFontSize}}"/>
+                        <Border 
+                            Margin="0,-5,0,0" 
+                            HorizontalAlignment="Right" 
+                            Background="{DynamicResource Local_AccentBrush}" 
+                            Padding="4,2,4,2" 
+                            CornerRadius="2"
+                            Visibility="{Binding IsPreview,ElementName=Me,Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock Text="{Binding Package.Label, ElementName=Me}" FontSize="10" FontWeight="Bold" Foreground="{StaticResource Local_WhiteBrush}"/>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <DockPanel x:Name="ErrorPanel" Opacity="0" Panel.ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="15">
+                <DockPanel.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=ShowErrorPanel,ElementName=Me}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DockPanel.Style>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="BtnShowDetails" Style="{StaticResource SplashButton}" Content="Show details" Margin="0,0,10,0" Click="BtnShowDetails_Click" />
+                    <Button x:Name="BtnQuit" Style="{StaticResource SplashButtonSubtle}" Content="Quit" Click="BtnQuit_Click"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Oops" FontWeight="Light" Foreground="{StaticResource Local_AccentBrush}" FontSize="80"/>
+                    <TextBlock x:Name="ErrorMessage" Foreground="{StaticResource Local_WhiteBrush}" TextWrapping="Wrap" Margin="0,20,0,0"/>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+    </Border>
+</Window>

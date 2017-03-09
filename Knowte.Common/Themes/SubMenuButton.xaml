@@ -3,10 +3,6 @@
     xmlns:my="clr-namespace:Knowte.Common.Controls"
     xmlns:converters="clr-namespace:Knowte.Common.Presentation.Converters">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/FontStyles.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-    
     <converters:BooleanToCollapsedConverter x:Key="BooleanToCollapsedConverter" />
     <converters:StringToUpperConverter x:Key="StringToUpperConverter" />
     

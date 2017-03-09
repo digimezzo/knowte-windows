@@ -2,7 +2,10 @@
 {
     public static class Constants
     {
-         // Transparency
+        // Fonts
+        public static double SplashAppNameFontSize = 44;
+
+        // Transparency
         public static readonly double OpacityWhenBlurred = 0.85;
     }
 }
