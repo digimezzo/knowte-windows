@@ -10,8 +10,7 @@ namespace Knowte.Common.Services.Command
         #region Public
         public void NewNote()
         {
-            IEventAggregator eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
-            eventAggregator.GetEvent<NewNoteEvent>().Publish(true);
+            ApplicationCommands.NewNoteCommand.Execute(true);
         }
 
         public void OpenNote(string noteTitle)

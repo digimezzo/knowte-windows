@@ -3,6 +3,7 @@ using Knowte.Common.IO;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.I18n;
+using Knowte.Common.Services.Note;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
@@ -18,6 +19,7 @@ namespace Knowte.SettingsModule.ViewModels
         #region Variables
         private IAppearanceService appearanceService;
         private II18nService i18nService;
+        private INoteService noteService;
         private ObservableCollection<ColorScheme> colorSchemes = new ObservableCollection<ColorScheme>();
         private ColorScheme selectedColorScheme;
         private ObservableCollection<Language> languages;
@@ -100,16 +102,17 @@ namespace Knowte.SettingsModule.ViewModels
                 SetProperty<bool>(ref this.checkBoxSortChecked, value);
 
                 SettingsClient.Set<bool>("Appearance", "SortByModificationDate", value);
-                this.eventAggregator.GetEvent<RefreshNotesEvent>().Publish("");
+                this.noteService.OnNotesChanged();
             }
         }
         #endregion
 
         #region Construction
-        public SettingsAppearanceViewModel(IAppearanceService appearanceService, II18nService i18nService, IEventAggregator eventAggregator)
+        public SettingsAppearanceViewModel(IAppearanceService appearanceService, II18nService i18nService,INoteService noteService, IEventAggregator eventAggregator)
         {
             this.appearanceService = appearanceService;
             this.i18nService = i18nService;
+            this.noteService = noteService;
             this.eventAggregator = eventAggregator;
 
             // ColorSchemes

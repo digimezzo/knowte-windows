@@ -6,10 +6,6 @@ namespace Knowte.Common.Prism
     {
     }
 
-    public class NewNoteEvent : PubSubEvent<bool>
-    {
-    }
-
     public class OpenNoteEvent : PubSubEvent<string>
     {
     }
