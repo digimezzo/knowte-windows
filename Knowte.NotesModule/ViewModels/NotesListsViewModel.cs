@@ -393,7 +393,7 @@ namespace Knowte.NotesModule.ViewModels
             {
                 if (this.jumpListService.NewNoteFromJumplist)
                 {
-                    this.NewNoteCommand.Execute(null);
+                    this.NewNote(true);
                 }
 
                 if (this.jumpListService.OpenNoteFromJumplist)
