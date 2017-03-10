@@ -5,15 +5,9 @@
 
     <converters:InvertingBooleanConverter x:Key="InvertingBooleanConverter" />
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    
-    <ContextMenu x:Key="ListboxNotebooksContextMenu">
-        <MenuItem Header="Delete notebook" IsEnabled="{Binding IsDefaultNotebook, Converter={StaticResource InvertingBooleanConverter}}" Command="{Binding DataContext.DeleteNotebook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-        <MenuItem Header="Edit notebook" IsEnabled="{Binding IsDefaultNotebook, Converter={StaticResource InvertingBooleanConverter}}" Command="{Binding DataContext.EditNotebook, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-    </ContextMenu>
-
+   
     <Style x:Key="ListboxNotebooksItem" TargetType="{x:Type ListBoxItem}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <!--<Setter Property="ContextMenu" Value="{StaticResource ListboxNotebooksContextMenu}"/>-->
         <Setter Property="Foreground" Value="{DynamicResource RG_BlackBrush}"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="Margin" Value="0,0,1,0"/>
