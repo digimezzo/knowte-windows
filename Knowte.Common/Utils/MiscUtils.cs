@@ -1,8 +1,5 @@
-﻿using Digimezzo.Utilities.Settings;
-using Knowte.Common.Base;
-using Knowte.Common.IO;
+﻿using Knowte.Common.Base;
 using System;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -12,29 +9,6 @@ namespace Knowte.Common.Utils
 {
     public sealed class MiscUtils
     {
-        public static void InitializeFiles()
-        {
-            string applicationFolder = SettingsClient.ApplicationFolder();
-
-            // If the AppName directory doesn't exist, create it
-            if (!Directory.Exists(applicationFolder))
-            {
-                Directory.CreateDirectory(applicationFolder);
-            }
-
-            // If the Notes directory doesn't exist, create it
-            if (!Directory.Exists(System.IO.Path.Combine(applicationFolder, ApplicationPaths.NotesSubDirectory)))
-            {
-                Directory.CreateDirectory(System.IO.Path.Combine(applicationFolder, ApplicationPaths.NotesSubDirectory));
-            }
-
-            // If the Themes directory doesn't exist, create it
-            if (!Directory.Exists(System.IO.Path.Combine(applicationFolder, ApplicationPaths.ColorSchemesSubDirectory)))
-            {
-                Directory.CreateDirectory(System.IO.Path.Combine(applicationFolder, ApplicationPaths.ColorSchemesSubDirectory));
-            }
-        }
-
         public static int CountOccurrences(string fullText, string findText)
         {
             int count = 0;
@@ -70,7 +44,7 @@ namespace Knowte.Common.Utils
 
             string extension = System.IO.Path.GetExtension(importFile);
 
-            // GetExtension(...) returns the extensio INCLUDING the dot
+            // GetExtension(...) returns the extension INCLUDING the dot
             if (extension.ToLower().Equals("." + Defaults.ExportFileExtension))
             {
                 retVal = true;

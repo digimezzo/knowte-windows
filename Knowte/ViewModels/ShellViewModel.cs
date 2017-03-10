@@ -78,8 +78,6 @@ namespace Knowte.ViewModels
         #region Construction
         public ShellViewModel(IAppearanceService appearanceService, II18nService i18nService, IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
-            MiscUtils.InitializeFiles();
-
             // Dependency injection
             this.regionManager = regionManager;
             this.appearanceService = appearanceService;

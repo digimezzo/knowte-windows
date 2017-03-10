@@ -27,6 +27,7 @@ namespace Knowte.Common.Services.Note
         #region Variables
         private IDialogService dialogService;
         private SQLiteConnectionFactory factory;
+        private string notesSubDirectory = Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.NotesSubDirectory);
         #endregion
 
         #region Construction
@@ -34,6 +35,15 @@ namespace Knowte.Common.Services.Note
         {
             this.dialogService = dialogService;
             this.factory = new SQLiteConnectionFactory();
+
+            // Initialize the Notes directory
+            // ------------------------------
+
+            // If the Notes directory doesn't exist, create it
+            if (!Directory.Exists(notesSubDirectory))
+            {
+                Directory.CreateDirectory(notesSubDirectory);
+            }
         }
         #endregion
 
