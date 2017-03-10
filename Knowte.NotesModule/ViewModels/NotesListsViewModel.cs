@@ -60,12 +60,13 @@ namespace Knowte.NotesModule.ViewModels
         public DelegateCommand<string> ImportNoteCommand { get; set; }
         public DelegateCommand<string> OpenNoteCommand { get; set; }
         public DelegateCommand<object> NavigateBetweenNotesCommand { get; set; }
-        public DelegateCommand<object> DeleteNoteFromListCommand { get; set; }
-        public DelegateCommand<object> ToggleNoteFlagFromListCommand { get; set; }
+        public DelegateCommand<object> DeleteNoteCommand { get; set; }
+        public DelegateCommand<object> ToggleNoteFlagCommand { get; set; }
         public DelegateCommand<object> DeleteNotebookCommand { get; set; }
         public DelegateCommand<object> EditNotebookCommand { get; set; }
         public DelegateCommand EditSelectedNotebookCommand { get; set; }
         public DelegateCommand DeleteSelectedNotebookCommand { get; set; }
+        public DelegateCommand DeleteSelectedNoteCommand { get; set; }
         #endregion
 
         #region Properties
@@ -174,7 +175,6 @@ namespace Knowte.NotesModule.ViewModels
 
             this.eventAggregator.GetEvent<RefreshJumpListEvent>().Subscribe((_) => this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes()));
             this.eventAggregator.GetEvent<NewNoteEvent>().Subscribe(createUnfiled => this.NewNoteCommand.Execute(createUnfiled));
-            this.eventAggregator.GetEvent<DeleteNoteEvent>().Subscribe((_) => this.DeleteNote.Execute(null));
             this.eventAggregator.GetEvent<RefreshNotesEvent>().Subscribe((_) => this.RefreshNotes());
 
             this.eventAggregator.GetEvent<OpenNoteEvent>().Subscribe(noteTitle =>
@@ -199,12 +199,13 @@ namespace Knowte.NotesModule.ViewModels
             this.RefreshNotes();
 
             // Commands
-            this.DeleteNoteFromListCommand = new DelegateCommand<object>((obj) => this.DeleteNoteFromList(obj));
-            this.ToggleNoteFlagFromListCommand = new DelegateCommand<object>((obj) => this.ToggleNoteFlagFromList(obj));
+            this.DeleteNoteCommand = new DelegateCommand<object>((obj) => this.DeleteNote(obj));
+            this.ToggleNoteFlagCommand = new DelegateCommand<object>((obj) => this.ToggleNoteFlag(obj));
             this.DeleteNotebookCommand = new DelegateCommand<object>((obj) => this.DeleteNotebook(obj));
             this.EditNotebookCommand = new DelegateCommand<object>((obj) => this.EditNotebook(obj));
             this.DeleteSelectedNotebookCommand = new DelegateCommand(() => this.DeleteSelectedNotebook());
             this.EditSelectedNotebookCommand = new DelegateCommand(() => this.EditSelectedNotebook());
+            this.DeleteSelectedNoteCommand = new DelegateCommand(() => this.DeleteSelectedNote());
 
             this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
@@ -226,6 +227,28 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
+        private void DeleteSelectedNote()
+        {
+            if (this.SelectedNote == null) return;
+
+            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.SelectedNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+
+            if (dialogResult)
+            {
+                this.noteService.DeleteNote(this.SelectedNote.Id);
+
+                try
+                {
+                    this.RefreshNotes();
+                }
+                catch (Exception)
+                {
+                }
+
+                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+            }
+        }
+
         private void EditSelectedNotebook()
         {
             if (this.selectedNotebook == null) return;
@@ -323,7 +346,7 @@ namespace Knowte.NotesModule.ViewModels
             this.ConfirmDeleteNotebook(this.noteService.GetNotebook(obj as string));
         }
 
-        public void ToggleNoteFlagFromList(object obj)
+        public void ToggleNoteFlag(object obj)
         {
             if (obj != null)
             {
@@ -344,7 +367,7 @@ namespace Knowte.NotesModule.ViewModels
             }
         }
 
-        private void DeleteNoteFromList(object obj)
+        private void DeleteNote(object obj)
         {
             if (obj != null)
             {
@@ -765,41 +788,6 @@ namespace Knowte.NotesModule.ViewModels
         {
             this.RefreshNotes();
             this.eventAggregator.GetEvent<TriggerLoadNoteAnimationEvent>().Publish("");
-        }
-        #endregion
-
-        #region Commands
-
-        // delete note
-        public void DeleteNoteExecute()
-        {
-            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.SelectedNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
-
-
-            if (dialogResult)
-            {
-                this.noteService.DeleteNote(this.SelectedNote.Id);
-
-                try
-                {
-                    this.RefreshNotes();
-                }
-                catch (Exception)
-                {
-                }
-
-                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
-            }
-        }
-
-        public bool CanDeleteNoteExecute()
-        {
-            return true;
-        }
-
-        public ICommand DeleteNote
-        {
-            get { return new DelegateCommand(DeleteNoteExecute, CanDeleteNoteExecute); }
         }
         #endregion
     }

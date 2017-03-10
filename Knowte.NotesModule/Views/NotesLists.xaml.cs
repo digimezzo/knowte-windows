@@ -41,15 +41,6 @@ namespace Knowte.NotesModule.Views
         #endregion
 
         #region Private
-
-        private void ListboxNotes_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Delete)
-            {
-                this.eventAggregator.GetEvent<DeleteNoteEvent>().Publish("");
-            }
-        }
-
         private void ListboxNotes_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             // This code checks if the source of the double-click was a ListBoxItem

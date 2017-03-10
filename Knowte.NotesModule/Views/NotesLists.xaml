@@ -43,7 +43,7 @@
                        Margin="0,0,5,0" 
                        ToolTip="{DynamicResource Language_Flag_This_Note}" 
                        Grid.Column="2" 
-                       Command="{Binding DataContext.ToggleNoteFlagFromListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                       Command="{Binding DataContext.ToggleNoteFlagCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                        CommandParameter="{Binding Title}">
                         <Grid>
                             <!-- Flagged -->
@@ -62,7 +62,7 @@
                        Margin="0,0,10,0" 
                        ToolTip="{DynamicResource Language_Delete_This_Note}" 
                        Grid.Column="3" 
-                       Command="{Binding DataContext.DeleteNoteFromListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
+                       Command="{Binding DataContext.DeleteNoteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
                        CommandParameter="{Binding Title}">
                         <controls:FontIcon Glyph="&#xE894;" FontSize="16" Foreground="{DynamicResource RG_AccentBrush}"/>
                     </Button>
@@ -175,8 +175,11 @@
                     HorizontalContentAlignment="Stretch" 
                     VirtualizingStackPanel.IsVirtualizing="True"
                     VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                    VirtualizingStackPanel.VirtualizationMode="Recycling"         
-                    KeyUp="ListboxNotes_KeyUp"/>
+                    VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding DeleteSelectedNoteCommand}" />
+                    </ListBox.InputBindings>
+                </ListBox>
                 <Border.Style>
                     <Style TargetType="Border">
                         <Style.Triggers>

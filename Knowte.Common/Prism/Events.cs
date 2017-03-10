@@ -14,10 +14,6 @@ namespace Knowte.Common.Prism
     {
     }
 
-    public class DeleteNoteEvent : PubSubEvent<string>
-    {
-    }
-
     public class NotebooksChangedEvent : PubSubEvent<string>
     {
     }
