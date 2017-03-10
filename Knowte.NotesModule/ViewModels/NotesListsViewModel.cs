@@ -61,6 +61,7 @@ namespace Knowte.NotesModule.ViewModels
         public DelegateCommand<string> OpenNoteCommand { get; set; }
         public DelegateCommand<object> NavigateBetweenNotesCommand { get; set; }
         public DelegateCommand<object> DeleteNoteFromListCommand { get; set; }
+        public DelegateCommand<object> ToggleNoteFlagFromListCommand { get; set; }
         #endregion
 
         #region Properties
@@ -196,6 +197,7 @@ namespace Knowte.NotesModule.ViewModels
 
             // Commands
             this.DeleteNoteFromListCommand = new DelegateCommand<object>((obj) => this.DeleteNoteFromList(obj));
+            this.ToggleNoteFlagFromListCommand = new DelegateCommand<object>((obj) => this.ToggleNoteFlagFromList(obj));
 
             this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
@@ -217,6 +219,27 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
+        public void ToggleNoteFlagFromList(object obj)
+        {
+            if (obj != null)
+            {
+                Note theNote = this.noteService.GetNote(obj as string);
+
+                if (theNote.Flagged == 1)
+                {
+                    theNote.Flagged = 0;
+                    this.noteService.UpdateNoteFlag(theNote.Id, false);
+                }
+                else
+                {
+                    theNote.Flagged = 1;
+                    this.noteService.UpdateNoteFlag(theNote.Id, true);
+                }
+
+                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+            }
+        }
+
         private void DeleteNoteFromList(object obj)
         {
             if (obj != null)
@@ -641,42 +664,6 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Commands
-
-        // Toggle note flag
-        public void ToggleNoteFlagFromListExecute(object obj)
-        {
-
-            if (obj != null)
-            {
-                Note theNote = this.noteService.GetNote(obj as string);
-
-                if (theNote.Flagged == 1)
-                {
-                    theNote.Flagged = 0;
-                    this.noteService.UpdateNoteFlag(theNote.Id, false);
-                }
-                else
-                {
-                    theNote.Flagged = 1;
-                    this.noteService.UpdateNoteFlag(theNote.Id, true);
-                }
-
-                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
-
-                //helper.CountNotes(Me.AllNotesCounter, Me.TodayNotesCounter, Me.YesterdayNotesCounter, Me.ThisWeekNotesCounter, Me.FlaggedCounter)
-            }
-        }
-
-        public bool CanToggleNoteFlagFromListExecute(object obj)
-        {
-            return true;
-        }
-
-        public DelegateCommand<object> ToggleNoteFlagFromList
-        {
-            get { return new DelegateCommand<object>(ToggleNoteFlagFromListExecute, CanToggleNoteFlagFromListExecute); }
-        }
-
 
         private void DeleteNotebookAction(Notebook notebook)
         {

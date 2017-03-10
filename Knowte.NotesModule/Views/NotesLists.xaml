@@ -43,7 +43,7 @@
                        Margin="0,0,5,0" 
                        ToolTip="{DynamicResource Language_Flag_This_Note}" 
                        Grid.Column="2" 
-                       Command="{Binding DataContext.ToggleNoteFlagFromList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                       Command="{Binding DataContext.ToggleNoteFlagFromListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                        CommandParameter="{Binding Title}">
                         <Grid>
                             <!-- Flagged -->
