@@ -113,4 +113,5 @@
   <Text Key="Success">Succès</Text>
   <Text Key="Move">Déplacer</Text>
   <Text Key="Move_Description">Changer l'endroit de stockage de vos notes. Vos notes actuelles seront déplacées vers le nouvel endroit de stockage.</Text>
+  <Text Key="Changing_Storage_Location">Changement de l'endroit de stockage en cours</Text>
 </Language>

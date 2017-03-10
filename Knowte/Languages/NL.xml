@@ -114,4 +114,5 @@
   <Text Key="Move">Verplaatsen</Text>
   <Text Key="Change_Storage_Location_Was_Successful">Veranderen van de opslagplaats van jouw notities is geslaagd!</Text>
   <Text Key="Move_Description">Verander de opslagplaats van jouw notities. Jouw actuele notities worden verplaatst naar de nieuwe opslagplaats.</Text>
+  <Text Key="Changing_Storage_Location">Opslagplaats wordt veranderd</Text>
 </Language>

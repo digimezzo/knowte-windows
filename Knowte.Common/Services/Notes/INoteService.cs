@@ -11,7 +11,7 @@ namespace Knowte.Common.Services.Note
     public interface INoteService
     {
         string GetUniqueNoteTitle(string proposedTitle);
-        Task Migrate(string sourceFolder, bool deleteDestination);
+        Task MigrateAsync(string sourceFolder, bool deleteDestination);
         Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes);
         void CloseAllNoteWindows();
         void NewNotebook(Notebook notebook);

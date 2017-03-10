@@ -7,32 +7,38 @@ namespace Knowte.Common.Database
     public class SQLiteConnectionFactory
     {
         #region Private
-        private string databaseFile;
+        private string customDatabaseFile;
         #endregion
 
         #region ReadOnly Properties
         public string DatabaseFile
         {
-            get { return this.databaseFile; }
+            get {
+                if (!string.IsNullOrEmpty(this.customDatabaseFile))
+                {
+                    return this.customDatabaseFile;
+                }
+
+                return System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ProcessExecutable.Name() + ".db"); ;
+            }
         }
         #endregion
 
         #region Construction
         public SQLiteConnectionFactory()
         {
-            this.databaseFile = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ProcessExecutable.Name() + ".db");
         }
 
-        public SQLiteConnectionFactory(string storageLocation)
+        public SQLiteConnectionFactory(string customStorageLocation)
         {
-            this.databaseFile = System.IO.Path.Combine(storageLocation, ProcessExecutable.Name() + ".db");
+            this.customDatabaseFile = System.IO.Path.Combine(customStorageLocation, ProcessExecutable.Name() + ".db");
         }
         #endregion
 
         #region Public
         public SQLiteConnection GetConnection()
         {
-            return new SQLiteConnection(this.databaseFile) { BusyTimeout = new System.TimeSpan(0, 0, 1) };
+            return new SQLiteConnection(this.DatabaseFile) { BusyTimeout = new System.TimeSpan(0, 0, 1) };
         }
         #endregion
     }

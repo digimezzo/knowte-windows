@@ -7,6 +7,7 @@ using Knowte.Common.Database;
 using Knowte.Common.Database.Entities;
 using Knowte.Common.Extensions;
 using Knowte.Common.IO;
+using Knowte.Common.Services.Dialog;
 using Knowte.Common.Utils;
 using System;
 using System.Collections.Generic;
@@ -24,23 +25,19 @@ namespace Knowte.Common.Services.Note
     public class NoteService : INoteService
     {
         #region Variables
+        private IDialogService dialogService;
         private SQLiteConnectionFactory factory;
         #endregion
 
         #region Construction
-        public NoteService()
+        public NoteService(IDialogService dialogService)
         {
+            this.dialogService = dialogService;
             this.factory = new SQLiteConnectionFactory();
         }
         #endregion
 
         #region Private
-        private async Task MoveNotesAsync(string newLocation)
-        {
-            string oldLocation = ApplicationPaths.NoteStorageLocation;
-            await this.Migrate(oldLocation, false);
-        }
-
         private async Task InitializeStorageIfRequiredAsync(string newLocation)
         {
             await Task.Run(() =>
@@ -94,7 +91,7 @@ namespace Knowte.Common.Services.Note
 
             return uniqueTitle;
         }
-        public async Task Migrate(string sourceFolder, bool deleteDestination)
+        public async Task MigrateAsync(string sourceFolder, bool deleteDestination)
         {
             var sourceFactory = new SQLiteConnectionFactory(sourceFolder); // SQLiteConnectionFactory that points to the source database file
             var sourceMigrator = new DbMigrator(sourceFolder); // DbMigrator that points to the source database file
@@ -170,16 +167,17 @@ namespace Knowte.Common.Services.Note
             });
         }
 
-        public async Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes)
+        public async Task<bool> ChangeStorageLocationAsyncCallback(string newStorageLocation, bool moveCurrentNotes)
         {
             bool isSuccess = true;
 
             try
             {
+                string oldStorageLocation = SettingsClient.Get<string>("General", "NoteStorageLocation");
                 SettingsClient.Set<string>("General", "NoteStorageLocation", newStorageLocation);
 
                 await this.InitializeStorageIfRequiredAsync(newStorageLocation);
-                if (moveCurrentNotes) await this.MoveNotesAsync(newStorageLocation);
+                if (moveCurrentNotes) await this.MigrateAsync(oldStorageLocation, false);
             }
             catch (Exception ex)
             {
@@ -190,6 +188,18 @@ namespace Knowte.Common.Services.Note
             this.StorageLocationChanged(this, new EventArgs());
 
             return isSuccess;
+        }
+
+        public async Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes)
+        {
+            bool isSuccess = this.dialogService.ShowBusyDialog(
+               null,
+               ResourceUtils.GetStringResource("Language_Backup"),
+               ResourceUtils.GetStringResource("Language_Changing_Storage_Location"),
+               1000,
+               () => this.ChangeStorageLocationAsyncCallback(newStorageLocation, moveCurrentNotes));
+
+            return isSuccess;   
         }
 
         public void CloseAllNoteWindows()

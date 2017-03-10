@@ -137,7 +137,7 @@ namespace Knowte.Common.Services.Backup
                 await this.ExtractBackupFileToBackupDirectory(backupFile);
 
                 // Restore from backup
-                await this.noteService.Migrate(this.BackupSubDirectory, deleteCurrentNotes);
+                await this.noteService.MigrateAsync(this.BackupSubDirectory, deleteCurrentNotes);
 
                 // Clean the backup directory
                 await this.CleanBackupDirectoryAsync();
