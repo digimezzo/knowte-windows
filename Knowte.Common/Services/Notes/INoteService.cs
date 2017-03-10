@@ -28,7 +28,7 @@ namespace Knowte.Common.Services.Note
         void UpdateNoteFlag(string id, bool flagged);
         void UpdateNote(FlowDocument document, string id, string title, string notebookId, double width, double height, double top, double left, bool maximized);
         LoadNoteResult LoadNote(FlowDocument document, Database.Entities.Note note);
-        void DeleteNote(string id);
+        Task DeleteNoteAsync(string id);
         Database.Entities.Note GetNote(string title);
         Database.Entities.Note GetNoteById(string id);
         bool NoteExists(string title);
@@ -44,5 +44,7 @@ namespace Knowte.Common.Services.Note
         void ImportFile(string filename);
         event FlagUpdatedEventHandler FlagUpdated;
         event EventHandler StorageLocationChanged;
+        event EventHandler NotesChanged;
+        void OnNotesChanged();
     }
 }

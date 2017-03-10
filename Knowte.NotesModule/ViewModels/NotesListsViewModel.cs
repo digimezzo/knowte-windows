@@ -175,7 +175,6 @@ namespace Knowte.NotesModule.ViewModels
 
             this.eventAggregator.GetEvent<RefreshJumpListEvent>().Subscribe((_) => this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes()));
             this.eventAggregator.GetEvent<NewNoteEvent>().Subscribe(createUnfiled => this.NewNoteCommand.Execute(createUnfiled));
-            this.eventAggregator.GetEvent<RefreshNotesEvent>().Subscribe((_) => this.RefreshNotes());
 
             this.eventAggregator.GetEvent<OpenNoteEvent>().Subscribe(noteTitle =>
             {
@@ -188,6 +187,7 @@ namespace Knowte.NotesModule.ViewModels
             this.noteService.FlagUpdated += async (noteId, isFlagged) => { await this.UpdateNoteFlagAsync(noteId, isFlagged); };
             this.noteService.StorageLocationChanged += RefreshAllHandler;
             this.backupService.BackupRestored += RefreshAllHandler;
+            this.noteService.NotesChanged += (_,__) => this.RefreshNotes();
             this.searchService.Searching += (_, __) => TryRefreshNotesOnSearch();
 
             // Initialize notebooks
@@ -199,13 +199,13 @@ namespace Knowte.NotesModule.ViewModels
             this.RefreshNotes();
 
             // Commands
-            this.DeleteNoteCommand = new DelegateCommand<object>((obj) => this.DeleteNote(obj));
+            this.DeleteNoteCommand = new DelegateCommand<object>(async(obj) => await this.DeleteNoteAsync(obj));
             this.ToggleNoteFlagCommand = new DelegateCommand<object>((obj) => this.ToggleNoteFlag(obj));
             this.DeleteNotebookCommand = new DelegateCommand<object>((obj) => this.DeleteNotebook(obj));
             this.EditNotebookCommand = new DelegateCommand<object>((obj) => this.EditNotebook(obj));
             this.DeleteSelectedNotebookCommand = new DelegateCommand(() => this.DeleteSelectedNotebook());
             this.EditSelectedNotebookCommand = new DelegateCommand(() => this.EditSelectedNotebook());
-            this.DeleteSelectedNoteCommand = new DelegateCommand(() => this.DeleteSelectedNote());
+            this.DeleteSelectedNoteCommand = new DelegateCommand(async() => await this.DeleteSelectedNoteAync());
 
             this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
@@ -227,7 +227,7 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
-        private void DeleteSelectedNote()
+        private async Task DeleteSelectedNoteAync()
         {
             if (this.SelectedNote == null) return;
 
@@ -235,16 +235,7 @@ namespace Knowte.NotesModule.ViewModels
 
             if (dialogResult)
             {
-                this.noteService.DeleteNote(this.SelectedNote.Id);
-
-                try
-                {
-                    this.RefreshNotes();
-                }
-                catch (Exception)
-                {
-                }
-
+                await this.noteService.DeleteNoteAsync(this.SelectedNote.Id);
                 this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
             }
         }
@@ -314,10 +305,6 @@ namespace Knowte.NotesModule.ViewModels
                     this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                 }
             }
-            else
-            {
-                // The user clicked Cancel
-            }
         }
 
         private void ConfirmDeleteNotebook(Notebook notebook)
@@ -367,7 +354,7 @@ namespace Knowte.NotesModule.ViewModels
             }
         }
 
-        private void DeleteNote(object obj)
+        private async Task DeleteNoteAsync(object obj)
         {
             if (obj != null)
             {
@@ -378,16 +365,8 @@ namespace Knowte.NotesModule.ViewModels
 
                 if (dialogResult)
                 {
-                    this.noteService.DeleteNote(theNote.Id);
+                    await this.noteService.DeleteNoteAsync(theNote.Id);
                     this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
-
-                    try
-                    {
-                        this.RefreshNotes();
-                    }
-                    catch (Exception)
-                    {
-                    }
 
                     foreach (Window win in Application.Current.Windows)
                     {
@@ -603,10 +582,6 @@ namespace Knowte.NotesModule.ViewModels
                 {
                     this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                 }
-            }
-            else
-            {
-                // The user clicked cancel
             }
         }
 

@@ -18,10 +18,6 @@ namespace Knowte.Common.Prism
     {
     }
 
-    public class RefreshNotesEvent : PubSubEvent<string>
-    {
-    }
-
     public class RefreshNotebooksEvent : PubSubEvent<string>
     {
     }

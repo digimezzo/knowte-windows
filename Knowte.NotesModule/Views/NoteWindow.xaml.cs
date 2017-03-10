@@ -424,16 +424,6 @@ namespace Knowte.NotesModule.Views
                         if (this.isContentChanged)
                         {
                             this.noteService.UpdateNote(XAMLRichTextBox.Document, this.Id, this.TextBoxTitle.Text, this.noteService.GetNotebookId(this.notebook.Title), this.ActualWidth, this.ActualHeight, this.Top, this.Left, isMaximized);
-
-                            // We only refresh lists when saving everything
-                            try
-                            {
-                                this.eventAggregator.GetEvent<RefreshNotesEvent>().Publish("");
-                            }
-                            catch (Exception)
-                            {
-                            }
-
                             this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
                         }
                         else
@@ -642,27 +632,17 @@ namespace Knowte.NotesModule.Views
             }
         }
 
-        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        private async void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
             bool dialogResult = this.dialogService.ShowConfirmationDialog(this,title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.TextBoxTitle.Text), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
 
 
             if (dialogResult)
             {
-                this.noteService.DeleteNote(this.id);
+                await this.noteService.DeleteNoteAsync(this.id);
 
-                try
-                {
-                    this.eventAggregator.GetEvent<RefreshNotesEvent>().Publish("");
-                }
-                catch (Exception)
-                {
-                }
-
-                this.isContentChanged = false;
-                // Prevents saving changes when deleting a note (because that generates an exception)
-                this.isParametersChanged = false;
-                // Prevents saving changes when deleting a note (because that generates an exception)
+                this.isContentChanged = false;  // Prevents saving changes when deleting a note (because that generates an exception)
+                this.isParametersChanged = false; // Prevents saving changes when deleting a note (because that generates an exception)
 
                 this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
 
@@ -1054,7 +1034,6 @@ namespace Knowte.NotesModule.Views
 
         private void CreateLinkedNote(string title, string id, Notebook notebook)
         {
-
             if (title != null && id != null && !title.Equals("") && !id.Equals(""))
             {
                 if (!this.noteService.NoteExists(title))
@@ -1064,7 +1043,7 @@ namespace Knowte.NotesModule.Views
                         NoteWindow notewin = new NoteWindow(title, id, notebook, "", true, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
                         this.dialogService);
                         notewin.Show();
-                        this.eventAggregator.GetEvent<RefreshNotesEvent>().Publish("");
+                        this.noteService.OnNotesChanged(); // TODO: can this be done better?
                     }
                     catch (Exception)
                     {

@@ -67,6 +67,12 @@ namespace Knowte.Common.Services.Note
         #region INoteService
         public event FlagUpdatedEventHandler FlagUpdated = delegate { };
         public event EventHandler StorageLocationChanged = delegate { };
+        public event EventHandler NotesChanged = delegate { };
+
+        public void OnNotesChanged()
+        {
+            this.NotesChanged(this, new EventArgs());
+        }
 
         public string GetUniqueNoteTitle(string proposedTitle)
         {
@@ -461,6 +467,8 @@ namespace Knowte.Common.Services.Note
                     conn.Update(noteToUpdate);
                 }
             }
+
+            this.OnNotesChanged();
         }
 
         public LoadNoteResult LoadNote(FlowDocument doc, Database.Entities.Note note)
@@ -507,28 +515,32 @@ namespace Knowte.Common.Services.Note
             return requestedNote;
         }
 
-        public void DeleteNote(string id)
+        public async Task DeleteNoteAsync(string id)
         {
-            using (var conn = this.factory.GetConnection())
-            {
-                Database.Entities.Note noteToDelete = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
-
-                if (noteToDelete != null)
+            await Task.Run(() => {
+                using (var conn = this.factory.GetConnection())
                 {
-                    // Delete Note from database
-                    conn.Delete(noteToDelete);
+                    Database.Entities.Note noteToDelete = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();
 
-                    // Delete Note from disk
-                    try
+                    if (noteToDelete != null)
                     {
-                        string notesPath = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
-                        File.Delete(System.IO.Path.Combine(notesPath, id + ".xaml"));
-                    }
-                    catch (Exception)
-                    {
+                        // Delete Note from database
+                        conn.Delete(noteToDelete);
+
+                        // Delete Note from disk
+                        try
+                        {
+                            string notesPath = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
+                            File.Delete(System.IO.Path.Combine(notesPath, id + ".xaml"));
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+                        this.OnNotesChanged();
                     }
                 }
-            }
+            });
         }
 
         public bool NoteExists(string title)
