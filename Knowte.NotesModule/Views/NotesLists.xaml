@@ -86,7 +86,7 @@
                        Margin="0,0,5,0" 
                        ToolTip="{DynamicResource Language_Rename_This_Notebook}"
                        Grid.Column="1" 
-                       Command="{Binding DataContext.EditNotebookFromList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
+                       Command="{Binding DataContext.EditNotebookFromListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
                        CommandParameter="{Binding Id}">
                         <controls:FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{DynamicResource RG_AccentBrush}"/>
                     </Button>
@@ -100,7 +100,7 @@
                        Margin="0,0,10,0" 
                        ToolTip="{DynamicResource Language_Delete_This_Notebook}" 
                        Grid.Column="2" 
-                       Command="{Binding DataContext.DeleteNotebookFromList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
+                       Command="{Binding DataContext.DeleteNotebookFromListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
                        CommandParameter="{Binding Id}">
                         <controls:FontIcon Glyph="&#xE894;" FontSize="16" Foreground="{DynamicResource RG_AccentBrush}"/>
                     </Button>

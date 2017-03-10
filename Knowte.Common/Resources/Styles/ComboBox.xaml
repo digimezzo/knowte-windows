@@ -76,7 +76,7 @@
                                             Value="{x:Static Visibility.Visible}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames
-                      Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                Storyboard.TargetProperty="(UIElement.Visibility)"
                                                  Storyboard.TargetName="ContentSite">
                                             <DiscreteObjectKeyFrame KeyTime="0"
                                             Value="{x:Static Visibility.Hidden}" />
@@ -211,6 +211,9 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource RG_AccentBrush}" />
                             <Setter TargetName="Label" Property="Foreground" Value="{DynamicResource RG_WhiteBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
