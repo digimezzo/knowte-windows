@@ -62,7 +62,7 @@
                        Margin="0,0,10,0" 
                        ToolTip="{DynamicResource Language_Delete_This_Note}" 
                        Grid.Column="3" 
-                       Command="{Binding DataContext.DeleteNoteFromList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
+                       Command="{Binding DataContext.DeleteNoteFromListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
                        CommandParameter="{Binding Title}">
                         <controls:FontIcon Glyph="&#xE894;" FontSize="16" Foreground="{DynamicResource RG_AccentBrush}"/>
                     </Button>

@@ -55,11 +55,12 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Commands
-        public DelegateCommand<string> NewNotebookCommand;
-        public DelegateCommand<object> NewNoteCommand;
-        public DelegateCommand<string> ImportNoteCommand;
-        public DelegateCommand<string> OpenNoteCommand;
-        public DelegateCommand<object> NavigateBetweenNotesCommand;
+        public DelegateCommand<string> NewNotebookCommand { get; set; }
+        public DelegateCommand<object> NewNoteCommand { get; set; }
+        public DelegateCommand<string> ImportNoteCommand { get; set; }
+        public DelegateCommand<string> OpenNoteCommand { get; set; }
+        public DelegateCommand<object> NavigateBetweenNotesCommand { get; set; }
+        public DelegateCommand<object> DeleteNoteFromListCommand { get; set; }
         #endregion
 
         #region Properties
@@ -194,6 +195,8 @@ namespace Knowte.NotesModule.ViewModels
             this.RefreshNotes();
 
             // Commands
+            this.DeleteNoteFromListCommand = new DelegateCommand<object>((obj) => this.DeleteNoteFromList(obj));
+
             this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
 
@@ -214,6 +217,39 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
+        private void DeleteNoteFromList(object obj)
+        {
+            if (obj != null)
+            {
+                Note theNote = this.noteService.GetNote(obj as string);
+
+                bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", theNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+
+
+                if (dialogResult)
+                {
+                    this.noteService.DeleteNote(theNote.Id);
+                    this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+
+                    try
+                    {
+                        this.RefreshNotes();
+                    }
+                    catch (Exception)
+                    {
+                    }
+
+                    foreach (Window win in Application.Current.Windows)
+                    {
+                        if (win.Title == theNote.Title)
+                        {
+                            win.Close();
+                        }
+                    }
+                }
+            }
+        }
+
         private void TryRefreshNotesOnSearch()
         {
             try
@@ -605,50 +641,6 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Commands
-        // Delete Note
-        public void DeleteNoteFromListExecute(object obj)
-        {
-
-            if (obj != null)
-            {
-                Note theNote = this.noteService.GetNote(obj as string);
-
-                bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", theNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
-
-
-                if (dialogResult)
-                {
-                    this.noteService.DeleteNote(theNote.Id);
-                    this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
-
-                    try
-                    {
-                        this.RefreshNotes();
-                    }
-                    catch (Exception)
-                    {
-                    }
-
-                    foreach (Window win in Application.Current.Windows)
-                    {
-                        if (win.Title == theNote.Title)
-                        {
-                            win.Close();
-                        }
-                    }
-                }
-            }
-        }
-
-        public bool CanDeleteNoteFromListExecute(object obj)
-        {
-            return true;
-        }
-
-        public DelegateCommand<object> DeleteNoteFromList
-        {
-            get { return new DelegateCommand<object>(DeleteNoteFromListExecute, CanDeleteNoteFromListExecute); }
-        }
 
         // Toggle note flag
         public void ToggleNoteFlagFromListExecute(object obj)
