@@ -62,8 +62,10 @@ namespace Knowte.NotesModule.ViewModels
         public DelegateCommand<object> NavigateBetweenNotesCommand { get; set; }
         public DelegateCommand<object> DeleteNoteFromListCommand { get; set; }
         public DelegateCommand<object> ToggleNoteFlagFromListCommand { get; set; }
-        public DelegateCommand<object> DeleteNotebookFromListCommand { get; set; }
-        public DelegateCommand<object> EditNotebookFromListCommand { get; set; }
+        public DelegateCommand<object> DeleteNotebookCommand { get; set; }
+        public DelegateCommand<object> EditNotebookCommand { get; set; }
+        public DelegateCommand EditSelectedNotebookCommand { get; set; }
+        public DelegateCommand DeleteSelectedNotebookCommand { get; set; }
         #endregion
 
         #region Properties
@@ -173,7 +175,6 @@ namespace Knowte.NotesModule.ViewModels
             this.eventAggregator.GetEvent<RefreshJumpListEvent>().Subscribe((_) => this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes()));
             this.eventAggregator.GetEvent<NewNoteEvent>().Subscribe(createUnfiled => this.NewNoteCommand.Execute(createUnfiled));
             this.eventAggregator.GetEvent<DeleteNoteEvent>().Subscribe((_) => this.DeleteNote.Execute(null));
-            this.eventAggregator.GetEvent<DeleteNotebookEvent>().Subscribe((_) => this.DeleteNotebook.Execute(null));
             this.eventAggregator.GetEvent<RefreshNotesEvent>().Subscribe((_) => this.RefreshNotes());
 
             this.eventAggregator.GetEvent<OpenNoteEvent>().Subscribe(noteTitle =>
@@ -200,8 +201,10 @@ namespace Knowte.NotesModule.ViewModels
             // Commands
             this.DeleteNoteFromListCommand = new DelegateCommand<object>((obj) => this.DeleteNoteFromList(obj));
             this.ToggleNoteFlagFromListCommand = new DelegateCommand<object>((obj) => this.ToggleNoteFlagFromList(obj));
-            this.DeleteNotebookFromListCommand = new DelegateCommand<object>((obj) => this.DeleteNotebookFromList(obj));
-            this.EditNotebookFromListCommand = new DelegateCommand<object>((obj) => this.EditNotebookFromList(obj));
+            this.DeleteNotebookCommand = new DelegateCommand<object>((obj) => this.DeleteNotebook(obj));
+            this.EditNotebookCommand = new DelegateCommand<object>((obj) => this.EditNotebook(obj));
+            this.DeleteSelectedNotebookCommand = new DelegateCommand(() => this.DeleteSelectedNotebook());
+            this.EditSelectedNotebookCommand = new DelegateCommand(() => this.EditSelectedNotebook());
 
             this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
@@ -223,7 +226,43 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
-        private void EditNotebookFromList(object obj)
+        private void EditSelectedNotebook()
+        {
+            if (this.selectedNotebook == null) return;
+
+            string responseText = this.selectedNotebook.Title;
+            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", this.selectedNotebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
+
+            if (dialogResult)
+            {
+
+                if (!string.IsNullOrEmpty(responseText))
+                {
+
+                    if (!this.noteService.NotebookExists(new Notebook { Title = responseText }))
+                    {
+                        this.noteService.UpdateNotebook(this.SelectedNotebook.Title, responseText);
+
+                        this.RefreshNotebooks();
+                    }
+                    else
+                    {
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    }
+                }
+                else
+                {
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                }
+            }
+        }
+        private void DeleteSelectedNotebook()
+        {
+            if (this.selectedNotebook == null) return;
+
+            this.ConfirmDeleteNotebook(this.SelectedNotebook.Notebook);
+        }
+        private void EditNotebook(object obj)
         {
             Notebook notebook = this.noteService.GetNotebook(obj as string);
 
@@ -279,7 +318,7 @@ namespace Knowte.NotesModule.ViewModels
             }
         }
 
-        private void DeleteNotebookFromList(object obj)
+        private void DeleteNotebook(object obj)
         {
             this.ConfirmDeleteNotebook(this.noteService.GetNotebook(obj as string));
         }
@@ -562,7 +601,8 @@ namespace Knowte.NotesModule.ViewModels
             }
             else
             {
-                await Task.Run(() => {
+                await Task.Run(() =>
+                {
                     foreach (NoteViewModel note in this.Notes)
                     {
                         if (note.Id.Equals(noteId)) note.Flagged = isFlagged;
@@ -729,29 +769,6 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Commands
-        // Delete Notebook
-        public void DeleteNotebookExecute()
-        {
-            if (this.SelectedNotebook != null)
-            {
-                this.ConfirmDeleteNotebook(this.SelectedNotebook.Notebook);
-            }
-            else
-            {
-                // This should never happen
-                MessageBox.Show(messageBoxText: "The notebook could not be deleted.", caption: "Error", button: MessageBoxButton.OK, icon: MessageBoxImage.Error);
-            }
-        }
-
-        public bool CanDeleteNotebookExecute()
-        {
-            return true;
-        }
-
-        public ICommand DeleteNotebook
-        {
-            get { return new DelegateCommand(DeleteNotebookExecute, CanDeleteNotebookExecute); }
-        }
 
         // delete note
         public void DeleteNoteExecute()
@@ -783,50 +800,6 @@ namespace Knowte.NotesModule.ViewModels
         public ICommand DeleteNote
         {
             get { return new DelegateCommand(DeleteNoteExecute, CanDeleteNoteExecute); }
-        }
-
-        // Edit Notebook
-        public void EditNotebookExecute()
-        {
-            string responseText = this.selectedNotebook.Title;
-            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", this.selectedNotebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
-
-            if (dialogResult)
-            {
-
-                if (!string.IsNullOrEmpty(responseText))
-                {
-
-                    if (!this.noteService.NotebookExists(new Notebook { Title = responseText }))
-                    {
-                        this.noteService.UpdateNotebook(this.SelectedNotebook.Title, responseText);
-
-                        this.RefreshNotebooks();
-                    }
-                    else
-                    {
-                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                    }
-                }
-                else
-                {
-                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                }
-            }
-            else
-            {
-                // The user clicked Cancel
-            }
-        }
-
-        public bool CanEditNotebookExecute()
-        {
-            return true;
-        }
-
-        public ICommand EditNotebook
-        {
-            get { return new DelegateCommand(EditNotebookExecute, CanEditNotebookExecute); }
         }
         #endregion
     }
