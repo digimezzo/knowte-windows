@@ -193,7 +193,7 @@ namespace Knowte.NotesModule.ViewModels
             this.noteService.FlagUpdated += async (noteId, isFlagged) => { await this.UpdateNoteFlagAsync(noteId, isFlagged); };
             this.noteService.StorageLocationChanged += RefreshAllHandler;
             this.backupService.BackupRestored += RefreshAllHandler;
-            this.noteService.NotesChanged += (_,__) => Application.Current.Dispatcher.Invoke(() => { this.RefreshNotes(); });
+            this.noteService.NotesChanged += (_, __) => Application.Current.Dispatcher.Invoke(() => { this.RefreshNotes(); });
             this.searchService.Searching += (_, __) => TryRefreshNotesOnSearch();
 
             // Initialize notebooks
@@ -204,13 +204,13 @@ namespace Knowte.NotesModule.ViewModels
             this.RefreshNotes();
 
             // Commands
-            this.DeleteNoteCommand = new DelegateCommand<object>(async(obj) => await this.DeleteNoteAsync(obj));
+            this.DeleteNoteCommand = new DelegateCommand<object>(async (obj) => await this.DeleteNoteAsync(obj));
             this.ToggleNoteFlagCommand = new DelegateCommand<object>((obj) => this.ToggleNoteFlag(obj));
             this.DeleteNotebookCommand = new DelegateCommand<object>((obj) => this.DeleteNotebook(obj));
             this.EditNotebookCommand = new DelegateCommand<object>((obj) => this.EditNotebook(obj));
             this.DeleteSelectedNotebookCommand = new DelegateCommand(() => this.DeleteSelectedNotebook());
             this.EditSelectedNotebookCommand = new DelegateCommand(() => this.EditSelectedNotebook());
-            this.DeleteSelectedNoteCommand = new DelegateCommand(async() => await this.DeleteSelectedNoteAync());
+            this.DeleteSelectedNoteCommand = new DelegateCommand(async () => await this.DeleteSelectedNoteAync());
             this.ChangeStorageLocationCommand = new DelegateCommand(async () => await this.ChangeStorageLocationAsync());
 
             this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
@@ -241,6 +241,10 @@ namespace Knowte.NotesModule.ViewModels
             if ((bool)dlg.ShowDialog())
             {
                 string selectedFolder = dlg.FileName;
+
+                // If the new folder is the same as the old folder, do nothing.
+                if (ApplicationPaths.CurrentNoteStorageLocation.Equals(selectedFolder,StringComparison.InvariantCultureIgnoreCase)) return;
+
                 bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, false);
 
                 // Show error if changing storage location failed

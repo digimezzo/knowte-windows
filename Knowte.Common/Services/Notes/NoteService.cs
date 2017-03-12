@@ -39,7 +39,7 @@ namespace Knowte.Common.Services.Note
             // -------------------------------------
 
             // If using the default storage location, check if the location needs to be created.
-            if(ApplicationPaths.IsUsingDefaultStorageLocation)
+            if (ApplicationPaths.IsUsingDefaultStorageLocation)
             {
                 if (!Directory.Exists(ApplicationPaths.CurrentNoteStorageLocation))
                 {
@@ -202,14 +202,24 @@ namespace Knowte.Common.Services.Note
 
         public async Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes)
         {
-            bool isSuccess = this.dialogService.ShowBusyDialog(
-               null,
-               ResourceUtils.GetStringResource("Language_Backup"),
-               ResourceUtils.GetStringResource("Language_Changing_Storage_Location"),
-               500,
-               () => this.ChangeStorageLocationAsyncCallback(newStorageLocation, moveCurrentNotes));
+            bool isSuccess = true;
 
-            return isSuccess;   
+            if (moveCurrentNotes)
+            {
+                // Only show busy dialog when moving notes
+                isSuccess = this.dialogService.ShowBusyDialog(
+                    null,
+                    ResourceUtils.GetStringResource("Language_Backup"),
+                    ResourceUtils.GetStringResource("Language_Changing_Storage_Location"),
+                    250,
+                    () => this.ChangeStorageLocationAsyncCallback(newStorageLocation, moveCurrentNotes));
+            }
+            else
+            {
+                isSuccess = await this.ChangeStorageLocationAsyncCallback(newStorageLocation, moveCurrentNotes);
+            }
+
+            return isSuccess;
         }
 
         public void CloseAllNoteWindows()
@@ -531,7 +541,8 @@ namespace Knowte.Common.Services.Note
 
         public async Task DeleteNoteAsync(string id)
         {
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 using (var conn = this.factory.GetConnection())
                 {
                     Database.Entities.Note noteToDelete = conn.Table<Database.Entities.Note>().Where((n) => n.Id == id).FirstOrDefault();

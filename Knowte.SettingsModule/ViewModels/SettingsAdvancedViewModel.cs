@@ -100,7 +100,7 @@ namespace Knowte.SettingsModule.ViewModels
             this.ImportCommand = new DelegateCommand(() => this.Import());
             this.RestoreCommand = new DelegateCommand(() => this.Restore());
             this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.CurrentNoteStorageLocation));
-            this.ChangeStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(false); });
+            this.ChangeStorageLocationCommand = new DelegateCommand(async() => { await this.ChangeStorageLocationAsync(false); });
             this.MoveStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(true); });
 
             // Event handlers
@@ -123,6 +123,10 @@ namespace Knowte.SettingsModule.ViewModels
             if ((bool)dlg.ShowDialog())
             {
                 string selectedFolder = dlg.FileName;
+
+                // If the new folder is the same as the old folder, do nothing.
+                if (ApplicationPaths.CurrentNoteStorageLocation.Equals(selectedFolder, StringComparison.InvariantCultureIgnoreCase)) return;
+
                 bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, moveCurrentNotes);
 
                 // Show error if changing storage location failed
