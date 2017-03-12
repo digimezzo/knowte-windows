@@ -48,6 +48,11 @@ namespace Knowte.Common.Base
                 Name = "WiX",
                 Description = "Windows Installer XML Toolset.",
                 Url = "http://wix.codeplex.com"
+            },
+            new ExternalComponent {
+                Name = "WPF Native Folder Browser",
+                Description = "Use the Windows Vista / Windows 7 Folder Browser Dialog from your WPF projects, without any additional dependencies.",
+                Url = "https://wpffolderbrowser.codeplex.com/"
             }
         };
     }
