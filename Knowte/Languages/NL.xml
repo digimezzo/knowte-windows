@@ -100,7 +100,7 @@
   <Text Key="Storage">Opslag</Text>
   <Text Key="Your_Notes_Are_Stored_Here">Jouw notities worden hier opgeslagen</Text>
   <Text Key="Change">Veranderen</Text>
-  <Text Key="Change_Description">Verander de opslagplaats van jouw notities. Jouw actuele notities worden niet verplaatst naar de nieuwe opslagplaats.</Text>
+  <Text Key="Change_Description">Verander de locatie waar jouw notities zijn opgeslagen. Jouw actuele notities worden niet verplaatst naar die locatie.</Text>
   <Text Key="Error_Change_Storage_Location_Error">Er is een fout opgetreden tijdens het veranderen van de opslagplaats van jouw notities. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Backup_Was_Successful">De back-up is geslaagd!</Text>
   <Text Key="Restore_Was_Successful">Het herstellen is geslaagd!</Text>

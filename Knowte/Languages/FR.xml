@@ -100,8 +100,8 @@
   <Text Key="Storage">Stockage</Text>
   <Text Key="Your_Notes_Are_Stored_Here">Vos notes sont stockées ici</Text>
   <Text Key="Change">Modifier</Text>
-  <Text Key="Change_Description">Changer l'endroit de stockage de vos notes. Vos notes actuelles ne seront pas déplacées vers le nouvel endroit de stockage.</Text>
-  <Text Key="Error_Change_Storage_Location_Error">Une erreur s'est produite durant le changement de l'endroit de stockage de vos notes. Consultez le fichier log pour plus de détails.</Text>
+  <Text Key="Change_Description">Changer l'endroit où vos notes sont stockées. Vos notes actuelles ne seront pas déplacées vers cet endroit.</Text>
+  <Text Key="Error_Change_Storage_Location_Error">Il ne fût pas possible de changer l'endroit où vos notes sont stockées. Consultez le fichier log pour plus de détails.</Text>
   <Text Key="Backup_Was_Successful">La sauvegarde a réussie!</Text>
   <Text Key="Restore_Was_Successful">La restauration a réussie!</Text>
   <Text Key="Import">Import</Text>

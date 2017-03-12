@@ -100,8 +100,8 @@
   <Text Key="Storage">Storage</Text>
   <Text Key="Your_Notes_Are_Stored_Here">Your notes are stored here</Text>
   <Text Key="Change">Change</Text>
-  <Text Key="Change_Description">Change where your notes are stored. Your current notes will not be moved to the new storage location.</Text>
-  <Text Key="Error_Change_Storage_Location_Error">An error occurred while changing the storage location of your notes. Please consult the log file for more information.</Text>
+  <Text Key="Change_Description">Change where your notes are stored. Your current notes will not be moved to that location.</Text>
+  <Text Key="Error_Change_Storage_Location_Error">It was not possible to change where your notes are stored. Please consult the log file for more information.</Text>
   <Text Key="Backup_Was_Successful">The backup was successful!</Text>
   <Text Key="Restore_Was_Successful">The restore was successful!</Text>
   <Text Key="Import">Import</Text>
