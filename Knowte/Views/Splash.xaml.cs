@@ -5,6 +5,7 @@ using Digimezzo.Utilities.Settings;
 using Knowte.Common.Database;
 using Knowte.Common.IO;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -165,10 +166,25 @@ namespace Knowte.Views
         {
             bool isSuccess = true;
 
-            // Make sure the default note storage location exists
-            if (!System.IO.Directory.Exists(ApplicationPaths.DefaultNoteStorageLocation))
+            var migrator = new DbMigrator();
+
+            // Move the old "Knowte.db" database file to "Notes\Notes.db". TODO: remove this later (e.g. in version 1.2)
+            try
             {
-                System.IO.Directory.CreateDirectory(ApplicationPaths.DefaultNoteStorageLocation);    
+                string oldDatabaseFile = Path.Combine(SettingsClient.ApplicationFolder(), "Knowte.db");
+                if (File.Exists(oldDatabaseFile) && !File.Exists(migrator.DatabaseFile)) File.Move(oldDatabaseFile, migrator.DatabaseFile);
+            }
+            catch (Exception ex)
+            {
+                LogClient.Error("The old database file could not be moved. Exception: {0}", ex.Message);
+                this.errorMessage = ex.Message;
+                isSuccess = false;
+            }
+
+            // Make sure the default note storage location exists
+            if (!Directory.Exists(ApplicationPaths.DefaultNoteStorageLocation))
+            {
+                Directory.CreateDirectory(ApplicationPaths.DefaultNoteStorageLocation);    
             }
 
             // Further verification is only needed when not using the default storage location
@@ -178,9 +194,7 @@ namespace Knowte.Views
             {
                 await Task.Run(() =>
                 {
-                    var migrator = new DbMigrator();
-
-                    if (!System.IO.Directory.Exists(ApplicationPaths.CurrentNoteStorageLocation))
+                    if (!Directory.Exists(ApplicationPaths.CurrentNoteStorageLocation))
                     {
                         LogClient.Warning("Note storage location '{0}' could not be found.", ApplicationPaths.CurrentNoteStorageLocation);
                         isSuccess = false;

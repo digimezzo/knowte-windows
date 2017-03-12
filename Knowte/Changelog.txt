@@ -1,5 +1,9 @@
-2017-03-08: Knowte 1.1 Build 488 (Preview)
+2017-03-12: Knowte 1.1 Build 489 (Preview)
 ------------------------------------------
+
+IMPORTANT: The version number format changed in this version. If you have a Preview of version 1.1 installed,
+           you might get a warning that a newer version is already installed when trying to install this version. 
+		   If you get such warning, remove the previous version, before installing this one.
 
 - [Added] Window borders are more visible when Windows doesn't display a drop shadow
 - [Added] Backup and restore of notes
