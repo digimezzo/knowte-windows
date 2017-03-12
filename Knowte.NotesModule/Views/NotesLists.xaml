@@ -117,7 +117,7 @@
                         <TextBlock DockPanel.Dock="Left" Text="{DynamicResource Language_Notebooks}" Foreground="{DynamicResource RG_BlackBrush}" FontWeight="Light" FontSize="26"/>
                         <Label DockPanel.Dock="Left" Style="{StaticResource CountLabel}" Content="{Binding TotalNotebooks}" />
                         <Button DockPanel.Dock="Right" VerticalAlignment="Center" Style="{StaticResource TransparentButton}" Margin="0,0,5,0" ToolTip="{DynamicResource Language_Change_Storage_Location}" Visibility="{Binding ShowChangeStorageLocationButton, Converter={StaticResource BooleanToCollapsedConverter}}" Command="{Binding ChangeStorageLocationCommand}">
-                            <TextBlock Text="&#xe117;" FontFamily="{StaticResource SegoeAssets}" FontSize="18" Foreground="{DynamicResource RG_MediumGrayBrush}"/>
+                            <TextBlock Text="&#xe13C;" FontFamily="{StaticResource SegoeAssets}" FontSize="18" Foreground="{DynamicResource RG_MediumGrayBrush}"/>
                         </Button>
                         <ContentControl/>
                     </DockPanel>

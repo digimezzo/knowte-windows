@@ -100,8 +100,8 @@
   <Text Key="Storage">Opslag</Text>
   <Text Key="Your_Notes_Are_Stored_Here">Jouw notities worden hier opgeslagen</Text>
   <Text Key="Change">Veranderen</Text>
-  <Text Key="Change_Description">Verander de locatie waar jouw notities zijn opgeslagen. Jouw actuele notities worden niet verplaatst naar die locatie.</Text>
-  <Text Key="Error_Change_Storage_Location_Error">Er is een fout opgetreden tijdens het veranderen van de opslagplaats van jouw notities. Raadpleeg het log bestand voor meer informatie.</Text>
+  <Text Key="Change_Description">Verander de opslaglocatie van jouw notities. Jouw actuele notities worden niet verplaatst naar die locatie.</Text>
+  <Text Key="Error_Change_Storage_Location_Error">Er is een fout opgetreden tijdens het veranderen van de opslaglocatie van jouw notities. Raadpleeg het log bestand voor meer informatie.</Text>
   <Text Key="Backup_Was_Successful">De back-up is geslaagd!</Text>
   <Text Key="Restore_Was_Successful">Het herstellen is geslaagd!</Text>
   <Text Key="Import">Import</Text>
@@ -112,9 +112,9 @@
   <Text Key="Importing_Backup">Back-up wordt geïmporteerd</Text>
   <Text Key="Success">Geslaagd</Text>
   <Text Key="Move">Verplaatsen</Text>
-  <Text Key="Change_Storage_Location_Was_Successful">Veranderen van de opslagplaats van jouw notities is geslaagd!</Text>
-  <Text Key="Move_Description">Verander de opslagplaats van jouw notities. Jouw actuele notities worden verplaatst naar de nieuwe opslagplaats.</Text>
-  <Text Key="Changing_Storage_Location">Opslagplaats wordt veranderd</Text>
-  <Text Key="Change_Storage_Location_From_Main">Opslagplaats kan veranderd worden vanaf het hoofdscherm</Text>
-  <Text Key="Change_Storage_Location">Verander opslagplaats</Text>
+  <Text Key="Change_Storage_Location_Was_Successful">De opslaglocatie van jouw notities werd met succes gewijzigd!</Text>
+  <Text Key="Move_Description">Verander de opslaglocatie van jouw notities. Jouw actuele notities worden verplaatst naar die locatie.</Text>
+  <Text Key="Changing_Storage_Location">Opslaglocatie wordt veranderd</Text>
+  <Text Key="Change_Storage_Location_From_Main">Opslaglocatie kan veranderd worden vanaf het hoofdscherm</Text>
+  <Text Key="Change_Storage_Location">Verander opslaglocatie</Text>
 </Language>
