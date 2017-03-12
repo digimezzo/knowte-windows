@@ -28,6 +28,7 @@ namespace Knowte.SettingsModule.ViewModels
         private IEventAggregator eventAggregator;
         private ObservableCollection<int> numberOfNotesInJumpList;
         private int selectedNumberOfNotesInJumpList;
+        private bool checkBoxChangeStorageLocationFromMainChecked;
         #endregion
 
         #region Commands
@@ -40,9 +41,21 @@ namespace Knowte.SettingsModule.ViewModels
         #endregion
 
         #region Properties
+        public bool CheckBoxChangeStorageLocationFromMainChecked
+        {
+            get { return this.checkBoxChangeStorageLocationFromMainChecked; }
+            set
+            {
+                SetProperty<bool>(ref this.checkBoxChangeStorageLocationFromMainChecked, value);
+
+                SettingsClient.Set<bool>("Advanced", "ChangeStorageLocationFromMain", value);
+                this.eventAggregator.GetEvent<SettingChangeStorageLocationFromMainChangedEvent>().Publish("");
+            }
+        }
+
         public string StorageLocation
         {
-            get { return ApplicationPaths.NoteStorageLocation; }
+            get { return ApplicationPaths.CurrentNoteStorageLocation; }
         }
 
         public ObservableCollection<int> NumberOfNotesInJumpList
@@ -86,7 +99,7 @@ namespace Knowte.SettingsModule.ViewModels
             this.BackupCommand = new DelegateCommand(() => this.Backup());
             this.ImportCommand = new DelegateCommand(() => this.Import());
             this.RestoreCommand = new DelegateCommand(() => this.Restore());
-            this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.NoteStorageLocation));
+            this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.CurrentNoteStorageLocation));
             this.ChangeStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(false); });
             this.MoveStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(true); });
 
@@ -95,6 +108,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             // Initialize
             this.LoadNumberOfNotesInJumplist();
+            this.LoadCheckBoxStates();
         }
         #endregion
 
@@ -103,18 +117,8 @@ namespace Knowte.SettingsModule.ViewModels
         {
             var dlg = new WPFFolderBrowserDialog();
 
-            string customStorageLocation = SettingsClient.Get<string>("General", "NoteStorageLocation");
-
-            if (!string.IsNullOrWhiteSpace(customStorageLocation))
-            {
-                // If there is a custom storage location set, open that location.
-                dlg.InitialDirectory = ApplicationPaths.NoteStorageLocation;
-            }
-            else
-            {
-                // If there is no custom storage location set, open My Documents.
-                dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            }
+            // Show the current storage location as default
+            dlg.InitialDirectory = ApplicationPaths.CurrentNoteStorageLocation;
 
             if ((bool)dlg.ShowDialog())
             {
@@ -303,6 +307,11 @@ namespace Knowte.SettingsModule.ViewModels
                     okText: ResourceUtils.GetStringResource("Language_Ok"),
                     showViewLogs: true);
             }
+        }
+
+        private void LoadCheckBoxStates()
+        {
+            this.CheckBoxChangeStorageLocationFromMainChecked = SettingsClient.Get<bool>("Advanced", "ChangeStorageLocationFromMain");
         }
 
         private void LoadNumberOfNotesInJumplist()

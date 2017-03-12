@@ -1,6 +1,5 @@
 ﻿using Digimezzo.Utilities.Settings;
 using Knowte.Common.IO;
-using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.I18n;
 using Knowte.Common.Services.Note;

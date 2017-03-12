@@ -165,16 +165,24 @@ namespace Knowte.Views
         {
             bool isSuccess = true;
 
+            // Make sure the default note storage location exists
+            if (!System.IO.Directory.Exists(ApplicationPaths.DefaultNoteStorageLocation))
+            {
+                System.IO.Directory.CreateDirectory(ApplicationPaths.DefaultNoteStorageLocation);    
+            }
+
+            // Further verification is only needed when not using the default storage location
+            if (ApplicationPaths.IsUsingDefaultStorageLocation) return true;
+
             try
             {
                 await Task.Run(() =>
                 {
                     var migrator = new DbMigrator();
-                    string noteStorageLocation = SettingsClient.Get<string>("General", "NoteStorageLocation");
 
-                    if (!System.IO.Directory.Exists(noteStorageLocation))
+                    if (!System.IO.Directory.Exists(ApplicationPaths.CurrentNoteStorageLocation))
                     {
-                        LogClient.Warning("Note storage location '{0}' could not be found.", noteStorageLocation);
+                        LogClient.Warning("Note storage location '{0}' could not be found.", ApplicationPaths.CurrentNoteStorageLocation);
                         isSuccess = false;
                     }
 
@@ -184,22 +192,14 @@ namespace Knowte.Views
                         isSuccess = false;
                     }
 
-                    string notesSubfolder = System.IO.Path.Combine(noteStorageLocation, ApplicationPaths.NotesSubDirectory);
-
-                    if (!System.IO.Directory.Exists(notesSubfolder))
-                    {
-                        LogClient.Warning("The notes sub folder '{0}' could not be found.", notesSubfolder);
-                        isSuccess = false;
-                    }
-
                     if (!isSuccess)
                     {
                         // Restore the default storage location
-                        SettingsClient.Set<string>("General", "NoteStorageLocation", SettingsClient.ApplicationFolder());
-                        LogClient.Warning("Default note storage location '{0}' was restored.", SettingsClient.ApplicationFolder());
+                        SettingsClient.Set<string>("General", "NoteStorageLocation", "");
+                        LogClient.Warning("Default note storage location was restored.");
 
                         // Allow the application to start up after the default storage location was restored
-                        isSuccess = true; 
+                        isSuccess = true;
                     }
                 });
             }

@@ -6,10 +6,8 @@ using Knowte.Common.IO;
 using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.Note;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Knowte.Common.Services.Backup
@@ -58,17 +56,14 @@ namespace Knowte.Common.Services.Backup
 
                 using (ZipArchive archive = ZipFile.Open(tempFile, ZipArchiveMode.Create))
                 {
-                    // Add the "Notes" subfolder    
-                    var di = new DirectoryInfo(Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory));
+                    // Add the files from the storage location
+                    var di = new DirectoryInfo(ApplicationPaths.CurrentNoteStorageLocation);
                     FileInfo[] fi = di.GetFiles();
 
                     foreach (FileInfo f in fi)
                     {
-                        archive.CreateEntryFromFile(f.FullName, f.Directory.Name + "/" + f.Name);
+                        archive.CreateEntryFromFile(f.FullName, f.Name);
                     }
-
-                    // Add database file
-                    archive.CreateEntryFromFile(this.factory.DatabaseFile, Path.GetFileName(this.factory.DatabaseFile));
                 }
 
                 if (File.Exists(backupFile)) File.Delete(backupFile);

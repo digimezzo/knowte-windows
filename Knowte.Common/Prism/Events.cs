@@ -33,4 +33,8 @@ namespace Knowte.Common.Prism
     public class TriggerLoadNoteAnimationEvent : PubSubEvent<string>
     {
     }
+
+    public class SettingChangeStorageLocationFromMainChangedEvent : PubSubEvent<string>
+    {
+    }
 }

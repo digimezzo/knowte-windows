@@ -6,6 +6,7 @@
              mc:Ignorable="d" 
              xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
              xmlns:presentationutils="clr-namespace:Knowte.Common.Presentation.Utils;assembly=Knowte.Common"
+             xmlns:dc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
              prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -58,6 +59,8 @@
                 <Button Grid.Row="8" Grid.Column="0" Margin="5,10,10,0" HorizontalAlignment="Stretch" Content="{Binding Source={StaticResource ChangeProxy}, Path=Data, Converter={StaticResource AddEllipsisConverter}}" Style="{StaticResource ColoredButtonSubtle}" Command="{Binding ChangeStorageLocationCommand}"/>
                 <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,10,0,0" Text="{DynamicResource Language_Change_Description}" Foreground="{DynamicResource RG_BlackBrush}" VerticalAlignment="Center"/>
             </Grid>
+            <Label Margin="0,20,0,0" Content="{DynamicResource Language_Change_Storage_Location_From_Main}"/>
+            <dc:Windows10ToggleSwitch x:Name="CheckBoxChangeStorageLocationFromMain" HorizontalAlignment="Left" Margin="5,5,0,0" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" IsChecked="{Binding CheckBoxChangeStorageLocationFromMainChecked}" Accent="{DynamicResource RG_AccentBrush}"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

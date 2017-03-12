@@ -1,5 +1,4 @@
-﻿using Digimezzo.Utilities.IO;
-using Knowte.Common.IO;
+﻿using Knowte.Common.IO;
 using SQLite;
 
 namespace Knowte.Common.Database
@@ -7,19 +6,16 @@ namespace Knowte.Common.Database
     public class SQLiteConnectionFactory
     {
         #region Private
-        private string customDatabaseFile;
+        private string customStorageLocation;
         #endregion
 
         #region ReadOnly Properties
         public string DatabaseFile
         {
-            get {
-                if (!string.IsNullOrEmpty(this.customDatabaseFile))
-                {
-                    return this.customDatabaseFile;
-                }
-
-                return System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ProcessExecutable.Name() + ".db"); ;
+            get
+            {
+                string storageLocation = string.IsNullOrEmpty(this.customStorageLocation) ? ApplicationPaths.CurrentNoteStorageLocation : this.customStorageLocation;
+                return System.IO.Path.Combine(storageLocation, "Notes.db"); ;
             }
         }
         #endregion
@@ -31,7 +27,7 @@ namespace Knowte.Common.Database
 
         public SQLiteConnectionFactory(string customStorageLocation)
         {
-            this.customDatabaseFile = System.IO.Path.Combine(customStorageLocation, ProcessExecutable.Name() + ".db");
+            this.customStorageLocation = customStorageLocation;
         }
         #endregion
 

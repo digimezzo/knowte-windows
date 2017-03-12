@@ -2,6 +2,7 @@
 using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
 using Knowte.Common.Database.Entities;
+using Knowte.Common.IO;
 using Knowte.Common.Prism;
 using Knowte.Common.Services.Appearance;
 using Knowte.Common.Services.Backup;
@@ -21,7 +22,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
-using System.Windows.Input;
+using WPFFolderBrowser;
 
 namespace Knowte.NotesModule.ViewModels
 {
@@ -66,9 +67,15 @@ namespace Knowte.NotesModule.ViewModels
         public DelegateCommand EditSelectedNotebookCommand { get; set; }
         public DelegateCommand DeleteSelectedNotebookCommand { get; set; }
         public DelegateCommand DeleteSelectedNoteCommand { get; set; }
+        public DelegateCommand ChangeStorageLocationCommand { get; set; }
         #endregion
 
         #region Properties
+        public bool ShowChangeStorageLocationButton
+        {
+            get { return SettingsClient.Get<bool>("Advanced", "ChangeStorageLocationFromMain"); }
+        }
+
         public bool TriggerRefreshNotesAnimation
         {
             get { return triggerRefreshNotesAnimation; }
@@ -172,6 +179,7 @@ namespace Knowte.NotesModule.ViewModels
                 this.TriggerRefreshNotesAnimation = true;
             });
 
+            this.eventAggregator.GetEvent<SettingChangeStorageLocationFromMainChangedEvent>().Subscribe((_) => OnPropertyChanged(() => this.ShowChangeStorageLocationButton));
             this.eventAggregator.GetEvent<RefreshJumpListEvent>().Subscribe((_) => this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes()));
 
             this.eventAggregator.GetEvent<OpenNoteEvent>().Subscribe(noteTitle =>
@@ -190,7 +198,6 @@ namespace Knowte.NotesModule.ViewModels
 
             // Initialize notebooks
             this.RefreshNotebooks();
-            this.SetDefaultSelectedNotebook();
 
             // Initialize notes
             this.NoteFilter = ""; // Must be set before RefreshNotes()
@@ -204,6 +211,7 @@ namespace Knowte.NotesModule.ViewModels
             this.DeleteSelectedNotebookCommand = new DelegateCommand(() => this.DeleteSelectedNotebook());
             this.EditSelectedNotebookCommand = new DelegateCommand(() => this.EditSelectedNotebook());
             this.DeleteSelectedNoteCommand = new DelegateCommand(async() => await this.DeleteSelectedNoteAync());
+            this.ChangeStorageLocationCommand = new DelegateCommand(async () => await this.ChangeStorageLocationAsync());
 
             this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
@@ -223,6 +231,42 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
+        private async Task ChangeStorageLocationAsync()
+        {
+            var dlg = new WPFFolderBrowserDialog();
+
+            // Show the current storage location as default
+            dlg.InitialDirectory = ApplicationPaths.CurrentNoteStorageLocation;
+
+            if ((bool)dlg.ShowDialog())
+            {
+                string selectedFolder = dlg.FileName;
+                bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, false);
+
+                // Show error if changing storage location failed
+                if (isChangeStorageLocationSuccess)
+                {
+                    // Show notification if change storage location succeeded
+                    this.dialogService.ShowNotificationDialog(
+                        null,
+                        title: ResourceUtils.GetStringResource("Language_Success"),
+                        content: ResourceUtils.GetStringResource("Language_Change_Storage_Location_Was_Successful"),
+                        okText: ResourceUtils.GetStringResource("Language_Ok"),
+                        showViewLogs: false);
+                }
+                else
+                {
+                    // Show error if change storage location failed
+                    this.dialogService.ShowNotificationDialog(
+                      null,
+                      title: ResourceUtils.GetStringResource("Language_Error"),
+                      content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
+                      okText: ResourceUtils.GetStringResource("Language_Ok"),
+                      showViewLogs: true);
+                }
+            }
+        }
+
         private async Task DeleteSelectedNoteAync()
         {
             if (this.SelectedNote == null) return;
@@ -682,6 +726,9 @@ namespace Knowte.NotesModule.ViewModels
             // Because we cannot pass a Property by reference aboves
             OnPropertyChanged(() => this.TotalNotebooks);
 
+            // Set the default selected notebook
+            this.SetDefaultSelectedNotebook();
+
             // This makes sure the View is notified that the Notebooks collection has changed. If this call is missing,
             // the list of Notebooks is not updated in the View after we changed its elements here.
             //OnPropertyChanged("Notebooks")
@@ -700,10 +747,8 @@ namespace Knowte.NotesModule.ViewModels
                 text = this.searchService.SearchText.Trim();
             }
 
-            if (this.SelectedNotebook == null)
-            {
-                SetDefaultSelectedNotebook();
-            }
+            // Make sure there is a notebook selected
+            if (this.SelectedNotebook == null) this.SetDefaultSelectedNotebook();
 
             this.Notes.Clear();
 
@@ -738,7 +783,8 @@ namespace Knowte.NotesModule.ViewModels
         {
             try
             {
-                this.SelectedNotebook = new NotebookViewModel
+                // Set the backing field, this avoid unnecessary refresh of the notes.
+                this.selectedNotebook = new NotebookViewModel
                 {
                     Notebook = new Notebook
                     {
@@ -748,6 +794,8 @@ namespace Knowte.NotesModule.ViewModels
                         IsDefaultNotebook = true
                     }
                 };
+
+                OnPropertyChanged(() => this.SelectedNotebook);
             }
             catch (Exception ex)
             {

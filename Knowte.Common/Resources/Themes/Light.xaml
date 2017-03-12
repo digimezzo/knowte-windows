@@ -20,9 +20,10 @@
 
     <SolidColorBrush x:Key="RG_BlackBrush" Color="#212121"/>
     <SolidColorBrush x:Key="RG_GrayBrush" Color="#757575"/>
+    <SolidColorBrush x:Key="RG_MediumGrayBrush" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="RG_LightGrayBrush" Color="#E0E0E0"/>
     <SolidColorBrush x:Key="RG_WhiteBrush" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="RG_BorderBrush" Color="#D2D2D2"/>
-    <SolidColorBrush x:Key="RG_LightGrayBrush" Color="#E0E0E0"/>
     <SolidColorBrush x:Key="RG_InvisibleWhiteBrush" Color="#00FFFFFF"/>
     <SolidColorBrush x:Key="RG_DimBrush" Color="#D2D2D2" Opacity="0.4"/>
     <SolidColorBrush x:Key="RG_HoverBrush" Color="#000000" Opacity="0.07"/>

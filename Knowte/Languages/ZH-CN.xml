@@ -115,4 +115,6 @@
   <Text Key="Change_Storage_Location_Was_Successful">Changing the storage location of your notes was successful!</Text>
   <Text Key="Move_Description">Change where your notes are stored. Your current notes will be moved to the new storage location.</Text>
   <Text Key="Changing_Storage_Location">Changing storage location</Text>
+  <Text Key="Change_Storage_Location_From_Main">Storage location can be changed from the main screen</Text>
+  <Text Key="Change_Storage_Location">Change storage location</Text>
 </Language>

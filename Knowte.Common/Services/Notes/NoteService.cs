@@ -27,7 +27,6 @@ namespace Knowte.Common.Services.Note
         #region Variables
         private IDialogService dialogService;
         private SQLiteConnectionFactory factory;
-        private string notesSubDirectory = Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.NotesSubDirectory);
         #endregion
 
         #region Construction
@@ -36,13 +35,16 @@ namespace Knowte.Common.Services.Note
             this.dialogService = dialogService;
             this.factory = new SQLiteConnectionFactory();
 
-            // Initialize the Notes directory
-            // ------------------------------
+            // Initialize the notes storage location
+            // -------------------------------------
 
-            // If the Notes directory doesn't exist, create it
-            if (!Directory.Exists(notesSubDirectory))
+            // If using the default storage location, check if the location needs to be created.
+            if(ApplicationPaths.IsUsingDefaultStorageLocation)
             {
-                Directory.CreateDirectory(notesSubDirectory);
+                if (!Directory.Exists(ApplicationPaths.CurrentNoteStorageLocation))
+                {
+                    Directory.CreateDirectory(ApplicationPaths.CurrentNoteStorageLocation);
+                }
             }
         }
         #endregion
@@ -65,7 +67,7 @@ namespace Knowte.Common.Services.Note
                 }
 
                 // Notes directory
-                string notesDirectoryPath = Path.Combine(newLocation, ApplicationPaths.NotesSubDirectory);
+                string notesDirectoryPath = newLocation;
                 if (!Directory.Exists(notesDirectoryPath)) Directory.CreateDirectory(notesDirectoryPath);
             });
         }
@@ -105,8 +107,6 @@ namespace Knowte.Common.Services.Note
         {
             var sourceFactory = new SQLiteConnectionFactory(sourceFolder); // SQLiteConnectionFactory that points to the source database file
             var sourceMigrator = new DbMigrator(sourceFolder); // DbMigrator that points to the source database file
-            string sourceNotesSubDirectoryPath = Path.Combine(sourceFolder, ApplicationPaths.NotesSubDirectory);
-            string destinationNotesSubDirectoryPath = Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
 
             List<Notebook> sourceNotebooks;
             List<Database.Entities.Note> sourceNotes;
@@ -126,7 +126,7 @@ namespace Knowte.Common.Services.Note
                 // If required, delete all destination Note files.
                 if (deleteDestination)
                 {
-                    foreach (string file in Directory.GetFiles(destinationNotesSubDirectoryPath, "*.xaml"))
+                    foreach (string file in Directory.GetFiles(ApplicationPaths.CurrentNoteStorageLocation, "*.xaml"))
                     {
                         File.Delete(file);
                     }
@@ -162,11 +162,11 @@ namespace Knowte.Common.Services.Note
                     // Restore only the Notes which don't exist (Id AND Title can't exist at destination. Both need to be unique).
                     foreach (Database.Entities.Note sourceNote in sourceNotes)
                     {
-                        string sourceNoteFile = Path.Combine(sourceNotesSubDirectoryPath, sourceNote.Id + ".xaml");
+                        string sourceNoteFile = Path.Combine(sourceFolder, sourceNote.Id + ".xaml");
 
                         if (!destinationNoteIds.Contains(sourceNote.Id) && !destinationNoteTitles.Contains(sourceNote.Title))
                         {
-                            File.Copy(sourceNoteFile, Path.Combine(destinationNotesSubDirectoryPath, sourceNote.Id + ".xaml"), true);
+                            File.Copy(sourceNoteFile, Path.Combine(ApplicationPaths.CurrentNoteStorageLocation, sourceNote.Id + ".xaml"), true);
                             destinationConn.Insert(sourceNote);
                         }
                     }
@@ -206,7 +206,7 @@ namespace Knowte.Common.Services.Note
                null,
                ResourceUtils.GetStringResource("Language_Backup"),
                ResourceUtils.GetStringResource("Language_Changing_Storage_Location"),
-               1000,
+               500,
                () => this.ChangeStorageLocationAsyncCallback(newStorageLocation, moveCurrentNotes));
 
             return isSuccess;   
@@ -336,9 +336,6 @@ namespace Knowte.Common.Services.Note
 
         public void NewNote(FlowDocument document, string id, string title, string notebookId)
         {
-            // Save FlowDocument as a xaml file
-            string notesPath = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
-
             DateTime saveDate = DateTime.Now;
 
             if (notebookId == null) notebookId = "";
@@ -352,7 +349,8 @@ namespace Knowte.Common.Services.Note
                 text = tr.Text;
             }
 
-            using (FileStream fs = new FileStream(System.IO.Path.Combine(notesPath, id + ".xaml"), FileMode.Create))
+            // Save FlowDocument as a xaml file
+            using (FileStream fs = new FileStream(System.IO.Path.Combine(ApplicationPaths.CurrentNoteStorageLocation, id + ".xaml"), FileMode.Create))
             {
                 tr.Save(fs, System.Windows.DataFormats.XamlPackage);
                 fs.Close();
@@ -438,9 +436,6 @@ namespace Knowte.Common.Services.Note
 
         public void UpdateNote(FlowDocument document, string id, string title, string notebookId, double width, double height, double top, double left, bool maximized)
         {
-            // Save FlowDocument as a xaml file
-            string notesPath = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
-
             DateTime modificationDate = DateTime.Now;
 
             if (notebookId == null)
@@ -458,7 +453,8 @@ namespace Knowte.Common.Services.Note
                 text = tr.Text;
             }
 
-            FileStream f = new FileStream(System.IO.Path.Combine(notesPath, id + ".xaml"), FileMode.Create);
+            // Save FlowDocument as a xaml file
+            FileStream f = new FileStream(System.IO.Path.Combine(ApplicationPaths.CurrentNoteStorageLocation, id + ".xaml"), FileMode.Create);
             tr.Save(f, System.Windows.DataFormats.XamlPackage);
             f.Close();
 
@@ -497,10 +493,8 @@ namespace Knowte.Common.Services.Note
 
             try
             {
-                string notesPath = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
-
                 TextRange t = new TextRange(doc.ContentStart, doc.ContentEnd);
-                FileStream f = new FileStream(System.IO.Path.Combine(notesPath, note.Id + ".xaml"), FileMode.Open);
+                FileStream f = new FileStream(System.IO.Path.Combine(ApplicationPaths.CurrentNoteStorageLocation, note.Id + ".xaml"), FileMode.Open);
                 t.Load(f, System.Windows.DataFormats.XamlPackage);
                 f.Close();
             }
@@ -550,8 +544,7 @@ namespace Knowte.Common.Services.Note
                         // Delete Note from disk
                         try
                         {
-                            string notesPath = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
-                            File.Delete(System.IO.Path.Combine(notesPath, id + ".xaml"));
+                            File.Delete(System.IO.Path.Combine(ApplicationPaths.CurrentNoteStorageLocation, id + ".xaml"));
                         }
                         catch (Exception)
                         {
@@ -802,10 +795,8 @@ namespace Knowte.Common.Services.Note
         public void ExportFile(string noteId, string filename)
         {
             // First, we set some defaults
-            string notesPath = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
-
             string tempPath = System.IO.Path.GetTempPath();
-            string inputXamlFile = System.IO.Path.Combine(notesPath, noteId + ".xaml");
+            string inputXamlFile = System.IO.Path.Combine(ApplicationPaths.CurrentNoteStorageLocation, noteId + ".xaml");
             string outputXamlFile = System.IO.Path.Combine(tempPath, noteId + ".xaml");
             string outputXmlFile = System.IO.Path.Combine(tempPath, noteId + ".xml");
             string zipFileName = System.IO.Path.Combine(tempPath, noteId + ".zip");
@@ -852,8 +843,6 @@ namespace Knowte.Common.Services.Note
         public void ImportFile(string filename)
         {
             // Some default paths
-            string notesPath = System.IO.Path.Combine(ApplicationPaths.NoteStorageLocation, ApplicationPaths.NotesSubDirectory);
-
             string tempPath = System.IO.Path.GetTempPath();
             string zippedGuid = "";
 

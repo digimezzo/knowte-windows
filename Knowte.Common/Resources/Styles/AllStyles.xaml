@@ -28,6 +28,7 @@
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/Null.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/ScrollBar.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/Tooltip.xaml" />
+        <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/TransparentButton.xaml" />
         <ResourceDictionary Source="/Knowte.Common;component/Resources/Styles/WindowButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

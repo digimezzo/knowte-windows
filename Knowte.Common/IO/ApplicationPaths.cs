@@ -2,7 +2,7 @@
 
 namespace Knowte.Common.IO
 {
-    public sealed class ApplicationPaths
+    public static class ApplicationPaths
     {
         public static string NotesSubDirectory = "Notes";
         public static string BackupSubDirectory = "Backup";
@@ -10,19 +10,33 @@ namespace Knowte.Common.IO
         public static string BuiltinLanguagesSubDirectory = "Languages";
         public static string CustomLanguagesSubDirectory = "Languages";
 
-        public static string NoteStorageLocation
+        public static string DefaultNoteStorageLocation
         {
             get
             {
-                string customStorageLocation = SettingsClient.Get<string>("General", "NoteStorageLocation");
-
-                if (string.IsNullOrWhiteSpace(customStorageLocation)){
-                    return SettingsClient.ApplicationFolder();
+                return System.IO.Path.Combine(SettingsClient.ApplicationFolder(), NotesSubDirectory);
+            }
+        }
+        public static string CurrentNoteStorageLocation
+        {
+            get
+            {
+                if (IsUsingDefaultStorageLocation)
+                {
+                    return DefaultNoteStorageLocation;
                 }
                 else
                 {
-                    return customStorageLocation;
+                    return SettingsClient.Get<string>("General", "NoteStorageLocation");
                 }
+            }
+        }
+
+        public static bool IsUsingDefaultStorageLocation
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(SettingsClient.Get<string>("General", "NoteStorageLocation"));
             }
         }
     }

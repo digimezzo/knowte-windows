@@ -2,7 +2,7 @@
 <Settings>
   <Namespace Name="Configuration">
     <Setting Name="Version">
-      <Value>7</Value>
+      <Value>8</Value>
     </Setting>
     <Setting Name="IsPortable">
       <Value>False</Value>
@@ -60,6 +60,9 @@
     </Setting>
   </Namespace>
   <Namespace Name="Advanced">
+    <Setting Name="ChangeStorageLocationFromMain">
+      <Value>False</Value>
+    </Setting>
     <Setting Name="NumberOfNotesInJumpList">
       <Value>10</Value>
     </Setting>
