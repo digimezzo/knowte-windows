@@ -1,4 +1,4 @@
-2017-03-12: Knowte 1.1 Build 490 (Preview)
+2017-03-13: Knowte 1.1 Build 491 (Preview)
 ------------------------------------------
 
 IMPORTANT: The version number format changed in this version. If you have a Preview of version 1.1 installed,

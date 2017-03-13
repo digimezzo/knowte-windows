@@ -260,20 +260,10 @@ namespace Knowte.NotesModule.ViewModels
 
             bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, false);
 
-            // Show error if changing storage location failed
-            if (isChangeStorageLocationSuccess)
+            if (!isChangeStorageLocationSuccess)
             {
-                // Show notification if change storage location succeeded
-                this.dialogService.ShowNotificationDialog(
-                    null,
-                    title: ResourceUtils.GetStringResource("Language_Success"),
-                    content: ResourceUtils.GetStringResource("Language_Change_Storage_Location_Was_Successful"),
-                    okText: ResourceUtils.GetStringResource("Language_Ok"),
-                    showViewLogs: false);
-            }
-            else
-            {
-                // Show error if change storage location failed
+                // Show error if change storage location failed. Don't notify when changing the storage location was successful.
+                // The user is on the main screen, and sees this immediately when the notebooks and notes get refreshed.
                 this.dialogService.ShowNotificationDialog(
                   null,
                   title: ResourceUtils.GetStringResource("Language_Error"),
