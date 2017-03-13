@@ -117,4 +117,8 @@
   <Text Key="Changing_Storage_Location">Opslaglocatie wordt veranderd</Text>
   <Text Key="Change_Storage_Location_From_Main">Opslaglocatie kan veranderd worden vanaf het hoofdscherm</Text>
   <Text Key="Change_Storage_Location">Verander opslaglocatie</Text>
+  <Text Key="Reset">Reset</Text>
+  <Text Key="Reset_Description">Gebruik de standaard opslaglocatie</Text>
+  <Text Key="Reset_Confirm">Ben je zeker dat je de standaard opslaglocatie wilt gebruiken?</Text>
+  <Text Key="Reset_Storage_Location">Standaard opslaglocatie</Text>
 </Language>

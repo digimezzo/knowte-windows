@@ -68,6 +68,7 @@ namespace Knowte.NotesModule.ViewModels
         public DelegateCommand DeleteSelectedNotebookCommand { get; set; }
         public DelegateCommand DeleteSelectedNoteCommand { get; set; }
         public DelegateCommand ChangeStorageLocationCommand { get; set; }
+        public DelegateCommand ResetStorageLocationCommand { get; set; }
         #endregion
 
         #region Properties
@@ -211,7 +212,8 @@ namespace Knowte.NotesModule.ViewModels
             this.DeleteSelectedNotebookCommand = new DelegateCommand(() => this.DeleteSelectedNotebook());
             this.EditSelectedNotebookCommand = new DelegateCommand(() => this.EditSelectedNotebook());
             this.DeleteSelectedNoteCommand = new DelegateCommand(async () => await this.DeleteSelectedNoteAync());
-            this.ChangeStorageLocationCommand = new DelegateCommand(async () => await this.ChangeStorageLocationAsync());
+            this.ChangeStorageLocationCommand = new DelegateCommand(async () => await this.ChangeStorageLocationAsync(false));
+            this.ResetStorageLocationCommand = new DelegateCommand(async () => await this.ChangeStorageLocationAsync(true));
 
             this.NewNotebookCommand = new DelegateCommand<string>((_) => this.NewNotebook());
             Common.Prism.ApplicationCommands.NewNotebookCommand.RegisterCommand(this.NewNotebookCommand);
@@ -231,43 +233,53 @@ namespace Knowte.NotesModule.ViewModels
         #endregion
 
         #region Private
-        private async Task ChangeStorageLocationAsync()
+        private async Task ChangeStorageLocationAsync(bool performReset)
         {
-            var dlg = new WPFFolderBrowserDialog();
+            string selectedFolder = ApplicationPaths.CurrentNoteStorageLocation;
 
-            // Show the current storage location as default
-            dlg.InitialDirectory = ApplicationPaths.CurrentNoteStorageLocation;
-
-            if ((bool)dlg.ShowDialog())
+            if (performReset)
             {
-                string selectedFolder = dlg.FileName;
+                bool confirmPerformReset = this.dialogService.ShowConfirmationDialog(
+                    null,
+                    title: ResourceUtils.GetStringResource("Language_Reset"),
+                    content: ResourceUtils.GetStringResource("Language_Reset_Confirm"),
+                    okText: ResourceUtils.GetStringResource("Language_Yes"),
+                    cancelText: ResourceUtils.GetStringResource("Language_No"));
 
-                // If the new folder is the same as the old folder, do nothing.
-                if (ApplicationPaths.CurrentNoteStorageLocation.Equals(selectedFolder,StringComparison.InvariantCultureIgnoreCase)) return;
+                if (confirmPerformReset) selectedFolder = ApplicationPaths.DefaultNoteStorageLocation;
+            }
+            else
+            {
+                var dlg = new WPFFolderBrowserDialog();
+                dlg.InitialDirectory = ApplicationPaths.CurrentNoteStorageLocation;
+                if ((bool)dlg.ShowDialog()) selectedFolder = dlg.FileName;
+            }
 
-                bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, false);
+            // If the new folder is the same as the old folder, do nothing.
+            if (ApplicationPaths.CurrentNoteStorageLocation.Equals(selectedFolder, StringComparison.InvariantCultureIgnoreCase)) return;
 
-                // Show error if changing storage location failed
-                if (isChangeStorageLocationSuccess)
-                {
-                    // Show notification if change storage location succeeded
-                    this.dialogService.ShowNotificationDialog(
-                        null,
-                        title: ResourceUtils.GetStringResource("Language_Success"),
-                        content: ResourceUtils.GetStringResource("Language_Change_Storage_Location_Was_Successful"),
-                        okText: ResourceUtils.GetStringResource("Language_Ok"),
-                        showViewLogs: false);
-                }
-                else
-                {
-                    // Show error if change storage location failed
-                    this.dialogService.ShowNotificationDialog(
-                      null,
-                      title: ResourceUtils.GetStringResource("Language_Error"),
-                      content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
-                      okText: ResourceUtils.GetStringResource("Language_Ok"),
-                      showViewLogs: true);
-                }
+            bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, false);
+
+            // Show error if changing storage location failed
+            if (isChangeStorageLocationSuccess)
+            {
+                // Show notification if change storage location succeeded
+                this.dialogService.ShowNotificationDialog(
+                    null,
+                    title: ResourceUtils.GetStringResource("Language_Success"),
+                    content: ResourceUtils.GetStringResource("Language_Change_Storage_Location_Was_Successful"),
+                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    showViewLogs: false);
+            }
+            else
+            {
+                // Show error if change storage location failed
+                this.dialogService.ShowNotificationDialog(
+                  null,
+                  title: ResourceUtils.GetStringResource("Language_Error"),
+                  content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
+                  okText: ResourceUtils.GetStringResource("Language_Ok"),
+                  showViewLogs: true);
             }
         }
 

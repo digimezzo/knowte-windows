@@ -117,4 +117,8 @@
   <Text Key="Changing_Storage_Location">Changement de l'endroit de stockage en cours</Text>
   <Text Key="Change_Storage_Location_From_Main">L'endroit de stockage peut être modifié depuis la page principale</Text>
   <Text Key="Change_Storage_Location">Changer l'endroit de stockage</Text>
+  <Text Key="Reset">Reset</Text>
+  <Text Key="Reset_Description">Utiliser l'endroit de stockage par défaut</Text>
+  <Text Key="Reset_Confirm">Êtes-vous sûr de vouloir utiliser l'endroit de stockage par défaut?</Text>
+  <Text Key="Reset_Storage_Location">Endroit de stockage par défaut</Text>
 </Language>

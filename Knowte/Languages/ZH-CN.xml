@@ -117,4 +117,8 @@
   <Text Key="Changing_Storage_Location">Changing storage location</Text>
   <Text Key="Change_Storage_Location_From_Main">Storage location can be changed from the main screen</Text>
   <Text Key="Change_Storage_Location">Change storage location</Text>
+  <Text Key="Reset">Reset</Text>
+  <Text Key="Reset_Description">Use the default storage location</Text>
+  <Text Key="Reset_Confirm">Are you sure you want to use the default storage location?</Text>
+  <Text Key="Reset_Storage_Location">Default storage location</Text>
 </Language>

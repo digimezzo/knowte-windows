@@ -38,6 +38,7 @@ namespace Knowte.SettingsModule.ViewModels
         public DelegateCommand OpenStorageLocationCommand { get; set; }
         public DelegateCommand ChangeStorageLocationCommand { get; set; }
         public DelegateCommand MoveStorageLocationCommand { get; set; }
+        public DelegateCommand ResetStorageLocationCommand { get; set; }
         #endregion
 
         #region Properties
@@ -100,8 +101,9 @@ namespace Knowte.SettingsModule.ViewModels
             this.ImportCommand = new DelegateCommand(() => this.Import());
             this.RestoreCommand = new DelegateCommand(() => this.Restore());
             this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.CurrentNoteStorageLocation));
-            this.ChangeStorageLocationCommand = new DelegateCommand(async() => { await this.ChangeStorageLocationAsync(false); });
-            this.MoveStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(true); });
+            this.ChangeStorageLocationCommand = new DelegateCommand(async() => { await this.ChangeStorageLocationAsync(false,false); });
+            this.MoveStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(false, true); });
+            this.ResetStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(true, false); });
 
             // Event handlers
             this.noteService.StorageLocationChanged += (sender, e) => OnPropertyChanged(() => this.StorageLocation);
@@ -113,43 +115,52 @@ namespace Knowte.SettingsModule.ViewModels
         #endregion
 
         #region Private
-        private async Task ChangeStorageLocationAsync(bool moveCurrentNotes)
+        private async Task ChangeStorageLocationAsync(bool performReset, bool moveCurrentNotes)
         {
-            var dlg = new WPFFolderBrowserDialog();
+            string selectedFolder = ApplicationPaths.CurrentNoteStorageLocation;
 
-            // Show the current storage location as default
-            dlg.InitialDirectory = ApplicationPaths.CurrentNoteStorageLocation;
-
-            if ((bool)dlg.ShowDialog())
+            if (performReset)
             {
-                string selectedFolder = dlg.FileName;
+                bool confirmPerformReset = this.dialogService.ShowConfirmationDialog(
+                    null, 
+                    title: ResourceUtils.GetStringResource("Language_Reset"), 
+                    content: ResourceUtils.GetStringResource("Language_Reset_Confirm"), 
+                    okText: ResourceUtils.GetStringResource("Language_Yes"), 
+                    cancelText: ResourceUtils.GetStringResource("Language_No"));
 
-                // If the new folder is the same as the old folder, do nothing.
-                if (ApplicationPaths.CurrentNoteStorageLocation.Equals(selectedFolder, StringComparison.InvariantCultureIgnoreCase)) return;
+                if(confirmPerformReset) selectedFolder = ApplicationPaths.DefaultNoteStorageLocation;
+            }
+            else {
+                var dlg = new WPFFolderBrowserDialog();
+                dlg.InitialDirectory = ApplicationPaths.CurrentNoteStorageLocation;
+                if ((bool)dlg.ShowDialog()) selectedFolder = dlg.FileName;
+            }
 
-                bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, moveCurrentNotes);
+            // If the new folder is the same as the old folder, do nothing.
+            if (ApplicationPaths.CurrentNoteStorageLocation.Equals(selectedFolder, StringComparison.InvariantCultureIgnoreCase)) return;
 
-                // Show error if changing storage location failed
-                if (isChangeStorageLocationSuccess)
-                {
-                    // Show notification if change storage location succeeded
-                    this.dialogService.ShowNotificationDialog(
-                        null,
-                        title: ResourceUtils.GetStringResource("Language_Success"),
-                        content: ResourceUtils.GetStringResource("Language_Change_Storage_Location_Was_Successful"),
-                        okText: ResourceUtils.GetStringResource("Language_Ok"),
-                        showViewLogs: false);
-                }
-                else
-                {
-                    // Show error if change storage location failed
-                    this.dialogService.ShowNotificationDialog(
-                      null,
-                      title: ResourceUtils.GetStringResource("Language_Error"),
-                      content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
-                      okText: ResourceUtils.GetStringResource("Language_Ok"),
-                      showViewLogs: true);
-                }
+            bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, moveCurrentNotes);
+
+            // Show error if changing storage location failed
+            if (isChangeStorageLocationSuccess)
+            {
+                // Show notification if change storage location succeeded
+                this.dialogService.ShowNotificationDialog(
+                    null,
+                    title: ResourceUtils.GetStringResource("Language_Success"),
+                    content: ResourceUtils.GetStringResource("Language_Change_Storage_Location_Was_Successful"),
+                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    showViewLogs: false);
+            }
+            else
+            {
+                // Show error if change storage location failed
+                this.dialogService.ShowNotificationDialog(
+                  null,
+                  title: ResourceUtils.GetStringResource("Language_Error"),
+                  content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
+                  okText: ResourceUtils.GetStringResource("Language_Ok"),
+                  showViewLogs: true);
             }
         }
 
