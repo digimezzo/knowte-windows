@@ -111,14 +111,14 @@
   <Text Key="Import_Was_Successful">导入成功！</Text>
   <Text Key="Importing_Backup">备份导入中</Text>
   <Text Key="Success">成功</Text>
-  <Text Key="Move">Move</Text>
-  <Text Key="Change_Storage_Location_Was_Successful">The storage location of your notes was changed successfully!</Text>
-  <Text Key="Move_Description">Change where your notes are stored. Your current notes will be moved to that location.</Text>
-  <Text Key="Changing_Storage_Location">Changing storage location</Text>
-  <Text Key="Change_Storage_Location_From_Main">Storage location can be changed from the main screen</Text>
-  <Text Key="Change_Storage_Location">Change storage location</Text>
-  <Text Key="Reset">Reset</Text>
-  <Text Key="Reset_Description">Use the default storage location</Text>
-  <Text Key="Reset_Confirm">Are you sure you want to use the default storage location?</Text>
-  <Text Key="Reset_Storage_Location">Default storage location</Text>
+  <Text Key="Move">移动</Text>
+  <Text Key="Change_Storage_Location_Was_Successful">笔记保存位置更改成功！</Text>
+  <Text Key="Move_Description">更改笔记保存位置。现存笔记会移动到新路径。</Text>
+  <Text Key="Changing_Storage_Location">保存位置更改中</Text>
+  <Text Key="Change_Storage_Location_From_Main">你可以从主窗口中更改保存位置。</Text>
+  <Text Key="Change_Storage_Location">更改保存位置</Text>
+  <Text Key="Reset">重置</Text>
+  <Text Key="Reset_Description">使用默认保存位置</Text>
+  <Text Key="Reset_Confirm">你确定使用默认保存位置吗？</Text>
+  <Text Key="Reset_Storage_Location">默认保存位置</Text>
 </Language>
