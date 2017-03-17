@@ -40,14 +40,6 @@ namespace Knowte.Common.Controls
         }
         #endregion
 
-        #region Overrides
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            this.InitializeWindow();
-        }
-        #endregion
-
         #region Public
         /// <summary>
         /// Custom Activate function because the real Activate function doesn't always bring the window on top.
@@ -72,12 +64,6 @@ namespace Knowte.Common.Controls
         #endregion
 
         #region Private
-        private void SetBorderThickness(Thickness borderThickness)
-        {
-            this.windowBorder.BorderThickness = borderThickness;
-            this.previousBorderThickness = borderThickness;
-        }
-
         /// <summary>
         /// The Deactivate function which goes together with ActivateNow
         /// </summary>
