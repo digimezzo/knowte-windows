@@ -13,7 +13,7 @@ namespace Knowte.Common.Services.Note
         string GetUniqueNoteTitle(string proposedTitle);
         Task MigrateAsync(string sourceFolder, bool deleteDestination);
         Task<bool> ChangeStorageLocationAsync(string newStorageLocation, bool moveCurrentNotes);
-        void CloseAllNoteWindows();
+        Task CloseAllNoteWindowsAsync(int delayMilliseconds = 0);
         void NewNotebook(Notebook notebook);
         void DeleteNotebook(string id);
         void UpdateNotebook(string id, string newTitle);

@@ -97,9 +97,9 @@ namespace Knowte.SettingsModule.ViewModels
             this.noteService = noteService;
 
             // Commands
-            this.BackupCommand = new DelegateCommand(() => this.Backup());
-            this.ImportCommand = new DelegateCommand(() => this.Import());
-            this.RestoreCommand = new DelegateCommand(() => this.Restore());
+            this.BackupCommand = new DelegateCommand(async () => await this.BackupAsync());
+            this.ImportCommand = new DelegateCommand(async () => await this.ImportAsync());
+            this.RestoreCommand = new DelegateCommand(async () => await this.RestoreAsync());
             this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.CurrentNoteStorageLocation));
             this.ChangeStorageLocationCommand = new DelegateCommand(async() => { await this.ChangeStorageLocationAsync(false,false); });
             this.MoveStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(false, true); });
@@ -138,6 +138,9 @@ namespace Knowte.SettingsModule.ViewModels
 
             // If the new folder is the same as the old folder, do nothing.
             if (ApplicationPaths.CurrentNoteStorageLocation.Equals(selectedFolder, StringComparison.InvariantCultureIgnoreCase)) return;
+
+            // Close all note windows
+            await this.noteService.CloseAllNoteWindowsAsync(500);
 
             bool isChangeStorageLocationSuccess = await this.noteService.ChangeStorageLocationAsync(selectedFolder, moveCurrentNotes);
 
@@ -219,7 +222,7 @@ namespace Knowte.SettingsModule.ViewModels
             return false;
         }
 
-        private void Backup()
+        private async Task BackupAsync()
         {
             bool isBackupSuccess = false;
 
@@ -227,6 +230,9 @@ namespace Knowte.SettingsModule.ViewModels
             string backupFile = string.Empty;
             bool isBackupFileChosen = this.SaveBackupFile(ref backupFile);
             if (!isBackupFileChosen) return;
+
+            // Close all note windows
+            await this.noteService.CloseAllNoteWindowsAsync(500);
 
             // Perform the backup to file
             isBackupSuccess = this.backupService.Backup(backupFile);
@@ -256,7 +262,7 @@ namespace Knowte.SettingsModule.ViewModels
             }
         }
 
-        private void Import()
+        private async Task ImportAsync()
         {
             bool isImportSuccess = false;
 
@@ -264,6 +270,9 @@ namespace Knowte.SettingsModule.ViewModels
             string backupFile = string.Empty;
             bool isBackupFileChosen = this.OpenBackupFile(ref backupFile);
             if (!isBackupFileChosen) return;
+
+            // Close all note windows
+            await this.noteService.CloseAllNoteWindowsAsync(500);
 
             // Perform the restore from file
             isImportSuccess = this.backupService.Import(backupFile);
@@ -290,7 +299,7 @@ namespace Knowte.SettingsModule.ViewModels
             }
         }
 
-        private void Restore()
+        private async Task RestoreAsync()
         {
             bool isRestoreSuccess = false;
 
@@ -298,6 +307,9 @@ namespace Knowte.SettingsModule.ViewModels
             string backupFile = string.Empty;
             bool isBackupFileChosen = this.OpenBackupFile(ref backupFile);
             if (!isBackupFileChosen) return;
+
+            // Close all note windows
+            await this.noteService.CloseAllNoteWindowsAsync(500);
 
             // Perform the restore from file
             isRestoreSuccess = this.backupService.Restore(backupFile);

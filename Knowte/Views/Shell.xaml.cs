@@ -114,7 +114,7 @@ namespace Knowte.Views
             this.appearanceService.WatchWindowsColor(this);
         }
 
-        private void Shell_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private async void Shell_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             LogClient.Info("### STOPPING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProcessExecutable.AssemblyVersion().ToString());
 
@@ -152,7 +152,7 @@ namespace Knowte.Views
                 SettingsClient.Write();
             }
 
-            this.noteService.CloseAllNoteWindows();
+            await this.noteService.CloseAllNoteWindowsAsync();
         }
 
         private void Shell_Loaded(object sender, RoutedEventArgs e)

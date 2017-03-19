@@ -222,13 +222,18 @@ namespace Knowte.Common.Services.Note
             return isSuccess;
         }
 
-        public void CloseAllNoteWindows()
+        public async Task CloseAllNoteWindowsAsync(int delayMilliseconds = 0)
         {
-            foreach (Window win in Application.Current.Windows)
+            if (Application.Current.Windows.Count > 0)
             {
-                if (win is KnowteWindow && !((KnowteWindow)win).IsMainWindow)
+                await Task.Delay(delayMilliseconds);
+
+                foreach (Window win in Application.Current.Windows)
                 {
-                    win.Close();
+                    if (win is KnowteWindow && !((KnowteWindow)win).IsMainWindow)
+                    {
+                        win.Close();
+                    }
                 }
             }
         }
