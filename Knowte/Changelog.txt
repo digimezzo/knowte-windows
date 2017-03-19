@@ -2,6 +2,7 @@
 --------------------------------------------
 
 - [Fixed] Changing storage location doesn't move the current notes to the new storage location
+- [Fixed] Possible memory leak
 
 
 2017-03-13: Knowte 1.1 Build 491 (Release)

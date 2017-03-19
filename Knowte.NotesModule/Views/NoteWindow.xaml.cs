@@ -25,6 +25,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.ComponentModel;
 
 namespace Knowte.NotesModule.Views
 {
@@ -600,6 +601,20 @@ namespace Knowte.NotesModule.Views
             {
                 // Print
                 this.DoPrint();
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            // Not sure if this is necessary. But I've seen the elapsed event getting raised even when the window was closed.
+            if (this.saveTimer != null)
+            {
+                this.saveTimer.Stop();
+                this.saveTimer.Elapsed -= new ElapsedEventHandler(this.SaveTimerHandler);
+                this.saveTimer.Dispose();
+                this.saveTimer = null;
             }
         }
 
