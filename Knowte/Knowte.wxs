@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?define Version="1.1.1.492" ?>
+<?define Version="1.1.1.493" ?>
 <?define Manufacturer="Digimezzo" ?>
 <?define Product="Knowte" ?>
 <?define ProductCab="Knowte.cab" ?>
@@ -124,6 +124,7 @@
             <File Source="SQLitePCL.batteries.dll" />
             <File Source="SQLitePCL.raw.dll" />
             <File Source="SQLitePCLPlugin_esqlite3.dll" />
+            <File Source="System.Windows.Interactivity.dll" />
             <File Source="WPFFolderBrowser.dll" />
           </Component>
         </Directory>

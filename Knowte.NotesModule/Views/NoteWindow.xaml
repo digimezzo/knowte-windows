@@ -1,26 +1,33 @@
 ﻿<controls:KnowteWindow x:Class="Knowte.NotesModule.Views.NoteWindow"
                        x:Name="MyNoteWindow"
-                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                        xmlns:controls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
-                        Title="Untitled" 
-                        Height="450"
-                        Width="550" 
-                        MinHeight="450" 
-                        MinWidth="550" 
-                        KeyUp="MetroWindow_KeyUp" 
-                        Closing="MetroWindow_Closing" 
-                        SizeChanged="MetroWindow_SizeChanged" 
-                        Loaded="MetroWindow_Loaded" 
-                        LocationChanged="MetroWindow_LocationChanged" 
-                        ContentRendered="MetroWindow_ContentRendered" 
-                        MouseDown="MetroWindow_MouseDown" 
-                        Closed="MetroWindow_Closed"
-                        OverlayBackground="{DynamicResource RG_DimBrush}"
-                        IsOverlayVisible="{Binding Path=IsDimmed}"
-                        Accent="{DynamicResource RG_AccentBrush}"
-                        xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
-                        prismMvvm:ViewModelLocator.AutoWireViewModel="True">
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:controls="clr-namespace:Knowte.Common.Controls;assembly=Knowte.Common"
+                       xmlns:prismMvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+                       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                       Title="Untitled"
+                       Height="450"
+                       Width="550"
+                       MinHeight="450"
+                       MinWidth="550"
+                       KeyUp="MetroWindow_KeyUp"
+                       Closing="MetroWindow_Closing"
+                       SizeChanged="MetroWindow_SizeChanged"
+                       Loaded="MetroWindow_Loaded"
+                       LocationChanged="MetroWindow_LocationChanged"
+                       ContentRendered="MetroWindow_ContentRendered"
+                       MouseDown="MetroWindow_MouseDown"
+                       Closed="MetroWindow_Closed"
+                       OverlayBackground="{DynamicResource RG_DimBrush}"
+                       IsOverlayVisible="{Binding Path=IsDimmed}"
+                       Accent="{DynamicResource RG_AccentBrush}"
+                       prismMvvm:ViewModelLocator.AutoWireViewModel="True">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding ClosingCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Border Panel.ZIndex="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,42" Background="{DynamicResource RG_WhiteBrush}"/>

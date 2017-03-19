@@ -1,4 +1,6 @@
-﻿using Knowte.Common.Services.Dialog;
+﻿using System;
+using Knowte.Common.Services.Dialog;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace Knowte.NotesModule.ViewModels
@@ -8,6 +10,10 @@ namespace Knowte.NotesModule.ViewModels
         #region Variables
         private IDialogService dialogService;
         private bool isDimmed;
+        #endregion
+
+        #region Commands
+        public DelegateCommand ClosingCommand { get; set; }
         #endregion
 
         #region Properties
@@ -23,8 +29,22 @@ namespace Knowte.NotesModule.ViewModels
         {
             this.dialogService = dialogService;
 
+            this.ClosingCommand = new DelegateCommand(() => this.Cleanup());
+
             // Events
-            this.dialogService.DialogVisibleChanged += isDialogVisible => this.IsDimmed = isDialogVisible;
+            this.dialogService.DialogVisibleChanged += DialogService_DialogVisibleChanged;
+        }
+        #endregion
+
+        #region Private
+        private void DialogService_DialogVisibleChanged(bool isDialogVisible)
+        {
+            this.IsDimmed = isDialogVisible;
+        }
+
+        private void Cleanup()
+        {
+            this.dialogService.DialogVisibleChanged -= DialogService_DialogVisibleChanged;
         }
         #endregion
     }
