@@ -1,4 +1,5 @@
-﻿using Knowte.Common.Database.Entities;
+﻿using Digimezzo.Utilities.Utils;
+using Knowte.Common.Database.Entities;
 using Prism.Mvvm;
 using System;
 
@@ -65,6 +66,40 @@ namespace Knowte.NotesModule.ViewModels
         {
             get { return this.isDragOver; }
             set { SetProperty<bool>(ref this.isDragOver, value); }
+        }
+        #endregion
+
+        #region Static
+        public static NotebookViewModel CreateAllNotesNotebook()
+        {
+            return new NotebookViewModel()
+            {
+                Notebook = new Notebook
+                {
+                    Title = ResourceUtils.GetStringResource("Language_All_Notes"),
+                    Id = "0",
+                    CreationDate = DateTime.Now.Ticks,
+                    IsDefaultNotebook = true
+                },
+                FontWeight = "Bold",
+                IsDragOver = false
+            };
+        }
+
+        public static NotebookViewModel CreateUnfiledNotesNotebook()
+        {
+            return new NotebookViewModel()
+            {
+                Notebook = new Notebook
+                {
+                    Title = ResourceUtils.GetStringResource("Language_Unfiled_Notes"),
+                    Id = "1",
+                    CreationDate = DateTime.Now.Ticks,
+                    IsDefaultNotebook = true
+                },
+                FontWeight = "Bold",
+                IsDragOver = false
+            };
         }
         #endregion
 

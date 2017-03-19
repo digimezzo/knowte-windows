@@ -192,17 +192,15 @@ namespace Knowte.NotesModule.ViewModels
             // Event handlers
             this.i18nService.LanguageChanged += LanguageChangedHandler;
             this.noteService.FlagUpdated += async (noteId, isFlagged) => { await this.UpdateNoteFlagAsync(noteId, isFlagged); };
-            this.noteService.StorageLocationChanged += RefreshAllHandler;
-            this.backupService.BackupRestored += RefreshAllHandler;
+            this.noteService.StorageLocationChanged += (_,__) => this.RefreshNotebooks();
+            this.backupService.BackupRestored += (_, __) => this.RefreshNotebooks();
             this.noteService.NotesChanged += (_, __) => Application.Current.Dispatcher.Invoke(() => { this.RefreshNotes(); });
             this.searchService.Searching += (_, __) => TryRefreshNotesOnSearch();
 
+            this.NoteFilter = ""; // Must be set before RefreshNotes()
+
             // Initialize notebooks
             this.RefreshNotebooks();
-
-            // Initialize notes
-            this.NoteFilter = ""; // Must be set before RefreshNotes()
-            this.RefreshNotes();
 
             // Commands
             this.DeleteNoteCommand = new DelegateCommand<object>(async (obj) => await this.DeleteNoteAsync(obj));
@@ -221,7 +219,7 @@ namespace Knowte.NotesModule.ViewModels
             this.NewNoteCommand = new DelegateCommand<object>(param => this.NewNote(param));
             Common.Prism.ApplicationCommands.NewNoteCommand.RegisterCommand(this.NewNoteCommand);
 
-            this.ImportNoteCommand = new DelegateCommand<string>((x) => this.ImportNote());
+            this.ImportNoteCommand = new DelegateCommand<string>((_) => this.ImportNote());
             Common.Prism.ApplicationCommands.ImportNoteCommand.RegisterCommand(this.ImportNoteCommand);
 
             this.NavigateBetweenNotesCommand = new DelegateCommand<object>(NavigateBetweenNotes);
@@ -361,16 +359,6 @@ namespace Knowte.NotesModule.ViewModels
             {
                 this.noteService.DeleteNotebook(notebook.Id);
                 this.RefreshNotebooks();
-                this.SelectedNotebook = new NotebookViewModel
-                {
-                    Notebook = new Notebook
-                    {
-                        Id = "0",
-                        Title = ResourceUtils.GetStringResource("Language_All_Notes"),
-                        CreationDate = DateTime.Now.Ticks,
-                        IsDefaultNotebook = true
-                    }
-                };
             }
         }
 
@@ -555,13 +543,7 @@ namespace Knowte.NotesModule.ViewModels
                 }
                 else
                 {
-                    theNotebook = new Notebook
-                    {
-                        Title = ResourceUtils.GetStringResource("Language_Unfiled_Notes"),
-                        Id = "1",
-                        CreationDate = DateTime.Now.Ticks,
-                        IsDefaultNotebook = true
-                    };
+                    theNotebook = NotebookViewModel.CreateUnfiledNotesNotebook().Notebook;
                 }
 
                 NoteWindow notewin = new NoteWindow(initialTitle, "", theNotebook, this.searchService.SearchText, true, this.appearanceService, this.jumpListService, this.eventAggregator, this.noteService,
@@ -631,11 +613,6 @@ namespace Knowte.NotesModule.ViewModels
             }
         }
 
-        private void RefreshAllHandler(object sender, EventArgs e)
-        {
-            this.RefreshNotebooks();
-            this.RefreshNotes();
-        }
         private async Task UpdateNoteFlagAsync(string noteId, bool isFlagged)
         {
             if (this.NoteFilter.Equals("Flagged"))
@@ -691,31 +668,9 @@ namespace Knowte.NotesModule.ViewModels
             this.Notebooks = null;
             var localNotebooks = new ObservableCollection<NotebookViewModel>();
 
-            localNotebooks.Add(new NotebookViewModel
-            {
-                Notebook = new Notebook
-                {
-                    Title = ResourceUtils.GetStringResource("Language_All_Notes"),
-                    Id = "0",
-                    CreationDate = DateTime.Now.Ticks,
-                    IsDefaultNotebook = true
-                },
-                FontWeight = "Bold",
-                IsDragOver = false
-            });
-
-            localNotebooks.Add(new NotebookViewModel
-            {
-                Notebook = new Notebook
-                {
-                    Title = ResourceUtils.GetStringResource("Language_Unfiled_Notes"),
-                    Id = "1",
-                    CreationDate = DateTime.Now.Ticks,
-                    IsDefaultNotebook = true
-                },
-                FontWeight = "Bold",
-                IsDragOver = false
-            });
+            // Add the default notebooks
+            localNotebooks.Add(NotebookViewModel.CreateAllNotesNotebook());
+            localNotebooks.Add(NotebookViewModel.CreateUnfiledNotesNotebook());
 
             foreach (Notebook nb in this.noteService.GetNotebooks(ref this.totalNotebooks))
             {
@@ -753,9 +708,6 @@ namespace Knowte.NotesModule.ViewModels
                 text = this.searchService.SearchText.Trim();
             }
 
-            // Make sure there is a notebook selected
-            if (this.SelectedNotebook == null) this.SetDefaultSelectedNotebook();
-
             this.Notes.Clear();
 
             foreach (Note note in this.noteService.GetNotes(new Notebook
@@ -789,19 +741,7 @@ namespace Knowte.NotesModule.ViewModels
         {
             try
             {
-                // Set the backing field, this avoid unnecessary refresh of the notes.
-                this.selectedNotebook = new NotebookViewModel
-                {
-                    Notebook = new Notebook
-                    {
-                        Title = ResourceUtils.GetStringResource("Language_All_Notes"),
-                        Id = "0",
-                        CreationDate = DateTime.Now.Ticks,
-                        IsDefaultNotebook = true
-                    }
-                };
-
-                OnPropertyChanged(() => this.SelectedNotebook);
+                this.SelectedNotebook = NotebookViewModel.CreateAllNotesNotebook();
             }
             catch (Exception ex)
             {
