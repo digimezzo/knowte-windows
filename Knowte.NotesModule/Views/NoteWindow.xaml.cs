@@ -26,6 +26,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.ComponentModel;
+using Knowte.NotesModule.ViewModels;
 
 namespace Knowte.NotesModule.Views
 {
@@ -129,10 +130,8 @@ namespace Knowte.NotesModule.Views
             this.searchTimer.Elapsed += new ElapsedEventHandler(this.SearchTimerHandler);
 
             // Events
-            this.eventAggregator.GetEvent<NotebooksChangedEvent>().Subscribe((x) => { this.RefreshNotebooks(); });
-
-            this.eventAggregator.GetEvent<RefreshNotebooksEvent>().Subscribe((x) => { this.RefreshNotebooks(); });
-
+            this.eventAggregator.GetEvent<NotebooksChangedEvent>().Subscribe((_) => { this.RefreshNotebooks(); });
+            this.eventAggregator.GetEvent<RefreshNotebooksEvent>().Subscribe((_) => { this.RefreshNotebooks(); });
 
             this.InitialTitle = title;
             this.notebook = notebook;
@@ -177,14 +176,14 @@ namespace Knowte.NotesModule.Views
             // This must happen AFTER the RichtTextBox is filled with text
             this.SubscribeToAllHyperlinks();
 
-            // Fill the combobox with notesbooks for the first time
+            // Fill the combobox with notebooks for the first time
             this.RefreshNotebooks();
 
             // Clear the formatting of pasted text
             // See: http://social.msdn.microsoft.com/Forums/vstudio/en-US/0d672c70-d49d-4ebf-871d-420cc164f7d8/c-wpf-richtextbox-remove-formatting-and-line-spaces
-            DataObject.AddPastingHandler(XAMLRichTextBox, new DataObjectPastingEventHandler(XAMLRichTextBoxPasting));
-            DataObject.AddCopyingHandler(XAMLRichTextBox, new DataObjectCopyingEventHandler(XAMLRichTextBoxCopying));
-            DataObject.AddPastingHandler(TextBoxTitle, new DataObjectPastingEventHandler(TextBoxTitlePasting));
+            DataObject.AddPastingHandler(XAMLRichTextBox, XAMLRichTextBoxPasting);
+            DataObject.AddCopyingHandler(XAMLRichTextBox, XAMLRichTextBoxCopying);
+            DataObject.AddPastingHandler(TextBoxTitle, TextBoxTitlePasting);
 
             // Is the note flagged?
             this.SetFlagVisibility();
@@ -229,13 +228,7 @@ namespace Knowte.NotesModule.Views
         private void RefreshNotebooks()
         {
             this.NotebooksComboBox.Items.Clear();
-            this.NotebooksComboBox.Items.Add(new Notebook
-            {
-                Title = "Unfiled notes",
-                Id = "1",
-                CreationDate = DateTime.Now.Ticks,
-                IsDefaultNotebook = true
-            });
+            this.NotebooksComboBox.Items.Add(NotebookViewModel.CreateUnfiledNotesNotebook().Notebook);
 
             foreach (Notebook nb in this.noteService.GetNotebooks())
             {
@@ -447,14 +440,14 @@ namespace Knowte.NotesModule.Views
                 else
                 {
                     this.TextBoxTitle.Text = this.InitialTitle;
-                    this.dialogService.ShowNotificationDialog(this,title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Note_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(this, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Note_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
                 }
             }
             catch (Exception ex)
             {
                 this.TextBoxTitle.Text = this.InitialTitle;
                 this.dialogService.ShowNotificationDialog(this, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
-                LogClient.Error("An error occured while saving the Note '{0}'. Exception: {1}", this.TextBoxTitle.Text, ex.Message);
+                LogClient.Error("An error occurred while saving the Note '{0}'. Exception: {1}", this.TextBoxTitle.Text, ex.Message);
 
                 retVal = false;
             }
@@ -608,14 +601,21 @@ namespace Knowte.NotesModule.Views
         {
             base.OnClosing(e);
 
-            // Not sure if this is necessary. But I've seen the elapsed event getting raised even when the window was closed.
-            if (this.saveTimer != null)
-            {
-                this.saveTimer.Stop();
-                this.saveTimer.Elapsed -= new ElapsedEventHandler(this.SaveTimerHandler);
-                this.saveTimer.Dispose();
-                this.saveTimer = null;
-            }
+            // Prevents memory leaks.
+            this.appearanceService.AppearanceChanged -= AppearanceChangedHandler;
+
+            DataObject.RemovePastingHandler(XAMLRichTextBox, XAMLRichTextBoxPasting);
+            DataObject.RemoveCopyingHandler(XAMLRichTextBox, XAMLRichTextBoxCopying);
+            DataObject.RemovePastingHandler(TextBoxTitle, TextBoxTitlePasting);
+
+            this.saveTimer.Stop();
+            this.saveTimer.Elapsed -= new ElapsedEventHandler(this.SaveTimerHandler);
+
+            this.typingTimer.Stop();
+            this.typingTimer.Elapsed -= new ElapsedEventHandler(this.TypingTimerHandler);
+
+            this.searchTimer.Stop();
+            this.searchTimer.Elapsed -= new ElapsedEventHandler(this.SearchTimerHandler);
         }
 
         private void RefreshSearch()
@@ -649,7 +649,7 @@ namespace Knowte.NotesModule.Views
 
         private async void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            bool dialogResult = this.dialogService.ShowConfirmationDialog(this,title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.TextBoxTitle.Text), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+            bool dialogResult = this.dialogService.ShowConfirmationDialog(this, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.TextBoxTitle.Text), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
 
 
             if (dialogResult)
@@ -688,8 +688,11 @@ namespace Knowte.NotesModule.Views
                 {
                     this.isContentChanged = true;
 
-                    this.saveTimer.Stop();
-                    this.saveTimer.Start(); //Start the timer
+                    if (this.saveTimer != null)
+                    {
+                        this.saveTimer.Stop();
+                        this.saveTimer.Start(); //Start the timer
+                    }
                 }
             }
         }
@@ -1346,7 +1349,7 @@ namespace Knowte.NotesModule.Views
             catch (Exception ex)
             {
                 LogClient.Error("Could not export note to rtf. Exception: {0}", ex.Message);
-                this.dialogService.ShowNotificationDialog(this,title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: true);
+                this.dialogService.ShowNotificationDialog(this, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: true);
             }
         }
 
