@@ -183,7 +183,7 @@ namespace Knowte.Common.Services.Note
 
             try
             {
-                string oldStorageLocation = SettingsClient.Get<string>("General", "NoteStorageLocation");
+                string oldStorageLocation = ApplicationPaths.CurrentNoteStorageLocation;
                 SettingsClient.Set<string>("General", "NoteStorageLocation", newStorageLocation);
 
                 await this.InitializeStorageIfRequiredAsync(newStorageLocation);
