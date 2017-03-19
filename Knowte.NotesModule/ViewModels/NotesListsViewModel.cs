@@ -192,7 +192,7 @@ namespace Knowte.NotesModule.ViewModels
             // Event handlers
             this.i18nService.LanguageChanged += LanguageChangedHandler;
             this.noteService.FlagUpdated += async (noteId, isFlagged) => { await this.UpdateNoteFlagAsync(noteId, isFlagged); };
-            this.noteService.StorageLocationChanged += (_,__) => this.RefreshNotebooks();
+            this.noteService.StorageLocationChanged += (_, __) => this.RefreshNotebooks();
             this.backupService.BackupRestored += (_, __) => this.RefreshNotebooks();
             this.noteService.NotesChanged += (_, __) => Application.Current.Dispatcher.Invoke(() => { this.RefreshNotes(); });
             this.searchService.Searching += (_, __) => TryRefreshNotesOnSearch();
@@ -674,7 +674,7 @@ namespace Knowte.NotesModule.ViewModels
 
             foreach (Notebook nb in this.noteService.GetNotebooks(ref this.totalNotebooks))
             {
-                localNotebooks.Add(new NotebookViewModel
+                localNotebooks.Add(new NotebookViewModel()
                 {
                     Notebook = nb,
                     FontWeight = "Normal",
@@ -710,14 +710,12 @@ namespace Knowte.NotesModule.ViewModels
 
             this.Notes.Clear();
 
-            foreach (Note note in this.noteService.GetNotes(new Notebook
+            NotebookViewModel selectedNotebook = this.SelectedNotebook != null ? this.SelectedNotebook : NotebookViewModel.CreateAllNotesNotebook();
+            var notes = this.noteService.GetNotes(selectedNotebook.Notebook, text, ref this.total, SettingsClient.Get<bool>("Appearance", "SortByModificationDate"), this.NoteFilter);
+
+            foreach (Note note in notes)
             {
-                Id = SelectedNotebook.Id,
-                Title = SelectedNotebook.Title,
-                CreationDate = SelectedNotebook.CreationDate.Ticks
-            }, text, ref this.total, SettingsClient.Get<bool>("Appearance", "SortByModificationDate"), this.NoteFilter))
-            {
-                this.Notes.Add(new NoteViewModel
+                this.Notes.Add(new NoteViewModel()
                 {
                     Title = note.Title,
                     Id = note.Id,
