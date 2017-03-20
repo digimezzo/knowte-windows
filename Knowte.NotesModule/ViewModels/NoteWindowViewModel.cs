@@ -1,5 +1,4 @@
-﻿using System;
-using Knowte.Common.Services.Dialog;
+﻿using Knowte.Common.Services.Dialog;
 using Prism.Commands;
 using Prism.Mvvm;
 

@@ -95,8 +95,6 @@ namespace Knowte.NotesModule.ViewModels
 
             set
             {
-                //SetProperty(Of ObservableCollection(Of NotebookViewModel))(mNotebooks, value)
-
                 // SetProperty doesn't notify when the elements of the collection change.
                 // So we have to do an old school OnPropertyChanged
                 this.notebooks = value;
@@ -192,15 +190,15 @@ namespace Knowte.NotesModule.ViewModels
             // Event handlers
             this.i18nService.LanguageChanged += LanguageChangedHandler;
             this.noteService.FlagUpdated += async (noteId, isFlagged) => { await this.UpdateNoteFlagAsync(noteId, isFlagged); };
-            this.noteService.StorageLocationChanged += (_, __) => this.RefreshNotebooks();
-            this.backupService.BackupRestored += (_, __) => this.RefreshNotebooks();
+            this.noteService.StorageLocationChanged += (_, __) => this.RefreshNotebooksAndNotes();
+            this.backupService.BackupRestored += (_, __) => this.RefreshNotebooksAndNotes();
             this.noteService.NotesChanged += (_, __) => Application.Current.Dispatcher.Invoke(() => { this.RefreshNotes(); });
             this.searchService.Searching += (_, __) => TryRefreshNotesOnSearch();
 
             this.NoteFilter = ""; // Must be set before RefreshNotes()
 
             // Initialize notebooks
-            this.RefreshNotebooks();
+            this.RefreshNotebooksAndNotes();
 
             // Commands
             this.DeleteNoteCommand = new DelegateCommand<object>(async (obj) => await this.DeleteNoteAsync(obj));
@@ -301,7 +299,7 @@ namespace Knowte.NotesModule.ViewModels
                     {
                         this.noteService.UpdateNotebook(this.SelectedNotebook.Title, responseText);
 
-                        this.RefreshNotebooks();
+                        this.RefreshNotebooksAndNotes();
                     }
                     else
                     {
@@ -337,7 +335,7 @@ namespace Knowte.NotesModule.ViewModels
                     {
                         this.noteService.UpdateNotebook(notebook.Id, responseText);
 
-                        this.RefreshNotebooks();
+                        this.RefreshNotebooksAndNotes();
                     }
                     else
                     {
@@ -358,34 +356,13 @@ namespace Knowte.NotesModule.ViewModels
             if (dialogResult)
             {
                 this.noteService.DeleteNotebook(notebook.Id);
-                this.RefreshNotebooks();
+                this.RefreshNotebooksAndNotes();
             }
         }
 
         private void DeleteNotebook(object obj)
         {
             this.ConfirmDeleteNotebook(this.noteService.GetNotebook(obj as string));
-        }
-
-        public void ToggleNoteFlag(object obj)
-        {
-            if (obj != null)
-            {
-                Note theNote = this.noteService.GetNote(obj as string);
-
-                if (theNote.Flagged == 1)
-                {
-                    theNote.Flagged = 0;
-                    this.noteService.UpdateNoteFlag(theNote.Id, false);
-                }
-                else
-                {
-                    theNote.Flagged = 1;
-                    this.noteService.UpdateNoteFlag(theNote.Id, true);
-                }
-
-                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
-            }
         }
 
         private async Task DeleteNoteAsync(object obj)
@@ -585,7 +562,7 @@ namespace Knowte.NotesModule.ViewModels
                         {
                             this.noteService.NewNotebook(newNotebook);
 
-                            this.RefreshNotebooks();
+                            this.RefreshNotebooksAndNotes();
                             this.SelectedNotebook = new NotebookViewModel
                             {
                                 Notebook = new Notebook
@@ -663,40 +640,46 @@ namespace Knowte.NotesModule.ViewModels
             }
         }
 
-        public void RefreshNotebooks()
+        private void SetDefaultSelectedNotebook()
         {
-            this.Notebooks = null;
-            var localNotebooks = new ObservableCollection<NotebookViewModel>();
-
-            // Add the default notebooks
-            localNotebooks.Add(NotebookViewModel.CreateAllNotesNotebook());
-            localNotebooks.Add(NotebookViewModel.CreateUnfiledNotesNotebook());
-
-            foreach (Notebook nb in this.noteService.GetNotebooks(ref this.totalNotebooks))
+            try
             {
-                localNotebooks.Add(new NotebookViewModel()
-                {
-                    Notebook = nb,
-                    FontWeight = "Normal",
-                    IsDragOver = false
-                });
+                this.SelectedNotebook = NotebookViewModel.CreateAllNotesNotebook();
             }
-
-            this.Notebooks = localNotebooks;
-
-            // Because we cannot pass a Property by reference aboves
-            OnPropertyChanged(() => this.TotalNotebooks);
-
-            // Set the default selected notebook
-            this.SetDefaultSelectedNotebook();
-
-            // This makes sure the View is notified that the Notebooks collection has changed. If this call is missing,
-            // the list of Notebooks is not updated in the View after we changed its elements here.
-            //OnPropertyChanged("Notebooks")
-            this.eventAggregator.GetEvent<NotebooksChangedEvent>().Publish("");
+            catch (Exception ex)
+            {
+                LogClient.Error("Could not set selected notebook. Exception: {0}", ex.Message);
+            }
         }
 
-        public void RefreshNotes()
+        private void RefreshNotesAnimated()
+        {
+            this.RefreshNotes();
+            this.eventAggregator.GetEvent<TriggerLoadNoteAnimationEvent>().Publish("");
+        }
+
+        private void ToggleNoteFlag(object obj)
+        {
+            if (obj != null)
+            {
+                Note theNote = this.noteService.GetNote(obj as string);
+
+                if (theNote.Flagged == 1)
+                {
+                    theNote.Flagged = 0;
+                    this.noteService.UpdateNoteFlag(theNote.Id, false);
+                }
+                else
+                {
+                    theNote.Flagged = 1;
+                    this.noteService.UpdateNoteFlag(theNote.Id, true);
+                }
+
+                this.jumpListService.RefreshJumpListAsync(this.noteService.GetRecentlyOpenedNotes(SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList")), this.noteService.GetFlaggedNotes());
+            }
+        }
+
+        private void RefreshNotes()
         {
             this.Notes = new ObservableCollection<NoteViewModel>();
 
@@ -735,22 +718,37 @@ namespace Knowte.NotesModule.ViewModels
             this.eventAggregator.GetEvent<CountNotesEvent>().Publish("");
         }
 
-        private void SetDefaultSelectedNotebook()
+        private void RefreshNotebooksAndNotes()
         {
-            try
-            {
-                this.SelectedNotebook = NotebookViewModel.CreateAllNotesNotebook();
-            }
-            catch (Exception ex)
-            {
-                LogClient.Error("Could not set selected notebook. Exception: {0}", ex.Message);
-            }
-        }
+            this.Notebooks = null;
+            var localNotebooks = new ObservableCollection<NotebookViewModel>();
 
-        public void RefreshNotesAnimated()
-        {
-            this.RefreshNotes();
-            this.eventAggregator.GetEvent<TriggerLoadNoteAnimationEvent>().Publish("");
+            // Add the default notebooks
+            localNotebooks.Add(NotebookViewModel.CreateAllNotesNotebook());
+            localNotebooks.Add(NotebookViewModel.CreateUnfiledNotesNotebook());
+
+            foreach (Notebook nb in this.noteService.GetNotebooks(ref this.totalNotebooks))
+            {
+                localNotebooks.Add(new NotebookViewModel()
+                {
+                    Notebook = nb,
+                    FontWeight = "Normal",
+                    IsDragOver = false
+                });
+            }
+
+            this.Notebooks = localNotebooks;
+
+            // Because we cannot pass a Property by reference aboves
+            OnPropertyChanged(() => this.TotalNotebooks);
+
+            // Set the default selected notebook (Setting the selected notebook, triggers a refresh of the notes.)
+            this.SetDefaultSelectedNotebook();
+
+            // This makes sure the View is notified that the Notebooks collection has changed. 
+            // If this call is missing, the list of Notebooks is not updated in the View after 
+            // we changed its elements here. OnPropertyChanged("Notebooks")
+            this.eventAggregator.GetEvent<NotebooksChangedEvent>().Publish("");
         }
         #endregion
     }
