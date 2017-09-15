@@ -13,14 +13,9 @@ namespace Migrator
 {
     public class MigratorWorker
     {
-        #region Variables
-        private SQLiteConnectionFactory factory;
-        #endregion
-
         #region Construction
         public MigratorWorker()
         {
-            this.factory = new SQLiteConnectionFactory();
         }
         #endregion
 
@@ -39,20 +34,20 @@ namespace Migrator
                 noteStudioFolder = Path.Combine(LegacyPaths.LocalAppData(), "NoteStudio");
             }
 
-            var migrator = new DbMigrator();
+            var migrator = new DbMigrator(Path.Combine(LegacyPaths.AppData(), ProductInformation.ApplicationDisplayName));
 
             if (Directory.Exists(noteStudioFolder))
             {
                 if (!migrator.DatabaseExists())
                 {
-                    // Create the database if if doesn't exist
+                    // Create the database if it doesn't exist
                     migrator.InitializeNewDatabase();
                 }
 
                 int noteCount = 0;
                 int notebookCount = 0;
 
-                using (var conn = this.factory.GetConnection())
+                using (var conn = migrator.Factory.GetConnection())
                 {
                     noteCount = conn.Table<Note>().Count();
                     notebookCount = conn.Table<Notebook>().Count();
@@ -111,7 +106,7 @@ namespace Migrator
                                              Left = t.Attribute("Left") == null ? Defaults.DefaultNoteLeft : Convert.ToInt32(t.Attribute("Left").Value)
                                          }).ToList();
 
-                                using (var conn = this.factory.GetConnection())
+                                using (var conn = migrator.Factory.GetConnection())
                                 {
                                     // NewNoteCount
                                     Knowte.Common.Database.Entities.Configuration newNoteCountConfiguration = conn.Table<Knowte.Common.Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").Select((c) => c).FirstOrDefault();
@@ -153,7 +148,7 @@ namespace Migrator
                             catch (Exception)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine(Environment.NewLine + "An error occured. Import failed.");
+                                Console.WriteLine(Environment.NewLine + "An error occurred. Import failed.");
                                 Console.ForegroundColor = ConsoleColor.Gray;
                             }
                         }

@@ -33,6 +33,11 @@ namespace Knowte.Common.Database
         #endregion
 
         #region Properties
+        public SQLiteConnectionFactory Factory
+        {
+            get { return this.factory; }
+        }
+
         public string DatabaseFile
         {
             get
