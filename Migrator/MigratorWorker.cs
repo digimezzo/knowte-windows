@@ -3,7 +3,6 @@ using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
 using Knowte.Common.Database;
 using Knowte.Common.Database.Entities;
-using Knowte.Common.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +30,14 @@ namespace Migrator
             Console.WriteLine("Migrator");
             Console.WriteLine("========");
 
+            // First check Roaming\NoteStudio
             string noteStudioFolder = Path.Combine(LegacyPaths.AppData(), "NoteStudio");
+
+            // If Roaming\NoteStudio doesn't exist, check Local\NoteStudio
+            if (!Directory.Exists(noteStudioFolder))
+            {
+                noteStudioFolder = Path.Combine(LegacyPaths.LocalAppData(), "NoteStudio");
+            }
 
             var migrator = new DbMigrator();
 
