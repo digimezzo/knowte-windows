@@ -92,7 +92,7 @@
   <Text Key="Could_Not_Open_Note">笔记无法打开。请查看日志文件获取更多信息。</Text>
   <Text Key="Backup">备份</Text>
   <Text Key="Backup_Description">为你的笔记创建一个备份</Text>
-  <Text Key="Restore">Restore</Text>
+  <Text Key="Restore">还原</Text>
   <Text Key="Error_Backup_Error">备份过程中出现一个错误。请查看日志获取更多信息。</Text>
   <Text Key="Error_Restore_Error">还原过程中出现一个错误。请查看日志获取更多信息。</Text>
   <Text Key="Creating_Backup">创建备份</Text>
