@@ -1,13 +1,7 @@
-2017-09-15: Knowte 1.1.3 Build 496 (Release)
+2017-09-17: Knowte 1.1.4 Build 497 (Release)
 --------------------------------------------
 
-- [Fixed] Fixed another NoteStudio migrator issue
-
-
-2017-09-14: Knowte 1.1.2 Build 495 (Release)
---------------------------------------------
-
-- [Fixed] Improved detection of old NoteStudio installations in the Migrator
+- [Fixed] Fixed multiple issues in the NoteStudio migrator application
 
 
 2017-03-20: Knowte 1.1.1 Build 494 (Release)

@@ -1,5 +1,4 @@
 ﻿using Digimezzo.Utilities.IO;
-using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
 using Knowte.Common.Database;
 using Knowte.Common.Database.Entities;
@@ -34,7 +33,8 @@ namespace Migrator
                 noteStudioFolder = Path.Combine(LegacyPaths.LocalAppData(), "NoteStudio");
             }
 
-            var migrator = new DbMigrator(Path.Combine(LegacyPaths.AppData(), ProductInformation.ApplicationDisplayName));
+            string notesSubfolder = Path.Combine(LegacyPaths.AppData(), ProductInformation.ApplicationDisplayName, "Notes");
+            var migrator = new DbMigrator(notesSubfolder);
 
             if (Directory.Exists(noteStudioFolder))
             {
@@ -108,11 +108,6 @@ namespace Migrator
 
                                 using (var conn = migrator.Factory.GetConnection())
                                 {
-                                    // NewNoteCount
-                                    Knowte.Common.Database.Entities.Configuration newNoteCountConfiguration = conn.Table<Knowte.Common.Database.Entities.Configuration>().Where((c) => c.Key == "NewNoteCount").Select((c) => c).FirstOrDefault();
-                                    newNoteCountConfiguration.Value = newNoteCount.ToString();
-                                    conn.Update(newNoteCountConfiguration);
-
                                     // Notebooks
                                     foreach (Notebook notebook in notebooks)
                                     {
@@ -129,14 +124,12 @@ namespace Migrator
                                 // Copy xaml files
                                 string noteStudioNotesSubFolder = System.IO.Path.Combine(noteStudioFolder, "Notes");
 
-                                if (System.IO.Directory.Exists(noteStudioNotesSubFolder))
+                                if (Directory.Exists(noteStudioNotesSubFolder))
                                 {
                                     // If the Notes subfolder doesn't exist, create it.
-                                    string notesSubfolder = System.IO.Path.Combine(SettingsClient.ApplicationFolder(), "Notes");
-
-                                    if (!System.IO.Directory.Exists(notesSubfolder))
+                                    if (!Directory.Exists(notesSubfolder))
                                     {
-                                        System.IO.Directory.CreateDirectory(notesSubfolder);
+                                        Directory.CreateDirectory(notesSubfolder);
                                     }
 
                                     foreach (var file in Directory.GetFiles(noteStudioNotesSubFolder))
@@ -145,10 +138,10 @@ namespace Migrator
                                     }
                                 }
                             }
-                            catch (Exception)
+                            catch (Exception ex)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine(Environment.NewLine + "An error occurred. Import failed.");
+                                Console.WriteLine(Environment.NewLine + $"Import failed. Exception: {ex}");
                                 Console.ForegroundColor = ConsoleColor.Gray;
                             }
                         }
