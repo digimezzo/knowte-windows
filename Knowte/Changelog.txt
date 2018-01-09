@@ -1,3 +1,9 @@
+2018-01-09: Knowte 1.1.5 (Release)
+----------------------------------
+
+- [Fixed] Fixed issue where new notes weren't automatically added to the selected notebook
+
+
 2017-09-17: Knowte 1.1.4 Build 497 (Release)
 --------------------------------------------
 
