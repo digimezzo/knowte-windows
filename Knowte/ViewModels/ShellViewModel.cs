@@ -34,22 +34,9 @@ namespace Knowte.ViewModels
         public DelegateCommand<string> OpenLinkCommand;
         public DelegateCommand<string> OpenPathCommand;
         public DelegateCommand<string> NavigateBetweenMainCommand { get; set; }
-        public DelegateCommand ShowLogfileCommand { get; set; }
         #endregion
 
         #region Properties
-        public bool IsPreview
-        {
-            get
-            {
-#if DEBUG
-                return true;
-#else
-		        return false;
-#endif
-            }
-        }
-
         public bool IsDimmed
         {
             get { return this.isDimmed; }
@@ -92,18 +79,6 @@ namespace Knowte.ViewModels
             this.i18nService.ApplyLanguageAsync(SettingsClient.Get<string>("Appearance", "Language"));
 
             // Commands
-            this.ShowLogfileCommand = new DelegateCommand(() =>
-            {
-                try
-                {
-                    Actions.TryViewInExplorer(LogClient.Logfile());
-                }
-                catch (Exception ex)
-                {
-                    LogClient.Error("Could not view the log file {0} in explorer. Exception: {1}", LogClient.Logfile(), ex.Message);
-                }
-            });
-
             this.OpenPathCommand = new DelegateCommand<string>((string path) =>
             {
                 try

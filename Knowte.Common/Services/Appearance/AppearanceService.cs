@@ -99,7 +99,7 @@ namespace Knowte.Common.Services.Appearance
                                 "",
                                 "1. Copy and rename the file Red.xml",
                                 "2. Open the file and edit the color code of AccentColor",
-                                "3. Your ColorScheme appears automatically in " + ProductInformation.ApplicationDisplayName
+                                "3. Your ColorScheme appears automatically in " + ProductInformation.ApplicationName
                                 };
 
             File.WriteAllLines(howToFile, lines, System.Text.Encoding.UTF8);

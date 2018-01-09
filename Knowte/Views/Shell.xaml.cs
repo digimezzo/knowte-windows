@@ -116,7 +116,7 @@ namespace Knowte.Views
 
         private async void Shell_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            LogClient.Info("### STOPPING {0}, version {1} ###", ProductInformation.ApplicationDisplayName, ProcessExecutable.AssemblyVersion().ToString());
+            LogClient.Info("### STOPPING {0}, version {1} ###", ProductInformation.ApplicationName, ProcessExecutable.AssemblyVersion().ToString());
 
             // Prevent saving the size when the window is minimized.
             // When minimized, the actual size is not detected correctly,

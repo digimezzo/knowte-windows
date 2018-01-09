@@ -209,8 +209,8 @@ namespace Knowte.Common.Services.Note
                 // Only show busy dialog when moving notes
                 isSuccess = this.dialogService.ShowBusyDialog(
                     null,
-                    ResourceUtils.GetStringResource("Language_Backup"),
-                    ResourceUtils.GetStringResource("Language_Changing_Storage_Location"),
+                    ResourceUtils.GetString("Language_Backup"),
+                    ResourceUtils.GetString("Language_Changing_Storage_Location"),
                     250,
                     () => this.ChangeStorageLocationAsyncCallback(newStorageLocation, moveCurrentNotes));
             }

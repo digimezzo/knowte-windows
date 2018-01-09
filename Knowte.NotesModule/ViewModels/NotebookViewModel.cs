@@ -76,7 +76,7 @@ namespace Knowte.NotesModule.ViewModels
             {
                 Notebook = new Notebook
                 {
-                    Title = ResourceUtils.GetStringResource("Language_All_Notes"),
+                    Title = ResourceUtils.GetString("Language_All_Notes"),
                     Id = "0",
                     CreationDate = DateTime.Now.Ticks,
                     IsDefaultNotebook = true
@@ -92,7 +92,7 @@ namespace Knowte.NotesModule.ViewModels
             {
                 Notebook = new Notebook
                 {
-                    Title = ResourceUtils.GetStringResource("Language_Unfiled_Notes"),
+                    Title = ResourceUtils.GetString("Language_Unfiled_Notes"),
                     Id = "1",
                     CreationDate = DateTime.Now.Ticks,
                     IsDefaultNotebook = true

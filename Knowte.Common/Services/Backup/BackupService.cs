@@ -154,8 +154,8 @@ namespace Knowte.Common.Services.Backup
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
-                ResourceUtils.GetStringResource("Language_Backup"),
-                ResourceUtils.GetStringResource("Language_Creating_Backup"),
+                ResourceUtils.GetString("Language_Backup"),
+                ResourceUtils.GetString("Language_Creating_Backup"),
                 1000,
                 () => this.BackupAsyncCallback(backupFile));
 
@@ -166,8 +166,8 @@ namespace Knowte.Common.Services.Backup
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
-                ResourceUtils.GetStringResource("Language_Import"),
-                ResourceUtils.GetStringResource("Language_Importing_Backup"),
+                ResourceUtils.GetString("Language_Import"),
+                ResourceUtils.GetString("Language_Importing_Backup"),
                 1000,
                 () => this.RestoreAsyncCallback(backupFile, false));
 
@@ -180,8 +180,8 @@ namespace Knowte.Common.Services.Backup
         {
             bool isSuccess = this.dialogService.ShowBusyDialog(
                 null,
-                ResourceUtils.GetStringResource("Language_Restore"),
-                ResourceUtils.GetStringResource("Language_Restoring_Backup"),
+                ResourceUtils.GetString("Language_Restore"),
+                ResourceUtils.GetString("Language_Restoring_Backup"),
                 1000,
                 () => this.RestoreAsyncCallback(backupFile, true));
 

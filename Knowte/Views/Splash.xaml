@@ -164,24 +164,13 @@
                             </dc:ProgressRing>
                         </Grid>
                     </Grid>
-                    <StackPanel>
-                        <TextBlock 
+                    <TextBlock 
                             Margin="15,5,0,0" 
                             Padding="0" 
-                            Text="{Binding Source={x:Static base:ProductInformation.ApplicationDisplayName},Converter={StaticResource StringToUpperConverter}}" 
+                            Text="{Binding Source={x:Static base:ProductInformation.ApplicationName},Converter={StaticResource StringToUpperConverter}}" 
                             Foreground="{StaticResource Local_WhiteBrush}" 
                             FontFamily="{StaticResource RobotoThin}"
                             FontSize="{Binding Source={x:Static base:Constants.SplashAppNameFontSize}}"/>
-                        <Border 
-                            Margin="0,-5,0,0" 
-                            HorizontalAlignment="Right" 
-                            Background="{DynamicResource Local_AccentBrush}" 
-                            Padding="4,2,4,2" 
-                            CornerRadius="2"
-                            Visibility="{Binding IsPreview,ElementName=Me,Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <TextBlock Text="{Binding Package.Label, ElementName=Me}" FontSize="10" FontWeight="Bold" Foreground="{StaticResource Local_WhiteBrush}"/>
-                        </Border>
-                    </StackPanel>
                 </StackPanel>
             </Grid>
             <DockPanel x:Name="ErrorPanel" Opacity="0" Panel.ZIndex="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="15">

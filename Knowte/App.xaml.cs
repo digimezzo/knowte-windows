@@ -92,11 +92,11 @@ namespace Knowte
 
             if (!isNewInstance)
             {
-                LogClient.Info("There is already another instance of {0} running.", ProductInformation.ApplicationDisplayName);
+                LogClient.Info("There is already another instance of {0} running.", ProductInformation.ApplicationName);
 
                 // Do fancy stuff here to send to the already running instance
                 ICommandService commandServiceProxy = default(ICommandService);
-                ChannelFactory<ICommandService> commandServiceFactory = new ChannelFactory<ICommandService>(new StrongNetNamedPipeBinding(), new EndpointAddress(string.Format("net.pipe://localhost/{0}/CommandService/CommandServiceEndpoint", ProductInformation.ApplicationDisplayName)));
+                ChannelFactory<ICommandService> commandServiceFactory = new ChannelFactory<ICommandService>(new StrongNetNamedPipeBinding(), new EndpointAddress(string.Format("net.pipe://localhost/{0}/CommandService/CommandServiceEndpoint", ProductInformation.ApplicationName)));
 
                 try
                 {

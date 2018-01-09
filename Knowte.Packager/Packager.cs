@@ -1,5 +1,6 @@
 ﻿using Digimezzo.Utilities.Packaging;
 using Knowte.Common.Base;
+using System;
 using System.Reflection;
 
 namespace Knowte.Packager
@@ -11,16 +12,30 @@ namespace Knowte.Packager
             Assembly asm = Assembly.GetEntryAssembly();
             AssemblyName an = asm.GetName();
 
-            Configuration config;
+            bool proceed = true;
 
 #if DEBUG
-            config = Configuration.Debug;
-#else
-		   config = Configuration.Release;
+            proceed = false;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("The project was built in DEBUG. Do you want to proceed? [Y/N]");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            ConsoleKeyInfo info = Console.ReadKey();
+            Console.Write(Environment.NewLine);
+            Console.Write(Environment.NewLine);
+
+            if (info.Key == ConsoleKey.Y)
+            {
+                proceed = true;
+
+            }
 #endif
 
-            var worker = new PackageCreator(ProductInformation.ApplicationDisplayName, an.Version, config);
-            worker.Execute();
+            if (proceed)
+            {
+                var worker = new PackageCreator(ProductInformation.ApplicationName, an.Version);
+                worker.ExecuteAsync().Wait();
+            }
         }
     }
 }

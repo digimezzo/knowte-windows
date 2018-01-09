@@ -33,7 +33,7 @@ namespace Migrator
                 noteStudioFolder = Path.Combine(LegacyPaths.LocalAppData(), "NoteStudio");
             }
 
-            string notesSubfolder = Path.Combine(LegacyPaths.AppData(), ProductInformation.ApplicationDisplayName, "Notes");
+            string notesSubfolder = Path.Combine(LegacyPaths.AppData(), ProductInformation.ApplicationName, "Notes");
             var migrator = new DbMigrator(notesSubfolder);
 
             if (Directory.Exists(noteStudioFolder))

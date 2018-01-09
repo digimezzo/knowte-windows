@@ -1,12 +1,7 @@
 ﻿using System.Reflection;
 
 [assembly: AssemblyCompany("Digimezzo")]
-[assembly: AssemblyCopyright("Copyright Digimezzo © 2013 - 2017")]
-[assembly: AssemblyVersion("1.1.4.497")]
-[assembly: AssemblyFileVersion("1.1.4.497")]
-
-#if DEBUG
-[assembly: AssemblyInformationalVersion("1.1.4.497 Preview")]
-#else
-[assembly: AssemblyInformationalVersion("1.1.4.497")]
-#endif
+[assembly: AssemblyCopyright("Copyright Digimezzo © 2013 - 2018")]
+[assembly: AssemblyVersion("1.1.5.0")]
+[assembly: AssemblyFileVersion("1.1.5.0")]
+[assembly: AssemblyInformationalVersion("1.1.5.0")]

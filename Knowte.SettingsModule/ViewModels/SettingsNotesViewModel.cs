@@ -70,17 +70,17 @@ namespace Knowte.SettingsModule.ViewModels
             this.FontSizeCorrections = new ObservableCollection<FontSizeCorrection>();
             this.FontSizeCorrections.Add(new FontSizeCorrection
             {
-                Name = ResourceUtils.GetStringResource("Language_Normal"),
+                Name = ResourceUtils.GetString("Language_Normal"),
                 Correction = 0
             });
             this.FontSizeCorrections.Add(new FontSizeCorrection
             {
-                Name = ResourceUtils.GetStringResource("Language_Large"),
+                Name = ResourceUtils.GetString("Language_Large"),
                 Correction =3
             });
             this.FontSizeCorrections.Add(new FontSizeCorrection
             {
-                Name = ResourceUtils.GetStringResource("Language_Larger"),
+                Name = ResourceUtils.GetString("Language_Larger"),
                 Correction = 6
             });
 

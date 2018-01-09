@@ -18,15 +18,12 @@
                         <Path Data="{StaticResource KnowteIcon}" Fill="{DynamicResource RG_WhiteBrush}"/>
                     </Viewbox>
                 </Grid>
-                <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource RG_BlackBrush}" FontSize="{Binding Source={x:Static base:Constants.AboutAppNameFontSize}}" Text="{Binding Source={x:Static base:ProductInformation.ApplicationDisplayName},Converter={StaticResource StringToUpperConverter}}" FontFamily="{StaticResource RobotoThin}"/>
+                <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource RG_BlackBrush}" FontSize="{Binding Source={x:Static base:Constants.AboutAppNameFontSize}}" Text="{Binding Source={x:Static base:ProductInformation.ApplicationName},Converter={StaticResource StringToUpperConverter}}" FontFamily="{StaticResource RobotoThin}"/>
             </DockPanel>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                 <TextBlock Text="{DynamicResource Language_Version}" Foreground="{DynamicResource RG_BlackBrush}"/>
                 <TextBlock Text=":" Margin="0,0,5,0" Foreground="{DynamicResource RG_BlackBrush}"/>
-                <TextBlock Text="{Binding Package.FormattedVersion}" Margin="0,0,5,0"/>
-                <Border Background="{DynamicResource RG_AccentBrush}" Padding="4,2,4,2" CornerRadius="2">
-                    <TextBlock Text="{Binding Package.Label}" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource RG_WhiteBrush}"/>
-                </Border>
+                <TextBlock Text="{Binding Package.FormattedVersionNoBuild}" Margin="0,0,5,0" FontWeight="Bold"/>
             </StackPanel>
             <TextBlock Text="{x:Static base:ProductInformation.Copyright}"/>
             <Button Content="{DynamicResource Language_License}" Style="{StaticResource LinkButton}" Command="{Binding ShowLicenseCommand}"/>

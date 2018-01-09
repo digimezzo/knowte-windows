@@ -6,8 +6,8 @@ namespace Knowte.Common.Base
     public class ProductInformation
     {
         public static string ApplicationGuid = "e3be6998-dbcf-4f99-b2b5-bf046fe680f7";
-        public static string ApplicationDisplayName = "Knowte";
-        public static string ApplicationDisplayNameUppercase = "KNOWTE";
+        public static string ApplicationName = "Knowte";
+        public static string ApplicationNameUppercase = "KNOWTE";
         public static string Copyright = "Copyright Digimezzo © 2013 - " + DateTime.Now.Year;
         public static string PayPalLink = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MQALEWTEZ7HX8";
         public static string PreviewLabel = "Preview";

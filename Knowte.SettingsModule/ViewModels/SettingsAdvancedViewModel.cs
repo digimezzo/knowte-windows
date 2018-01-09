@@ -123,10 +123,10 @@ namespace Knowte.SettingsModule.ViewModels
             {
                 bool confirmPerformReset = this.dialogService.ShowConfirmationDialog(
                     null, 
-                    title: ResourceUtils.GetStringResource("Language_Reset"), 
-                    content: ResourceUtils.GetStringResource("Language_Reset_Confirm"), 
-                    okText: ResourceUtils.GetStringResource("Language_Yes"), 
-                    cancelText: ResourceUtils.GetStringResource("Language_No"));
+                    title: ResourceUtils.GetString("Language_Reset"), 
+                    content: ResourceUtils.GetString("Language_Reset_Confirm"), 
+                    okText: ResourceUtils.GetString("Language_Yes"), 
+                    cancelText: ResourceUtils.GetString("Language_No"));
 
                 if(confirmPerformReset) selectedFolder = ApplicationPaths.DefaultNoteStorageLocation;
             }
@@ -150,9 +150,9 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show notification if change storage location succeeded
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    title: ResourceUtils.GetStringResource("Language_Success"),
-                    content: ResourceUtils.GetStringResource("Language_Change_Storage_Location_Was_Successful"),
-                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    title: ResourceUtils.GetString("Language_Success"),
+                    content: ResourceUtils.GetString("Language_Change_Storage_Location_Was_Successful"),
+                    okText: ResourceUtils.GetString("Language_Ok"),
                     showViewLogs: false);
             }
             else
@@ -160,9 +160,9 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show error if change storage location failed
                 this.dialogService.ShowNotificationDialog(
                   null,
-                  title: ResourceUtils.GetStringResource("Language_Error"),
-                  content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
-                  okText: ResourceUtils.GetStringResource("Language_Ok"),
+                  title: ResourceUtils.GetString("Language_Error"),
+                  content: ResourceUtils.GetString("Language_Error_Change_Storage_Location_Error"),
+                  okText: ResourceUtils.GetString("Language_Ok"),
                   showViewLogs: true);
             }
         }
@@ -172,7 +172,7 @@ namespace Knowte.SettingsModule.ViewModels
             var dlg = new SaveFileDialog();
             dlg.FileName = DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss.fff");
             dlg.DefaultExt = Defaults.BackupFileExtension;
-            dlg.Filter = ProductInformation.ApplicationDisplayName + " backup file (*." + Defaults.BackupFileExtension + ")|*." + Defaults.BackupFileExtension + "|All files (*.*)|*.*";
+            dlg.Filter = ProductInformation.ApplicationName + " backup file (*." + Defaults.BackupFileExtension + ")|*." + Defaults.BackupFileExtension + "|All files (*.*)|*.*";
 
             string lastBackupDirectory = SettingsClient.Get<string>("General", "LastBackupDirectory");
 
@@ -199,7 +199,7 @@ namespace Knowte.SettingsModule.ViewModels
         {
             var dlg = new OpenFileDialog();
             dlg.DefaultExt = Defaults.BackupFileExtension;
-            dlg.Filter = ProductInformation.ApplicationDisplayName + " backup file (*." + Defaults.BackupFileExtension + ")|*." + Defaults.BackupFileExtension + "|All files (*.*)|*.*";
+            dlg.Filter = ProductInformation.ApplicationName + " backup file (*." + Defaults.BackupFileExtension + ")|*." + Defaults.BackupFileExtension + "|All files (*.*)|*.*";
 
             string lastBackupDirectory = SettingsClient.Get<string>("General", "LastBackupDirectory");
 
@@ -245,9 +245,9 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show notification if backup succeeded
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    title: ResourceUtils.GetStringResource("Language_Success"),
-                    content: ResourceUtils.GetStringResource("Language_Backup_Was_Successful"),
-                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    title: ResourceUtils.GetString("Language_Success"),
+                    content: ResourceUtils.GetString("Language_Backup_Was_Successful"),
+                    okText: ResourceUtils.GetString("Language_Ok"),
                     showViewLogs: false);
             }
             else
@@ -255,9 +255,9 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show error if backup failed
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    title: ResourceUtils.GetStringResource("Language_Error"),
-                    content: ResourceUtils.GetStringResource("Language_Error_Backup_Error"),
-                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    title: ResourceUtils.GetString("Language_Error"),
+                    content: ResourceUtils.GetString("Language_Error_Backup_Error"),
+                    okText: ResourceUtils.GetString("Language_Ok"),
                     showViewLogs: true);
             }
         }
@@ -282,9 +282,9 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show notification if import succeeded
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    title: ResourceUtils.GetStringResource("Language_Success"),
-                    content: ResourceUtils.GetStringResource("Language_Import_Was_Successful"),
-                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    title: ResourceUtils.GetString("Language_Success"),
+                    content: ResourceUtils.GetString("Language_Import_Was_Successful"),
+                    okText: ResourceUtils.GetString("Language_Ok"),
                     showViewLogs: false);
             }
             else
@@ -292,9 +292,9 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show error if import failed
                 this.dialogService.ShowNotificationDialog(
                                    null,
-                                   title: ResourceUtils.GetStringResource("Language_Error"),
-                                   content: ResourceUtils.GetStringResource("Language_Error_Import_Error"),
-                                   okText: ResourceUtils.GetStringResource("Language_Ok"),
+                                   title: ResourceUtils.GetString("Language_Error"),
+                                   content: ResourceUtils.GetString("Language_Error_Import_Error"),
+                                   okText: ResourceUtils.GetString("Language_Ok"),
                                    showViewLogs: true);
             }
         }
@@ -319,9 +319,9 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show notification if restore succeeded
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    title: ResourceUtils.GetStringResource("Language_Success"),
-                    content: ResourceUtils.GetStringResource("Language_Restore_Was_Successful"),
-                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    title: ResourceUtils.GetString("Language_Success"),
+                    content: ResourceUtils.GetString("Language_Restore_Was_Successful"),
+                    okText: ResourceUtils.GetString("Language_Ok"),
                     showViewLogs: false);
             }
             else
@@ -329,9 +329,9 @@ namespace Knowte.SettingsModule.ViewModels
                 // Show error if restore failed
                 this.dialogService.ShowNotificationDialog(
                     null,
-                    title: ResourceUtils.GetStringResource("Language_Error"),
-                    content: ResourceUtils.GetStringResource("Language_Error_Restore_Error"),
-                    okText: ResourceUtils.GetStringResource("Language_Ok"),
+                    title: ResourceUtils.GetString("Language_Error"),
+                    content: ResourceUtils.GetString("Language_Error_Restore_Error"),
+                    okText: ResourceUtils.GetString("Language_Ok"),
                     showViewLogs: true);
             }
         }

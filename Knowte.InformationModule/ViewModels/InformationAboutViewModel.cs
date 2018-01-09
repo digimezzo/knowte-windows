@@ -35,15 +35,7 @@ namespace Knowte.InformationModule.ViewModels
             this.container = container;
             this.dialogService = dialogService;
 
-            Configuration config;
-
-#if DEBUG
-            config = Configuration.Debug;
-#else
-		    config = Configuration.Release;
-#endif
-
-            this.Package = new Package(ProcessExecutable.Name(), ProcessExecutable.AssemblyVersion(), config);
+            this.Package = new Package(ProcessExecutable.Name(), ProcessExecutable.AssemblyVersion());
             this.ShowLicenseCommand = new DelegateCommand(() => this.ShowLicense());
         }
 
@@ -53,13 +45,13 @@ namespace Knowte.InformationModule.ViewModels
 
             this.dialogService.ShowCustomDialog(
                 null,
-                ResourceUtils.GetStringResource("Language_License"),
+                ResourceUtils.GetString("Language_License"),
                 view,
                 400,
                 0,
                 false,
                 false,
-                ResourceUtils.GetStringResource("Language_Ok"),
+                ResourceUtils.GetString("Language_Ok"),
                 string.Empty,
                 null);
         }

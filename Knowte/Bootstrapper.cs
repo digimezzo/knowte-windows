@@ -88,7 +88,7 @@ namespace Knowte
         {
             // CommandService
             // --------------
-            ServiceHost commandServicehost = new ServiceHost(typeof(CommandService), new Uri[] { new Uri(string.Format("net.pipe://localhost/{0}/CommandService", ProductInformation.ApplicationDisplayName)) });
+            ServiceHost commandServicehost = new ServiceHost(typeof(CommandService), new Uri[] { new Uri(string.Format("net.pipe://localhost/{0}/CommandService", ProductInformation.ApplicationName)) });
             commandServicehost.AddServiceEndpoint(typeof(ICommandService), new StrongNetNamedPipeBinding(), "CommandServiceEndpoint");
 
             try

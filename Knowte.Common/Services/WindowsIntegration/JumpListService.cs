@@ -41,7 +41,7 @@ namespace Knowte.Common.Services.WindowsIntegration
                     Title = note.Title,
                     Arguments = "/open " + "\"" + note.Title + "\"",
                     Description = "",
-                    CustomCategory = ResourceUtils.GetStringResource("Language_Recent_Notes"),
+                    CustomCategory = ResourceUtils.GetString("Language_Recent_Notes"),
                     IconResourcePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Defaults.IconsLibrary),
                     ApplicationPath = Assembly.GetEntryAssembly().Location,
                     IconResourceIndex = 2
@@ -70,7 +70,7 @@ namespace Knowte.Common.Services.WindowsIntegration
 
                     this.jumplist.JumpItems.Add(new JumpTask
                     {
-                        Title = ResourceUtils.GetStringResource("Language_Donate"),
+                        Title = ResourceUtils.GetString("Language_Donate"),
                         Arguments = "/donate " + ProductInformation.PayPalLink,
                         Description = "",
                         IconResourcePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Defaults.IconsLibrary),
@@ -80,7 +80,7 @@ namespace Knowte.Common.Services.WindowsIntegration
 
                     this.jumplist.JumpItems.Add(new JumpTask
                     {
-                        Title = ResourceUtils.GetStringResource("Language_New_Note"),
+                        Title = ResourceUtils.GetString("Language_New_Note"),
                         Arguments = "/new dummyArgument",
                         Description = "",
                         IconResourcePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Defaults.IconsLibrary),

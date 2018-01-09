@@ -16,29 +16,9 @@ namespace Knowte.Views
         #region Variables
         private int uiWaitMilliSeconds = 300;
         private string errorMessage;
-        private Package package;
         #endregion
 
         #region Properties
-        public Package Package
-        {
-            get
-            {
-                return this.package;
-            }
-        }
-
-        public bool IsPreview
-        {
-            get
-            {
-#if DEBUG
-                return true;
-#else
-		        return false;
-#endif
-            }
-        }
         public bool ShowErrorPanel
         {
             get { return Convert.ToBoolean(GetValue(ShowErrorPanelProperty)); }
@@ -61,15 +41,6 @@ namespace Knowte.Views
 
         public Splash()
         {
-            Configuration config;
-#if DEBUG
-            config = Configuration.Debug;
-#else
-		    config = Configuration.Release;
-#endif
-
-            this.package = new Package(ProcessExecutable.Name(), ProcessExecutable.AssemblyVersion(), config);
-
             InitializeComponent();
         }
 
@@ -143,11 +114,11 @@ namespace Knowte.Views
             try
             {
                 // Checks if an upgrade of the settings is needed
-                if (SettingsClient.IsUpgradeNeeded())
+                if (SettingsClient.IsMigrationNeeded())
                 {
                     this.ShowProgressRing = true;
                     LogClient.Info("Upgrading settings");
-                    await Task.Run(() => SettingsClient.Upgrade());
+                    await Task.Run(() => SettingsClient.Migrate());
                 }
 
                 isSuccess = true;

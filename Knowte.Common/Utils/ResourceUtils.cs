@@ -5,7 +5,7 @@ namespace Knowte.Common.Utils
 {
     public sealed class ResourceUtils
     {
-        public static string GetStringResource(string resourceName)
+        public static string GetString(string resourceName)
         {
             return Application.Current.TryFindResource(resourceName).ToString();
         }

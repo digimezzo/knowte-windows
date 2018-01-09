@@ -237,10 +237,10 @@ namespace Knowte.NotesModule.ViewModels
             {
                 bool confirmPerformReset = this.dialogService.ShowConfirmationDialog(
                     null,
-                    title: ResourceUtils.GetStringResource("Language_Reset"),
-                    content: ResourceUtils.GetStringResource("Language_Reset_Confirm"),
-                    okText: ResourceUtils.GetStringResource("Language_Yes"),
-                    cancelText: ResourceUtils.GetStringResource("Language_No"));
+                    title: ResourceUtils.GetString("Language_Reset"),
+                    content: ResourceUtils.GetString("Language_Reset_Confirm"),
+                    okText: ResourceUtils.GetString("Language_Yes"),
+                    cancelText: ResourceUtils.GetString("Language_No"));
 
                 if (confirmPerformReset) selectedFolder = ApplicationPaths.DefaultNoteStorageLocation;
             }
@@ -262,9 +262,9 @@ namespace Knowte.NotesModule.ViewModels
                 // The user is on the main screen, and sees this immediately when the notebooks and notes get refreshed.
                 this.dialogService.ShowNotificationDialog(
                   null,
-                  title: ResourceUtils.GetStringResource("Language_Error"),
-                  content: ResourceUtils.GetStringResource("Language_Error_Change_Storage_Location_Error"),
-                  okText: ResourceUtils.GetStringResource("Language_Ok"),
+                  title: ResourceUtils.GetString("Language_Error"),
+                  content: ResourceUtils.GetString("Language_Error_Change_Storage_Location_Error"),
+                  okText: ResourceUtils.GetString("Language_Ok"),
                   showViewLogs: true);
             }
         }
@@ -273,7 +273,7 @@ namespace Knowte.NotesModule.ViewModels
         {
             if (this.SelectedNote == null) return;
 
-            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", this.SelectedNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetString("Language_Delete_Note"), content: ResourceUtils.GetString("Language_Delete_Note_Confirm").Replace("%notename%", this.SelectedNote.Title), okText: ResourceUtils.GetString("Language_Yes"), cancelText: ResourceUtils.GetString("Language_No"));
 
             if (dialogResult)
             {
@@ -287,7 +287,7 @@ namespace Knowte.NotesModule.ViewModels
             if (this.selectedNotebook == null) return;
 
             string responseText = this.selectedNotebook.Title;
-            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", this.selectedNotebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
+            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetString("Language_Edit_Notebook"), content: ResourceUtils.GetString("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", this.selectedNotebook.Title), okText: ResourceUtils.GetString("Language_Ok"), cancelText: ResourceUtils.GetString("Language_Cancel"), responeText: ref responseText);
 
             if (dialogResult)
             {
@@ -303,12 +303,12 @@ namespace Knowte.NotesModule.ViewModels
                     }
                     else
                     {
-                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                     }
                 }
                 else
                 {
-                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                 }
             }
         }
@@ -323,7 +323,7 @@ namespace Knowte.NotesModule.ViewModels
             Notebook notebook = this.noteService.GetNotebook(obj as string);
 
             string responseText = notebook.Title;
-            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_Edit_Notebook"), content: ResourceUtils.GetStringResource("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
+            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetString("Language_Edit_Notebook"), content: ResourceUtils.GetString("Language_Enter_New_Name_For_Notebook").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetString("Language_Ok"), cancelText: ResourceUtils.GetString("Language_Cancel"), responeText: ref responseText);
 
             if (dialogResult)
             {
@@ -339,19 +339,19 @@ namespace Knowte.NotesModule.ViewModels
                     }
                     else
                     {
-                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                     }
                 }
                 else
                 {
-                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                 }
             }
         }
 
         private void ConfirmDeleteNotebook(Notebook notebook)
         {
-            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Notebook"), content: ResourceUtils.GetStringResource("Language_Delete_Notebook_Confirm").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+            bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetString("Language_Delete_Notebook"), content: ResourceUtils.GetString("Language_Delete_Notebook_Confirm").Replace("%notebookname%", notebook.Title), okText: ResourceUtils.GetString("Language_Yes"), cancelText: ResourceUtils.GetString("Language_No"));
 
             if (dialogResult)
             {
@@ -371,7 +371,7 @@ namespace Knowte.NotesModule.ViewModels
             {
                 Note theNote = this.noteService.GetNote(obj as string);
 
-                bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetStringResource("Language_Delete_Note"), content: ResourceUtils.GetStringResource("Language_Delete_Note_Confirm").Replace("%notename%", theNote.Title), okText: ResourceUtils.GetStringResource("Language_Yes"), cancelText: ResourceUtils.GetStringResource("Language_No"));
+                bool dialogResult = this.dialogService.ShowConfirmationDialog(null, title: ResourceUtils.GetString("Language_Delete_Note"), content: ResourceUtils.GetString("Language_Delete_Note_Confirm").Replace("%notename%", theNote.Title), okText: ResourceUtils.GetString("Language_Yes"), cancelText: ResourceUtils.GetString("Language_No"));
 
 
                 if (dialogResult)
@@ -463,7 +463,7 @@ namespace Knowte.NotesModule.ViewModels
         private void ImportNote()
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = ProductInformation.ApplicationDisplayName + " file (*." + Defaults.ExportFileExtension + ")|*." + Defaults.ExportFileExtension + "|All files (*.*)|*.*";
+            dlg.Filter = ProductInformation.ApplicationName + " file (*." + Defaults.ExportFileExtension + ")|*." + Defaults.ExportFileExtension + "|All files (*.*)|*.*";
 
             string lastExportDirectory = SettingsClient.Get<string>("General", "LastExportDirectory");
 
@@ -485,7 +485,7 @@ namespace Knowte.NotesModule.ViewModels
                 {
                     if (!MiscUtils.IsValidExportFile(importFile))
                     {
-                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Invalid_File"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Invalid_File"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                     }
                     else
                     {
@@ -497,7 +497,7 @@ namespace Knowte.NotesModule.ViewModels
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Error_Unexpected_Error"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                 }
             }
         }
@@ -508,7 +508,7 @@ namespace Knowte.NotesModule.ViewModels
 
             try
             {
-                string initialTitle = this.noteService.GetUniqueNoteTitle(ResourceUtils.GetStringResource("Language_New_Note"));
+                string initialTitle = this.noteService.GetUniqueNoteTitle(ResourceUtils.GetString("Language_New_Note"));
 
                 FlowDocument flowDoc = new FlowDocument();
 
@@ -532,7 +532,7 @@ namespace Knowte.NotesModule.ViewModels
             }
             catch (Exception)
             {
-                this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Note"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Problem_Creating_Note"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
             }
         }
 
@@ -541,7 +541,7 @@ namespace Knowte.NotesModule.ViewModels
             this.selectedNotebook = null;
 
             string responseText = string.Empty;
-            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetStringResource("Language_New_Notebook"), content: ResourceUtils.GetStringResource("Language_New_Notebook_Enter_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), cancelText: ResourceUtils.GetStringResource("Language_Cancel"), responeText: ref responseText);
+            bool dialogResult = this.dialogService.ShowInputDialog(null, title: ResourceUtils.GetString("Language_New_Notebook"), content: ResourceUtils.GetString("Language_New_Notebook_Enter_Name"), okText: ResourceUtils.GetString("Language_Ok"), cancelText: ResourceUtils.GetString("Language_Cancel"), responeText: ref responseText);
 
             if (dialogResult)
             {
@@ -575,17 +575,17 @@ namespace Knowte.NotesModule.ViewModels
                         }
                         else
                         {
-                            this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                            this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Already_Notebook_With_That_Name"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                         }
                     }
                     catch (Exception)
                     {
-                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Problem_Creating_Notebook"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                        this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Problem_Creating_Notebook"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                     }
                 }
                 else
                 {
-                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetStringResource("Language_Error"), content: ResourceUtils.GetStringResource("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetStringResource("Language_Ok"), showViewLogs: false);
+                    this.dialogService.ShowNotificationDialog(null, title: ResourceUtils.GetString("Language_Error"), content: ResourceUtils.GetString("Language_Notebook_Needs_Name"), okText: ResourceUtils.GetString("Language_Ok"), showViewLogs: false);
                 }
             }
         }
@@ -614,17 +614,17 @@ namespace Knowte.NotesModule.ViewModels
             foreach (NotebookViewModel nb in this.Notebooks)
             {
                 if (nb.Id == "0")
-                    nb.Title = ResourceUtils.GetStringResource("Language_All_Notes");
+                    nb.Title = ResourceUtils.GetString("Language_All_Notes");
                 if (nb.Id == "1")
-                    nb.Title = ResourceUtils.GetStringResource("Language_Unfiled_Notes");
+                    nb.Title = ResourceUtils.GetString("Language_Unfiled_Notes");
             }
 
             if (this.SelectedNotebook != null)
             {
                 if (this.SelectedNotebook.Id == "0")
-                    this.SelectedNotebook.Title = ResourceUtils.GetStringResource("Language_All_Notes");
+                    this.SelectedNotebook.Title = ResourceUtils.GetString("Language_All_Notes");
                 if (this.SelectedNotebook.Id == "1")
-                    this.SelectedNotebook.Title = ResourceUtils.GetStringResource("Language_Unfiled_Notes");
+                    this.SelectedNotebook.Title = ResourceUtils.GetString("Language_Unfiled_Notes");
 
                 OnPropertyChanged(() => this.SelectedNotebook);
             }
