@@ -7,16 +7,13 @@ namespace Knowte.NotesModule.ViewModels
 {
     public class NotebookViewModel : BindableBase
     {
-        #region Variables
         private Notebook notebook;
         private string id;
         private string title;
         private DateTime creationDate;
         private string fontWeight;
         private bool isDragOver;
-        #endregion
-
-        #region Properties
+    
         public Notebook Notebook
         {
             get { return this.notebook; }
@@ -67,9 +64,7 @@ namespace Knowte.NotesModule.ViewModels
             get { return this.isDragOver; }
             set { SetProperty<bool>(ref this.isDragOver, value); }
         }
-        #endregion
-
-        #region Static
+   
         public static NotebookViewModel CreateAllNotesNotebook()
         {
             return new NotebookViewModel()
@@ -101,9 +96,7 @@ namespace Knowte.NotesModule.ViewModels
                 IsDragOver = false
             };
         }
-        #endregion
-
-        #region Overrides
+     
         public override string ToString()
         {
             return this.Title;
@@ -123,6 +116,5 @@ namespace Knowte.NotesModule.ViewModels
         {
             return this.Id.GetHashCode();
         }
-        #endregion
     }
 }

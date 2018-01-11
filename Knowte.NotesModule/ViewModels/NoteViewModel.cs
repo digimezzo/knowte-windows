@@ -5,7 +5,6 @@ namespace Knowte.NotesModule.ViewModels
 {
     public class NoteViewModel : BindableBase
     {
-        #region Variables
         private string title;
         private string id;
         private string notebookId;
@@ -15,9 +14,7 @@ namespace Knowte.NotesModule.ViewModels
         private string modificationDateText;
         private string modificationDateTextSimple;
         private bool flagged;
-        #endregion
-
-        #region Properties
+    
         public string Title
         {
             get { return this.title; }
@@ -75,6 +72,5 @@ namespace Knowte.NotesModule.ViewModels
             get { return this.flagged; }
             set { SetProperty<bool>(ref this.flagged, value); }
         }
-        #endregion
     }
 }

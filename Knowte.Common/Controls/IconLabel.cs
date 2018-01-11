@@ -7,7 +7,6 @@ namespace Knowte.Common.Controls
 {
     public class IconLabel : Label
     {
-        #region Properties
         public Brush IconColor
         {
             get { return (Brush)GetValue(IconColorProperty); }
@@ -41,8 +40,6 @@ namespace Knowte.Common.Controls
             }
         }
 
-
-
         public Brush TextColor
         {
             get { return (Brush)GetValue(TextColorProperty); }
@@ -53,13 +50,14 @@ namespace Knowte.Common.Controls
                 Debug.WriteLine(value);
             }
         }
-        #endregion
-
-        #region Dependency Properties
-        public static readonly DependencyProperty IconColorProperty = DependencyProperty.Register("IconColor", typeof(Brush), typeof(IconLabel), new PropertyMetadata(null));
-        public static readonly DependencyProperty BorderColorProperty = DependencyProperty.Register("BorderColor", typeof(Brush), typeof(IconLabel), new PropertyMetadata(null));
-        public static readonly DependencyProperty BackgroundColorProperty = DependencyProperty.Register("BackgroundColor", typeof(Brush), typeof(IconLabel), new PropertyMetadata(null));
-        public static readonly DependencyProperty TextColorProperty = DependencyProperty.Register("TextColor", typeof(Brush), typeof(IconLabel), new PropertyMetadata(null));
-        #endregion
+    
+        public static readonly DependencyProperty IconColorProperty = 
+            DependencyProperty.Register("IconColor", typeof(Brush), typeof(IconLabel), new PropertyMetadata(null));
+        public static readonly DependencyProperty BorderColorProperty = 
+            DependencyProperty.Register("BorderColor", typeof(Brush), typeof(IconLabel), new PropertyMetadata(null));
+        public static readonly DependencyProperty BackgroundColorProperty = 
+            DependencyProperty.Register("BackgroundColor", typeof(Brush), typeof(IconLabel), new PropertyMetadata(null));
+        public static readonly DependencyProperty TextColorProperty = 
+            DependencyProperty.Register("TextColor", typeof(Brush), typeof(IconLabel), new PropertyMetadata(null));
     }
 }

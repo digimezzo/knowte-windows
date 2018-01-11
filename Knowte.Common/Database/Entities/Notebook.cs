@@ -5,7 +5,6 @@ namespace Knowte.Common.Database.Entities
 {
     public class Notebook
     {
-        #region Properties
         [PrimaryKey()]
         public string Id { get; set; }
         public string Title { get; set; }
@@ -13,9 +12,7 @@ namespace Knowte.Common.Database.Entities
 
         [Ignore()]
         public bool IsDefaultNotebook { get; set; }
-        #endregion
-
-        #region Overrides
+     
         public override string ToString()
         {
             return this.Title;
@@ -35,6 +32,5 @@ namespace Knowte.Common.Database.Entities
         {
             return this.Id.GetHashCode();
         }
-        #endregion
     }
 }

@@ -7,7 +7,6 @@ namespace Knowte.NotesModule.ViewModels
 {
     public class NotesSubMenuViewModel : BindableBase
     {
-        #region Variables
         private IEventAggregator eventAggregator;
         private INoteService noteService;
         private int allNotesCounter;
@@ -15,9 +14,7 @@ namespace Knowte.NotesModule.ViewModels
         private int yesterdayNotesCounter;
         private int thisWeekNotesCounter;
         private int flaggedCounter;
-        #endregion
-
-        #region Properties
+       
         public int AllNotesCounter
         {
             get { return this.allNotesCounter; }
@@ -47,9 +44,7 @@ namespace Knowte.NotesModule.ViewModels
             get { return this.flaggedCounter; }
             set { SetProperty<int>(ref this.flaggedCounter, value); }
         }
-        #endregion
-
-        #region Construction
+    
         public NotesSubMenuViewModel(IEventAggregator eventAggregator, INoteService noteService)
         {
             this.eventAggregator = eventAggregator;
@@ -66,6 +61,5 @@ namespace Knowte.NotesModule.ViewModels
                 OnPropertyChanged(() => this.FlaggedCounter);
             });
         }
-        #endregion
     }
 }

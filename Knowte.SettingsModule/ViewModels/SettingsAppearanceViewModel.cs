@@ -15,7 +15,6 @@ namespace Knowte.SettingsModule.ViewModels
 {
     public class SettingsAppearanceViewModel : BindableBase
     {
-        #region Variables
         private IAppearanceService appearanceService;
         private II18nService i18nService;
         private INoteService noteService;
@@ -27,9 +26,7 @@ namespace Knowte.SettingsModule.ViewModels
         private bool checkBoxWindowsColorChecked;
         private bool checkBoxSortChecked;
         private IEventAggregator eventAggregator;
-        #endregion
-
-        #region Properties
+     
         public string ColorSchemesDirectory { get; set; }
 
         public ObservableCollection<ColorScheme> ColorSchemes
@@ -104,9 +101,7 @@ namespace Knowte.SettingsModule.ViewModels
                 this.noteService.OnNotesChanged();
             }
         }
-        #endregion
-
-        #region Construction
+        
         public SettingsAppearanceViewModel(IAppearanceService appearanceService, II18nService i18nService,INoteService noteService, IEventAggregator eventAggregator)
         {
             this.appearanceService = appearanceService;
@@ -129,9 +124,7 @@ namespace Knowte.SettingsModule.ViewModels
 
             this.ColorSchemesDirectory = System.IO.Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.ColorSchemesSubDirectory);
         }
-        #endregion
-
-        #region Private
+       
         private void LoadCheckBoxStates()
         {
             this.CheckBoxWindowsColorChecked = SettingsClient.Get<bool>("Appearance", "FollowWindowsColor");
@@ -198,13 +191,10 @@ namespace Knowte.SettingsModule.ViewModels
             // behaviour in the setter of the SelectedLanguage Property (because the "value" would be Nothing)
             this.SelectedLanguage = tempLanguage;
         }
-        #endregion
-
-        #region Event Handlers
+       
         private void ColorSchemesChangedHandler(object sender, EventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() => { this.GetColorSchemes(); });
         }
-        #endregion
     }
 }

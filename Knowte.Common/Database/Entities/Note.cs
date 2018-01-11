@@ -5,7 +5,6 @@ namespace Knowte.Common.Database.Entities
 {
     public class Note
     {
-        #region Properties
         [PrimaryKey()]
         public string Id { get; set; }
         public string NotebookId { get; set; }
@@ -20,9 +19,7 @@ namespace Knowte.Common.Database.Entities
         public long Left { get; set; }
         public long Maximized { get; set; }
         public long Flagged { get; set; }
-        #endregion
-
-        #region Overrides
+     
         public override string ToString()
         {
             return this.Title;
@@ -42,6 +39,5 @@ namespace Knowte.Common.Database.Entities
         {
             return this.Id.GetHashCode();
         }
-        #endregion
     }
 }

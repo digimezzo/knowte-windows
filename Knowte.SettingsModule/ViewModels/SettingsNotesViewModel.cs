@@ -9,14 +9,11 @@ namespace Knowte.SettingsModule.ViewModels
 {
     public class SettingsNotesViewModel : BindableBase
     {
-        #region Variables
         private ObservableCollection<FontSizeCorrection> fontSizeCorrections;
         private FontSizeCorrection selectedFontSizeCorrection;
         private int previewFontSize;
         private bool checkBoxEscapeChecked;
-        #endregion
 
-        #region Properties
         public ObservableCollection<FontSizeCorrection> FontSizeCorrections
         {
             get { return this.fontSizeCorrections; }
@@ -49,17 +46,13 @@ namespace Knowte.SettingsModule.ViewModels
                 SetProperty<bool>(ref this.checkBoxEscapeChecked, value);
             }
         }
-        #endregion
-
-        #region Construction
+       
         public SettingsNotesViewModel()
         {
             this.LoadFontSizeCorrections();
             this.LoadCheckBoxStates();
         }
-        #endregion
-
-        #region Private
+    
         private void LoadCheckBoxStates()
         {
             this.CheckBoxEscapeChecked = SettingsClient.Get<bool>("Notes", "PressingEscapeClosesNotes");
@@ -92,6 +85,5 @@ namespace Knowte.SettingsModule.ViewModels
                 }
             }
         }
-        #endregion
     }
 }

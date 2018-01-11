@@ -24,12 +24,9 @@ namespace Knowte.Common.Services.Note
 {
     public class NoteService : INoteService
     {
-        #region Variables
         private IDialogService dialogService;
         private SQLiteConnectionFactory factory;
-        #endregion
-
-        #region Construction
+     
         public NoteService(IDialogService dialogService)
         {
             this.dialogService = dialogService;
@@ -47,9 +44,7 @@ namespace Knowte.Common.Services.Note
                 }
             }
         }
-        #endregion
-
-        #region Private
+    
         private async Task InitializeStorageIfRequiredAsync(string newLocation)
         {
             await Task.Run(() =>
@@ -71,9 +66,7 @@ namespace Knowte.Common.Services.Note
                 if (!Directory.Exists(notesDirectoryPath)) Directory.CreateDirectory(notesDirectoryPath);
             });
         }
-        #endregion
-
-        #region INoteService
+       
         public event FlagUpdatedEventHandler FlagUpdated = delegate { };
         public event EventHandler StorageLocationChanged = delegate { };
         public event EventHandler NotesChanged = delegate { };
@@ -914,6 +907,5 @@ namespace Knowte.Common.Services.Note
             System.IO.File.Delete(System.IO.Path.Combine(tempPath, zippedGuid + ".xaml"));
             System.IO.File.Delete(System.IO.Path.Combine(tempPath, zippedGuid + ".xml"));
         }
-        #endregion
     }
 }

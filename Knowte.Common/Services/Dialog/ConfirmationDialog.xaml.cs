@@ -5,12 +5,8 @@ using System.Windows;
 
 namespace Knowte.Common.Services.Dialog
 {
-    /// <summary>
-    /// Interaction logic for ConfirmationDialog.xaml
-    /// </summary>
     public partial class ConfirmationDialog : BorderlessWindows8Window
     {
-        #region Construction
         public ConfirmationDialog(Window parent, string title, string content, string okText, string cancelText) : base()
         {
             InitializeComponent();
@@ -24,9 +20,7 @@ namespace Knowte.Common.Services.Dialog
 
             this.CenterWindow(parent);
         }
-        #endregion
-
-        #region Event Handlers
+  
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
@@ -36,6 +30,5 @@ namespace Knowte.Common.Services.Dialog
         {
             this.DialogResult = false;
         }
-        #endregion
     }
 }

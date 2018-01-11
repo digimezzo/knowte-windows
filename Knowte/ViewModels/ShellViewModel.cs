@@ -17,7 +17,6 @@ namespace Knowte.ViewModels
 {
     public class ShellViewModel : BindableBase
     {
-        #region Variables
         private IAppearanceService appearanceService;
         private II18nService i18nService;
         private IDialogService dialogService;
@@ -28,15 +27,11 @@ namespace Knowte.ViewModels
         private int contentSlideInFrom;
         private int searchSlideInFrom;
         private int previousIndex;
-        #endregion
-
-        #region Commands
+      
         public DelegateCommand<string> OpenLinkCommand;
         public DelegateCommand<string> OpenPathCommand;
         public DelegateCommand<string> NavigateBetweenMainCommand { get; set; }
-        #endregion
-
-        #region Properties
+    
         public bool IsDimmed
         {
             get { return this.isDimmed; }
@@ -60,9 +55,7 @@ namespace Knowte.ViewModels
             get { return this.searchSlideInFrom; }
             set { SetProperty<int>(ref this.searchSlideInFrom, value); }
         }
-        #endregion
-
-        #region Construction
+  
         public ShellViewModel(IAppearanceService appearanceService, II18nService i18nService, IDialogService dialogService, IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             // Dependency injection
@@ -117,9 +110,7 @@ namespace Knowte.ViewModels
             this.ContentSlideInFrom = 30;
             this.SearchSlideInFrom = 20;
         }
-        #endregion
-
-        #region Private
+   
         private void NavigateBetweenMain(string index)
         {
             if (string.IsNullOrWhiteSpace(index)) return;
@@ -157,6 +148,5 @@ namespace Knowte.ViewModels
                     break;
             }
         }
-        #endregion
     }
 }

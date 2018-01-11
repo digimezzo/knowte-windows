@@ -5,12 +5,9 @@ namespace Knowte.MainModule.ViewModels
 {
     public class SearchViewModel : BindableBase
     {
-        #region Variables
         private string searchText;
         private ISearchService searchService;
-        #endregion
-
-        #region Properties
+   
         public string SearchText
         {
             get { return this.searchText; }
@@ -20,13 +17,10 @@ namespace Knowte.MainModule.ViewModels
                 this.searchService.DoSearch(value);
             }
         }
-        #endregion
-
-        #region Construction
+    
         public SearchViewModel(ISearchService searchService)
         {
             this.searchService = searchService;
         }
-        #endregion
     }
 }

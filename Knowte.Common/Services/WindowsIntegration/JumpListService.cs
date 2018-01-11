@@ -12,24 +12,17 @@ namespace Knowte.Common.Services.WindowsIntegration
 {
     public class JumpListService : IJumpListService
     {
-        #region Variables
         private JumpList jumplist;
-        #endregion
-
-        #region Constructor
+     
         public JumpListService()
         {
             this.jumplist = JumpList.GetJumpList(Application.Current);
         }
-        #endregion
-
-        #region Properties
+    
         public bool OpenNoteFromJumplist { get; set; }
         public string OpenNoteFromJumplistTitle { get; set; }
         public bool NewNoteFromJumplist { get; set; }
-        #endregion
-
-        #region Private
+    
         private List<JumpTask> CreateRecentNotesJumpTasks(List<Database.Entities.Note> recentNotes)
         {
             List<JumpTask> jtList = new List<JumpTask>();
@@ -50,9 +43,7 @@ namespace Knowte.Common.Services.WindowsIntegration
 
             return jtList;
         }
-        #endregion
-
-        #region Public
+   
         public async void RefreshJumpListAsync(List<Database.Entities.Note> recentNotes, List<Database.Entities.Note> flaggedNotes)
         {
             await Task.Run(() =>
@@ -95,6 +86,5 @@ namespace Knowte.Common.Services.WindowsIntegration
                 this.jumplist.Apply();
             }
         }
-        #endregion
     }
 }

@@ -6,7 +6,6 @@ namespace Knowte.Common.Database
 {
     public class DbMigrator
     {
-        #region DatabaseVersionAttribute
         protected sealed class DatabaseVersionAttribute : Attribute
         {
             private int version;
@@ -21,18 +20,14 @@ namespace Knowte.Common.Database
                 this.version = version;
             }
         }
-        #endregion
-
-        #region Variables
+   
         // NOTE: whenever there is a change in the database schema,
         // this version MUST be incremented and a migration method
         // MUST be supplied to match the new version number
         protected const int CURRENT_VERSION = 1;
         private int userDatabaseVersion;
         private SQLiteConnectionFactory factory;
-        #endregion
 
-        #region Properties
         public SQLiteConnectionFactory Factory
         {
             get { return this.factory; }
@@ -46,9 +41,7 @@ namespace Knowte.Common.Database
                 return string.Empty;
             }
         }
-        #endregion
-
-        #region Construction
+     
         public DbMigrator()
         {
             this.factory = new SQLiteConnectionFactory();
@@ -58,9 +51,7 @@ namespace Knowte.Common.Database
         {
             this.factory = new SQLiteConnectionFactory(storageLocation);
         }
-        #endregion
-
-        #region Fresh database setup
+       
         private void CreateConfiguration()
         {
             using (var conn = this.factory.GetConnection())
@@ -103,9 +94,7 @@ namespace Knowte.Common.Database
                                      "PRIMARY KEY(Id));");
             }
         }
-        #endregion
-
-        #region Version 1
+     
         [DatabaseVersion(1)]
         private void Migrate1()
         {
@@ -114,9 +103,7 @@ namespace Knowte.Common.Database
                 conn.Execute("DELETE FROM Configuration WHERE Key='NewNoteCount';");
             }
         }
-        #endregion
-
-        #region Public
+      
         public bool DatabaseExists()
         {
             return File.Exists(this.factory.DatabaseFile);
@@ -161,6 +148,5 @@ namespace Knowte.Common.Database
                 conn.Execute("UPDATE Configuration SET Value = ? WHERE Key = 'DatabaseVersion'", CURRENT_VERSION);
             }
         }
-        #endregion
     }
 }

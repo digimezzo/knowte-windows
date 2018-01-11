@@ -17,7 +17,6 @@ namespace Knowte.Common.Services.Appearance
 {
     public class AppearanceService : IAppearanceService
     {
-        #region Variables
         private string colorSchemesSubDirectory = Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.ColorSchemesSubDirectory);
         private const int WM_DWMCOLORIZATIONCOLORCHANGED = 0x320;
         private bool followWindowsColor = false;
@@ -47,17 +46,13 @@ namespace Knowte.Common.Services.Appearance
                                                             AccentColor = "#CE0058"
                                                         }
                                                     };
-        #endregion
-
-        #region Properties
+     
         public string ColorSchemesSubDirectory
         {
             get { return this.colorSchemesSubDirectory; }
             set { this.colorSchemesSubDirectory = value; }
         }
-        #endregion
-
-        #region Construction
+  
         public AppearanceService()
         {
             // Initialize the ColorSchemes directory
@@ -126,9 +121,7 @@ namespace Knowte.Common.Services.Appearance
             this.colorSchemeWatcher.Created += new FileSystemEventHandler(WatcherChangedHandler);
             this.colorSchemeWatcher.Renamed += new RenamedEventHandler(WatcherRenamedHandler);
         }
-        #endregion
-
-        #region Event Handlers
+    
         private void ColorSchemeTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             this.colorSchemeTimer.Stop();
@@ -152,9 +145,7 @@ namespace Knowte.Common.Services.Appearance
             this.colorSchemeTimer.Stop();
             this.colorSchemeTimer.Start();
         }
-        #endregion
-
-        #region Private
+    
         private IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
 
@@ -269,9 +260,7 @@ namespace Knowte.Common.Services.Appearance
             }
 
         }
-        #endregion
-
-        #region IAppearanceService
+   
         public void WatchWindowsColor(Window win)
         {
             IntPtr windowHandle = (new WindowInteropHelper(win)).Handle;
@@ -373,11 +362,8 @@ namespace Knowte.Common.Services.Appearance
                 AppearanceChanged(this, null);
             }
         }
-        #endregion
-
-        #region Events
+    
         public event ColorSchemesChangedEventHandler ColorSchemesChanged = delegate { };
         public event AppearanceChangedEventHandler AppearanceChanged = delegate { };
-        #endregion
     }
 }

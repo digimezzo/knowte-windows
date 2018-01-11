@@ -1,6 +1,5 @@
 ﻿using Digimezzo.Utilities.IO;
 using Digimezzo.Utilities.Log;
-using Digimezzo.Utilities.Packaging;
 using Digimezzo.Utilities.Settings;
 using Knowte.Common.Database;
 using Knowte.Common.IO;
@@ -13,12 +12,9 @@ namespace Knowte.Views
 {
     public partial class Splash : Window
     {
-        #region Variables
         private int uiWaitMilliSeconds = 300;
         private string errorMessage;
-        #endregion
-
-        #region Properties
+     
         public bool ShowErrorPanel
         {
             get { return Convert.ToBoolean(GetValue(ShowErrorPanelProperty)); }
@@ -32,12 +28,11 @@ namespace Knowte.Views
 
             set { SetValue(ShowProgressRingProperty, value); }
         }
-        #endregion
-
-        #region Dependency Properties
-        public static readonly DependencyProperty ShowErrorPanelProperty = DependencyProperty.Register("ShowErrorPanel", typeof(bool), typeof(Splash), new PropertyMetadata(null));
-        public static readonly DependencyProperty ShowProgressRingProperty = DependencyProperty.Register("ShowProgressRing", typeof(bool), typeof(Splash), new PropertyMetadata(null));
-        #endregion
+     
+        public static readonly DependencyProperty ShowErrorPanelProperty = 
+            DependencyProperty.Register("ShowErrorPanel", typeof(bool), typeof(Splash), new PropertyMetadata(null));
+        public static readonly DependencyProperty ShowProgressRingProperty = 
+            DependencyProperty.Register("ShowProgressRing", typeof(bool), typeof(Splash), new PropertyMetadata(null));
 
         public Splash()
         {

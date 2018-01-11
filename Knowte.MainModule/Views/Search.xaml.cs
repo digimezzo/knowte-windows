@@ -6,11 +6,8 @@ namespace Knowte.MainModule.Views
 {
     public partial class Search : UserControl
     {
-        #region Variables
         private IEventAggregator eventAggregator;
-        #endregion
-
-        #region Construction
+    
         public Search(IEventAggregator eventAggregator)
         {
             // This call is required by the designer.
@@ -20,6 +17,5 @@ namespace Knowte.MainModule.Views
             this.eventAggregator = eventAggregator;
             this.eventAggregator.GetEvent<SetMainSearchBoxFocusEvent>().Subscribe((x) => this.SearchBox.Focus());
         }
-        #endregion
     }
 }

@@ -14,22 +14,16 @@ namespace Knowte.Common.Services.Backup
 {
     public class BackupService : IBackupService
     {
-        #region Variables
         private SQLiteConnectionFactory factory;
         private INoteService noteService;
         private IDialogService dialogService;
         private string backupSubDirectory = Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.BackupSubDirectory);
-        #endregion
-
-        #region Properties
+   
         public string BackupSubDirectory
         {
             get { return this.backupSubDirectory; }
         }
 
-        #endregion
-
-        #region Construction
         public BackupService(INoteService noteService, IDialogService dialogService)
         {
             this.noteService = noteService;
@@ -45,9 +39,7 @@ namespace Knowte.Common.Services.Backup
                 Directory.CreateDirectory(Path.Combine(this.BackupSubDirectory));
             }
         }
-        #endregion
-
-        #region Private
+        
         private async Task CreateBackupFile(string backupFile)
         {
             await Task.Run(() =>
@@ -145,9 +137,7 @@ namespace Knowte.Common.Services.Backup
 
             return isSuccess;
         }
-        #endregion
-
-        #region IBackupService
+       
         public event EventHandler BackupRestored = delegate { };
 
         public bool Backup(string backupFile)
@@ -189,6 +179,5 @@ namespace Knowte.Common.Services.Backup
 
             return isSuccess;
         }
-        #endregion
     }
 }

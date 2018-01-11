@@ -8,16 +8,10 @@ using System.Windows.Controls;
 
 namespace Knowte.Common.Services.Dialog
 {
-    /// <summary>
-    /// Interaction logic for CustomDialog.xaml
-    /// </summary>
     public partial class CustomDialog : BorderlessWindows8Window
     {
-        #region Variables
         private Func<Task<bool>> callback;
-        #endregion
-
-        #region Construction
+    
         public CustomDialog(Window parent, string title, UserControl content, int width, int height, bool canResize, bool showCancelButton, string okText, string cancelText, Func<Task<bool>> callback) : base()
         {
             InitializeComponent();
@@ -58,9 +52,7 @@ namespace Knowte.Common.Services.Dialog
 
             this.CenterWindow(parent);
         }
-        #endregion
 
-        #region Event Handlers
         private async void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             if (this.callback != null)
@@ -83,6 +75,5 @@ namespace Knowte.Common.Services.Dialog
         {
             this.DialogResult = false;
         }
-        #endregion
     }
 }

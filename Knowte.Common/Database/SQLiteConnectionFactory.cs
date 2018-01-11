@@ -5,11 +5,8 @@ namespace Knowte.Common.Database
 {
     public class SQLiteConnectionFactory
     {
-        #region Private
         private string customStorageLocation;
-        #endregion
-
-        #region ReadOnly Properties
+      
         public string DatabaseFile
         {
             get
@@ -18,9 +15,7 @@ namespace Knowte.Common.Database
                 return System.IO.Path.Combine(storageLocation, "Notes.db"); ;
             }
         }
-        #endregion
-
-        #region Construction
+        
         public SQLiteConnectionFactory()
         {
         }
@@ -29,13 +24,10 @@ namespace Knowte.Common.Database
         {
             this.customStorageLocation = customStorageLocation;
         }
-        #endregion
-
-        #region Public
+       
         public SQLiteConnection GetConnection()
         {
             return new SQLiteConnection(this.DatabaseFile) { BusyTimeout = new System.TimeSpan(0, 0, 1) };
         }
-        #endregion
     }
 }

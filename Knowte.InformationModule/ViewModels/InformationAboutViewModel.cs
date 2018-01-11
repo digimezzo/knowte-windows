@@ -11,25 +11,18 @@ namespace Knowte.InformationModule.ViewModels
 {
     public class InformationAboutViewModel : BindableBase
     {
-        #region Variables
         private IUnityContainer container;
         private IDialogService dialogService;
         private Package package;
-        #endregion
-
-        #region Commands
+     
         public DelegateCommand ShowLicenseCommand { get; set; }
-        #endregion
-
-        #region Properties
+      
         public Package Package
         {
             get { return this.package; }
             set { SetProperty<Package>(ref this.package, value); }
         }
-        #endregion
-
-        #region Construction
+      
         public InformationAboutViewModel(IUnityContainer container, IDialogService dialogService)
         {
             this.container = container;
@@ -55,6 +48,5 @@ namespace Knowte.InformationModule.ViewModels
                 string.Empty,
                 null);
         }
-        #endregion
     }
 }

@@ -21,7 +21,6 @@ namespace Knowte.SettingsModule.ViewModels
 {
     public class SettingsAdvancedViewModel : BindableBase
     {
-        #region Variables
         private IBackupService backupService;
         private IDialogService dialogService;
         private INoteService noteService;
@@ -29,9 +28,7 @@ namespace Knowte.SettingsModule.ViewModels
         private ObservableCollection<int> numberOfNotesInJumpList;
         private int selectedNumberOfNotesInJumpList;
         private bool checkBoxChangeStorageLocationFromMainChecked;
-        #endregion
-
-        #region Commands
+    
         public DelegateCommand BackupCommand { get; set; }
         public DelegateCommand ImportCommand { get; set; }
         public DelegateCommand RestoreCommand { get; set; }
@@ -39,9 +36,7 @@ namespace Knowte.SettingsModule.ViewModels
         public DelegateCommand ChangeStorageLocationCommand { get; set; }
         public DelegateCommand MoveStorageLocationCommand { get; set; }
         public DelegateCommand ResetStorageLocationCommand { get; set; }
-        #endregion
-
-        #region Properties
+     
         public bool CheckBoxChangeStorageLocationFromMainChecked
         {
             get { return this.checkBoxChangeStorageLocationFromMainChecked; }
@@ -85,9 +80,6 @@ namespace Knowte.SettingsModule.ViewModels
             }
         }
 
-        #endregion
-
-        #region Construction
         public SettingsAdvancedViewModel(IBackupService backupService, IDialogService dialogService, INoteService noteService, IEventAggregator eventAggregator)
         {
             // Injection
@@ -112,9 +104,7 @@ namespace Knowte.SettingsModule.ViewModels
             this.LoadNumberOfNotesInJumplist();
             this.LoadCheckBoxStates();
         }
-        #endregion
-
-        #region Private
+  
         private async Task ChangeStorageLocationAsync(bool performReset, bool moveCurrentNotes)
         {
             string selectedFolder = ApplicationPaths.CurrentNoteStorageLocation;
@@ -352,6 +342,5 @@ namespace Knowte.SettingsModule.ViewModels
 
             this.SelectedNumberOfNotesInJumpList = SettingsClient.Get<int>("Advanced", "NumberOfNotesInJumpList");
         }
-        #endregion
     }
 }

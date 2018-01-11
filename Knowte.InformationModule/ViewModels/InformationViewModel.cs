@@ -7,25 +7,18 @@ namespace Knowte.InformationModule.ViewModels
 {
     public class InformationViewModel : BindableBase
     {
-        #region Variables
         private IRegionManager regionManager;
         private int slideInFrom;
         private int previousIndex;
-        #endregion
-
-        #region Commands
+     
         public DelegateCommand<string> NavigateBetweenInformationCommand;
-        #endregion
-
-        #region Properties
+      
         public int SlideInFrom
         {
             get { return this.slideInFrom; }
             set { SetProperty<int>(ref this.slideInFrom, value); }
         }
-        #endregion
-
-        #region Construction
+       
         public InformationViewModel(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
@@ -34,9 +27,7 @@ namespace Knowte.InformationModule.ViewModels
 
             this.SlideInFrom = 50;
         }
-        #endregion
-
-        #region Private
+       
         private void NavigateBetweenInformation(string index)
         {
             if (string.IsNullOrWhiteSpace(index)) return;
@@ -58,6 +49,5 @@ namespace Knowte.InformationModule.ViewModels
                     break;
             }
         }
-        #endregion
     }
 }

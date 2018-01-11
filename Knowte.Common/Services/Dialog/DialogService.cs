@@ -7,11 +7,8 @@ namespace Knowte.Common.Services.Dialog
 {
     public class DialogService : IDialogService
     {
-        #region Variables
         private int openDialogCount = 0;
-        #endregion
-
-        #region Private
+  
         private void ShowDialog(Window window)
         {
             this.openDialogCount += 1;
@@ -20,9 +17,7 @@ namespace Knowte.Common.Services.Dialog
             this.openDialogCount -= 1;
             this.DialogVisibleChanged(this.openDialogCount > 0);
         }
-        #endregion
-
-        #region IDialogService
+      
         public bool ShowBusyDialog(Window parent, string title, string content, int delayMilliseconds, Func<Task<bool>> callback)
         {
             var dialog = new BusyDialog(parent: parent, title: title, content: content, delayMilliseconds: delayMilliseconds, callback: callback);
@@ -76,10 +71,7 @@ namespace Knowte.Common.Services.Dialog
                 return false;
             }
         }
-        #endregion
-
-        #region Events
+      
         public event DialogVisibleChangedEventHandler DialogVisibleChanged = delegate { };
-        #endregion
     }
 }

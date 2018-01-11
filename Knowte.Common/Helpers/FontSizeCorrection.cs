@@ -2,13 +2,9 @@
 {
     public class FontSizeCorrection
     {
-
-        #region Variables
         private string name;
         private int correction;
-        #endregion
 
-        #region Properties
         public string Name
         {
             get { return this.name; }
@@ -20,9 +16,7 @@
             get { return this.correction; }
             set { this.correction = value; }
         }
-        #endregion
-
-        #region Public
+     
         public override string ToString()
         {
             return this.Name;
@@ -42,6 +36,5 @@
         {
             return this.Correction.GetHashCode();
         }
-        #endregion
     }
 }

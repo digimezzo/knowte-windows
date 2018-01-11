@@ -8,12 +8,9 @@ namespace Knowte.Common.Services.Dialog
 {
     public partial class BusyDialog : BorderlessWindows8Window
     {
-        #region Variables
         private int delayMilliseconds;
         private Func<Task<bool>> callback;
-        #endregion
-
-        #region Construction
+        
         public BusyDialog(Window parent, string title, string content, int delayMilliseconds, Func<Task<bool>> callback) : base()
         {
             InitializeComponent();
@@ -23,9 +20,7 @@ namespace Knowte.Common.Services.Dialog
             this.Content.Text = content;
             this.CenterWindow(parent);
         }
-        #endregion
-
-        #region Event handlers
+  
         private async void BusyDialog_Loaded(object sender, RoutedEventArgs e)
         {
             if (this.callback != null)
@@ -38,6 +33,5 @@ namespace Knowte.Common.Services.Dialog
                 this.DialogResult = false;
             }
         }
-        #endregion
     }
 }

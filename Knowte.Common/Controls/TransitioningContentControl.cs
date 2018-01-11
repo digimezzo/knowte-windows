@@ -7,17 +7,21 @@ namespace Knowte.Common.Controls
 {
     public class TransitioningContentControl : ContentControl
     {
-        #region Dependency Properties
-        public static readonly DependencyProperty FadeInProperty = DependencyProperty.Register("FadeIn", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty FadeInTimeoutProperty = DependencyProperty.Register("FadeInTimeout", typeof(double), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty SlideInProperty = DependencyProperty.Register("SlideIn", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty SlideInTimeoutProperty = DependencyProperty.Register("SlideInTimeout", typeof(double), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty SlideInFromProperty = DependencyProperty.Register("SlideInFrom", typeof(int), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty SlideInToProperty = DependencyProperty.Register("SlideInTo", typeof(int), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty RightToLeftProperty = DependencyProperty.Register("RightToLeft", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        #endregion
+        public static readonly DependencyProperty FadeInProperty = 
+            DependencyProperty.Register("FadeIn", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty FadeInTimeoutProperty = 
+            DependencyProperty.Register("FadeInTimeout", typeof(double), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty SlideInProperty = 
+            DependencyProperty.Register("SlideIn", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty SlideInTimeoutProperty = 
+            DependencyProperty.Register("SlideInTimeout", typeof(double), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty SlideInFromProperty = 
+            DependencyProperty.Register("SlideInFrom", typeof(int), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty SlideInToProperty = 
+            DependencyProperty.Register("SlideInTo", typeof(int), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty RightToLeftProperty = 
+            DependencyProperty.Register("RightToLeft", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(null));
 
-        #region Properties
         public bool FadeIn
         {
             get { return Convert.ToBoolean(GetValue(FadeInProperty)); }
@@ -66,16 +70,12 @@ namespace Knowte.Common.Controls
 
             set { SetValue(RightToLeftProperty, value); }
         }
-        #endregion
-
-        #region Overrides
+   
         protected override void OnContentChanged(object oldContent, object newContent)
         {
             this.DoAnimation();
         }
-        #endregion
-
-        #region Private
+      
         private void DoAnimation()
         {
             if (this.FadeInTimeout != 0 && this.FadeIn)
@@ -108,6 +108,5 @@ namespace Knowte.Common.Controls
                 }
             }
         }
-        #endregion
     }
 }

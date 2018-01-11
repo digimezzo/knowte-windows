@@ -15,17 +15,14 @@ namespace Knowte.Common.Services.I18n
 {
     public class I18nService : II18nService
     {
-        #region Private
-        private string builtinLanguagesDirectory = System.IO.Path.Combine(ProcessExecutable.ExecutionFolder(), ApplicationPaths.BuiltinLanguagesSubDirectory);
-        private string customLanguagesDirectory = System.IO.Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.CustomLanguagesSubDirectory);
+        private string builtinLanguagesDirectory = Path.Combine(ProcessExecutable.ExecutionFolder(), ApplicationPaths.BuiltinLanguagesSubDirectory);
+        private string customLanguagesDirectory = Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.CustomLanguagesSubDirectory);
         private List<Language> languages;
         private Language defaultLanguage;
         private FileSystemWatcher languageWatcher;
         private Timer languageTimer = new Timer();
         private double languageTimeoutSeconds = 0.2;
-        #endregion
-
-        #region Construction
+      
         public I18nService()
         {
 
@@ -55,9 +52,7 @@ namespace Knowte.Common.Services.I18n
             this.languageWatcher.Created += new FileSystemEventHandler(WatcherChangedHandler);
             this.languageWatcher.Renamed += new RenamedEventHandler(WatcherRenamedHandler);
         }
-        #endregion
-
-        #region II18nService
+   
         public async void ApplyLanguageAsync(string code)
         {
             await Task.Run(() =>
@@ -97,9 +92,7 @@ namespace Knowte.Common.Services.I18n
 
             return this.defaultLanguage;
         }
-        #endregion
-
-        #region Private
+     
         private Language CreateLanguage(string languageFile)
         {
             XDocument xdoc = XDocument.Load(languageFile);
@@ -202,14 +195,10 @@ namespace Knowte.Common.Services.I18n
                 return this.defaultLanguage.Texts[key];
             }
         }
-        #endregion
-
-        #region Events
+      
         public event LanguagesChangedEventHandler LanguagesChanged;
         public event LanguageChangedEventHandler LanguageChanged;
-        #endregion
-
-        #region Event Handlers
+    
         private void LanguageTimerElapsed(object sender, ElapsedEventArgs e)
         {
             this.languageTimer.Stop();
@@ -238,6 +227,5 @@ namespace Knowte.Common.Services.I18n
             this.languageTimer.Stop();
             this.languageTimer.Start();
         }
-        #endregion
     }
 }

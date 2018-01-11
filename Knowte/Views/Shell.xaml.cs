@@ -21,7 +21,6 @@ namespace Knowte.Views
 {
     public partial class Shell : KnowteWindow
     {
-        #region Variables
         private IUnityContainer container;
         private IRegionManager regionManager;
         private IEventAggregator eventAggregator;
@@ -29,17 +28,13 @@ namespace Knowte.Views
         private II18nService i18nService;
         private IJumpListService jumplistService;
         private INoteService noteService;
-        #endregion
-
-        #region Properties
+     
         public new object DataContext
         {
             get { return base.DataContext; }
             set { base.DataContext = value; }
         }
-        #endregion
-
-        #region Construction
+   
         public Shell(IUnityContainer container, IRegionManager regionManager, IAppearanceService appearanceService, II18nService i18nService, IJumpListService jumpListService, IEventAggregator eventAggregator, INoteService noteService)
         {    
             InitializeComponent();
@@ -69,9 +64,7 @@ namespace Knowte.Views
             // Main window state
             this.WindowState = SettingsClient.Get<bool>("General", "IsMaximized") ? WindowState.Maximized : WindowState.Normal;
         }
-        #endregion
-
-        #region Private
+     
         private void ProcessCommandLineArgs()
         {
             // Get the commandline arguments
@@ -98,9 +91,7 @@ namespace Knowte.Views
                 }
             }
         }
-        #endregion
-
-        #region Event handlers
+   
         private void Shell_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keyboard.Modifiers == null & char.IsLetterOrDigit((char)e.Key) & !(e.Key == Key.F1 | e.Key == Key.F2 | e.Key == Key.F3 | e.Key == Key.F4 | e.Key == Key.F5 | e.Key == Key.F6 | e.Key == Key.F7 | e.Key == Key.F8 | e.Key == Key.F9 | e.Key == Key.F10 | e.Key == Key.F11 | e.Key == Key.F12))
@@ -179,6 +170,5 @@ namespace Knowte.Views
                 win.Topmost = false;
             }
         }
-        #endregion
     }
 }

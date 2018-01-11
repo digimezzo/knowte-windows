@@ -10,13 +10,10 @@ namespace Knowte.Common.Controls
 {
     public partial class MetroNotification : UserControl
     {
-        #region Variables
         private Timer timer = new Timer();
         private int showSeconds;
         private int elapsedSeconds;
-        #endregion
-
-        #region Properties
+  
         public Brush TitleForeground
         {
             get { return (Brush)GetValue(TitleForegroundProperty); }
@@ -71,17 +68,18 @@ namespace Knowte.Common.Controls
                 Debug.WriteLine(value);
             }
         }
-        #endregion
-
-        #region Dependency Properties
-        public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroNotification), new PropertyMetadata(null));
-        public static readonly DependencyProperty AnimationDurationProperty = DependencyProperty.Register("AnimationDuration", typeof(int), typeof(MetroNotification), new PropertyMetadata(null));
-        public static readonly DependencyProperty ShowTimerProperty = DependencyProperty.Register("ShowTimer", typeof(int), typeof(MetroNotification), new PropertyMetadata(null));
-        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(int), typeof(MetroNotification), new PropertyMetadata(null));
-        public static readonly DependencyProperty NotificationColorProperty = DependencyProperty.Register("NotificationColor", typeof(Brush), typeof(MetroNotification), new PropertyMetadata(null));
-        #endregion
-
-        #region Construction
+    
+        public static readonly DependencyProperty TitleForegroundProperty = 
+            DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroNotification), new PropertyMetadata(null));
+        public static readonly DependencyProperty AnimationDurationProperty = 
+            DependencyProperty.Register("AnimationDuration", typeof(int), typeof(MetroNotification), new PropertyMetadata(null));
+        public static readonly DependencyProperty ShowTimerProperty = 
+            DependencyProperty.Register("ShowTimer", typeof(int), typeof(MetroNotification), new PropertyMetadata(null));
+        public static readonly DependencyProperty CornerRadiusProperty = 
+            DependencyProperty.Register("CornerRadius", typeof(int), typeof(MetroNotification), new PropertyMetadata(null));
+        public static readonly DependencyProperty NotificationColorProperty = 
+            DependencyProperty.Register("NotificationColor", typeof(Brush), typeof(MetroNotification), new PropertyMetadata(null));
+     
         public MetroNotification()
         {
             // This call is required by the designer.
@@ -89,9 +87,7 @@ namespace Knowte.Common.Controls
 
             this.timer.Elapsed += new ElapsedEventHandler(TimerHandler);
         }
-        #endregion
-
-        #region Event Handlers
+     
         public void TimerHandler(object sender, ElapsedEventArgs e)
         {
             this.elapsedSeconds += 1;
@@ -107,9 +103,7 @@ namespace Knowte.Common.Controls
         {
             this.Hide();
         }
-        #endregion
-
-        #region Public
+    
         public void Show(string title, string body)
         {
             // Make sure the timer is not started. We don't want the notification to accidentally hide.
@@ -219,9 +213,7 @@ namespace Knowte.Common.Controls
 
             return retVal;
         }
-        #endregion
-
-        #region Private
+  
         private void StopTimer()
         {
             if (this.timer != null)
@@ -242,6 +234,5 @@ namespace Knowte.Common.Controls
                 timer.Enabled = true;
             }
         }
-        #endregion
     }
 }

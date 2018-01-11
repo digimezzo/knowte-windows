@@ -9,20 +9,15 @@ namespace Knowte.SettingsModule
 {
     public class SettingsModule : IModule
     {
-        #region Variables
         private IRegionManager regionManager;
         private IUnityContainer container;
-        #endregion
-
-        #region Construction
+     
         public SettingsModule(IRegionManager regionManager, IUnityContainer container)
         {
             this.regionManager = regionManager;
             this.container = container;
         }
-        #endregion
-
-        #region Public
+     
         public void Initialize()
         {
             this.regionManager.RegisterViewWithRegion(RegionNames.SettingsRegion, typeof(Views.SettingsAppearance));
@@ -38,6 +33,5 @@ namespace Knowte.SettingsModule
             this.container.RegisterType<object, SettingsNotesViewModel>(typeof(SettingsNotesViewModel).FullName);
             this.container.RegisterType<object, SettingsNotes>(typeof(SettingsNotes).FullName);
         }
-        #endregion
     }
 }

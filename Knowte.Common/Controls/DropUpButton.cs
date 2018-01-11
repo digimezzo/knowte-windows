@@ -5,19 +5,14 @@ namespace Knowte.Common.Controls
 {
     public class DropUpButton : AccentButton
     {
-        #region Variables
         private bool isContextMenuOpen = false;
-        #endregion
-
-        #region Construction
+       
         public DropUpButton() : base()
         {
             base.Click += MyClick;
             base.MouseRightButtonUp += MyMouseRightButtonUp;
         }
-        #endregion 
-
-        #region Event Handlers
+      
         protected void MyClick(object sender, RoutedEventArgs e)
         {
             if (!this.isContextMenuOpen)
@@ -49,6 +44,5 @@ namespace Knowte.Common.Controls
         {
             this.isContextMenuOpen = false;
         }
-        #endregion
     }
 }

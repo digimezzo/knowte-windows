@@ -7,7 +7,6 @@ namespace Knowte.Common.Services.Command
 {
     public class CommandService : ICommandService
     {
-        #region Public
         public void NewNote()
         {
             ApplicationCommands.NewNoteCommand.Execute(true);
@@ -24,6 +23,5 @@ namespace Knowte.Common.Services.Command
             IEventAggregator eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
             eventAggregator.GetEvent<ShowMainWindowEvent>().Publish(String.Empty);
         }
-        #endregion
     }
 }

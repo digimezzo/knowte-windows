@@ -6,14 +6,11 @@ namespace Knowte.Common.IO
 {
     public class StrongNetNamedPipeBinding : NetNamedPipeBinding
     {
-        #region Construction
         public StrongNetNamedPipeBinding() : base(NetNamedPipeSecurityMode.None)
         {
             this.InitializeSettings();
         }
-        #endregion
-
-        #region Private
+      
         private void InitializeSettings()
         {
             var bindingReaderQuotas = new XmlDictionaryReaderQuotas
@@ -33,6 +30,5 @@ namespace Knowte.Common.IO
             this.MaxBufferSize = 2000000000;
             this.ReaderQuotas = bindingReaderQuotas;
         }
-        #endregion
     }
 }

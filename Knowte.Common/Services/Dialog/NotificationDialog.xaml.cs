@@ -11,7 +11,6 @@ namespace Knowte.Common.Services.Dialog
 {
     public partial class NotificationDialog : BorderlessWindows8Window
     {
-        #region Construction
         public NotificationDialog(Window parent, string title, string content, string okText, bool showViewLogs, string viewLogsText) : base()
         {
             InitializeComponent();
@@ -34,9 +33,7 @@ namespace Knowte.Common.Services.Dialog
 
             this.CenterWindow(parent);
         }
-        #endregion
-
-        #region Event Handlers
+   
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
@@ -53,6 +50,5 @@ namespace Knowte.Common.Services.Dialog
                 LogClient.Error("Could not view the log file {0} in explorer. Exception: {1}", LogClient.Logfile(), ex.Message);
             }
         }
-        #endregion
     }
 }

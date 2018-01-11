@@ -2,12 +2,9 @@
 {
     public class ColorScheme
     {
-        #region Variables
         private string name;
         private string accentColor;
-        #endregion
-
-        #region Properties
+     
         public string Name
         {
             get { return this.name; }
@@ -19,9 +16,7 @@
             get { return this.accentColor; }
             set { this.accentColor = value; }
         }
-        #endregion
-
-        #region Public
+    
         public override bool Equals(object obj)
         {
             if (obj == null || !GetType().Equals(obj.GetType()))
@@ -36,6 +31,5 @@
         {
             return this.Name.GetHashCode();
         }
-        #endregion
     }
 }

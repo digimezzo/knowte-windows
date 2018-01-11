@@ -7,19 +7,14 @@ namespace Knowte.Common.Services.Dialog
 {
     public partial class InputDialog : BorderlessWindows8Window
     {
-        #region Variables
         private string responseText;
-        #endregion
-
-        #region Properties
+    
         public string ResponseText
         {
             get { return this.responseText; }
             set { this.responseText = value; }
         }
-        #endregion
-
-        #region Construction
+    
         public InputDialog(Window parent, string title, string content, string okText, string cancelText, string defaultResponse) : base()
         {
             InitializeComponent();
@@ -35,9 +30,7 @@ namespace Knowte.Common.Services.Dialog
 
             this.CenterWindow(parent);
         }
-        #endregion
-
-        #region Event Handlers
+    
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             this.ResponseText = TextBoxResponse.Text;
@@ -48,6 +41,5 @@ namespace Knowte.Common.Services.Dialog
         {
             this.DialogResult = false;
         }
-        #endregion
     }
 }

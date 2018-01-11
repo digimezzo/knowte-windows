@@ -8,13 +8,10 @@ namespace Knowte.Common.Controls
 {
     public class SearchBox : TextBox
     {
-        #region Variables
         private FontIcon searchIconCross;
         private FontIcon searchIconGlass;
         private Border searchBorder;
-        #endregion
-
-        #region Properties
+     
         public bool HasText
         {
             get { return Convert.ToBoolean(GetValue(HasTextProperty)); }
@@ -49,26 +46,25 @@ namespace Knowte.Common.Controls
 
             set { SetValue(VisibleBackgroundProperty, value); }
         }
-        #endregion
-
-        #region Dependency Properties
-        public static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", typeof(bool), typeof(SearchBox), new PropertyMetadata(false));
-        public static readonly DependencyProperty HasFocusProperty = DependencyProperty.Register("HasFocus", typeof(bool), typeof(SearchBox), new PropertyMetadata(false));
-        public static readonly DependencyProperty AccentProperty = DependencyProperty.Register("Accent", typeof(Brush), typeof(SearchBox), new PropertyMetadata(null));
-        public static readonly DependencyProperty SearchGlassForegroundProperty = DependencyProperty.Register("SearchGlassForeground", typeof(Brush), typeof(SearchBox), new PropertyMetadata(null));
-        public static readonly DependencyProperty VisibleBackgroundProperty = DependencyProperty.Register("VisibleBackground", typeof(Brush), typeof(SearchBox), new PropertyMetadata(null));
-        #endregion
-
-        #region Construction
+      
+        public static readonly DependencyProperty HasTextProperty = 
+            DependencyProperty.Register("HasText", typeof(bool), typeof(SearchBox), new PropertyMetadata(false));
+        public static readonly DependencyProperty HasFocusProperty = 
+            DependencyProperty.Register("HasFocus", typeof(bool), typeof(SearchBox), new PropertyMetadata(false));
+        public static readonly DependencyProperty AccentProperty = 
+            DependencyProperty.Register("Accent", typeof(Brush), typeof(SearchBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty SearchGlassForegroundProperty = 
+            DependencyProperty.Register("SearchGlassForeground", typeof(Brush), typeof(SearchBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty VisibleBackgroundProperty = 
+            DependencyProperty.Register("VisibleBackground", typeof(Brush), typeof(SearchBox), new PropertyMetadata(null));
+     
         static SearchBox()
         {
             //This OverrideMetadata call tells the system that this element wants to provide a style that is different than its base class.
             //This style is defined in themes\generic.xaml
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchBox), new FrameworkPropertyMetadata(typeof(SearchBox)));
         }
-        #endregion
-
-        #region Overrides
+   
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -92,9 +88,7 @@ namespace Knowte.Common.Controls
             this.HasText = Text.Length > 0;
             this.SetButtonState();
         }
-        #endregion
-
-        #region Private
+        
         private void SetButtonState()
         {
 
@@ -112,9 +106,7 @@ namespace Knowte.Common.Controls
                 }
             }
         }
-        #endregion
-
-        #region Event Handlers
+   
         private void SearchButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (this.HasText)
@@ -123,6 +115,5 @@ namespace Knowte.Common.Controls
             }
             this.SetButtonState();
         }
-        #endregion
     }
 }

@@ -12,13 +12,10 @@ namespace Migrator
 {
     public class MigratorWorker
     {
-        #region Construction
         public MigratorWorker()
         {
         }
-        #endregion
-
-        #region Public
+     
         public void Execute()
         {
             Console.WriteLine("Migrator");
@@ -166,6 +163,5 @@ namespace Migrator
             Console.WriteLine(Environment.NewLine + "Press any key to close this window...");
             Console.ReadKey();
         }
-        #endregion
     }
 }

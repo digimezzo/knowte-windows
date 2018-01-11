@@ -28,7 +28,6 @@ namespace Knowte.NotesModule.ViewModels
 {
     public class NotesListsViewModel : BindableBase
     {
-        #region Variables
         private ObservableCollection<NotebookViewModel> notebooks;
         private ObservableCollection<NoteViewModel> notes;
         private NotebookViewModel selectedNotebook;
@@ -53,9 +52,7 @@ namespace Knowte.NotesModule.ViewModels
         private I18nService i18nService;
         private IBackupService backupService;
         private bool triggerRefreshNotesAnimation;
-        #endregion
-
-        #region Commands
+     
         public DelegateCommand<string> NewNotebookCommand { get; set; }
         public DelegateCommand<object> NewNoteCommand { get; set; }
         public DelegateCommand<string> ImportNoteCommand { get; set; }
@@ -69,9 +66,7 @@ namespace Knowte.NotesModule.ViewModels
         public DelegateCommand DeleteSelectedNoteCommand { get; set; }
         public DelegateCommand ChangeStorageLocationCommand { get; set; }
         public DelegateCommand ResetStorageLocationCommand { get; set; }
-        #endregion
-
-        #region Properties
+  
         public bool ShowChangeStorageLocationButton
         {
             get { return SettingsClient.Get<bool>("Advanced", "ChangeStorageLocationFromMain"); }
@@ -156,9 +151,7 @@ namespace Knowte.NotesModule.ViewModels
             get { return this.mainHeight; }
             set { SetProperty<double>(ref this.mainHeight, value); }
         }
-        #endregion
-
-        #region Construction
+     
         public NotesListsViewModel(IEventAggregator eventAggregator, INoteService noteService, IAppearanceService appearanceService, IJumpListService jumpListService, ISearchService searchService, IDialogService dialogService, I18nService i18nService, IBackupService backupService)
         {
             // Injection
@@ -226,9 +219,7 @@ namespace Knowte.NotesModule.ViewModels
             // Process jumplist commands
             this.ProcessJumplistCommands();
         }
-        #endregion
-
-        #region Private
+      
         private async Task ChangeStorageLocationAsync(bool performReset)
         {
             string selectedFolder = ApplicationPaths.CurrentNoteStorageLocation;
@@ -750,6 +741,5 @@ namespace Knowte.NotesModule.ViewModels
             // we changed its elements here. OnPropertyChanged("Notebooks")
             this.eventAggregator.GetEvent<NotebooksChangedEvent>().Publish("");
         }
-        #endregion
     }
 }
