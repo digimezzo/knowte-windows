@@ -966,7 +966,7 @@ namespace Knowte.NotesModule.Views
                 return;
             }
 
-            foreach (string word in this.SearchBox.Text.Trim().Split(' '))
+            foreach (string word in StringUtils.SplitWords(this.SearchBox.Text.Trim()))
             {
                 // Filters out double spaces: we don't want to search for spaces in the text.
                 if (!word.Trim().Equals(""))

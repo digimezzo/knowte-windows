@@ -235,6 +235,7 @@
     <Compile Include="Utils\EnvironmentUtils.cs" />
     <Compile Include="Utils\MiscUtils.cs" />
     <Compile Include="Utils\ResourceUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\VisualTreeUtils.cs" />
     <Compile Include="Utils\WindowUtils.cs" />
     <Compile Include="Win32\AccentPolicy.cs" />

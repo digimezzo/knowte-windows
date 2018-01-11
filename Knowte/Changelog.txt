@@ -1,6 +1,7 @@
 2018-01-11: Knowte 1.1.5 (Release)
 ----------------------------------
 
+- [Added] It is now possible to search for groups of words by putting them between double quotes
 - [Fixed] Pressing TAB in the note title doesn't jump the cursor to the note content
 - [Fixed] Fixed issue where new notes weren't automatically added to the selected notebook
 

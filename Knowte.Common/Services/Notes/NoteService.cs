@@ -615,7 +615,7 @@ namespace Knowte.Common.Services.Note
 
         public List<Database.Entities.Note> GetNotes(Notebook notebook, string searchString, ref int count, bool orderByLastChanged, string noteFilter)
         {
-            string[] search = searchString.Split(new char[] { ' ' });
+            string[] search = StringUtils.SplitWords(searchString);
 
             List<Database.Entities.Note> notes = null;
 
