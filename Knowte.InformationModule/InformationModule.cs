@@ -9,20 +9,15 @@ namespace Knowte.InformationModule
 {
     public class InformationModule : IModule
     {
-        #region Variables
         private IRegionManager regionManager;
         private IUnityContainer container;
-        #endregion
-
-        #region Construction
+    
         public InformationModule(IRegionManager regionManager, IUnityContainer container)
         {
             this.regionManager = regionManager;
             this.container = container;
         }
-        #endregion
-
-        #region Public
+     
         public void Initialize()
         {
             this.regionManager.RegisterViewWithRegion(RegionNames.InformationRegion, typeof(Views.InformationAbout));
@@ -34,6 +29,5 @@ namespace Knowte.InformationModule
             this.container.RegisterType<object, InformationAbout>(typeof(InformationAbout).FullName);
             this.container.RegisterType<object, InformationAboutLicense>(typeof(InformationAboutLicense).FullName);
         }
-        #endregion
     }
 }

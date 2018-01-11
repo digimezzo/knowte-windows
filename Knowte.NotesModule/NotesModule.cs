@@ -9,20 +9,15 @@ namespace Knowte.NotesModule
 {
     public class NotesModule : IModule
     {
-        #region Variables
         private readonly IRegionManager regionManager;
         private IUnityContainer container;
-        #endregion
-
-        #region Construction
+    
         public NotesModule(IRegionManager regionManager, IUnityContainer container)
         {
             this.regionManager = regionManager;
             this.container = container;
         }
-        #endregion
-
-        #region Public
+      
         public void Initialize()
         {
             this.regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(Views.Notes));
@@ -37,6 +32,5 @@ namespace Knowte.NotesModule
             this.container.RegisterType<object, NotesLists>(typeof(NotesLists).FullName);
             this.container.RegisterType<object, NoteWindow>(typeof(NoteWindow).FullName);
         }
-        #endregion
     }
 }
