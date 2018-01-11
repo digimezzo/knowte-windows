@@ -337,7 +337,7 @@ namespace Knowte.NotesModule.Views
         private void TextBoxTitle_PreviewKeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter || e.Key == Key.Tab)
             {
                 // Sets the focus to the XAMLRichTextBox
                 XAMLRichTextBox.Focus();
