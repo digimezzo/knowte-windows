@@ -22,7 +22,7 @@ Examples:
 
 **RIGHT :)**
 
-- If you experienced a crash, send the log file. The log file can be found in this folder on your computer: %appdata%\Dopamine\Log
+- If you experienced a crash, send the log file. The log file can be found in this folder on your computer: %appdata%\Knowte\Log
 - If you got an error message, send a screenshot of that error message. Or, at least, describe the content of the error.
 - Describe the problem in a concise and constructive way. More information, increases the chances of reproducing the bug.
 
