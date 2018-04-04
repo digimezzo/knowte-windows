@@ -38,14 +38,14 @@
   <Text Key="Follow_Windows_Color">Volg de Windows kleur</Text>
   <Text Key="Add_More_Colors">Meer kleuren toevoegen</Text>
   <Text Key="Choose_Language">Kies een taal</Text>
-  <Text Key="Sort_Notes_By_modification_Date">Sorteer nota's op wijzigingsdatum</Text>
+  <Text Key="Sort_Notes_By_modification_Date">Sorteer notities op wijzigingsdatum</Text>
   <Text Key="Close_notes_with_escape">Sluiten van notities met [Esc]</Text>
   <Text Key="Jump_List">Jump List</Text>
-  <Text Key="Number_Of_Notes_In_Jumplist">Aantal nota's in de Jump List:</Text>
+  <Text Key="Number_Of_Notes_In_Jumplist">Aantal notities in de Jump List:</Text>
   <Text Key="Components">Componenten</Text>
   <Text Key="Is_Useful">Vind je Knowte nuttig?</Text>
-  <Text Key="Delete_Note">Nota verwijderen</Text>
-  <Text Key="Delete_Note_Confirm">Ben je zeker dat je de nota '%notename%' wilt verwijderen?</Text>
+  <Text Key="Delete_Note">Notitie verwijderen</Text>
+  <Text Key="Delete_Note_Confirm">Ben je zeker dat je de notitie '%notename%' wilt verwijderen?</Text>
   <Text Key="Information">Informatie</Text>
   <Text Key="Normal">Normaal</Text>
   <Text Key="Large">Groot</Text>
@@ -121,4 +121,6 @@
   <Text Key="Reset_Description">Gebruik de standaard opslaglocatie</Text>
   <Text Key="Reset_Confirm">Ben je zeker dat je de standaard opslaglocatie wilt gebruiken?</Text>
   <Text Key="Reset_Storage_Location">Standaard opslaglocatie</Text>
+  <Text Key="Data">Data</Text>
+  <Text Key="Show_Exact_Dates_In_The_Notes_List">Geef exacte data weer in de lijst met notities</Text>
 </Language>

@@ -26,6 +26,10 @@
             <Label Margin="0,20,0,0" Content="{DynamicResource Language_Closing}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
             <Label Content="{DynamicResource Language_Close_notes_with_escape}"/>
             <dc:Windows10ToggleSwitch x:Name="CheckBoxEscape" HorizontalAlignment="Left" Margin="5,5,0,0" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" IsChecked="{Binding CheckBoxEscapeChecked}" Accent="{DynamicResource RG_AccentBrush}"/>
+            <!-- Dates -->
+            <Label Margin="0,20,0,0" Content="{DynamicResource Language_Dates}" FontSize="22" FontWeight="Light" Foreground="{DynamicResource RG_AccentBrush}"/>
+            <Label Content="{DynamicResource Language_Show_Exact_Dates_In_The_Notes_List}"/>
+            <dc:Windows10ToggleSwitch x:Name="CheckBoxUseExactDates" HorizontalAlignment="Left" Margin="5,5,0,0" FontSize="12" OnLabel="{DynamicResource Language_Yes}" OffLabel="{DynamicResource Language_No}" IsChecked="{Binding CheckBoxUseExactDatesChecked}" Accent="{DynamicResource RG_AccentBrush}"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

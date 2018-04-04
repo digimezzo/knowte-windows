@@ -2,7 +2,7 @@
 <Settings>
   <Namespace Name="Configuration">
     <Setting Name="Version">
-      <Value>8</Value>
+      <Value>9</Value>
     </Setting>
     <Setting Name="IsPortable">
       <Value>False</Value>
@@ -56,6 +56,9 @@
       <Value>0</Value>
     </Setting>
     <Setting Name="PressingEscapeClosesNotes">
+      <Value>False</Value>
+    </Setting>
+    <Setting Name="UseExactDates">
       <Value>False</Value>
     </Setting>
   </Namespace>

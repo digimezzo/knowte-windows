@@ -121,4 +121,6 @@
   <Text Key="Reset_Description">Utiliser l'endroit de stockage par défaut</Text>
   <Text Key="Reset_Confirm">Êtes-vous sûr de vouloir utiliser l'endroit de stockage par défaut?</Text>
   <Text Key="Reset_Storage_Location">Endroit de stockage par défaut</Text>
+  <Text Key="Dates">Dates</Text>
+  <Text Key="Show_Exact_Dates_In_The_Notes_List">Afficher des dates exactes dans la liste des notes</Text>
 </Language>

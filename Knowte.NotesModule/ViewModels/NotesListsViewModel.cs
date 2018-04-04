@@ -699,7 +699,7 @@ namespace Knowte.NotesModule.ViewModels
                     ModificationDate = new DateTime(note.ModificationDate),
                     Flagged = note.Flagged == 1 ? true : false,
                     ModificationDateText = DateUtils.DateDifference(new DateTime(note.ModificationDate), DateTime.Now, formatDate, false),
-                    ModificationDateTextSimple = DateUtils.DateDifference(new DateTime(note.ModificationDate), DateTime.Now, formatDate, true)
+                    ModificationDateTextSimple = DateUtils.DateDifference(new DateTime(note.ModificationDate), DateTime.Now, formatDate, !SettingsClient.Get<bool>("Notes","UseExactDates"))
                 });
             }
 

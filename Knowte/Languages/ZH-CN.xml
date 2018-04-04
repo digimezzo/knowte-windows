@@ -121,4 +121,6 @@
   <Text Key="Reset_Description">使用默认保存位置</Text>
   <Text Key="Reset_Confirm">你确定使用默认保存位置吗？</Text>
   <Text Key="Reset_Storage_Location">默认保存位置</Text>
+  <Text Key="Dates">Dates</Text>
+  <Text Key="Show_Exact_Dates_In_The_Notes_List">Show exact dates the notes list</Text>
 </Language>

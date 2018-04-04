@@ -1,6 +1,7 @@
 ﻿using Digimezzo.Utilities.Settings;
 using Knowte.Common.Base;
 using Knowte.Common.Helpers;
+using Knowte.Common.Services.Note;
 using Knowte.Common.Utils;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
@@ -9,10 +10,12 @@ namespace Knowte.SettingsModule.ViewModels
 {
     public class SettingsNotesViewModel : BindableBase
     {
+        private INoteService noteService;
         private ObservableCollection<FontSizeCorrection> fontSizeCorrections;
         private FontSizeCorrection selectedFontSizeCorrection;
         private int previewFontSize;
         private bool checkBoxEscapeChecked;
+        private bool checkBoxUseExactDatesChecked;
 
         public ObservableCollection<FontSizeCorrection> FontSizeCorrections
         {
@@ -46,9 +49,21 @@ namespace Knowte.SettingsModule.ViewModels
                 SetProperty<bool>(ref this.checkBoxEscapeChecked, value);
             }
         }
-       
-        public SettingsNotesViewModel()
+
+        public bool CheckBoxUseExactDatesChecked
         {
+            get { return this.checkBoxUseExactDatesChecked; }
+            set
+            {
+                SettingsClient.Set<bool>("Notes", "UseExactDates", value);
+                SetProperty<bool>(ref this.checkBoxUseExactDatesChecked, value);
+                this.noteService.OnNotesChanged();
+            }
+        }
+
+        public SettingsNotesViewModel(INoteService noteService)
+        {
+            this.noteService = noteService;
             this.LoadFontSizeCorrections();
             this.LoadCheckBoxStates();
         }
@@ -56,6 +71,7 @@ namespace Knowte.SettingsModule.ViewModels
         private void LoadCheckBoxStates()
         {
             this.CheckBoxEscapeChecked = SettingsClient.Get<bool>("Notes", "PressingEscapeClosesNotes");
+            this.checkBoxUseExactDatesChecked = SettingsClient.Get<bool>("Notes", "UseExactDates");
         }
 
         private void LoadFontSizeCorrections()
