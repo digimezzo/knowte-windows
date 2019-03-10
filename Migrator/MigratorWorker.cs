@@ -21,10 +21,25 @@ namespace Migrator
             public string CreationDate { get; set; }
         }
 
+        public class NoteJson
+        {
+            public string Title { get; set; }
+
+            public string Text { get; set; }
+
+            public string Notebook { get; set; }
+
+            public bool IsMarked { get; set; }
+
+            public string CreationDate { get; set; }
+
+            public string ModificationDate { get; set; }
+        }
+
         public MigratorWorker()
         {
         }
-     
+
         public void Execute()
         {
             Console.WriteLine("Migrator");
@@ -55,7 +70,7 @@ namespace Migrator
                 notebooksJson.Add(notebookJson);
             }
 
-            string json = JsonConvert.SerializeObject(notebooksJson);
+            string notebooksJsonString = JsonConvert.SerializeObject(notebooksJson);
 
             // Get notes
             List<Note> notes = null;
@@ -64,6 +79,30 @@ namespace Migrator
             {
                 notes = conn.Query<Note>("SELECT * FROM Note;");
             }
+
+            // Export notes
+            var notesJson = new List<NoteJson>();
+
+            foreach (Note note in notes)
+            {
+                Notebook notebook = notebooks.Where(x => x.Id.Equals(note.NotebookId)).FirstOrDefault();
+                string notebookTitle = string.Empty;
+
+                if(notebook != null)
+                {
+                    notebookTitle = notebook.Title;
+                }
+
+                var noteJson = new NoteJson();
+                noteJson.Title = note.Title;
+                noteJson.Text = note.Text;
+                noteJson.Notebook = notebookTitle;
+                noteJson.CreationDate = new DateTime(note.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
+                noteJson.ModificationDate = new DateTime(note.ModificationDate).ToString("yyyy-MM-dd hh:mm:ss");
+                notesJson.Add(noteJson);
+            }
+
+            string notesJsonString = JsonConvert.SerializeObject(notesJson);
 
             Console.WriteLine(Environment.NewLine + "Press any key to close this window...");
             Console.ReadKey();
