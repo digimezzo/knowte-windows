@@ -214,16 +214,19 @@ namespace Knowte.SettingsModule.ViewModels
 
             return false;
         }
-
+   
         private async Task ExportAsync()
         {
+            // Close all note windows
+            await this.noteService.CloseAllNoteWindowsAsync(500);
+
             string exportLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             var dlg = new WPFFolderBrowserDialog();
             dlg.InitialDirectory = exportLocation;
             if ((bool)dlg.ShowDialog()) exportLocation = dlg.FileName;
 
-            bool isExportSuccess = await this.backupService.ExportAsync(exportLocation);
+            bool isExportSuccess = this.backupService.Export(exportLocation);
 
             //// Show error if exporting failed
             if (isExportSuccess)

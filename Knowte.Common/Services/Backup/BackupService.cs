@@ -167,75 +167,73 @@ namespace Knowte.Common.Services.Backup
         public event EventHandler BackupRestored = delegate { };
 
 
-        public async Task<bool> ExportAsync(string exportLocation)
+        public bool Export(string exportLocation)
         {
             bool isSuccess = true;
 
             try
             {
-                await Task.Run(() =>
+                string storageLocation = ApplicationPaths.CurrentNoteStorageLocation;
+
+                var factory = new SQLiteConnectionFactory(storageLocation);
+                string notesDatabaseFile = factory.DatabaseFile;
+
+                // Get notebooks
+                List<Notebook> notebooks = null;
+
+                using (var conn = factory.GetConnection())
                 {
-                    string storageLocation = ApplicationPaths.CurrentNoteStorageLocation;
+                    notebooks = conn.Query<Notebook>("SELECT * FROM Notebook;");
+                }
 
-                    var factory = new SQLiteConnectionFactory(storageLocation);
-                    string notesDatabaseFile = factory.DatabaseFile;
+                // Export notebooks
+                var notebooksJson = new List<NotebookJson>();
 
-                    // Get notebooks
-                    List<Notebook> notebooks = null;
+                foreach (Notebook notebook in notebooks)
+                {
+                    var notebookJson = new NotebookJson();
+                    notebookJson.Name = notebook.Title;
+                    notebookJson.CreationDate = new DateTime(notebook.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
+                    notebooksJson.Add(notebookJson);
+                }
 
-                    using (var conn = factory.GetConnection())
+                string notebooksJsonString = JsonConvert.SerializeObject(notebooksJson);
+
+                // Get notes
+                List<Database.Entities.Note> notes = null;
+
+                using (var conn = factory.GetConnection())
+                {
+                    notes = conn.Query<Database.Entities.Note>("SELECT * FROM Note;");
+                }
+
+                // Export notes
+                var notesJson = new List<NoteJson>();
+
+                foreach (Database.Entities.Note note in notes)
+                {
+                    Notebook notebook = notebooks.Where(x => x.Id.Equals(note.NotebookId)).FirstOrDefault();
+                    string notebookTitle = string.Empty;
+
+                    if (notebook != null)
                     {
-                        notebooks = conn.Query<Notebook>("SELECT * FROM Notebook;");
+                        notebookTitle = notebook.Title;
                     }
 
-                    // Export notebooks
-                    var notebooksJson = new List<NotebookJson>();
+                    var noteJson = new NoteJson();
+                    noteJson.Title = note.Title;
+                    noteJson.Text = note.Text.Replace("•	", "- ");
+                    noteJson.Notebook = notebookTitle;
+                    noteJson.CreationDate = new DateTime(note.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
+                    noteJson.ModificationDate = new DateTime(note.ModificationDate).ToString("yyyy-MM-dd hh:mm:ss");
+                    notesJson.Add(noteJson);
+                }
 
-                    foreach (Notebook notebook in notebooks)
-                    {
-                        var notebookJson = new NotebookJson();
-                        notebookJson.Name = notebook.Title;
-                        notebookJson.CreationDate = new DateTime(notebook.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
-                        notebooksJson.Add(notebookJson);
-                    }
+                string notesJsonString = JsonConvert.SerializeObject(notesJson);
 
-                    string notebooksJsonString = JsonConvert.SerializeObject(notebooksJson);
-
-                    // Get notes
-                    List<Database.Entities.Note> notes = null;
-
-                    using (var conn = factory.GetConnection())
-                    {
-                        notes = conn.Query<Database.Entities.Note>("SELECT * FROM Note;");
-                    }
-
-                    // Export notes
-                    var notesJson = new List<NoteJson>();
-
-                    foreach (Database.Entities.Note note in notes)
-                    {
-                        Notebook notebook = notebooks.Where(x => x.Id.Equals(note.NotebookId)).FirstOrDefault();
-                        string notebookTitle = string.Empty;
-
-                        if (notebook != null)
-                        {
-                            notebookTitle = notebook.Title;
-                        }
-
-                        var noteJson = new NoteJson();
-                        noteJson.Title = note.Title;
-                        noteJson.Text = note.Text.Replace("•	", "- ");
-                        noteJson.Notebook = notebookTitle;
-                        noteJson.CreationDate = new DateTime(note.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
-                        noteJson.ModificationDate = new DateTime(note.ModificationDate).ToString("yyyy-MM-dd hh:mm:ss");
-                        notesJson.Add(noteJson);
-                    }
-
-                    string notesJsonString = JsonConvert.SerializeObject(notesJson);
-
-                    // TODO: create notebooksJsonString file
-                    // TODO: create notesJsonString file
-                });
+                // Write to files
+                File.WriteAllText(Path.Combine(exportLocation, "Notebooks.json"), notebooksJsonString);
+                File.WriteAllText(Path.Combine(exportLocation, "Notes.json"), notesJsonString);
             }
             catch (Exception ex)
             {

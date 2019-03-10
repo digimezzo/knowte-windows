@@ -5,7 +5,7 @@ namespace Knowte.Common.Services.Backup
 {
     public interface IBackupService
     {
-        Task<bool> ExportAsync(string exportLocation);
+        bool Export(string exportLocation);
         bool Backup(string backupFile);
         bool Import(string backupFile);
         bool Restore(string backupFile);
