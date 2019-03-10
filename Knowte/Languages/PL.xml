@@ -123,4 +123,8 @@
   <Text Key="Reset_Storage_Location">Default storage location</Text>
   <Text Key="Dates">Dates</Text>
   <Text Key="Show_Exact_Dates_In_The_Notes_List">Show exact dates the notes list</Text>
+  <Text Key="Export">Export</Text>
+  <Text Key="Export_Description">Export notebooks and notes in order to import them in Knowte 2.0 later</Text>
+  <Text Key="Export_Was_Successful">The export was successful!</Text>
+  <Text Key="Export_Error">An error occurred during the export. Please consult the log file for more information.</Text>
 </Language>

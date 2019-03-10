@@ -28,7 +28,8 @@ namespace Knowte.SettingsModule.ViewModels
         private ObservableCollection<int> numberOfNotesInJumpList;
         private int selectedNumberOfNotesInJumpList;
         private bool checkBoxChangeStorageLocationFromMainChecked;
-    
+
+        public DelegateCommand ExportCommand { get; set; }
         public DelegateCommand BackupCommand { get; set; }
         public DelegateCommand ImportCommand { get; set; }
         public DelegateCommand RestoreCommand { get; set; }
@@ -36,7 +37,7 @@ namespace Knowte.SettingsModule.ViewModels
         public DelegateCommand ChangeStorageLocationCommand { get; set; }
         public DelegateCommand MoveStorageLocationCommand { get; set; }
         public DelegateCommand ResetStorageLocationCommand { get; set; }
-     
+
         public bool CheckBoxChangeStorageLocationFromMainChecked
         {
             get { return this.checkBoxChangeStorageLocationFromMainChecked; }
@@ -89,11 +90,12 @@ namespace Knowte.SettingsModule.ViewModels
             this.noteService = noteService;
 
             // Commands
+            this.ExportCommand = new DelegateCommand(async () => await this.ExportAsync());
             this.BackupCommand = new DelegateCommand(async () => await this.BackupAsync());
             this.ImportCommand = new DelegateCommand(async () => await this.ImportAsync());
             this.RestoreCommand = new DelegateCommand(async () => await this.RestoreAsync());
             this.OpenStorageLocationCommand = new DelegateCommand(() => Actions.TryOpenPath(ApplicationPaths.CurrentNoteStorageLocation));
-            this.ChangeStorageLocationCommand = new DelegateCommand(async() => { await this.ChangeStorageLocationAsync(false,false); });
+            this.ChangeStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(false, false); });
             this.MoveStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(false, true); });
             this.ResetStorageLocationCommand = new DelegateCommand(async () => { await this.ChangeStorageLocationAsync(true, false); });
 
@@ -104,7 +106,7 @@ namespace Knowte.SettingsModule.ViewModels
             this.LoadNumberOfNotesInJumplist();
             this.LoadCheckBoxStates();
         }
-  
+
         private async Task ChangeStorageLocationAsync(bool performReset, bool moveCurrentNotes)
         {
             string selectedFolder = ApplicationPaths.CurrentNoteStorageLocation;
@@ -112,15 +114,16 @@ namespace Knowte.SettingsModule.ViewModels
             if (performReset)
             {
                 bool confirmPerformReset = this.dialogService.ShowConfirmationDialog(
-                    null, 
-                    title: ResourceUtils.GetString("Language_Reset"), 
-                    content: ResourceUtils.GetString("Language_Reset_Confirm"), 
-                    okText: ResourceUtils.GetString("Language_Yes"), 
+                    null,
+                    title: ResourceUtils.GetString("Language_Reset"),
+                    content: ResourceUtils.GetString("Language_Reset_Confirm"),
+                    okText: ResourceUtils.GetString("Language_Yes"),
                     cancelText: ResourceUtils.GetString("Language_No"));
 
-                if(confirmPerformReset) selectedFolder = ApplicationPaths.DefaultNoteStorageLocation;
+                if (confirmPerformReset) selectedFolder = ApplicationPaths.DefaultNoteStorageLocation;
             }
-            else {
+            else
+            {
                 var dlg = new WPFFolderBrowserDialog();
                 dlg.InitialDirectory = ApplicationPaths.CurrentNoteStorageLocation;
                 if ((bool)dlg.ShowDialog()) selectedFolder = dlg.FileName;
@@ -210,6 +213,39 @@ namespace Knowte.SettingsModule.ViewModels
             }
 
             return false;
+        }
+
+        private async Task ExportAsync()
+        {
+            string exportLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            var dlg = new WPFFolderBrowserDialog();
+            dlg.InitialDirectory = exportLocation;
+            if ((bool)dlg.ShowDialog()) exportLocation = dlg.FileName;
+
+            bool isExportSuccess = await this.backupService.ExportAsync(exportLocation);
+
+            //// Show error if exporting failed
+            if (isExportSuccess)
+            {
+                // Show notification if exporting succeeded
+                this.dialogService.ShowNotificationDialog(
+                    null,
+                    title: ResourceUtils.GetString("Language_Success"),
+                    content: ResourceUtils.GetString("Language_Export_Was_Successful"),
+                    okText: ResourceUtils.GetString("Language_Ok"),
+                    showViewLogs: false);
+            }
+            else
+            {
+                // Show error if exporting failed
+                this.dialogService.ShowNotificationDialog(
+                  null,
+                  title: ResourceUtils.GetString("Language_Error"),
+                  content: ResourceUtils.GetString("Language_Export_Error"),
+                  okText: ResourceUtils.GetString("Language_Ok"),
+                  showViewLogs: true);
+            }
         }
 
         private async Task BackupAsync()

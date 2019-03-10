@@ -123,4 +123,8 @@
   <Text Key="Reset_Storage_Location">Standaard opslaglocatie</Text>
   <Text Key="Data">Data</Text>
   <Text Key="Show_Exact_Dates_In_The_Notes_List">Geef exacte data weer in de lijst met notities</Text>
+  <Text Key="Export">Export</Text>
+  <Text Key="Export_Description">Notitieboeken en notities exporteren om ze later in Knowte 2.0 te importeren</Text>
+  <Text Key="Export_Was_Successful">De export is geslaagd!</Text>
+  <Text Key="Export_Error">Er is een fout opgetreden tijdens de export. Raadpleeg het log bestand voor meer informatie.</Text>
 </Language>

@@ -123,4 +123,8 @@
   <Text Key="Reset_Storage_Location">Endroit de stockage par défaut</Text>
   <Text Key="Dates">Dates</Text>
   <Text Key="Show_Exact_Dates_In_The_Notes_List">Afficher des dates exactes dans la liste des notes</Text>
+  <Text Key="Export">Exporter</Text>
+  <Text Key="Export_Description">Exporter blocs-notes et notes afin de les importer dans Knowte 2.0 plus tard</Text>
+  <Text Key="Export_Was_Successful">L'export a réussi!</Text>
+  <Text Key="Export_Error">Une erreur s'est produite durant l'export. Consultez le fichier log pour plus de détails.</Text>
 </Language>

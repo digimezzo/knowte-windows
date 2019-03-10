@@ -1,7 +1,7 @@
 2019-03-10: Knowte 1.1.7 (Release)
 ----------------------------------
 
-- [Changed] Modified Migrator to allow migration from Knowte 1.x to 2.0
+- [Added] Added option to export notebooks and notes for import in Knowte 2.0
 - [Changed] Updated the Chinese (Simplified) translation
 
 

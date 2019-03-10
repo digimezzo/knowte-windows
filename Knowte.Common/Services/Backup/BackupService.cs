@@ -2,23 +2,49 @@
 using Digimezzo.Utilities.Settings;
 using Digimezzo.Utilities.Utils;
 using Knowte.Common.Database;
+using Knowte.Common.Database.Entities;
 using Knowte.Common.IO;
 using Knowte.Common.Services.Dialog;
 using Knowte.Common.Services.Note;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace Knowte.Common.Services.Backup
 {
     public class BackupService : IBackupService
     {
+        public class NotebookJson
+        {
+            public string Name { get; set; }
+
+            public string CreationDate { get; set; }
+        }
+
+        public class NoteJson
+        {
+            public string Title { get; set; }
+
+            public string Text { get; set; }
+
+            public string Notebook { get; set; }
+
+            public bool IsMarked { get; set; }
+
+            public string CreationDate { get; set; }
+
+            public string ModificationDate { get; set; }
+        }
+
         private SQLiteConnectionFactory factory;
         private INoteService noteService;
         private IDialogService dialogService;
         private string backupSubDirectory = Path.Combine(SettingsClient.ApplicationFolder(), ApplicationPaths.BackupSubDirectory);
-   
+
         public string BackupSubDirectory
         {
             get { return this.backupSubDirectory; }
@@ -39,7 +65,7 @@ namespace Knowte.Common.Services.Backup
                 Directory.CreateDirectory(Path.Combine(this.BackupSubDirectory));
             }
         }
-        
+
         private async Task CreateBackupFile(string backupFile)
         {
             await Task.Run(() =>
@@ -137,8 +163,88 @@ namespace Knowte.Common.Services.Backup
 
             return isSuccess;
         }
-       
+
         public event EventHandler BackupRestored = delegate { };
+
+
+        public async Task<bool> ExportAsync(string exportLocation)
+        {
+            bool isSuccess = true;
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    string storageLocation = ApplicationPaths.CurrentNoteStorageLocation;
+
+                    var factory = new SQLiteConnectionFactory(storageLocation);
+                    string notesDatabaseFile = factory.DatabaseFile;
+
+                    // Get notebooks
+                    List<Notebook> notebooks = null;
+
+                    using (var conn = factory.GetConnection())
+                    {
+                        notebooks = conn.Query<Notebook>("SELECT * FROM Notebook;");
+                    }
+
+                    // Export notebooks
+                    var notebooksJson = new List<NotebookJson>();
+
+                    foreach (Notebook notebook in notebooks)
+                    {
+                        var notebookJson = new NotebookJson();
+                        notebookJson.Name = notebook.Title;
+                        notebookJson.CreationDate = new DateTime(notebook.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
+                        notebooksJson.Add(notebookJson);
+                    }
+
+                    string notebooksJsonString = JsonConvert.SerializeObject(notebooksJson);
+
+                    // Get notes
+                    List<Database.Entities.Note> notes = null;
+
+                    using (var conn = factory.GetConnection())
+                    {
+                        notes = conn.Query<Database.Entities.Note>("SELECT * FROM Note;");
+                    }
+
+                    // Export notes
+                    var notesJson = new List<NoteJson>();
+
+                    foreach (Database.Entities.Note note in notes)
+                    {
+                        Notebook notebook = notebooks.Where(x => x.Id.Equals(note.NotebookId)).FirstOrDefault();
+                        string notebookTitle = string.Empty;
+
+                        if (notebook != null)
+                        {
+                            notebookTitle = notebook.Title;
+                        }
+
+                        var noteJson = new NoteJson();
+                        noteJson.Title = note.Title;
+                        noteJson.Text = note.Text.Replace("•	", "- ");
+                        noteJson.Notebook = notebookTitle;
+                        noteJson.CreationDate = new DateTime(note.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
+                        noteJson.ModificationDate = new DateTime(note.ModificationDate).ToString("yyyy-MM-dd hh:mm:ss");
+                        notesJson.Add(noteJson);
+                    }
+
+                    string notesJsonString = JsonConvert.SerializeObject(notesJson);
+
+                    // TODO: create notebooksJsonString file
+                    // TODO: create notesJsonString file
+                });
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+                LogClient.Error("Could not perform export. Exception: {0}", ex.Message);
+            }
+
+            return isSuccess;
+        }
 
         public bool Backup(string backupFile)
         {
