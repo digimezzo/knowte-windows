@@ -222,7 +222,7 @@ namespace Knowte.Common.Services.Backup
 
                     var noteJson = new NoteJson();
                     noteJson.Title = note.Title;
-                    noteJson.Text = note.Text.Replace("•	", "- ");
+                    noteJson.Text = note.Text.Replace("•	", "- ").Replace(Environment.NewLine,"\n").Replace('"', '\"');
                     noteJson.Notebook = notebookTitle;
                     noteJson.CreationDate = new DateTime(note.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
                     noteJson.ModificationDate = new DateTime(note.ModificationDate).ToString("yyyy-MM-dd hh:mm:ss");
