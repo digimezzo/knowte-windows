@@ -229,6 +229,8 @@ namespace Knowte.Common.Services.Backup
                     noteJson.Text = noteJson.Text.Replace("•", "-");
                     noteJson.Text = noteJson.Text.Replace('"', '\"');
 
+                    noteJson.IsMarked = note.Flagged == 0 ? false : true;
+
                     noteJson.Notebook = notebookTitle;
                     noteJson.CreationDate = new DateTime(note.CreationDate).ToString("yyyy-MM-dd hh:mm:ss");
                     noteJson.ModificationDate = new DateTime(note.ModificationDate).ToString("yyyy-MM-dd hh:mm:ss");
