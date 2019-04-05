@@ -224,30 +224,34 @@ namespace Knowte.SettingsModule.ViewModels
 
             var dlg = new WPFFolderBrowserDialog();
             dlg.InitialDirectory = exportLocation;
-            if ((bool)dlg.ShowDialog()) exportLocation = dlg.FileName;
 
-            bool isExportSuccess = this.backupService.Export(exportLocation);
+            if ((bool)dlg.ShowDialog())
+            {
+                exportLocation = dlg.FileName;
 
-            //// Show error if exporting failed
-            if (isExportSuccess)
-            {
-                // Show notification if exporting succeeded
-                this.dialogService.ShowNotificationDialog(
-                    null,
-                    title: ResourceUtils.GetString("Language_Success"),
-                    content: ResourceUtils.GetString("Language_Export_Was_Successful"),
-                    okText: ResourceUtils.GetString("Language_Ok"),
-                    showViewLogs: false);
-            }
-            else
-            {
-                // Show error if exporting failed
-                this.dialogService.ShowNotificationDialog(
-                  null,
-                  title: ResourceUtils.GetString("Language_Error"),
-                  content: ResourceUtils.GetString("Language_Export_Error"),
-                  okText: ResourceUtils.GetString("Language_Ok"),
-                  showViewLogs: true);
+                bool isExportSuccess = this.backupService.Export(exportLocation);
+
+                //// Show error if exporting failed
+                if (isExportSuccess)
+                {
+                    // Show notification if exporting succeeded
+                    this.dialogService.ShowNotificationDialog(
+                        null,
+                        title: ResourceUtils.GetString("Language_Success"),
+                        content: ResourceUtils.GetString("Language_Export_Was_Successful"),
+                        okText: ResourceUtils.GetString("Language_Ok"),
+                        showViewLogs: false);
+                }
+                else
+                {
+                    // Show error if exporting failed
+                    this.dialogService.ShowNotificationDialog(
+                      null,
+                      title: ResourceUtils.GetString("Language_Error"),
+                      content: ResourceUtils.GetString("Language_Export_Error"),
+                      okText: ResourceUtils.GetString("Language_Ok"),
+                      showViewLogs: true);
+                }
             }
         }
 
