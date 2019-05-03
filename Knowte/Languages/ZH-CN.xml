@@ -123,8 +123,8 @@
   <Text Key="Reset_Storage_Location">默认保存位置</Text>
   <Text Key="Dates">日期</Text>
   <Text Key="Show_Exact_Dates_In_The_Notes_List">在笔记列表中显示详细日期</Text>
-  <Text Key="Export">Export</Text>
-  <Text Key="Export_Description">Export notebooks and notes in order to import them in Knowte 2.0 later</Text>
-  <Text Key="Export_Was_Successful">The export was successful!</Text>
-  <Text Key="Export_Error">An error occurred during the export. Please consult the log file for more information.</Text>
+  <Text Key="Export">导出</Text>
+  <Text Key="Export_Description">导出笔记本和笔记和导入功能将在 Knowte 2.0 之后的某时加入</Text>
+  <Text Key="Export_Was_Successful">导出成功!</Text>
+  <Text Key="Export_Error">导出时出现了错误。请至日志文件以获取更多信息。</Text>
 </Language>
