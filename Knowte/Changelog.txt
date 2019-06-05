@@ -1,8 +1,9 @@
-2019-03-10: Knowte 1.1.7 (Release)
+2019-06-05: Knowte 1.1.7 (Release)
 ----------------------------------
 
 - [Added] Added option to export notebooks and notes for import in Knowte 2.0
 - [Changed] Updated the Chinese (Simplified) translation
+- [Changed] Changed target .NET framework to 4.7.2
 
 
 2018-04-04: Knowte 1.1.6 (Release)
