@@ -6,12 +6,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolTip}" >
-                    <Border Margin="10" CornerRadius="2" Background="{DynamicResource RG_AccentBrush}" Padding="10,3,10,3">
-                        <ContentPresenter />
-                        <Border.Effect>
-                            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
-                        </Border.Effect>
-                    </Border>
+                    <Grid Margin="10">
+                        <Border CornerRadius="2" Background="{DynamicResource RG_AccentBrush}">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Black" Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+                        <ContentPresenter Margin="10,3"/>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
