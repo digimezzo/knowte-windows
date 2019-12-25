@@ -10,4 +10,4 @@ Knowte is a note taking application that allows you to quickly and easily organi
 
 ## Important
 
-This project will not be updated anymore. The new version can be found here: https://github.com/digimezzo/knowte-test
+This project will not be updated anymore. The new version can be found here: https://github.com/digimezzo/knowte
