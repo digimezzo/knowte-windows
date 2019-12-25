@@ -1,6 +1,6 @@
 ![Knowte](Knowte.full.png)
 
-# Knowte (deprecated)
+# Knowte (for Windows)
 
 Knowte is a note taking application that allows you to quickly and easily organize and find your notes. More information and downloads are available at [http://www.digimezzo.com](http://www.digimezzo.com)
 
@@ -8,6 +8,6 @@ Knowte is a note taking application that allows you to quickly and easily organi
 [![Issues](https://img.shields.io/github/issues/digimezzo/Knowte.svg?style=flat-square)](https://github.com/digimezzo/Knowte/issues)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MQALEWTEZ7HX8)
 
-## Deprecated ##
+## Important
 
-This project is deprecated and will not be updated anymore. Please download the new version at: https://github.com/digimezzo/knowte-electron
+This project will not be updated anymore. The new version can be found here: https://github.com/digimezzo/knowte
